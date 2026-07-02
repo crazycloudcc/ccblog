@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-ink: #303055;
+  --color-code-plum: #8844ae;
+  --color-code-cobalt: #3b61b0;
+  --color-code-teal: #096e72;
+  --color-code-rust: #984e4d;
+  --color-slate: #403f53;
+  --color-fog: #767682;
+  --color-mist: #a8a8b0;
+  --color-obsidian: #111111;
+  --color-lavender-mist: #e8e8f2;
+  --color-paper: #ffffff;
+
+  /* Typography */
+  --font-sans: "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Spacing */
+  --spacing-section: 64px;
+  --spacing-card: 16px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+:root {
+  --font-rubik: "Rubik", ui-sans-serif, system-ui, sans-serif;
+  --font-ibm-plex-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --color-ink: #303055;
+  --color-code-plum: #8844ae;
+  --color-code-cobalt: #3b61b0;
+  --color-code-teal: #096e72;
+  --color-code-rust: #984e4d;
+  --color-slate: #403f53;
+  --color-fog: #767682;
+  --color-mist: #a8a8b0;
+  --color-obsidian: #111111;
+  --color-lavender-mist: #e8e8f2;
+  --color-paper: #ffffff;
+  --page-max-width: 1200px;
+  --section-gap: 64px;
+  --card-padding: 16px;
+  --radius-tags: 4px;
+  --radius-cards: 8px;
+  --radius-code-blocks: 8px;
+  --elevation-code-block: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.8;
+}
