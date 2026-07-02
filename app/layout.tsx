@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
+import { TerminalShell } from "@/components/terminal/TerminalShell";
+import { ThemeProvider } from "@/components/terminal/ThemeProvider";
+import { ThemeScript } from "@/components/terminal/ThemeScript";
+import { getPosts } from "@/lib/posts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,9 +15,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const postCount = getPosts().length;
+
   return (
-    <html lang="zh-CN" className="h-full antialiased">
+    <html lang="zh-CN" className="h-full antialiased" suppressHydrationWarning>
       <head>
+        <ThemeScript />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -27,10 +32,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="flex min-h-full flex-col bg-paper text-ink">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="min-h-full text-ink">
+        <ThemeProvider>
+          <TerminalShell postCount={postCount}>{children}</TerminalShell>
+        </ThemeProvider>
       </body>
     </html>
   );

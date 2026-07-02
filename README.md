@@ -18,5 +18,4 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/` — Home
 - `/blog` — Post list
 - `/blog/[slug]` — Post detail
-- `/about` — About
-- `/contact` — Contact
+- `/about` — About & contact

@@ -9,10 +9,10 @@ export function TextLink({ children, className = "", ...props }: TextLinkProps) 
   return (
     <Link
       {...props}
-      className={`inline-flex items-center gap-1 font-sans text-base font-medium text-ink transition-colors hover:underline ${className}`}
+      className={`inline-flex items-center gap-1 font-mono text-sm font-semibold text-ink transition-colors hover:text-code-cobalt ${className}`}
     >
+      <span className="text-mist">{"> "}</span>
       {children}
-      <span aria-hidden="true">{">"}</span>
     </Link>
   );
 }

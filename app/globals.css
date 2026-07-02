@@ -1,59 +1,120 @@
 @import "tailwindcss";
 
-@theme {
-  /* Colors */
-  --color-ink: #303055;
-  --color-code-plum: #8844ae;
-  --color-code-cobalt: #3b61b0;
-  --color-code-teal: #096e72;
-  --color-code-rust: #984e4d;
-  --color-slate: #403f53;
-  --color-fog: #767682;
-  --color-mist: #a8a8b0;
+/* Tailwind utilities read runtime tokens via @theme inline */
+@theme inline {
+  --color-ink: var(--theme-ink);
+  --color-code-plum: var(--theme-code-plum);
+  --color-code-cobalt: var(--theme-code-cobalt);
+  --color-code-teal: var(--theme-code-teal);
+  --color-code-rust: var(--theme-code-rust);
+  --color-slate: var(--theme-slate);
+  --color-fog: var(--theme-fog);
+  --color-mist: var(--theme-mist);
   --color-obsidian: #111111;
-  --color-lavender-mist: #e8e8f2;
-  --color-paper: #ffffff;
+  --color-lavender-mist: var(--theme-border);
+  --color-paper: var(--theme-paper);
+  --color-terminal-bg: var(--theme-terminal-bg);
+  --color-terminal-desk: var(--theme-terminal-desk);
 
-  /* Typography */
   --font-sans: "Rubik", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Spacing */
   --spacing-section: 64px;
   --spacing-card: 16px;
-
-  /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
+}
+
+/* Scheme C — Midnight IDE (light) */
+:root,
+[data-theme="light"] {
+  --theme-ink: #1f2937;
+  --theme-slate: #4b5563;
+  --theme-fog: #6b7280;
+  --theme-mist: #9ca3af;
+  --theme-paper: #ffffff;
+  --theme-terminal-bg: #f8fafc;
+  --theme-terminal-desk: #eef2f7;
+  --theme-border: #e2e8f0;
+  --theme-code-plum: #7c3aed;
+  --theme-code-cobalt: #2563eb;
+  --theme-code-teal: #0891b2;
+  --theme-code-rust: #dc2626;
+  --color-grid-line: rgba(31, 41, 55, 0.05);
+  --elevation-code-block: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.06);
+  --elevation-terminal: 0 16px 40px rgba(15, 23, 42, 0.1);
+  color-scheme: light;
+}
+
+/* Scheme C — Midnight IDE (dark) */
+[data-theme="dark"] {
+  --theme-ink: #e6edf3;
+  --theme-slate: #b6c2cf;
+  --theme-fog: #8b9cb3;
+  --theme-mist: #6e7681;
+  --theme-paper: #0d1117;
+  --theme-terminal-bg: #161b22;
+  --theme-terminal-desk: #010409;
+  --theme-border: #30363d;
+  --theme-code-plum: #d2a8ff;
+  --theme-code-cobalt: #79c0ff;
+  --theme-code-teal: #56d4dd;
+  --theme-code-rust: #ff7b72;
+  --color-grid-line: rgba(230, 237, 243, 0.04);
+  --elevation-code-block: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 12px rgba(0, 0, 0, 0.35);
+  --elevation-terminal: 0 16px 48px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
 }
 
 :root {
   --font-rubik: "Rubik", ui-sans-serif, system-ui, sans-serif;
   --font-ibm-plex-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --color-ink: #303055;
-  --color-code-plum: #8844ae;
-  --color-code-cobalt: #3b61b0;
-  --color-code-teal: #096e72;
-  --color-code-rust: #984e4d;
-  --color-slate: #403f53;
-  --color-fog: #767682;
-  --color-mist: #a8a8b0;
-  --color-obsidian: #111111;
-  --color-lavender-mist: #e8e8f2;
-  --color-paper: #ffffff;
-  --page-max-width: 1200px;
-  --section-gap: 64px;
-  --card-padding: 16px;
-  --radius-tags: 4px;
-  --radius-cards: 8px;
-  --radius-code-blocks: 8px;
-  --elevation-code-block: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+html {
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {
-  background: var(--color-paper);
+  background: var(--color-terminal-desk);
   color: var(--color-ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.7;
+}
+
+.terminal-desk {
+  background-color: var(--color-terminal-desk);
+  background-image:
+    linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  transition: background-color 0.2s ease;
+}
+
+.terminal-window {
+  border: 1px solid var(--color-lavender-mist);
+  border-radius: 8px;
+  background: var(--color-terminal-bg);
+  box-shadow: var(--elevation-terminal);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.terminal-main {
+  background: var(--color-terminal-bg);
+  transition: background-color 0.2s ease;
+}
+
+.prose-terminal {
+  font-family: var(--font-sans);
+}
+
+.terminal-chrome {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }

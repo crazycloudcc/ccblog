@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PostCover } from "@/components/blog/PostCover";
+import { PostContent } from "@/components/blog/PostContent";
 import { formatDateParts } from "@/lib/blog-utils";
 import { getPostBySlug, getPosts } from "@/lib/posts";
+import {
+  TerminalCommand,
+  TerminalComment,
+  TerminalOutput,
+} from "@/components/terminal/TerminalCommand";
+import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -35,94 +41,48 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const { month, day, weekday, year } = formatDateParts(post.date);
-  const paragraphs = post.content.split("\n\n");
 
   return (
     <article>
-      <div className="mx-auto max-w-[960px] px-6 pt-10 lg:px-8">
+      <TerminalPanel>
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1 font-sans text-sm font-medium text-fog hover:text-ink hover:underline"
+          className="inline-flex items-center gap-1 font-mono text-sm text-fog hover:text-ink"
         >
           <span aria-hidden="true">{"<"}</span>
-          Back to timeline
+          cd ../writing.log
         </Link>
 
-        <PostCover
-          cover={post.cover}
-          className="mt-8 min-h-[280px] rounded-[8px] md:min-h-[360px]"
-        />
-      </div>
-
-      <div className="mx-auto max-w-[720px] px-6 py-12 md:py-16">
-        <div className="flex items-center gap-4 border-b border-lavender-mist pb-6">
-          <div className="flex h-4 w-4 items-center justify-center rounded-full border-2 border-ink bg-paper">
-            <div className="h-1.5 w-1.5 rounded-full bg-ink" />
-          </div>
-          <time className="font-mono text-sm text-fog">
-            {weekday}, {month} {day}, {year}
-          </time>
+        <div className="mt-6">
+          <TerminalCommand command={`cat ${post.slug}`} />
+          <TerminalOutput>
+            <div className="mt-2 space-y-1 text-xs">
+              <div>
+                <span className="text-code-plum">[</span>
+                <span className="text-ink">{year}-{month}-{day}</span>
+                <span className="text-code-plum">]</span>
+                <span className="text-code-cobalt"> {weekday.toLowerCase()}</span>
+              </div>
+              <TerminalComment>// status: published · type: article</TerminalComment>
+            </div>
+          </TerminalOutput>
         </div>
+      </TerminalPanel>
 
-        <h1 className="mt-8 font-sans text-[40px] font-medium leading-[1.1] tracking-[-0.021em] text-ink sm:text-[48px]">
+      <TerminalPanel title="content">
+        <h1 className="prose-terminal text-[32px] font-semibold leading-[1.15] text-ink sm:text-[40px]">
           {post.title}
         </h1>
-        <p className="mt-4 font-sans text-lg leading-[1.65] text-slate">
+        <p className="prose-terminal mt-4 text-base leading-[1.7] text-slate">
           {post.excerpt}
         </p>
 
-        <div className="mt-12 space-y-6">
-          {paragraphs.map((block, index) => {
-            if (block.startsWith("## ")) {
-              return (
-                <h2
-                  key={index}
-                  className="font-sans text-xl font-semibold text-ink"
-                >
-                  {block.replace("## ", "")}
-                </h2>
-              );
-            }
-
-            if (block.startsWith("- ")) {
-              const items = block.split("\n").filter(Boolean);
-              return (
-                <ul
-                  key={index}
-                  className="list-disc space-y-2 pl-5 font-sans text-sm leading-[1.8] text-slate"
-                >
-                  {items.map((item) => (
-                    <li key={item}>{item.replace("- ", "")}</li>
-                  ))}
-                </ul>
-              );
-            }
-
-            if (/^\d+\.\s/.test(block)) {
-              const items = block.split("\n").filter(Boolean);
-              return (
-                <ol
-                  key={index}
-                  className="list-decimal space-y-2 pl-5 font-sans text-sm leading-[1.8] text-slate"
-                >
-                  {items.map((item) => (
-                    <li key={item}>{item.replace(/^\d+\.\s/, "")}</li>
-                  ))}
-                </ol>
-              );
-            }
-
-            return (
-              <p
-                key={index}
-                className="font-sans text-sm leading-[1.8] text-slate"
-              >
-                {block}
-              </p>
-            );
-          })}
+        <div className="mt-10">
+          <PostContent content={post.content} />
         </div>
-      </div>
+
+        <TerminalComment>// EOF — {post.slug}</TerminalComment>
+      </TerminalPanel>
     </article>
   );
 }

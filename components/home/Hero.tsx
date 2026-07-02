@@ -1,33 +1,59 @@
+import Link from "next/link";
 import { CodeBlock } from "@/components/ui/CodeBlock";
-import { TextLink } from "@/components/ui/TextLink";
+import {
+  TerminalCommand,
+  TerminalComment,
+  TerminalOutput,
+} from "@/components/terminal/TerminalCommand";
+import { TerminalPanel } from "@/components/terminal/TerminalPanel";
+
+const dirEntries = [
+  { name: "writing.log", href: "/blog", type: "file" },
+  { name: "about.txt", href: "/about", type: "file" },
+  { name: "posts/", href: "/blog", type: "dir" },
+];
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-12 lg:px-8 lg:pb-28 lg:pt-16">
-      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <CodeBlock />
+    <>
+      <TerminalPanel title="session start">
+        <TerminalComment>// last login: {new Date().toLocaleString("en-US")}</TerminalComment>
 
-        <div className="lg:pl-4">
-          <h1 className="font-sans text-[40px] font-medium leading-[1.1] tracking-[-0.021em] text-ink sm:text-[48px]">
-            Writing about the things I build.
-          </h1>
-          <p className="mt-5 max-w-md font-sans text-lg leading-[1.65] text-slate">
-            Notes on software, cloud infrastructure, and everyday engineering
-            from crazycloudcc.
-          </p>
-
-          <div className="mt-8 font-mono text-sm">
-            <span className="text-mist">{"> "}</span>
-            <span className="font-semibold text-ink">cd</span>
-            <span className="font-semibold text-ink"> crazycloudcc-blog</span>
+        <div className="mt-6 space-y-6">
+          <div>
+            <TerminalCommand command="whoami" />
+            <TerminalOutput>
+              <span className="text-ink">crazycloudcc</span>
+            </TerminalOutput>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <TextLink href="/blog">Read posts</TextLink>
-            <TextLink href="/about">About me</TextLink>
+          <div>
+            <TerminalCommand command="cat site.ts" />
+            <div className="mt-3">
+              <CodeBlock />
+            </div>
+          </div>
+
+          <div>
+            <TerminalCommand command="ls -la" />
+            <TerminalOutput>
+              <div className="mt-2 space-y-1 text-xs">
+                <div className="text-fog">total {dirEntries.length + 1}</div>
+                {dirEntries.map((entry) => (
+                  <div key={entry.name} className="flex flex-wrap gap-x-3">
+                    <span className="text-code-cobalt">
+                      {entry.type === "dir" ? "drwxr-xr-x" : entry.type === "exec" ? "-rwxr-xr-x" : "-rw-r--r--"}
+                    </span>
+                    <Link href={entry.href} className="text-ink hover:text-code-cobalt">
+                      {entry.name}
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </TerminalOutput>
           </div>
         </div>
-      </div>
-    </section>
+      </TerminalPanel>
+    </>
   );
 }
