@@ -25,44 +25,44 @@
   --radius-md: 8px;
 }
 
-/* Scheme C — Midnight IDE (light) */
+/* Scheme D — Warm Manuscript (light) */
 :root,
 [data-theme="light"] {
-  --theme-ink: #1f2937;
-  --theme-slate: #4b5563;
-  --theme-fog: #6b7280;
-  --theme-mist: #9ca3af;
-  --theme-paper: #ffffff;
-  --theme-terminal-bg: #f8fafc;
-  --theme-terminal-desk: #eef2f7;
-  --theme-border: #e2e8f0;
-  --theme-code-plum: #7c3aed;
-  --theme-code-cobalt: #2563eb;
-  --theme-code-teal: #0891b2;
-  --theme-code-rust: #dc2626;
-  --color-grid-line: rgba(31, 41, 55, 0.05);
-  --elevation-code-block: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.06);
-  --elevation-terminal: 0 16px 40px rgba(15, 23, 42, 0.1);
+  --theme-ink: #3d2f2a;
+  --theme-slate: #5c4d47;
+  --theme-fog: #8a7a73;
+  --theme-mist: #b0a49e;
+  --theme-paper: #fffef9;
+  --theme-terminal-bg: #faf8f2;
+  --theme-terminal-desk: #f0ebe3;
+  --theme-border: #e8dfd4;
+  --theme-code-plum: #8b5e3c;
+  --theme-code-cobalt: #4a6fa5;
+  --theme-code-teal: #3a7d6f;
+  --theme-code-rust: #b45309;
+  --color-grid-line: rgba(61, 47, 42, 0.05);
+  --elevation-code-block: 0 0 0 1px rgba(61, 47, 42, 0.06), 0 4px 12px rgba(61, 47, 42, 0.06);
+  --elevation-terminal: 0 16px 40px rgba(61, 47, 42, 0.1);
   color-scheme: light;
 }
 
-/* Scheme C — Midnight IDE (dark) */
+/* Scheme D — Warm Manuscript (dark) */
 [data-theme="dark"] {
-  --theme-ink: #e6edf3;
-  --theme-slate: #b6c2cf;
-  --theme-fog: #8b9cb3;
-  --theme-mist: #6e7681;
-  --theme-paper: #0d1117;
-  --theme-terminal-bg: #161b22;
-  --theme-terminal-desk: #010409;
-  --theme-border: #30363d;
-  --theme-code-plum: #d2a8ff;
-  --theme-code-cobalt: #79c0ff;
-  --theme-code-teal: #56d4dd;
-  --theme-code-rust: #ff7b72;
-  --color-grid-line: rgba(230, 237, 243, 0.04);
+  --theme-ink: #f0e8df;
+  --theme-slate: #cfc3b8;
+  --theme-fog: #a6978c;
+  --theme-mist: #7d6f66;
+  --theme-paper: #1f1b18;
+  --theme-terminal-bg: #292420;
+  --theme-terminal-desk: #14110f;
+  --theme-border: #3f3832;
+  --theme-code-plum: #e0a96d;
+  --theme-code-cobalt: #8cb4e0;
+  --theme-code-teal: #7ec8b0;
+  --theme-code-rust: #f0906c;
+  --color-grid-line: rgba(240, 232, 223, 0.04);
   --elevation-code-block: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 12px rgba(0, 0, 0, 0.35);
-  --elevation-terminal: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --elevation-terminal: 0 16px 48px rgba(0, 0, 0, 0.48);
   color-scheme: dark;
 }
 

@@ -12,6 +12,7 @@ const navItems = [
       path === "/blog" || (path.startsWith("/blog/") && !path.startsWith("/blog/layouts")),
   },
   { href: "/about", label: "./about.txt", match: (path: string) => path === "/about" },
+  { href: "/playground", label: "./playground.cc", match: (path: string) => path === "/playground" },
   { href: "/themes", label: "./themes.json", match: (path: string) => path === "/themes" },
 ];
 
