@@ -2,6 +2,9 @@ export const TOOLCHAIN_TAG = "toolchain-v0.1.1";
 
 export const GITHUB_REPO = "crazycloudcc/ccblog";
 
+/** Keep in sync with the browsercc version in package.json. */
+export const BROWSERCC_VERSION = "0.1.1";
+
 export const TOOLCHAIN_FILES = [
   "clang.wasm",
   "lld.wasm",
@@ -11,10 +14,34 @@ export const TOOLCHAIN_FILES = [
 
 export type ToolchainFile = (typeof TOOLCHAIN_FILES)[number];
 
+/** Dev — proxies from node_modules via API route. */
 export const TOOLCHAIN_API_BASE = "/api/toolchain";
 
+/** Production default — browsercc on unpkg (CORS-enabled, no Vercel deploy bloat). */
+export function getUnpkgToolchainBase(): string {
+  return `https://unpkg.com/browsercc@${BROWSERCC_VERSION}/dist`;
+}
+
+/**
+ * Where the browser loads wasm/sysroot from.
+ * - dev: local API
+ * - prod: unpkg CDN (override with NEXT_PUBLIC_TOOLCHAIN_BASE)
+ */
+export function resolveToolchainBase(): string {
+  if (process.env.NODE_ENV === "development") {
+    return TOOLCHAIN_API_BASE;
+  }
+
+  const override = process.env.NEXT_PUBLIC_TOOLCHAIN_BASE?.replace(/\/$/, "");
+  if (override) {
+    return override;
+  }
+
+  return getUnpkgToolchainBase();
+}
+
 export function getToolchainFileUrl(file: string): string {
-  return `${TOOLCHAIN_API_BASE}/${file}`;
+  return `${resolveToolchainBase()}/${file}`;
 }
 
 export function getGithubReleaseAssetUrl(file: string): string {

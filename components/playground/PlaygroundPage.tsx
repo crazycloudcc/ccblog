@@ -16,7 +16,7 @@ import {
   decodeSharePayload,
   hasShareParams,
 } from "@/lib/playground/share";
-import { TOOLCHAIN_API_BASE } from "@/lib/playground/toolchain";
+import { resolveToolchainBase } from "@/lib/playground/toolchain";
 import type { CompileDone, PlaygroundLanguage, RunResult } from "@/lib/playground/types";
 
 const RUN_TIMEOUT_MS = 5000;
@@ -59,6 +59,7 @@ export function PlaygroundPage() {
   >("idle");
   const [durationMs, setDurationMs] = useState<number | null>(null);
   const [loadProgress, setLoadProgress] = useState(0);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const workerRef = useRef<Worker | null>(null);
   const editorRef = useRef<CodeEditorHandle | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -66,6 +67,8 @@ export function PlaygroundPage() {
   const sharedAppliedRef = useRef(false);
 
   const languageConfig = useMemo(() => getLanguageConfig(language), [language]);
+
+  const toolchainBase = useMemo(() => resolveToolchainBase(), []);
 
   const createWorker = useCallback(() => {
     workerRef.current?.terminate();
@@ -127,8 +130,9 @@ export function PlaygroundPage() {
 
     async function warmToolchain() {
       try {
+        setLoadError(null);
         setLoadProgress(0);
-        await preloadToolchain(TOOLCHAIN_API_BASE, (loaded, total) => {
+        await preloadToolchain(toolchainBase, (loaded, total) => {
           if (!cancelled) {
             setLoadProgress(Math.round((loaded / total) * 100));
           }
@@ -137,9 +141,14 @@ export function PlaygroundPage() {
           setReady(true);
           setLoadProgress(100);
         }
-      } catch {
+      } catch (error) {
         if (!cancelled) {
           setReady(false);
+          setLoadError(
+            error instanceof Error
+              ? error.message
+              : "Toolchain failed to load. Redeploy after a successful build.",
+          );
         }
       }
     }
@@ -154,7 +163,7 @@ export function PlaygroundPage() {
       }
       workerRef.current?.terminate();
     };
-  }, [createWorker]);
+  }, [createWorker, toolchainBase]);
 
   const handleRun = useCallback(() => {
     const worker = workerRef.current ?? createWorker();
@@ -211,9 +220,9 @@ export function PlaygroundPage() {
       language,
       source,
       stdin,
-      toolchainBase: TOOLCHAIN_API_BASE,
+      toolchainBase,
     });
-  }, [createWorker, language, languageConfig.fileName, source, stdin]);
+  }, [createWorker, language, languageConfig.fileName, source, stdin, toolchainBase]);
 
   const handleShare = useCallback(async () => {
     setSharing(true);
@@ -273,6 +282,9 @@ export function PlaygroundPage() {
 
         {!ready ? (
           <div className="mt-3">
+            {loadError ? (
+              <p className="mb-2 font-mono text-xs text-code-rust">{loadError}</p>
+            ) : null}
             <div className="mb-1 flex items-center justify-between font-mono text-[11px] text-fog">
               <span>loading toolchain</span>
               <span>{loadProgress}%</span>

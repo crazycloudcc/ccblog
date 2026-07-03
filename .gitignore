@@ -42,3 +42,6 @@ next-env.d.ts
 
 # pagefind index (generated at build time)
 /public/pagefind
+
+# obsolete local toolchain copy (production uses unpkg CDN)
+/public/toolchain

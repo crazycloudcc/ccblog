@@ -167,20 +167,24 @@ npm run start   # listens on port 3000
 
 Set `NEXT_PUBLIC_SITE_URL` in the host's environment panel.
 
-## 8. Playground toolchain (optional)
+## 8. Playground toolchain
 
-`/playground` compiles C/C++ in the browser. WASM toolchain files are served from:
+`/playground` compiles C/C++ in the browser (~108 MB of WASM assets).
 
-1. `node_modules/browsercc/dist` in development, or
-2. [GitHub Releases](https://github.com/crazycloudcc/ccblog/releases) (`toolchain-v0.1.1`) in production
+| Environment | Source |
+|-------------|--------|
+| **Development** | `/api/toolchain` → `node_modules/browsercc/dist` |
+| **Production** | [unpkg](https://unpkg.com/browsercc@0.1.1/dist/) CDN (default) |
 
-Forks can keep using the upstream release assets as-is. To publish your own:
+Production does **not** bundle toolchain files into the Vercel deployment (Hobby upload limit is 100 MB). The browser fetches directly from unpkg with CORS enabled.
+
+To self-host instead, set:
 
 ```bash
-./scripts/publish-toolchain.sh toolchain-v0.1.1 0.1.1
+NEXT_PUBLIC_TOOLCHAIN_BASE=https://your-cdn.example/toolchain
 ```
 
-Then update `TOOLCHAIN_TAG` in `lib/playground/toolchain.ts` if you use a new tag.
+Optional: publish a [GitHub Release](https://github.com/crazycloudcc/ccblog/releases) for backup hosting (`./scripts/publish-toolchain.sh`). GitHub assets cannot be fetched directly from the browser due to CORS — use a proxy or CDN if you go that route.
 
 ## 9. CI
 
