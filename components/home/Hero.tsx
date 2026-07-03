@@ -8,9 +8,10 @@ import {
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 
 const dirEntries = [
-  { name: "writing.log", href: "/blog", type: "file" },
-  { name: "about.txt", href: "/about", type: "file" },
-  { name: "posts/", href: "/blog", type: "dir" },
+  { name: "notes", href: "/blog", type: "file" as const },
+  { name: "apps", href: "/apps", type: "file" as const },
+  { name: "playground.cc", href: "/playground", type: "file" as const },
+  { name: "about.md", href: "/about", type: "file" as const },
 ];
 
 export function Hero() {
@@ -38,12 +39,10 @@ export function Hero() {
             <TerminalCommand command="ls -la" />
             <TerminalOutput>
               <div className="mt-2 space-y-1 text-xs">
-                <div className="text-fog">total {dirEntries.length + 1}</div>
+                <div className="text-fog">total {dirEntries.length}</div>
                 {dirEntries.map((entry) => (
                   <div key={entry.name} className="flex flex-wrap gap-x-3">
-                    <span className="text-code-cobalt">
-                      {entry.type === "dir" ? "drwxr-xr-x" : entry.type === "exec" ? "-rwxr-xr-x" : "-rw-r--r--"}
-                    </span>
+                    <span className="text-code-cobalt">-rw-r--r--</span>
                     <Link href={entry.href} className="text-ink hover:text-code-cobalt">
                       {entry.name}
                     </Link>

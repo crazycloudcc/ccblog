@@ -12,8 +12,8 @@ export default function BlogPage() {
   const posts = getPosts();
 
   return (
-    <TerminalPanel title="writing.log">
-      <TerminalCommand command="tail -f writing.log" />
+    <TerminalPanel title="notes">
+      <TerminalCommand command="tail -f notes" />
       <p className="mt-3 font-mono text-xs text-code-teal">
         // streaming {posts.length} entries · ctrl+c to stop (just kidding)
       </p>

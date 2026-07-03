@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           className="inline-flex items-center gap-1 font-mono text-sm text-fog hover:text-ink"
         >
           <span aria-hidden="true">{"<"}</span>
-          cd ../writing.log
+          cd ../notes
         </Link>
 
         <div className="mt-6">

@@ -4,16 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/", label: "./index", match: (path: string) => path === "/" },
+  { href: "/", label: "~/", match: (path: string) => path === "/" },
   {
     href: "/blog",
-    label: "./writing.log",
-    match: (path: string) =>
-      path === "/blog" || (path.startsWith("/blog/") && !path.startsWith("/blog/layouts")),
+    label: "./notes",
+    match: (path: string) => path === "/blog" || path.startsWith("/blog/"),
   },
-  { href: "/about", label: "./about.txt", match: (path: string) => path === "/about" },
+  { href: "/apps", label: "./apps", match: (path: string) => path === "/apps" },
   { href: "/playground", label: "./playground.cc", match: (path: string) => path === "/playground" },
-  { href: "/themes", label: "./themes.json", match: (path: string) => path === "/themes" },
+  { href: "/about", label: "./about.md", match: (path: string) => path === "/about" },
 ];
 
 export function TerminalNav() {

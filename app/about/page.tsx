@@ -32,8 +32,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <TerminalPanel title="about.txt">
-      <TerminalCommand command="cat about.txt" />
+    <TerminalPanel title="about.md">
+      <TerminalCommand command="cat about.md" />
       <TerminalOutput>
         <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">
           crazycloudcc&apos;s blog
@@ -68,9 +68,9 @@ export default function AboutPage() {
       </div>
 
       <div className="mt-8 border-t border-lavender-mist/80 pt-6">
-        <TerminalCommand command="ls posts/" />
+        <TerminalCommand command="cat notes" />
         <div className="mt-3">
-          <TextLink href="/blog">open writing.log</TextLink>
+          <TextLink href="/blog">open notes</TextLink>
         </div>
       </div>
     </TerminalPanel>

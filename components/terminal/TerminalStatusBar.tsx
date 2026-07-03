@@ -26,7 +26,7 @@ export function TerminalStatusBar({ postCount }: TerminalStatusBarProps) {
       </div>
       <div className="flex items-center gap-4">
         <Link href="/blog" className="transition-colors hover:text-ink">
-          tail -f writing.log
+          tail -f notes
         </Link>
         <span>© {year} crazycloudcc</span>
       </div>

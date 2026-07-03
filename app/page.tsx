@@ -11,15 +11,15 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TerminalPanel title="recent log stream">
-        <TerminalCommand command="tail -n 4 writing.log" />
+      <TerminalPanel title="notes">
+        <TerminalCommand command="tail -n 4 notes" />
         <div className="mt-4">
           <TerminalFeed posts={posts} limit={4} />
         </div>
         <div className="mt-6 font-mono text-sm">
           <span className="text-mist">{"> "}</span>
           <Link href="/blog" className="font-semibold text-ink hover:text-code-cobalt">
-            tail -f writing.log
+            tail -f notes
           </Link>
         </div>
       </TerminalPanel>

@@ -28,7 +28,7 @@ function pickCover(index: number, label: string): PostCover {
   return { ...palette, label: label.slice(0, 12) };
 }
 
-const basePosts: Post[] = [
+export const posts: Post[] = [
   {
     slug: "hello-world",
     title: "Hello, World",
@@ -77,77 +77,6 @@ The structure is intentionally simple:
 3. Post content stored in TypeScript for now — easy to migrate to MDX later`,
   },
 ];
-
-const mockTopics = [
-  "Kubernetes",
-  "Docker",
-  "Terraform",
-  "AWS Lambda",
-  "CI/CD",
-  "Observability",
-  "PostgreSQL",
-  "Redis",
-  "GraphQL",
-  "TypeScript",
-  "React Server Components",
-  "Edge Functions",
-  "DNS",
-  "TLS",
-  "Monitoring",
-  "Logging",
-  "GitOps",
-  "Helm",
-  "Serverless",
-  "API Design",
-];
-
-const mockVerbs = [
-  "Notes on",
-  "Debugging",
-  "Lessons from",
-  "A practical guide to",
-  "Thoughts on",
-  "Migrating to",
-  "Optimizing",
-  "Understanding",
-  "Building with",
-  "Reviewing",
-];
-
-function createMockPosts(count: number): Post[] {
-  return Array.from({ length: count }, (_, index) => {
-    const topic = mockTopics[index % mockTopics.length];
-    const verb = mockVerbs[index % mockVerbs.length];
-    const day = String((index % 28) + 1).padStart(2, "0");
-    const month = String((index % 12) + 1).padStart(2, "0");
-    const year = index < 24 ? 2025 : 2024;
-    const slug = `mock-${index + 1}-${topic.toLowerCase().replace(/\s+/g, "-")}`;
-
-    return {
-      slug,
-      title: `${verb} ${topic}`,
-      excerpt: `Temporary preview post #${index + 1} about ${topic.toLowerCase()} — placeholder content for layout testing.`,
-      date: `${year}-${month}-${day}`,
-      cover: pickCover(index + 3, topic.toLowerCase().replace(/\s+/g, "-").slice(0, 12)),
-      content: `This is temporary mock post #${index + 1}.
-
-It exists only to preview how the blog list and detail pages handle a larger volume of content.
-
-## Topic
-
-${topic}
-
-## Summary
-
-Placeholder body copy for layout testing. Remove mock posts in \`lib/posts.ts\` when done reviewing.`,
-    };
-  });
-}
-
-// TODO: remove mock posts after layout review
-const mockPosts = createMockPosts(47);
-
-export const posts: Post[] = [...basePosts, ...mockPosts];
 
 export function getPosts(): Post[] {
   return [...posts].sort((a, b) => b.date.localeCompare(a.date));
