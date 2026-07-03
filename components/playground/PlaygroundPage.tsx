@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { CodeEditor } from "@/components/playground/CodeEditor";
 import { OutputPanel } from "@/components/playground/OutputPanel";
 import { RunToolbar } from "@/components/playground/RunToolbar";
@@ -9,6 +10,11 @@ import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { getLanguageConfig } from "@/lib/playground/languages";
 import { loadDraft, loadStdin, saveDraft, saveStdin } from "@/lib/playground/storage";
 import { preloadToolchain } from "@/lib/playground/compile-run";
+import {
+  buildPlaygroundShareUrl,
+  decodeSharePayload,
+  hasShareParams,
+} from "@/lib/playground/share";
 import { TOOLCHAIN_API_BASE } from "@/lib/playground/toolchain";
 import type { CompileDone, PlaygroundLanguage, RunResult } from "@/lib/playground/types";
 
@@ -36,15 +42,14 @@ function getEmptySource(language: PlaygroundLanguage): string {
 }
 
 export function PlaygroundPage() {
+  const searchParams = useSearchParams();
   const [language, setLanguage] = useState<PlaygroundLanguage>("cpp");
   const [source, setSource] = useState(() => loadDraft("cpp") ?? getEmptySource("cpp"));
   const [stdin, setStdin] = useState("");
-
-  useEffect(() => {
-    setStdin(loadStdin());
-  }, []);
   const [ready, setReady] = useState(false);
   const [running, setRunning] = useState(false);
+  const [sharing, setSharing] = useState(false);
+  const [shareMessage, setShareMessage] = useState<string | null>(null);
   const [compileOutput, setCompileOutput] = useState("");
   const [stdout, setStdout] = useState("");
   const [stderr, setStderr] = useState("");
@@ -55,6 +60,7 @@ export function PlaygroundPage() {
   const workerRef = useRef<Worker | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const languageInitializedRef = useRef(false);
+  const sharedAppliedRef = useRef(false);
 
   const languageConfig = useMemo(() => getLanguageConfig(language), [language]);
 
@@ -68,8 +74,36 @@ export function PlaygroundPage() {
   }, []);
 
   useEffect(() => {
+    async function loadShare() {
+      const params = new URLSearchParams(searchParams.toString());
+      if (!hasShareParams(params)) {
+        setStdin(loadStdin());
+        return;
+      }
+
+      const payload = await decodeSharePayload(params);
+      if (!payload) {
+        setStdin(loadStdin());
+        return;
+      }
+
+      sharedAppliedRef.current = true;
+      setLanguage(payload.lang);
+      setSource(payload.source);
+      setStdin(payload.stdin ?? "");
+    }
+
+    void loadShare();
+  }, [searchParams]);
+
+  useEffect(() => {
     if (!languageInitializedRef.current) {
       languageInitializedRef.current = true;
+      return;
+    }
+
+    if (sharedAppliedRef.current) {
+      sharedAppliedRef.current = false;
       return;
     }
 
@@ -165,6 +199,22 @@ export function PlaygroundPage() {
     });
   }, [createWorker, language, source, stdin]);
 
+  const handleShare = useCallback(async () => {
+    setSharing(true);
+    setShareMessage(null);
+
+    try {
+      const url = await buildPlaygroundShareUrl({ lang: language, source, stdin });
+      await navigator.clipboard.writeText(url);
+      setShareMessage("link copied");
+      window.setTimeout(() => setShareMessage(null), 2000);
+    } catch (error) {
+      setShareMessage(error instanceof Error ? error.message : "share failed");
+    } finally {
+      setSharing(false);
+    }
+  }, [language, source, stdin]);
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
@@ -196,10 +246,13 @@ export function PlaygroundPage() {
           running={running}
           status={status}
           ready={ready}
+          sharing={sharing}
+          shareMessage={shareMessage}
           onLanguageChange={setLanguage}
           onExampleChange={setSource}
           onRun={handleRun}
           onClear={() => setSource(getEmptySource(language))}
+          onShare={handleShare}
         />
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:items-stretch">
@@ -244,6 +297,7 @@ export function PlaygroundPage() {
           <li>- The example dropdown loads reference code only; it does not limit editing.</li>
           <li>- stdin is only required when your program reads input; leave it empty for hello world.</li>
           <li>- Shortcut: Cmd/Ctrl + Enter to run; execution stops automatically after 5 seconds.</li>
+          <li>- Share copies a gzip-compressed link (?lang=cpp&amp;z=...) that restores code and stdin.</li>
         </ul>
       </TerminalPanel>
     </>

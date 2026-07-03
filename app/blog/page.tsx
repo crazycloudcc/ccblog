@@ -1,8 +1,9 @@
 import { TerminalFeed } from "@/components/blog/TerminalFeed";
+import { TagFilter } from "@/components/blog/TagFilter";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
-import { getPosts } from "@/lib/posts";
+import { getAllTags, getPosts, getPostsByTag } from "@/lib/posts";
 
 export const metadata = createPageMetadata({
   title: "Blog",
@@ -10,17 +11,26 @@ export const metadata = createPageMetadata({
   path: "/blog",
 });
 
-export default function BlogPage() {
-  const posts = getPosts();
+type BlogPageProps = {
+  searchParams: Promise<{ tag?: string }>;
+};
+
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const { tag } = await searchParams;
+  const activeTag = tag?.trim().toLowerCase();
+  const posts = activeTag ? getPostsByTag(activeTag) : getPosts();
+  const tags = getAllTags();
+  const command = activeTag ? `grep -R "#${activeTag}" notes/` : "tail -f notes";
 
   return (
     <TerminalPanel title="notes">
-      <TerminalCommand command="tail -f notes" />
+      <TerminalCommand command={command} />
       <p className="mt-3 font-mono text-xs text-code-teal">
         // streaming {posts.length} entries · ctrl+c to stop (just kidding)
       </p>
+      <TagFilter tags={tags} activeTag={activeTag} />
       <div className="mt-6">
-        <TerminalFeed posts={posts} />
+        <TerminalFeed posts={posts} activeTag={activeTag} />
       </div>
     </TerminalPanel>
   );

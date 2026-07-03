@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostContent } from "@/components/blog/PostContent";
+import { PostNavigation } from "@/components/blog/PostNavigation";
 import { formatDateParts } from "@/lib/blog-utils";
 import { createPostMetadata, createPageMetadata } from "@/lib/metadata";
-import { getPostBySlug, getPosts } from "@/lib/posts";
+import {
+  getAdjacentPosts,
+  getPostBySlug,
+  getPosts,
+  getRelatedPosts,
+} from "@/lib/posts";
 import {
   TerminalCommand,
   TerminalComment,
@@ -39,6 +45,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const { month, day, weekday, year } = formatDateParts(post.date);
+  const { prev, next } = getAdjacentPosts(slug);
+  const related = getRelatedPosts(slug);
 
   return (
     <article>
@@ -61,6 +69,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <span className="text-code-plum">]</span>
                 <span className="text-code-cobalt"> {weekday.toLowerCase()}</span>
               </div>
+              {post.tags.length > 0 ? (
+                <TerminalComment>{`tags: ${post.tags.map((tag) => `#${tag}`).join(" ")}`}</TerminalComment>
+              ) : null}
               <TerminalComment>// status: published · type: article</TerminalComment>
             </div>
           </TerminalOutput>
@@ -78,6 +89,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mt-10">
           <PostContent content={post.content} />
         </div>
+
+        <PostNavigation prev={prev} next={next} related={related} />
 
         <TerminalComment>// EOF — {post.slug}</TerminalComment>
       </TerminalPanel>

@@ -3,6 +3,9 @@ title: Monospace on the Web
 excerpt: Why code blocks and terminal-inspired layouts still work well for developer blogs.
 date: 2026-06-15
 coverLabel: design
+tags:
+  - design
+  - web
 ---
 
 Developer blogs benefit from a visual language readers already trust: monospace type for code, clean prose for everything else, and a restrained palette that stays out of the way.

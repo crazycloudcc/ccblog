@@ -3,6 +3,10 @@ title: Hello, World
 excerpt: Launching crazycloudcc's blog — a place for notes on code and cloud.
 date: 2026-07-02
 coverLabel: launch
+tags:
+  - launch
+  - meta
+  - cloud
 ---
 
 Welcome to crazycloudcc's blog.

@@ -5,11 +5,20 @@ import type { Post } from "@/lib/posts";
 type TerminalFeedProps = {
   posts: Post[];
   limit?: number;
+  activeTag?: string;
 };
 
-export function TerminalFeed({ posts, limit }: TerminalFeedProps) {
+export function TerminalFeed({ posts, limit, activeTag }: TerminalFeedProps) {
   const visiblePosts = limit ? posts.slice(0, limit) : posts;
   const groups = groupPostsByYear(visiblePosts);
+
+  if (visiblePosts.length === 0) {
+    return (
+      <p className="font-mono text-sm text-fog">
+        {activeTag ? `No notes tagged #${activeTag}.` : "No notes yet."}
+      </p>
+    );
+  }
 
   return (
     <div className="font-mono text-sm">
@@ -39,6 +48,18 @@ export function TerminalFeed({ posts, limit }: TerminalFeedProps) {
                   <p className="prose-terminal mt-1.5 pl-0 text-sm leading-[1.7] text-slate">
                     {post.excerpt}
                   </p>
+                  {post.tags.length > 0 ? (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-[4px] border border-lavender-mist px-2 py-0.5 text-[11px] text-fog"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
                 </Link>
               </li>
             ))}

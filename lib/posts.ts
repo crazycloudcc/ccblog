@@ -16,6 +16,7 @@ export type Post = {
   date: string;
   content: string;
   cover: PostCover;
+  tags: string[];
 };
 
 type PostFrontmatter = {
@@ -24,6 +25,7 @@ type PostFrontmatter = {
   date: string;
   coverLabel?: string;
   slug?: string;
+  tags?: string[] | string;
 };
 
 const NOTES_DIR = path.join(process.cwd(), "content/notes");
@@ -50,6 +52,15 @@ function normalizeDate(value: unknown): string {
   return String(value).slice(0, 10);
 }
 
+function normalizeTags(value: unknown): string[] {
+  if (!value) {
+    return [];
+  }
+
+  const tags = Array.isArray(value) ? value : [value];
+  return [...new Set(tags.map((tag) => String(tag).trim().toLowerCase()).filter(Boolean))].sort();
+}
+
 function readPostFile(fileName: string, index: number): Post {
   const filePath = path.join(NOTES_DIR, fileName);
   const raw = fs.readFileSync(filePath, "utf8");
@@ -64,6 +75,7 @@ function readPostFile(fileName: string, index: number): Post {
     date: normalizeDate(frontmatter.date),
     content: content.trim(),
     cover: pickCover(index, frontmatter.coverLabel ?? slug),
+    tags: normalizeTags(frontmatter.tags),
   };
 }
 
@@ -86,6 +98,67 @@ export function getPosts(): Post[] {
 
 export function getPostBySlug(slug: string): Post | undefined {
   return loadPosts().find((post) => post.slug === slug);
+}
+
+export function getPostsByTag(tag: string): Post[] {
+  const normalized = tag.trim().toLowerCase();
+  return getPosts().filter((post) => post.tags.includes(normalized));
+}
+
+export function getAllTags(): string[] {
+  const tags = new Set<string>();
+
+  for (const post of loadPosts()) {
+    for (const tag of post.tags) {
+      tags.add(tag);
+    }
+  }
+
+  return [...tags].sort();
+}
+
+export function getAdjacentPosts(slug: string): {
+  prev: Post | null;
+  next: Post | null;
+} {
+  const posts = getPosts();
+  const index = posts.findIndex((post) => post.slug === slug);
+
+  if (index === -1) {
+    return { prev: null, next: null };
+  }
+
+  return {
+    prev: index > 0 ? posts[index - 1] : null,
+    next: index < posts.length - 1 ? posts[index + 1] : null,
+  };
+}
+
+export function getRelatedPosts(slug: string, limit = 3): Post[] {
+  const current = getPostBySlug(slug);
+
+  if (!current || current.tags.length === 0) {
+    return [];
+  }
+
+  const tagSet = new Set(current.tags);
+
+  return getPosts()
+    .filter((post) => post.slug !== slug)
+    .map((post) => ({
+      post,
+      score: post.tags.filter((tag) => tagSet.has(tag)).length,
+    }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      return b.post.date.localeCompare(a.post.date);
+    })
+    .slice(0, limit)
+    .map((item) => item.post);
 }
 
 export function getPostOgImage(content: string): string | undefined {

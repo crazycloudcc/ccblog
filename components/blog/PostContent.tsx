@@ -1,4 +1,5 @@
 import { parsePostContent } from "@/lib/parse-post-content";
+import { CodePanel } from "@/components/ui/CodePanel";
 
 type PostContentProps = {
   content: string;
@@ -16,6 +17,15 @@ export function PostContent({ content }: PostContentProps) {
               <h2 key={index} className="text-xl font-semibold text-ink">
                 {block.text}
               </h2>
+            );
+
+          case "code":
+            return (
+              <CodePanel
+                key={index}
+                code={block.text}
+                language={block.language}
+              />
             );
 
           case "ul":

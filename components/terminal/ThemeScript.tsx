@@ -1,8 +1,10 @@
-export function ThemeScript() {
-  const script = `
+import Script from "next/script";
+import { THEME_STORAGE_KEY } from "@/lib/active-theme";
+
+const themeInitScript = `
 (function () {
   try {
-    var key = ${JSON.stringify("theme-preference")};
+    var key = ${JSON.stringify(THEME_STORAGE_KEY)};
     var pref = localStorage.getItem(key) || "system";
     var dark =
       pref === "dark" ||
@@ -14,5 +16,10 @@ export function ThemeScript() {
 })();
 `;
 
-  return <script dangerouslySetInnerHTML={{ __html: script }} />;
+export function ThemeScript() {
+  return (
+    <Script id="theme-init" strategy="beforeInteractive">
+      {themeInitScript}
+    </Script>
+  );
 }

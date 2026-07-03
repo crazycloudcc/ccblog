@@ -5,6 +5,23 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    rules: {
+      "react/jsx-no-comment-textnodes": "off",
+    },
+  },
+  {
+    files: ["components/terminal/ThemeProvider.tsx"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
+  {
+    files: ["lib/playground/compile-run.ts", "lib/playground/playground.worker.ts"],
+    rules: {
+      "@next/next/no-assign-module-variable": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

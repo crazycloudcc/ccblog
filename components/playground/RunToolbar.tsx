@@ -9,10 +9,13 @@ type RunToolbarProps = {
   running: boolean;
   status: "idle" | "running" | "compiling" | "success" | "compile_error" | "runtime_error" | "timeout";
   ready: boolean;
+  sharing?: boolean;
+  shareMessage?: string | null;
   onLanguageChange: (language: PlaygroundLanguage) => void;
   onExampleChange: (source: string) => void;
   onRun: () => void;
   onClear: () => void;
+  onShare: () => void;
 };
 
 export function RunToolbar({
@@ -21,10 +24,13 @@ export function RunToolbar({
   running,
   status,
   ready,
+  sharing = false,
+  shareMessage,
   onLanguageChange,
   onExampleChange,
   onRun,
   onClear,
+  onShare,
 }: RunToolbarProps) {
   return (
     <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
@@ -90,6 +96,17 @@ export function RunToolbar({
       >
         clear
       </button>
+
+      <button
+        type="button"
+        onClick={onShare}
+        disabled={sharing}
+        className="rounded-[4px] border border-lavender-mist px-3 py-1.5 text-fog transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {sharing ? "sharing..." : "share"}
+      </button>
+
+      {shareMessage ? <span className="text-code-teal">{shareMessage}</span> : null}
 
       <span className="text-fog">
         <span className="text-code-teal">toolchain</span>: {ready ? "ready" : "loading"}
