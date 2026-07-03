@@ -1,12 +1,14 @@
 import { TerminalFeed } from "@/components/blog/TerminalFeed";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
+import { createPageMetadata } from "@/lib/metadata";
 import { getPosts } from "@/lib/posts";
 
-export const metadata = {
-  title: "Blog — crazycloudcc's blog",
+export const metadata = createPageMetadata({
+  title: "Blog",
   description: "Writing log from crazycloudcc's blog",
-};
+  path: "/blog",
+});
 
 export default function BlogPage() {
   const posts = getPosts();

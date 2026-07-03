@@ -27,7 +27,7 @@ export function formatLocation(
   country?: string | null,
 ): string {
   const parts = [city, region, country].filter((part) => part && part.trim().length > 0);
-  return parts.join(", ") || "未知";
+  return parts.join(", ") || "Unknown";
 }
 
 export function readClientIp(request: Request): string {

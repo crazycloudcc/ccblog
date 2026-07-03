@@ -4,14 +4,15 @@ import {
   readClientIp,
   type SessionGeo,
 } from "@/lib/session-geo";
+import { SITE_LOCALE } from "@/lib/site";
 
 async function lookupGeo(ip: string): Promise<string> {
-  const response = await fetch(`https://ipwho.is/${ip}?lang=zh-CN`, {
+  const response = await fetch(`https://ipwho.is/${ip}?lang=${SITE_LOCALE}`, {
     next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
-    return "未知";
+    return "Unknown";
   }
 
   const data = (await response.json()) as {
@@ -22,7 +23,7 @@ async function lookupGeo(ip: string): Promise<string> {
   };
 
   if (!data.success) {
-    return "未知";
+    return "Unknown";
   }
 
   return formatLocation(data.city, data.region, data.country);
@@ -32,7 +33,7 @@ export async function GET(request: Request) {
   const ip = readClientIp(request);
 
   if (isPrivateIp(ip)) {
-    const payload: SessionGeo = { ip: "local", location: "本地" };
+    const payload: SessionGeo = { ip: "local", location: "Local" };
     return Response.json(payload);
   }
 
@@ -52,7 +53,7 @@ export async function GET(request: Request) {
     const payload: SessionGeo = { ip, location };
     return Response.json(payload);
   } catch {
-    const payload: SessionGeo = { ip, location: "未知" };
+    const payload: SessionGeo = { ip, location: "Unknown" };
     return Response.json(payload);
   }
 }

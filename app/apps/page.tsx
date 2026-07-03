@@ -6,11 +6,13 @@ import {
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { getApps } from "@/lib/apps";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Apps — crazycloudcc's blog",
+export const metadata = createPageMetadata({
+  title: "Apps",
   description: "Shipped iOS utility apps and games on the App Store.",
-};
+  path: "/apps",
+});
 
 export default function AppsPage() {
   const total = getApps().length;

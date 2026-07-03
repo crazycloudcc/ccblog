@@ -6,6 +6,7 @@ import {
   TerminalOutput,
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
+import { createPageMetadata } from "@/lib/metadata";
 
 const contacts = [
   {
@@ -25,10 +26,11 @@ const contacts = [
   },
 ];
 
-export const metadata = {
-  title: "About — crazycloudcc's blog",
+export const metadata = createPageMetadata({
+  title: "About",
   description: "About crazycloudcc and how to get in touch",
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

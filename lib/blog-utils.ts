@@ -1,4 +1,5 @@
 import type { Post } from "@/lib/posts";
+import { SITE_LOCALE } from "@/lib/site";
 
 export type YearGroup = {
   year: string;
@@ -25,8 +26,8 @@ export function formatDateParts(date: string) {
 
   return {
     year: parsed.getFullYear().toString(),
-    month: parsed.toLocaleString("en-US", { month: "short" }),
+    month: parsed.toLocaleString(SITE_LOCALE, { month: "short" }),
     day: parsed.getDate().toString().padStart(2, "0"),
-    weekday: parsed.toLocaleString("en-US", { weekday: "short" }),
+    weekday: parsed.toLocaleString(SITE_LOCALE, { weekday: "short" }),
   };
 }

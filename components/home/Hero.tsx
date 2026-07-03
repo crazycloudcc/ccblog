@@ -6,6 +6,7 @@ import {
   TerminalOutput,
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
+import { SITE_LOCALE } from "@/lib/site";
 
 const dirEntries = [
   { name: "notes", href: "/blog", type: "file" as const },
@@ -18,7 +19,7 @@ export function Hero() {
   return (
     <>
       <TerminalPanel title="session start">
-        <TerminalComment>// last login: {new Date().toLocaleString("en-US")}</TerminalComment>
+        <TerminalComment>// last login: {new Date().toLocaleString(SITE_LOCALE)}</TerminalComment>
 
         <div className="mt-6 space-y-6">
           <div>

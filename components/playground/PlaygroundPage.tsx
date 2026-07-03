@@ -184,8 +184,8 @@ export function PlaygroundPage() {
       <TerminalPanel title="playground.cc">
         <TerminalCommand command="vim main.cpp" />
         <p className="mt-3 max-w-3xl font-mono text-sm text-fog">
-          在左侧编辑器自由编写 C/C++ 代码，点击 run 编译运行。示例代码仅作参考，stdin
-          仅在程序需要读入时使用。
+          Write C/C++ freely in the left editor, then click run to compile and execute. Examples
+          are for reference only; stdin is only needed when your program reads input.
         </p>
       </TerminalPanel>
 
@@ -240,10 +240,10 @@ export function PlaygroundPage() {
 
       <TerminalPanel title="man playground">
         <ul className="space-y-2 font-mono text-sm text-fog">
-          <li>- 主编辑区支持任意 C/C++ 代码，草稿自动保存在浏览器本地。</li>
-          <li>- example 下拉仅用于加载参考代码，不会限制编辑。</li>
-          <li>- stdin 只在程序读取输入时需要；hello world 可留空。</li>
-          <li>- 快捷键：Cmd/Ctrl + Enter 运行；运行超时 5 秒自动终止。</li>
+          <li>- The main editor accepts any C/C++ code; drafts are saved locally in your browser.</li>
+          <li>- The example dropdown loads reference code only; it does not limit editing.</li>
+          <li>- stdin is only required when your program reads input; leave it empty for hello world.</li>
+          <li>- Shortcut: Cmd/Ctrl + Enter to run; execution stops automatically after 5 seconds.</li>
         </ul>
       </TerminalPanel>
     </>

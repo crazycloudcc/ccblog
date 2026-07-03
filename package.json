@@ -4,14 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
+    "prebuild": "node scripts/sync-apps.mjs",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync:apps": "node scripts/sync-apps.mjs"
   },
   "dependencies": {
     "@bjorn3/browser_wasi_shim": "^0.4.2",
     "@monaco-editor/react": "^4.7.0",
     "browsercc": "^0.1.1",
+    "gray-matter": "^4.0.3",
     "monaco-editor": "^0.55.1",
     "next": "16.2.10",
     "react": "19.2.4",

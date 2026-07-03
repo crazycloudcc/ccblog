@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import { TerminalShell } from "@/components/terminal/TerminalShell";
 import { ThemeProvider } from "@/components/terminal/ThemeProvider";
 import { ThemeScript } from "@/components/terminal/ThemeScript";
+import { createPageMetadata } from "@/lib/metadata";
 import { getPosts } from "@/lib/posts";
+import { SITE_LANG } from "@/lib/site";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "crazycloudcc's blog",
-  description: "Notes on software, cloud infrastructure, and everyday engineering.",
-};
+export const metadata: Metadata = createPageMetadata();
 
 export default function RootLayout({
   children,
@@ -18,7 +17,7 @@ export default function RootLayout({
   const postCount = getPosts().length;
 
   return (
-    <html lang="zh-CN" className="h-full antialiased" suppressHydrationWarning>
+    <html lang={SITE_LANG} className="h-full antialiased" suppressHydrationWarning>
       <head>
         <ThemeScript />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

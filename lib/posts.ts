@@ -1,3 +1,7 @@
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+
 export type PostCover = {
   from: string;
   to: string;
@@ -14,6 +18,16 @@ export type Post = {
   cover: PostCover;
 };
 
+type PostFrontmatter = {
+  title: string;
+  excerpt: string;
+  date: string;
+  coverLabel?: string;
+  slug?: string;
+};
+
+const NOTES_DIR = path.join(process.cwd(), "content/notes");
+
 const coverPalettes: PostCover[] = [
   { from: "#303055", to: "#8844ae", label: "cloud", caption: "infra / deploy" },
   { from: "#3b61b0", to: "#096e72", label: "runtime", caption: "systems / code" },
@@ -28,60 +42,53 @@ function pickCover(index: number, label: string): PostCover {
   return { ...palette, label: label.slice(0, 12) };
 }
 
-export const posts: Post[] = [
-  {
-    slug: "hello-world",
-    title: "Hello, World",
-    excerpt: "Launching crazycloudcc's blog — a place for notes on code and cloud.",
-    date: "2026-07-02",
-    cover: pickCover(0, "launch"),
-    content: `Welcome to crazycloudcc's blog.
+function normalizeDate(value: unknown): string {
+  if (value instanceof Date) {
+    return value.toISOString().slice(0, 10);
+  }
 
-This is where I write about software, infrastructure, and the things I'm learning along the way.
+  return String(value).slice(0, 10);
+}
 
-![Terminal-style blog layout](https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=630&fit=crop)
+function readPostFile(fileName: string, index: number): Post {
+  const filePath = path.join(NOTES_DIR, fileName);
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { data, content } = matter(raw);
+  const frontmatter = data as PostFrontmatter;
+  const slug = frontmatter.slug ?? fileName.replace(/\.md$/, "");
 
-## What to expect
+  return {
+    slug,
+    title: frontmatter.title,
+    excerpt: frontmatter.excerpt,
+    date: normalizeDate(frontmatter.date),
+    content: content.trim(),
+    cover: pickCover(index, frontmatter.coverLabel ?? slug),
+  };
+}
 
-- Cloud and DevOps notes
-- Project write-ups and retrospectives
-- Occasional tooling tips
+function loadPosts(): Post[] {
+  if (!fs.existsSync(NOTES_DIR)) {
+    return [];
+  }
 
-::video[Cloud deploy walkthrough](https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4)
+  const files = fs
+    .readdirSync(NOTES_DIR)
+    .filter((file) => file.endsWith(".md"))
+    .sort((a, b) => a.localeCompare(b));
 
-Thanks for reading.`,
-  },
-  {
-    slug: "monospace-on-the-web",
-    title: "Monospace on the Web",
-    excerpt:
-      "Why code blocks and terminal-inspired layouts still work well for developer blogs.",
-    date: "2026-06-15",
-    cover: pickCover(1, "design"),
-    content: `Developer blogs benefit from a visual language readers already trust: monospace type for code, clean prose for everything else, and a restrained palette that stays out of the way.
-
-A code snippet on the homepage isn't decoration — it's a signal about who the site is for and what kind of writing lives here.`,
-  },
-  {
-    slug: "nextjs-blog-setup",
-    title: "Setting Up a Next.js Blog",
-    excerpt: "A minimal App Router setup with static pages and markdown-style posts.",
-    date: "2026-05-28",
-    cover: pickCover(2, "nextjs"),
-    content: `This site runs on Next.js with the App Router, TypeScript, and Tailwind CSS.
-
-The structure is intentionally simple:
-
-1. Static pages for home, about, and contact
-2. A blog index and per-post routes
-3. Post content stored in TypeScript for now — easy to migrate to MDX later`,
-  },
-];
+  return files.map((file, index) => readPostFile(file, index));
+}
 
 export function getPosts(): Post[] {
-  return [...posts].sort((a, b) => b.date.localeCompare(a.date));
+  return loadPosts().sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
-  return posts.find((post) => post.slug === slug);
+  return loadPosts().find((post) => post.slug === slug);
+}
+
+export function getPostOgImage(content: string): string | undefined {
+  const match = content.match(/!\[[^\]]*\]\(([^)]+)\)/);
+  return match?.[1];
 }

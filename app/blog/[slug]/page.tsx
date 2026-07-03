@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostContent } from "@/components/blog/PostContent";
 import { formatDateParts } from "@/lib/blog-utils";
+import { createPostMetadata, createPageMetadata } from "@/lib/metadata";
 import { getPostBySlug, getPosts } from "@/lib/posts";
 import {
   TerminalCommand,
@@ -23,13 +24,10 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   const post = getPostBySlug(slug);
 
   if (!post) {
-    return { title: "Post not found — crazycloudcc's blog" };
+    return createPageMetadata({ title: "Post not found", path: "/blog" });
   }
 
-  return {
-    title: `${post.title} — crazycloudcc's blog`,
-    description: post.excerpt,
-  };
+  return createPostMetadata(post);
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
