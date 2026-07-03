@@ -29,8 +29,9 @@ export function TerminalOutput({ children, className = "" }: TerminalOutputProps
 
 type TerminalCommentProps = {
   children: ReactNode;
+  className?: string;
 };
 
-export function TerminalComment({ children }: TerminalCommentProps) {
-  return <div className="font-mono text-xs text-code-teal">{children}</div>;
+export function TerminalComment({ children, className = "" }: TerminalCommentProps) {
+  return <div className={`font-mono text-xs text-code-teal ${className}`}>{children}</div>;
 }

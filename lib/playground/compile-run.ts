@@ -206,14 +206,20 @@ export async function runModule(
   };
 }
 
-export async function preloadToolchain(toolchainBase: string): Promise<void> {
-  await Promise.all(
-    ["sysroot.tar", "clang.wasm", "lld.wasm"].map(async (file) => {
-      const response = await fetch(`${toolchainBase}/${file}`);
-      if (!response.ok) {
-        throw new Error(`Failed to preload ${file}`);
-      }
-      await response.arrayBuffer();
-    }),
-  );
+export async function preloadToolchain(
+  toolchainBase: string,
+  onProgress?: (loaded: number, total: number) => void,
+): Promise<void> {
+  const files = ["sysroot.tar", "clang.wasm", "lld.wasm"];
+  let loaded = 0;
+
+  for (const file of files) {
+    const response = await fetch(`${toolchainBase}/${file}`);
+    if (!response.ok) {
+      throw new Error(`Failed to preload ${file}`);
+    }
+    await response.arrayBuffer();
+    loaded += 1;
+    onProgress?.(loaded, files.length);
+  }
 }

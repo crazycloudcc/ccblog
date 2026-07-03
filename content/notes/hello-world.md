@@ -1,7 +1,7 @@
 ---
 title: Hello, World
 excerpt: Launching crazycloudcc's blog — a place for notes on code and cloud.
-date: 2026-07-02
+date: 2017-01-01
 coverLabel: launch
 tags:
   - launch

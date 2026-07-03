@@ -17,6 +17,7 @@ export type Post = {
   content: string;
   cover: PostCover;
   tags: string[];
+  ogImage?: string;
 };
 
 type PostFrontmatter = {
@@ -26,6 +27,7 @@ type PostFrontmatter = {
   coverLabel?: string;
   slug?: string;
   tags?: string[] | string;
+  ogImage?: string;
 };
 
 const NOTES_DIR = path.join(process.cwd(), "content/notes");
@@ -76,6 +78,7 @@ function readPostFile(fileName: string, index: number): Post {
     content: content.trim(),
     cover: pickCover(index, frontmatter.coverLabel ?? slug),
     tags: normalizeTags(frontmatter.tags),
+    ogImage: frontmatter.ogImage,
   };
 }
 

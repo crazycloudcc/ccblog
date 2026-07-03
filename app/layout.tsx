@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { TerminalShell } from "@/components/terminal/TerminalShell";
 import { ThemeProvider } from "@/components/terminal/ThemeProvider";
-import { ThemeScript } from "@/components/terminal/ThemeScript";
 import { createPageMetadata } from "@/lib/metadata";
 import { getPosts } from "@/lib/posts";
 import { SITE_LANG } from "@/lib/site";
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang={SITE_LANG} className="h-full antialiased" suppressHydrationWarning>
       <head>
-        <ThemeScript />
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

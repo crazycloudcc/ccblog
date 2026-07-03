@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getFilesystemPath, getTerminalCwd } from "@/lib/terminal-paths";
 
 const navItems = [
   { href: "/", label: "~/", match: (path: string) => path === "/" },
@@ -17,17 +18,19 @@ const navItems = [
 
 export function TerminalNav() {
   const pathname = usePathname();
+  const cwd = getTerminalCwd(pathname);
+  const filesystemPath = getFilesystemPath(pathname);
 
   return (
     <div className="terminal-chrome shrink-0 border-b border-lavender-mist bg-terminal-bg px-4 py-3 font-mono text-sm">
       <div className="text-fog">
         <span className="text-code-teal">crazycloudcc@blog</span>
         <span className="text-mist">:</span>
-        <span className="text-code-cobalt">~</span>
+        <span className="text-code-cobalt">{cwd}</span>
         <span className="text-mist">$ </span>
         <span className="text-ink">pwd</span>
       </div>
-      <div className="mt-1 text-code-plum">/home/crazycloudcc/blog</div>
+      <div className="mt-1 text-code-plum">{filesystemPath}</div>
 
       <nav className="mt-4 flex flex-wrap gap-2" aria-label="Main navigation">
         {navItems.map((item) => {

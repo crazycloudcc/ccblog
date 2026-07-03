@@ -17,13 +17,17 @@ export async function GET() {
   const items = posts
     .map((post) => {
       const url = absoluteUrl(`/blog/${post.slug}`);
+      const categories = post.tags
+        .map((tag) => `\n      <category>${escapeXml(tag)}</category>`)
+        .join("");
+
       return `
     <item>
       <title>${escapeXml(post.title)}</title>
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <pubDate>${new Date(`${post.date}T12:00:00.000Z`).toUTCString()}</pubDate>
-      <description>${escapeXml(post.excerpt)}</description>
+      <description>${escapeXml(post.excerpt)}</description>${categories}
     </item>`;
     })
     .join("");

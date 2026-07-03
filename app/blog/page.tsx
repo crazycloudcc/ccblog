@@ -1,3 +1,4 @@
+import { NotesSearch } from "@/components/blog/NotesSearch";
 import { TerminalFeed } from "@/components/blog/TerminalFeed";
 import { TagFilter } from "@/components/blog/TagFilter";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
@@ -28,8 +29,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <p className="mt-3 font-mono text-xs text-code-teal">
         // streaming {posts.length} entries · ctrl+c to stop (just kidding)
       </p>
+      <NotesSearch />
       <TagFilter tags={tags} activeTag={activeTag} />
-      <div className="mt-6">
+      <div className="mt-6" data-pagefind-body>
         <TerminalFeed posts={posts} activeTag={activeTag} />
       </div>
     </TerminalPanel>

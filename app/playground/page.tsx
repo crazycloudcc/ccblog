@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { PlaygroundPage } from "@/components/playground/PlaygroundPage";
+import { TerminalLoadingPanel } from "@/components/terminal/TerminalLoadingPanel";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
@@ -11,7 +12,15 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="px-4 py-8 font-mono text-sm text-fog">loading playground...</div>}>
+    <Suspense
+      fallback={
+        <TerminalLoadingPanel
+          title="playground.cc"
+          command="make toolchain"
+          message="loading playground..."
+        />
+      }
+    >
       <PlaygroundPage />
     </Suspense>
   );

@@ -1,8 +1,10 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostContent } from "@/components/blog/PostContent";
+import { PostJsonLd } from "@/components/blog/PostJsonLd";
 import { PostNavigation } from "@/components/blog/PostNavigation";
-import { formatDateParts } from "@/lib/blog-utils";
+import { PostTagLinks } from "@/components/blog/PostTagLinks";
+import { TerminalBackLink } from "@/components/terminal/TerminalBackLink";
+import { formatDateParts, estimateReadingTime, formatReadingTime } from "@/lib/blog-utils";
 import { createPostMetadata, createPageMetadata } from "@/lib/metadata";
 import {
   getAdjacentPosts,
@@ -47,31 +49,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { month, day, weekday, year } = formatDateParts(post.date);
   const { prev, next } = getAdjacentPosts(slug);
   const related = getRelatedPosts(slug);
+  const readingTime = formatReadingTime(estimateReadingTime(post.content));
 
   return (
     <article>
-      <TerminalPanel>
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1 font-mono text-sm text-fog hover:text-ink"
-        >
-          <span aria-hidden="true">{"<"}</span>
-          cd ../notes
-        </Link>
+      <PostJsonLd post={post} />
+      {post.tags.map((tag) => (
+        <span key={tag} data-pagefind-filter={`tag:${tag}`} hidden />
+      ))}
+
+      <TerminalPanel title={post.slug}>
+        <TerminalBackLink href="/blog" label="cd ../notes" />
 
         <div className="mt-6">
-          <TerminalCommand command={`cat ${post.slug}`} />
+          <TerminalCommand command={`cat notes/${post.slug}.md`} />
           <TerminalOutput>
-            <div className="mt-2 space-y-1 text-xs">
+            <div className="mt-2 space-y-2 text-xs">
               <div>
                 <span className="text-code-plum">[</span>
                 <span className="text-ink">{year}-{month}-{day}</span>
                 <span className="text-code-plum">]</span>
                 <span className="text-code-cobalt"> {weekday.toLowerCase()}</span>
+                <span className="text-mist"> · </span>
+                <span className="text-fog">{readingTime}</span>
               </div>
-              {post.tags.length > 0 ? (
-                <TerminalComment>{`tags: ${post.tags.map((tag) => `#${tag}`).join(" ")}`}</TerminalComment>
-              ) : null}
+              {post.tags.length > 0 ? <PostTagLinks tags={post.tags} /> : null}
               <TerminalComment>// status: published · type: article</TerminalComment>
             </div>
           </TerminalOutput>
@@ -79,15 +81,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </TerminalPanel>
 
       <TerminalPanel title="content">
-        <h1 className="prose-terminal text-[32px] font-semibold leading-[1.15] text-ink sm:text-[40px]">
-          {post.title}
-        </h1>
-        <p className="prose-terminal mt-4 text-base leading-[1.7] text-slate">
-          {post.excerpt}
-        </p>
+        <div data-pagefind-body>
+          <h1
+            className="prose-terminal text-[32px] font-semibold leading-[1.15] text-ink sm:text-[40px]"
+            data-pagefind-meta="title"
+          >
+            {post.title}
+          </h1>
+          <p className="prose-terminal mt-4 text-base leading-[1.7] text-slate">{post.excerpt}</p>
 
-        <div className="mt-10">
-          <PostContent content={post.content} />
+          <div className="mt-10">
+            <PostContent content={post.content} />
+          </div>
         </div>
 
         <PostNavigation prev={prev} next={next} related={related} />

@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CodeEditor } from "@/components/playground/CodeEditor";
+import { CodeEditor, type CodeEditorHandle } from "@/components/playground/CodeEditor";
 import { OutputPanel } from "@/components/playground/OutputPanel";
 import { RunToolbar } from "@/components/playground/RunToolbar";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
+import { parseCompileErrorLine } from "@/lib/playground/diagnostics";
 import { getLanguageConfig } from "@/lib/playground/languages";
 import { loadDraft, loadStdin, saveDraft, saveStdin } from "@/lib/playground/storage";
 import { preloadToolchain } from "@/lib/playground/compile-run";
@@ -57,7 +58,9 @@ export function PlaygroundPage() {
     "idle" | "running" | "compiling" | "success" | "compile_error" | "runtime_error" | "timeout"
   >("idle");
   const [durationMs, setDurationMs] = useState<number | null>(null);
+  const [loadProgress, setLoadProgress] = useState(0);
   const workerRef = useRef<Worker | null>(null);
+  const editorRef = useRef<CodeEditorHandle | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const languageInitializedRef = useRef(false);
   const sharedAppliedRef = useRef(false);
@@ -124,9 +127,15 @@ export function PlaygroundPage() {
 
     async function warmToolchain() {
       try {
-        await preloadToolchain(TOOLCHAIN_API_BASE);
+        setLoadProgress(0);
+        await preloadToolchain(TOOLCHAIN_API_BASE, (loaded, total) => {
+          if (!cancelled) {
+            setLoadProgress(Math.round((loaded / total) * 100));
+          }
+        });
         if (!cancelled) {
           setReady(true);
+          setLoadProgress(100);
         }
       } catch {
         if (!cancelled) {
@@ -187,6 +196,13 @@ export function PlaygroundPage() {
       setStdout(event.data.stdout);
       setStderr(event.data.stderr);
       setDurationMs(event.data.durationMs);
+
+      if (event.data.status === "compile_error") {
+        const line = parseCompileErrorLine(event.data.compileOutput, languageConfig.fileName);
+        if (line) {
+          editorRef.current?.revealLine(line);
+        }
+      }
     };
 
     worker.addEventListener("message", onMessage);
@@ -197,7 +213,7 @@ export function PlaygroundPage() {
       stdin,
       toolchainBase: TOOLCHAIN_API_BASE,
     });
-  }, [createWorker, language, source, stdin]);
+  }, [createWorker, language, languageConfig.fileName, source, stdin]);
 
   const handleShare = useCallback(async () => {
     setSharing(true);
@@ -255,9 +271,25 @@ export function PlaygroundPage() {
           onShare={handleShare}
         />
 
+        {!ready ? (
+          <div className="mt-3">
+            <div className="mb-1 flex items-center justify-between font-mono text-[11px] text-fog">
+              <span>loading toolchain</span>
+              <span>{loadProgress}%</span>
+            </div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-lavender-mist">
+              <div
+                className="h-full bg-code-teal transition-[width] duration-300"
+                style={{ width: `${loadProgress}%` }}
+              />
+            </div>
+          </div>
+        ) : null}
+
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:items-stretch">
           <div className="h-[min(560px,70vh)]">
             <CodeEditor
+              ref={editorRef}
               language={languageConfig.monacoLanguage}
               fileName={languageConfig.fileName}
               value={source}
@@ -297,6 +329,7 @@ export function PlaygroundPage() {
           <li>- The example dropdown loads reference code only; it does not limit editing.</li>
           <li>- stdin is only required when your program reads input; leave it empty for hello world.</li>
           <li>- Shortcut: Cmd/Ctrl + Enter to run; execution stops automatically after 5 seconds.</li>
+          <li>- Compile errors jump the editor to the reported line number.</li>
           <li>- Share copies a gzip-compressed link (?lang=cpp&amp;z=...) that restores code and stdin.</li>
         </ul>
       </TerminalPanel>

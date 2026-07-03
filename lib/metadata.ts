@@ -3,9 +3,6 @@ import type { Post } from "@/lib/posts";
 import { getPostOgImage } from "@/lib/posts";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 
-const DEFAULT_OG_IMAGE =
-  "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=630&fit=crop";
-
 type PageMetadataOptions = {
   title?: string;
   description?: string;
@@ -23,6 +20,18 @@ export function absoluteUrl(path = ""): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+export function defaultOgImageUrl(): string {
+  return absoluteUrl("/opengraph-image");
+}
+
+export function resolvePostOgImage(post: Post): string {
+  if (post.ogImage) {
+    return post.ogImage.startsWith("http") ? post.ogImage : absoluteUrl(post.ogImage);
+  }
+
+  return getPostOgImage(post.content) ?? defaultOgImageUrl();
+}
+
 export function createPageMetadata({
   title,
   description = SITE_DESCRIPTION,
@@ -33,7 +42,7 @@ export function createPageMetadata({
 }: PageMetadataOptions = {}): Metadata {
   const pageTitle = title ? `${title} — ${SITE_NAME}` : SITE_TITLE;
   const url = absoluteUrl(path);
-  const ogImage = image ?? DEFAULT_OG_IMAGE;
+  const ogImage = image ?? defaultOgImageUrl();
 
   return {
     title: pageTitle,
@@ -66,13 +75,12 @@ export function createPageMetadata({
 
 export function createPostMetadata(post: Post): Metadata {
   const path = `/blog/${post.slug}`;
-  const image = getPostOgImage(post.content) ?? DEFAULT_OG_IMAGE;
 
   return createPageMetadata({
     title: post.title,
     description: post.excerpt,
     path,
-    image,
+    image: resolvePostOgImage(post),
     type: "article",
     publishedTime: `${post.date}T00:00:00.000Z`,
   });

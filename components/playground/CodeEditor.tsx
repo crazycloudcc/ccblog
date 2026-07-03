@@ -1,7 +1,13 @@
 "use client";
 
 import Editor from "@monaco-editor/react";
+import type { editor } from "monaco-editor";
 import { useTheme } from "@/components/terminal/ThemeProvider";
+import { forwardRef, useImperativeHandle, useRef } from "react";
+
+export type CodeEditorHandle = {
+  revealLine: (line: number) => void;
+};
 
 type CodeEditorProps = {
   language: string;
@@ -10,8 +16,24 @@ type CodeEditorProps = {
   onChange: (value: string) => void;
 };
 
-export function CodeEditor({ language, fileName, value, onChange }: CodeEditorProps) {
+export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(function CodeEditor(
+  { language, fileName, value, onChange },
+  ref,
+) {
   const { resolved } = useTheme();
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+
+  useImperativeHandle(ref, () => ({
+    revealLine(line: number) {
+      if (!editorRef.current || line < 1) {
+        return;
+      }
+
+      editorRef.current.revealLineInCenter(line);
+      editorRef.current.setPosition({ lineNumber: line, column: 1 });
+      editorRef.current.focus();
+    },
+  }));
 
   return (
     <div className="flex h-full min-h-[420px] flex-col overflow-hidden rounded-[8px] border border-lavender-mist">
@@ -26,6 +48,9 @@ export function CodeEditor({ language, fileName, value, onChange }: CodeEditorPr
           value={value}
           theme={resolved === "dark" ? "vs-dark" : "vs"}
           onChange={(nextValue) => onChange(nextValue ?? "")}
+          onMount={(instance) => {
+            editorRef.current = instance;
+          }}
           options={{
             fontFamily: "IBM Plex Mono, ui-monospace, monospace",
             fontSize: 13,
@@ -41,4 +66,4 @@ export function CodeEditor({ language, fileName, value, onChange }: CodeEditorPr
       </div>
     </div>
   );
-}
+});

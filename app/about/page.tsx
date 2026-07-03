@@ -34,19 +34,21 @@ export const metadata = createPageMetadata({
 
 export default function AboutPage() {
   return (
-    <TerminalPanel title="about.md">
-      <TerminalCommand command="cat about.md" />
-      <TerminalOutput>
-        <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">
-          crazycloudcc&apos;s blog
-        </h1>
-        <p className="prose-terminal mt-4 text-base leading-[1.8] text-slate">
-          A personal blog by crazycloudcc. I write about software, cloud
-          infrastructure, and the craft of building things that last.
-        </p>
-      </TerminalOutput>
+    <>
+      <TerminalPanel title="about.md">
+        <TerminalCommand command="cat about.md" />
+        <TerminalOutput>
+          <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">
+            crazycloudcc&apos;s blog
+          </h1>
+          <p className="prose-terminal mt-4 text-base leading-[1.8] text-slate">
+            A personal blog by crazycloudcc. I write about software, cloud
+            infrastructure, and the craft of building things that last.
+          </p>
+        </TerminalOutput>
+      </TerminalPanel>
 
-      <div className="mt-8 border-t border-lavender-mist/80 pt-6">
+      <TerminalPanel>
         <TerminalCommand command="env | grep -E 'EMAIL|GITHUB|X'" />
         <TerminalOutput>
           <div className="mt-2 space-y-2 text-sm">
@@ -65,16 +67,16 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-          <TerminalComment>// 3 variables exported</TerminalComment>
+          <TerminalComment className="mt-2">// 3 variables exported</TerminalComment>
         </TerminalOutput>
-      </div>
+      </TerminalPanel>
 
-      <div className="mt-8 border-t border-lavender-mist/80 pt-6">
-        <TerminalCommand command="cat notes" />
+      <TerminalPanel>
+        <TerminalCommand command="ls notes" />
         <div className="mt-3">
           <TextLink href="/blog">open notes</TextLink>
         </div>
-      </div>
-    </TerminalPanel>
+      </TerminalPanel>
+    </>
   );
 }

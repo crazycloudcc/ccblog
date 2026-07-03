@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { groupPostsByYear } from "@/lib/blog-utils";
+import { estimateReadingTime, formatReadingTime, groupPostsByYear } from "@/lib/blog-utils";
 import type { Post } from "@/lib/posts";
 
 type TerminalFeedProps = {
@@ -44,6 +44,10 @@ export function TerminalFeed({ posts, limit, activeTag }: TerminalFeedProps) {
                     <span className="text-code-plum">]</span>
                     <span className="text-mist"> - </span>
                     <span className="font-semibold text-ink">{post.title}</span>
+                    <span className="text-mist"> · </span>
+                    <span className="text-xs text-fog">
+                      {formatReadingTime(estimateReadingTime(post.content))}
+                    </span>
                   </div>
                   <p className="prose-terminal mt-1.5 pl-0 text-sm leading-[1.7] text-slate">
                     {post.excerpt}
