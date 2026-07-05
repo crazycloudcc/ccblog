@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { PostContent } from "@/components/blog/PostContent";
 import { PostJsonLd } from "@/components/blog/PostJsonLd";
+import { PostMeta } from "@/components/blog/PostMeta";
 import { PostNavigation } from "@/components/blog/PostNavigation";
 import { PostTagLinks } from "@/components/blog/PostTagLinks";
 import { TerminalBackLink } from "@/components/terminal/TerminalBackLink";
@@ -74,6 +75,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <span className="text-fog">{readingTime}</span>
               </div>
               {post.tags.length > 0 ? <PostTagLinks tags={post.tags} /> : null}
+              <PostMeta post={post} />
               <TerminalComment>// status: published · type: article</TerminalComment>
             </div>
           </TerminalOutput>
@@ -91,7 +93,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <p className="prose-terminal mt-4 text-base leading-[1.7] text-slate">{post.excerpt}</p>
 
           <div className="mt-10">
-            <PostContent content={post.content} />
+            <PostContent content={post.content} playground={post.playground} />
           </div>
         </div>
 

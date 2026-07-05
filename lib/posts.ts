@@ -9,6 +9,13 @@ export type PostCover = {
   caption: string;
 };
 
+export type PostDifficulty = "beginner" | "intermediate" | "advanced";
+
+export type PostPlayground = {
+  slug: string;
+  readonly?: boolean;
+};
+
 export type Post = {
   slug: string;
   title: string;
@@ -18,6 +25,11 @@ export type Post = {
   cover: PostCover;
   tags: string[];
   ogImage?: string;
+  series?: string;
+  difficulty?: PostDifficulty;
+  runtime?: string;
+  prerequisites?: string[];
+  playground?: PostPlayground;
 };
 
 type PostFrontmatter = {
@@ -28,6 +40,11 @@ type PostFrontmatter = {
   slug?: string;
   tags?: string[] | string;
   ogImage?: string;
+  series?: string;
+  difficulty?: PostDifficulty;
+  runtime?: string;
+  prerequisites?: string[] | string;
+  playground?: PostPlayground;
 };
 
 const NOTES_DIR = path.join(process.cwd(), "content/notes");
@@ -52,6 +69,41 @@ function normalizeDate(value: unknown): string {
   }
 
   return String(value).slice(0, 10);
+}
+
+function normalizeStringList(value: unknown): string[] {
+  if (!value) {
+    return [];
+  }
+
+  const items = Array.isArray(value) ? value : [value];
+  return [...new Set(items.map((item) => String(item).trim()).filter(Boolean))];
+}
+
+function normalizeDifficulty(value: unknown): PostDifficulty | undefined {
+  if (value === "beginner" || value === "intermediate" || value === "advanced") {
+    return value;
+  }
+
+  return undefined;
+}
+
+function normalizePlayground(value: unknown): PostPlayground | undefined {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+
+  const record = value as Record<string, unknown>;
+  const slug = typeof record.slug === "string" ? record.slug.trim() : "";
+
+  if (!slug) {
+    return undefined;
+  }
+
+  return {
+    slug,
+    readonly: record.readonly === true,
+  };
 }
 
 function normalizeTags(value: unknown): string[] {
@@ -79,6 +131,11 @@ function readPostFile(fileName: string, index: number): Post {
     cover: pickCover(index, frontmatter.coverLabel ?? slug),
     tags: normalizeTags(frontmatter.tags),
     ogImage: frontmatter.ogImage,
+    series: frontmatter.series?.trim() || undefined,
+    difficulty: normalizeDifficulty(frontmatter.difficulty),
+    runtime: frontmatter.runtime?.trim() || undefined,
+    prerequisites: normalizeStringList(frontmatter.prerequisites),
+    playground: normalizePlayground(frontmatter.playground),
   };
 }
 
@@ -106,6 +163,23 @@ export function getPostBySlug(slug: string): Post | undefined {
 export function getPostsByTag(tag: string): Post[] {
   const normalized = tag.trim().toLowerCase();
   return getPosts().filter((post) => post.tags.includes(normalized));
+}
+
+export function getPostsBySeries(series: string): Post[] {
+  const normalized = series.trim().toLowerCase();
+  return getPosts().filter((post) => post.series?.toLowerCase() === normalized);
+}
+
+export function getAllSeries(): string[] {
+  const series = new Set<string>();
+
+  for (const post of loadPosts()) {
+    if (post.series) {
+      series.add(post.series);
+    }
+  }
+
+  return [...series].sort();
 }
 
 export function getAllTags(): string[] {

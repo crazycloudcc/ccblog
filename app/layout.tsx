@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { WebVitalsReporter } from "@/components/observability/WebVitalsReporter";
+import { SiteStatusProvider } from "@/components/terminal/SiteStatusProvider";
 import { TerminalShell } from "@/components/terminal/TerminalShell";
 import { ThemeProvider } from "@/components/terminal/ThemeProvider";
 import { createPageMetadata } from "@/lib/metadata";
@@ -33,7 +35,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-full text-ink">
         <ThemeProvider>
-          <TerminalShell postCount={postCount}>{children}</TerminalShell>
+          <SiteStatusProvider>
+            <WebVitalsReporter />
+            <TerminalShell postCount={postCount}>{children}</TerminalShell>
+          </SiteStatusProvider>
         </ThemeProvider>
       </body>
     </html>

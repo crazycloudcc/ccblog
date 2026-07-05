@@ -6,7 +6,7 @@ import { useTheme } from "@/components/terminal/ThemeProvider";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 
 export type CodeEditorHandle = {
-  revealLine: (line: number) => void;
+  revealLine: (line: number, column?: number) => void;
 };
 
 type CodeEditorProps = {
@@ -14,23 +14,25 @@ type CodeEditorProps = {
   fileName: string;
   value: string;
   onChange: (value: string) => void;
+  readOnly?: boolean;
 };
 
 export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(function CodeEditor(
-  { language, fileName, value, onChange },
+  { language, fileName, value, onChange, readOnly = false },
   ref,
 ) {
   const { resolved } = useTheme();
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   useImperativeHandle(ref, () => ({
-    revealLine(line: number) {
+    revealLine(line: number, column?: number) {
       if (!editorRef.current || line < 1) {
         return;
       }
 
+      const col = column && column > 0 ? column : 1;
       editorRef.current.revealLineInCenter(line);
-      editorRef.current.setPosition({ lineNumber: line, column: 1 });
+      editorRef.current.setPosition({ lineNumber: line, column: col });
       editorRef.current.focus();
     },
   }));
@@ -60,6 +62,7 @@ export const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(function
             automaticLayout: true,
             tabSize: 2,
             wordWrap: "off",
+            readOnly,
             padding: { top: 12, bottom: 12 },
           }}
         />

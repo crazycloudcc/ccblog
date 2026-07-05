@@ -11,6 +11,7 @@ type RunToolbarProps = {
   ready: boolean;
   sharing?: boolean;
   shareMessage?: string | null;
+  readonly?: boolean;
   onLanguageChange: (language: PlaygroundLanguage) => void;
   onExampleChange: (source: string) => void;
   onRun: () => void;
@@ -26,6 +27,7 @@ export function RunToolbar({
   ready,
   sharing = false,
   shareMessage,
+  readonly = false,
   onLanguageChange,
   onExampleChange,
   onRun,
@@ -39,8 +41,9 @@ export function RunToolbar({
           <button
             key={item}
             type="button"
+            disabled={readonly}
             onClick={() => onLanguageChange(item)}
-            className={`px-3 py-1.5 transition-colors ${
+            className={`px-3 py-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
               language === item
                 ? "bg-ink text-paper"
                 : "bg-terminal-bg text-fog hover:text-ink"
@@ -58,7 +61,8 @@ export function RunToolbar({
       <label className="text-fog">
         <span className="text-code-teal">example</span>
         <select
-          className="ml-2 rounded-[4px] border border-lavender-mist bg-terminal-bg px-2 py-1.5 text-ink"
+          disabled={readonly}
+          className="ml-2 rounded-[4px] border border-lavender-mist bg-terminal-bg px-2 py-1.5 text-ink disabled:cursor-not-allowed disabled:opacity-50"
           defaultValue=""
           onChange={(event) => {
             if (!event.target.value) {
@@ -89,22 +93,30 @@ export function RunToolbar({
         {running ? (status === "compiling" ? "compiling..." : "running...") : "run"}
       </button>
 
-      <button
-        type="button"
-        onClick={onClear}
-        className="rounded-[4px] border border-lavender-mist px-3 py-1.5 text-fog transition-colors hover:text-ink"
-      >
-        clear
-      </button>
+      {!readonly ? (
+        <>
+          <button
+            type="button"
+            onClick={onClear}
+            className="rounded-[4px] border border-lavender-mist px-3 py-1.5 text-fog transition-colors hover:text-ink"
+          >
+            clear
+          </button>
 
-      <button
-        type="button"
-        onClick={onShare}
-        disabled={sharing}
-        className="rounded-[4px] border border-lavender-mist px-3 py-1.5 text-fog transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {sharing ? "sharing..." : "share"}
-      </button>
+          <button
+            type="button"
+            onClick={onShare}
+            disabled={sharing}
+            className="rounded-[4px] border border-lavender-mist px-3 py-1.5 text-fog transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {sharing ? "sharing..." : "share"}
+          </button>
+        </>
+      ) : (
+        <span className="rounded-[4px] border border-code-plum/40 bg-code-plum/10 px-3 py-1.5 text-code-plum">
+          readonly
+        </span>
+      )}
 
       {shareMessage ? <span className="text-code-teal">{shareMessage}</span> : null}
 

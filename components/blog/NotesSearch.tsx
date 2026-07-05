@@ -2,6 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { DegradedStatePanel } from "@/components/terminal/DegradedStatePanel";
+import { recordMetric } from "@/lib/observability/client-metrics";
+import { report } from "@/lib/observability/report";
+import { patchSiteStatus } from "@/lib/site-status";
 
 type SearchResult = {
   url: string;
@@ -52,12 +56,53 @@ export function NotesSearch() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [ready, setReady] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [indexReady, setIndexReady] = useState<boolean | null>(null);
+  const [indexError, setIndexError] = useState<string | null>(null);
+  const [searchError, setSearchError] = useState<string | null>(null);
+  const [probeAttempt, setProbeAttempt] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    const probeStart = performance.now();
+
+    void (async () => {
+      try {
+        const pagefind = await loadPagefind();
+        if (cancelled) {
+          return;
+        }
+
+        if (!pagefind) {
+          throw new Error("Search index unavailable.");
+        }
+
+        recordMetric("searchIndexLoadMs", Math.round(performance.now() - probeStart));
+        patchSiteStatus({ pagefindReady: true });
+        setIndexReady(true);
+        setIndexError(null);
+      } catch (error) {
+        if (cancelled) {
+          return;
+        }
+
+        const message =
+          error instanceof Error ? error.message : "Search index unavailable. Run npm run build first.";
+
+        report({ type: "search_failed", message });
+        patchSiteStatus({ pagefindReady: false });
+        setIndexReady(false);
+        setIndexError(message);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [probeAttempt]);
 
   useEffect(() => {
     const trimmed = query.trim();
-    if (!trimmed) {
+    if (!trimmed || indexReady !== true) {
       return;
     }
 
@@ -65,7 +110,8 @@ export function NotesSearch() {
     const timer = window.setTimeout(() => {
       void (async () => {
         setLoading(true);
-        setError(null);
+        setSearchError(null);
+        const searchStart = performance.now();
 
         try {
           const pagefind = await loadPagefind();
@@ -86,16 +132,22 @@ export function NotesSearch() {
           );
 
           if (!cancelled) {
+            const latencyMs = Math.round(performance.now() - searchStart);
+            recordMetric("searchLatencyMs", latencyMs);
+            report({
+              type: "search_success",
+              latencyMs,
+              resultCount: resolved.length,
+            });
             setResults(resolved);
-            setReady(true);
           }
         } catch (searchError) {
           if (!cancelled) {
+            const message =
+              searchError instanceof Error ? searchError.message : "Search unavailable";
+            report({ type: "search_failed", message });
             setResults([]);
-            setReady(false);
-            setError(
-              searchError instanceof Error ? searchError.message : "Search unavailable",
-            );
+            setSearchError(message);
           }
         } finally {
           if (!cancelled) {
@@ -109,12 +161,13 @@ export function NotesSearch() {
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [query]);
+  }, [query, indexReady]);
 
   const trimmedQuery = query.trim();
   const visibleResults = trimmedQuery ? results : [];
-  const visibleError = trimmedQuery ? error : null;
-  const showEmpty = trimmedQuery && !loading && ready && visibleResults.length === 0 && !visibleError;
+  const visibleError = trimmedQuery ? searchError : null;
+  const showEmpty =
+    trimmedQuery && !loading && indexReady && visibleResults.length === 0 && !visibleError;
 
   return (
     <div className="mt-4 font-mono text-sm">
@@ -125,10 +178,27 @@ export function NotesSearch() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder='"keyword" notes/'
-          className="ml-2 w-full max-w-md rounded-[4px] border border-lavender-mist bg-terminal-bg px-3 py-2 text-sm text-ink outline-none placeholder:text-mist"
+          disabled={indexReady === false}
+          className="ml-2 w-full max-w-md rounded-[4px] border border-lavender-mist bg-terminal-bg px-3 py-2 text-sm text-ink outline-none placeholder:text-mist disabled:cursor-not-allowed disabled:opacity-60"
           spellCheck={false}
         />
       </label>
+
+      {indexReady === false ? (
+        <DegradedStatePanel
+          title="search index not built"
+          command="npm run build"
+          detail={indexError ?? "pagefind index missing from /pagefind/"}
+          hint="run a production build to generate public/pagefind — dev-only `next dev` does not create the index"
+          action={{
+            label: "retry probe",
+            onClick: () => {
+              pagefindPromise = null;
+              setProbeAttempt((current) => current + 1);
+            },
+          }}
+        />
+      ) : null}
 
       {loading ? <p className="mt-2 text-xs text-fog">searching...</p> : null}
       {visibleError ? <p className="mt-2 text-xs text-code-rust">{visibleError}</p> : null}

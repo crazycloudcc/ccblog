@@ -17,9 +17,23 @@ export type ToolchainFile = (typeof TOOLCHAIN_FILES)[number];
 /** Dev — proxies from node_modules via API route. */
 export const TOOLCHAIN_API_BASE = "/api/toolchain";
 
+export type ToolchainSource = "api" | "unpkg" | "custom";
+
 /** Production default — browsercc on unpkg (CORS-enabled, no Vercel deploy bloat). */
 export function getUnpkgToolchainBase(): string {
   return `https://unpkg.com/browsercc@${BROWSERCC_VERSION}/dist`;
+}
+
+export function getToolchainSource(): ToolchainSource {
+  if (process.env.NODE_ENV === "development") {
+    return "api";
+  }
+
+  if (process.env.NEXT_PUBLIC_TOOLCHAIN_BASE?.trim()) {
+    return "custom";
+  }
+
+  return "unpkg";
 }
 
 /**

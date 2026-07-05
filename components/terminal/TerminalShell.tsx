@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { DevToolsRoot } from "@/components/dev/DevToolsRoot";
 import { TerminalNav } from "@/components/terminal/TerminalNav";
 import { TerminalPageEntry } from "@/components/terminal/TerminalPageEntry";
 import { TerminalStatusBar } from "@/components/terminal/TerminalStatusBar";
@@ -19,6 +20,7 @@ export function TerminalShell({ children, postCount }: TerminalShellProps) {
           <TerminalPageEntry>{children}</TerminalPageEntry>
         </main>
         <TerminalStatusBar postCount={postCount} />
+        <DevToolsRoot />
       </div>
     </div>
   );

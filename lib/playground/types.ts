@@ -1,8 +1,44 @@
 export type PlaygroundLanguage = "c" | "cpp";
 
+export type CompilePhase =
+  | "idle"
+  | "fetching_toolchain"
+  | "compiling"
+  | "linking"
+  | "running"
+  | "done";
+
+export type CompileTiming = {
+  toolchainMs?: number;
+  compileMs?: number;
+  linkMs?: number;
+  runMs?: number;
+  totalMs?: number;
+};
+
+export type SandboxMetrics = {
+  exitCode?: number;
+  timedOut?: boolean;
+  peakMemoryBytes?: number;
+};
+
+export type CompileMetadata = {
+  flags: string[];
+  compilerProgram: string;
+  fileName: string;
+  driverSummary?: string;
+};
+
+export type PhaseMessage = {
+  type: "phase";
+  phase: CompilePhase;
+};
+
 export type CompileDone = {
   type: "compiled";
   compileOutput: string;
+  timing: CompileTiming;
+  metadata: CompileMetadata;
 };
 
 export type RunRequest = {
@@ -13,13 +49,17 @@ export type RunRequest = {
   toolchainBase: string;
 };
 
+export type RunResultStatus = "success" | "compile_error" | "runtime_error" | "timeout";
+
 export type RunResult = {
   type: "result";
-  status: "success" | "compile_error" | "runtime_error";
+  status: RunResultStatus;
   compileOutput: string;
   stdout: string;
   stderr: string;
-  durationMs: number;
+  timing: CompileTiming;
+  metrics: SandboxMetrics;
+  metadata?: CompileMetadata;
 };
 
-export type WorkerMessage = RunRequest | CompileDone | RunResult;
+export type WorkerOutboundMessage = PhaseMessage | CompileDone | RunResult;

@@ -3,6 +3,14 @@ title: playground.cc
 excerpt: A browser-based C/C++ playground — write code, pass stdin, run, and share a link.
 date: 2014-04-14
 coverLabel: runtime
+series: playground-internals
+difficulty: intermediate
+runtime: browsercc
+prerequisites:
+  - basic C++
+playground:
+  slug: hello-cpp
+  readonly: true
 tags:
   - playground
   - c
@@ -110,6 +118,79 @@ More built-in examples: `regex.cpp` (extract numbers from a line), `json.cpp` (p
 ## Share a snippet
 
 Click **Share** to copy a URL with your code and stdin compressed into the query string (`?lang=cpp&z=...`). Open the link on another device and the editor restores the same state.
+
+## Under the hood
+
+A typical hello-world run breaks down like this:
+
+:::trace{title="hello.cpp run"}
+compile: 420ms
+link: 180ms
+run: 12ms
+stdout: |
+  Hello, World
+:::
+
+Optimization level comparison (illustrative):
+
+:::bench{title="clang -O levels"}
+| variant | time |
+|---------|------|
+| O0 | 15ms |
+| O2 | 12ms |
+| O3 | 11ms |
+:::
+
+The compile pipeline in the worker:
+
+:::steps{title="Worker pipeline"}
+```cpp
+// 1. fetch WASM toolchain (cached after first load)
+// 2. clang compile to object
+// 3. lld link to wasm module
+// 4. instantiate + WASI run
+```
+1. fetch toolchain (line 1)
+2. compile source (line 2)
+3. link module (line 3)
+4. execute main (line 4)
+:::
+
+Semicolon mistakes are a common gotcha:
+
+:::cases{title="Missing semicolon"}
+### good
+```cpp
+int main() {
+    std::cout << "ok\n";
+    return 0;
+}
+```
+### bad
+```cpp
+int main() {
+    std::cout << "ok\n"
+    return 0;
+}
+```
+:::
+
+Annotated view of hello-world:
+
+:::annotate{title="hello.cpp"}
+```cpp
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, World\n";
+    return 0;
+}
+```
+- line 1: pull in iostream for std::cout
+- line 3: program entry point
+- line 4: write to stdout
+- line 5: exit successfully
+:::
 
 ## Limits worth knowing
 

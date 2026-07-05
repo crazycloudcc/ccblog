@@ -4,6 +4,9 @@ export type PlaygroundSharePayload = {
   lang: PlaygroundLanguage;
   source: string;
   stdin?: string;
+  readonly?: boolean;
+  title?: string;
+  id?: string;
 };
 
 const MAX_SHARE_URL_LENGTH = 7500;
@@ -70,12 +73,33 @@ export async function buildPlaygroundShareUrl(
     url.searchParams.set("in", await encodeParam(payload.stdin));
   }
 
+  if (payload.readonly) {
+    url.searchParams.set("readonly", "1");
+  }
+
+  if (payload.title?.trim()) {
+    url.searchParams.set("title", payload.title.trim());
+  }
+
+  if (payload.id?.trim()) {
+    url.searchParams.set("id", payload.id.trim());
+  }
+
   const href = url.toString();
   if (href.length > MAX_SHARE_URL_LENGTH) {
     throw new Error("Share link is too long. Try shortening your code or stdin.");
   }
 
   return href;
+}
+
+export async function buildPlaygroundEmbedUrl(
+  payload: PlaygroundSharePayload,
+  origin = typeof window === "undefined" ? "https://crazycloud.cc" : window.location.origin,
+): Promise<string> {
+  const url = new URL(await buildPlaygroundShareUrl(payload, origin));
+  url.searchParams.set("embed", "1");
+  return url.toString();
 }
 
 export async function decodeSharePayload(
@@ -97,6 +121,9 @@ export async function decodeSharePayload(
       lang,
       source,
       stdin,
+      readonly: params.get("readonly") === "1",
+      title: params.get("title") ?? undefined,
+      id: params.get("id") ?? undefined,
     };
   } catch {
     return null;

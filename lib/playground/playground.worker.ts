@@ -1,9 +1,19 @@
 /// <reference lib="webworker" />
 
 import { compileSource, runModule } from "@/lib/playground/compile-run";
-import type { CompileDone, RunRequest, RunResult } from "@/lib/playground/types";
+import type {
+  CompileDone,
+  PhaseMessage,
+  RunRequest,
+  RunResult,
+} from "@/lib/playground/types";
 
 declare const self: DedicatedWorkerGlobalScope;
+
+function postPhase(phase: PhaseMessage["phase"]) {
+  const message: PhaseMessage = { type: "phase", phase };
+  self.postMessage(message);
+}
 
 self.onmessage = async (event: MessageEvent<RunRequest>) => {
   if (event.data.type !== "run") {
@@ -14,10 +24,18 @@ self.onmessage = async (event: MessageEvent<RunRequest>) => {
   const { language, source, stdin, toolchainBase } = event.data;
 
   try {
+    postPhase("fetching_toolchain");
+    postPhase("compiling");
+
     const compiled = await compileSource(toolchainBase, language, source);
+
+    postPhase("linking");
+
     const compileDone: CompileDone = {
       type: "compiled",
       compileOutput: compiled.compileOutput,
+      timing: compiled.timing,
+      metadata: compiled.metadata,
     };
     self.postMessage(compileDone);
 
@@ -28,21 +46,38 @@ self.onmessage = async (event: MessageEvent<RunRequest>) => {
         compileOutput: compiled.compileOutput,
         stdout: "",
         stderr: compiled.compileOutput,
-        durationMs: Math.round(performance.now() - startedAt),
+        timing: {
+          ...compiled.timing,
+          totalMs: Math.round(performance.now() - startedAt),
+        },
+        metrics: { exitCode: 1 },
+        metadata: compiled.metadata,
       };
+      postPhase("done");
       self.postMessage(payload);
       return;
     }
 
+    postPhase("running");
+    const runStarted = performance.now();
     const executed = await runModule(compiled.module, stdin);
+    const runMs = Math.round(performance.now() - runStarted);
+
     const payload: RunResult = {
       type: "result",
       status: executed.status,
       compileOutput: compiled.compileOutput,
       stdout: executed.stdout,
       stderr: executed.stderr,
-      durationMs: Math.round(performance.now() - startedAt),
+      timing: {
+        ...compiled.timing,
+        runMs,
+        totalMs: Math.round(performance.now() - startedAt),
+      },
+      metrics: { exitCode: executed.exitCode },
+      metadata: compiled.metadata,
     };
+    postPhase("done");
     self.postMessage(payload);
   } catch (error) {
     const payload: RunResult = {
@@ -51,8 +86,10 @@ self.onmessage = async (event: MessageEvent<RunRequest>) => {
       compileOutput: "",
       stdout: "",
       stderr: error instanceof Error ? error.message : "Unknown worker error",
-      durationMs: Math.round(performance.now() - startedAt),
+      timing: { totalMs: Math.round(performance.now() - startedAt) },
+      metrics: { exitCode: 1 },
     };
+    postPhase("done");
     self.postMessage(payload);
   }
 };

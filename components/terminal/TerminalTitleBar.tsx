@@ -4,7 +4,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { SessionGeo } from "@/lib/session-geo";
 import { SITE_LOCALE } from "@/lib/site";
+import { formatSiteStatusLine } from "@/lib/site-status";
 import { getWindowTitle } from "@/lib/terminal-paths";
+import { useSiteStatus } from "@/components/terminal/SiteStatusProvider";
 
 type TerminalTitleBarProps = {
   title?: string;
@@ -36,6 +38,7 @@ function formatClock(date: Date): ClockState {
 
 export function TerminalTitleBar({ title }: TerminalTitleBarProps) {
   const pathname = usePathname();
+  const siteStatus = useSiteStatus();
   const [geo, setGeo] = useState<SessionGeo | null>(null);
   const [clock, setClock] = useState<ClockState | null>(null);
   const windowTitle = title ?? getWindowTitle(pathname);
@@ -77,8 +80,8 @@ export function TerminalTitleBar({ title }: TerminalTitleBarProps) {
   const timeLabel = clock?.time ?? "--:--:--";
   const zoneLabel = clock?.zone ?? "···";
   const statusTitle = clock
-    ? [clock.time, clock.zone, geoLabel].filter(Boolean).join(" · ")
-    : undefined;
+    ? [formatSiteStatusLine(siteStatus), clock.time, clock.zone, geoLabel].filter(Boolean).join(" · ")
+    : formatSiteStatusLine(siteStatus);
 
   return (
     <div className="terminal-chrome flex shrink-0 items-center gap-2 border-b border-lavender-mist bg-lavender-mist/60 px-4 py-2.5 font-mono text-xs text-fog">
@@ -88,6 +91,13 @@ export function TerminalTitleBar({ title }: TerminalTitleBarProps) {
         <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-code-teal/70" />
         <span className="ml-2 truncate text-ink/80">{windowTitle}</span>
       </div>
+
+      <span
+        className="hidden shrink-0 whitespace-nowrap text-[10px] text-fog/90 lg:inline"
+        title={statusTitle}
+      >
+        {formatSiteStatusLine(siteStatus)}
+      </span>
 
       <div
         className="ml-3 flex max-w-[55%] shrink-0 flex-wrap items-center justify-end gap-x-2 gap-y-1 text-[11px] sm:max-w-none sm:gap-x-3"

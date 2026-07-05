@@ -1,10 +1,11 @@
 import { NotesSearch } from "@/components/blog/NotesSearch";
+import { SeriesFilter } from "@/components/blog/SeriesFilter";
 import { TerminalFeed } from "@/components/blog/TerminalFeed";
 import { TagFilter } from "@/components/blog/TagFilter";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
-import { getAllTags, getPosts, getPostsByTag } from "@/lib/posts";
+import { getAllSeries, getAllTags, getPosts, getPostsBySeries, getPostsByTag } from "@/lib/posts";
 
 export const metadata = createPageMetadata({
   title: "Blog",
@@ -13,15 +14,25 @@ export const metadata = createPageMetadata({
 });
 
 type BlogPageProps = {
-  searchParams: Promise<{ tag?: string }>;
+  searchParams: Promise<{ tag?: string; series?: string }>;
 };
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const { tag } = await searchParams;
+  const { tag, series } = await searchParams;
   const activeTag = tag?.trim().toLowerCase();
-  const posts = activeTag ? getPostsByTag(activeTag) : getPosts();
+  const activeSeries = series?.trim();
+  const posts = activeSeries
+    ? getPostsBySeries(activeSeries)
+    : activeTag
+      ? getPostsByTag(activeTag)
+      : getPosts();
   const tags = getAllTags();
-  const command = activeTag ? `grep -R "#${activeTag}" notes/` : "tail -f notes";
+  const seriesList = getAllSeries();
+  const command = activeSeries
+    ? `grep -R "series: ${activeSeries}" notes/`
+    : activeTag
+      ? `grep -R "#${activeTag}" notes/`
+      : "tail -f notes";
 
   return (
     <TerminalPanel title="notes">
@@ -31,8 +42,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </p>
       <NotesSearch />
       <TagFilter tags={tags} activeTag={activeTag} />
+      <SeriesFilter series={seriesList} activeSeries={activeSeries} />
       <div className="mt-6" data-pagefind-body>
-        <TerminalFeed posts={posts} activeTag={activeTag} />
+        <TerminalFeed posts={posts} activeTag={activeTag} activeSeries={activeSeries} />
       </div>
     </TerminalPanel>
   );

@@ -2,7 +2,7 @@ import Clang from "browsercc/dist/clang.js";
 import LLD from "browsercc/dist/lld.js";
 import { WASI, File, OpenFile, ConsoleStdout } from "@bjorn3/browser_wasi_shim";
 import { setUpSysroot } from "browsercc";
-import type { PlaygroundLanguage } from "@/lib/playground/types";
+import type { CompileMetadata, CompileTiming, PlaygroundLanguage } from "@/lib/playground/types";
 import { getLanguageConfig } from "@/lib/playground/languages";
 
 type EmscriptenModule = {
@@ -20,17 +20,21 @@ type Invocation = {
   compilerArtifact: string;
   linkerArgs: string[];
   linerArtifact: string;
+  driverSummary: string;
 };
 
 export type CompileResult = {
   compileOutput: string;
   module: WebAssembly.Module | null;
+  timing: CompileTiming;
+  metadata: CompileMetadata;
 };
 
 export type ExecuteResult = {
   stdout: string;
   stderr: string;
   status: "success" | "runtime_error";
+  exitCode: number;
 };
 
 function createLocateFile(toolchainBase: string) {
@@ -38,9 +42,10 @@ function createLocateFile(toolchainBase: string) {
 }
 
 async function fetchToolchainFile(toolchainBase: string, file: string): Promise<ArrayBuffer> {
-  const response = await fetch(`${toolchainBase}/${file}`);
+  const url = `${toolchainBase}/${file}`;
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`Failed to load toolchain file ${file}: ${response.status}`);
+    throw new Error(`Failed to load ${file}: HTTP ${response.status} from ${url}`);
   }
 
   return response.arrayBuffer();
@@ -85,12 +90,16 @@ async function getCompilerInvocation(
 
   const cc1Line = getArgs("-cc1");
   const linkerLine = getArgs("wasm-ld");
+  const driverSummary =
+    lines.find((line) => line.includes(compilerProgram) && line.includes(inputName))?.trim() ??
+    `${compilerProgram} ${inputName} ${flags.join(" ")}`;
 
   return {
     compilerArgs: cc1Line.args,
     compilerArtifact: cc1Line.outputFileName,
     linkerArgs: linkerLine.args,
     linerArtifact: linkerLine.outputFileName,
+    driverSummary,
   };
 }
 
@@ -99,6 +108,8 @@ export async function compileSource(
   language: PlaygroundLanguage,
   source: string,
 ): Promise<CompileResult> {
+  const timing: CompileTiming = {};
+  const startedAt = performance.now();
   const { fileName, compilerProgram, flags } = getLanguageConfig(language);
   const locateFile = createLocateFile(toolchainBase);
   let stderr = "";
@@ -119,6 +130,7 @@ export async function compileSource(
     },
   });
 
+  const toolchainStarted = performance.now();
   const sysroot = await fetchToolchainFile(toolchainBase, "sysroot.tar");
   const invocation = await getCompilerInvocation(
     toolchainBase,
@@ -127,16 +139,30 @@ export async function compileSource(
     source,
     flags,
   );
+  timing.toolchainMs = Math.round(performance.now() - toolchainStarted);
+
+  const metadata: CompileMetadata = {
+    flags,
+    compilerProgram,
+    fileName,
+    driverSummary: invocation.driverSummary,
+  };
 
   const clang = (await clangPromise) as EmscriptenModule;
   clang.FS.writeFile(fileName, source);
   setUpSysroot(clang, sysroot);
 
+  const compileStarted = performance.now();
   let exitCode = clang.callMain(invocation.compilerArgs);
+  timing.compileMs = Math.round(performance.now() - compileStarted);
+
   if (exitCode !== 0) {
+    timing.totalMs = Math.round(performance.now() - startedAt);
     return {
       compileOutput: stderr,
       module: null,
+      timing,
+      metadata,
     };
   }
 
@@ -145,21 +171,30 @@ export async function compileSource(
   lld.FS.writeFile(invocation.compilerArtifact, binary);
   setUpSysroot(lld, sysroot);
 
+  const linkStarted = performance.now();
   exitCode = lld.callMain(invocation.linkerArgs);
+  timing.linkMs = Math.round(performance.now() - linkStarted);
+
   if (exitCode !== 0) {
+    timing.totalMs = Math.round(performance.now() - startedAt);
     return {
       compileOutput: stderr,
       module: null,
+      timing,
+      metadata,
     };
   }
 
   const output = lld.FS.readFile(invocation.linerArtifact, { encoding: "binary" });
   const wasmBytes = Uint8Array.from(output);
   const module = await WebAssembly.compile(wasmBytes);
+  timing.totalMs = Math.round(performance.now() - startedAt);
 
   return {
     compileOutput: stderr,
     module,
+    timing,
+    metadata,
   };
 }
 
@@ -196,6 +231,7 @@ export async function runModule(
       status: "runtime_error",
       stdout,
       stderr: error instanceof Error ? error.message : "Program execution failed",
+      exitCode: 1,
     };
   }
 
@@ -203,6 +239,7 @@ export async function runModule(
     status: "success",
     stdout,
     stderr,
+    exitCode: 0,
   };
 }
 
@@ -214,9 +251,10 @@ export async function preloadToolchain(
   let loaded = 0;
 
   for (const file of files) {
-    const response = await fetch(`${toolchainBase}/${file}`);
+    const url = `${toolchainBase}/${file}`;
+    const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Failed to preload ${file}`);
+      throw new Error(`Failed to preload ${file}: HTTP ${response.status} from ${url}`);
     }
     await response.arrayBuffer();
     loaded += 1;
