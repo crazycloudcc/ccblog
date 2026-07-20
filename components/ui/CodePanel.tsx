@@ -15,7 +15,7 @@ export function CodePanel({ code, language, title }: CodePanelProps) {
         <span className="text-code-teal">{label}</span>
         <CopyButton text={code} />
       </div>
-      <pre className="overflow-x-auto px-3 py-3 font-mono text-[12px] leading-6 text-ink">
+      <pre className="overflow-x-auto px-3 py-3 font-mono text-[13px] leading-6 text-ink">
         <code>{code}</code>
       </pre>
     </div>

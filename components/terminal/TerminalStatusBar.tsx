@@ -19,7 +19,7 @@ export function TerminalStatusBar({ postCount }: TerminalStatusBarProps) {
         <span>
           <span className="text-code-teal">posts</span>: {postCount}
         </span>
-        <ThemeToggle />
+        <span className="lg:hidden"><ThemeToggle /></span>
         <span>
           <span className="text-code-teal">encoding</span>: utf-8
         </span>

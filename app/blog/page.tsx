@@ -1,11 +1,10 @@
+import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { NotesSearch } from "@/components/blog/NotesSearch";
-import { SeriesFilter } from "@/components/blog/SeriesFilter";
 import { TerminalFeed } from "@/components/blog/TerminalFeed";
-import { TagFilter } from "@/components/blog/TagFilter";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
-import { getAllSeries, getAllTags, getPosts, getPostsBySeries, getPostsByTag } from "@/lib/posts";
+import { getAllSeries, getAllTags, getPosts, getPostsBySeries, getPostsByTag, getRecentPosts } from "@/lib/posts";
 
 export const metadata = createPageMetadata({
   title: "Blog",
@@ -28,6 +27,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       : getPosts();
   const tags = getAllTags();
   const seriesList = getAllSeries();
+  const recentPosts = getRecentPosts(5);
   const command = activeSeries
     ? `grep -R "series: ${activeSeries}" notes/`
     : activeTag
@@ -41,10 +41,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         // streaming {posts.length} entries · ctrl+c to stop (just kidding)
       </p>
       <NotesSearch />
-      <TagFilter tags={tags} activeTag={activeTag} />
-      <SeriesFilter series={seriesList} activeSeries={activeSeries} />
-      <div className="mt-6" data-pagefind-body>
-        <TerminalFeed posts={posts} activeTag={activeTag} activeSeries={activeSeries} />
+
+      <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_256px]">
+        <div data-pagefind-body>
+          <TerminalFeed posts={posts} activeTag={activeTag} activeSeries={activeSeries} />
+        </div>
+        <BlogSidebar
+          tags={tags}
+          series={seriesList}
+          recentPosts={recentPosts}
+          activeTag={activeTag}
+          activeSeries={activeSeries}
+        />
       </div>
     </TerminalPanel>
   );

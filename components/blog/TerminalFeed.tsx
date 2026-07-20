@@ -52,7 +52,7 @@ export function TerminalFeed({ posts, limit, activeTag, activeSeries }: Terminal
                         {formatReadingTime(estimateReadingTime(post.content))}
                       </span>
                     </div>
-                    <p className="prose-terminal mt-1.5 pl-0 text-sm leading-[1.7] text-slate">
+                    <p className="prose-terminal mt-1.5 pl-0 text-base leading-[1.7] text-slate">
                       {post.excerpt}
                     </p>
                   </Link>

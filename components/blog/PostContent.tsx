@@ -24,7 +24,7 @@ export function PostContent({ content, playground }: PostContentProps) {
         switch (block.type) {
           case "heading":
             return (
-              <h2 key={index} className="text-xl font-semibold text-ink">
+              <h2 key={index} className="text-2xl font-semibold text-ink">
                 {block.text}
               </h2>
             );
@@ -105,7 +105,7 @@ export function PostContent({ content, playground }: PostContentProps) {
             return (
               <ul
                 key={index}
-                className="list-disc space-y-2 pl-5 text-sm leading-[1.8] text-slate"
+                className="list-disc space-y-2 pl-5 text-base leading-7 text-slate"
               >
                 {block.items.map((item) => (
                   <li key={item}>{item}</li>
@@ -117,7 +117,7 @@ export function PostContent({ content, playground }: PostContentProps) {
             return (
               <ol
                 key={index}
-                className="list-decimal space-y-2 pl-5 text-sm leading-[1.8] text-slate"
+                className="list-decimal space-y-2 pl-5 text-base leading-7 text-slate"
               >
                 {block.items.map((item) => (
                   <li key={item}>{item}</li>
@@ -163,7 +163,7 @@ export function PostContent({ content, playground }: PostContentProps) {
 
           case "paragraph":
             return (
-              <p key={index} className="text-sm leading-[1.8] text-slate">
+              <p key={index} className="text-base leading-7 text-slate">
                 {block.text}
               </p>
             );

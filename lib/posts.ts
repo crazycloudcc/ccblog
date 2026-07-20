@@ -238,6 +238,12 @@ export function getRelatedPosts(slug: string, limit = 3): Post[] {
     .map((item) => item.post);
 }
 
+export function getRecentPosts(limit = 5, excludeSlug?: string): Post[] {
+  return getPosts()
+    .filter((post) => post.slug !== excludeSlug)
+    .slice(0, limit);
+}
+
 export function getPostOgImage(content: string): string | undefined {
   const match = content.match(/!\[[^\]]*\]\(([^)]+)\)/);
   return match?.[1];
