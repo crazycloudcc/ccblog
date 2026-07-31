@@ -10,8 +10,8 @@ import type { CcblogConfig } from "@/lib/types/config";
  * production set NEXT_PUBLIC_SITE_URL (and optionally NEXT_PUBLIC_CCBLOG_BRANCH).
  */
 const config: CcblogConfig = {
-  name: "cc's blog",
-  author: "cc",
+  name: "crazycloudcc's blog",
+  author: "crazycloudcc",
   handle: "crazycloudcc",
   initials: "cc",
   description: "Notes on software, cloud infrastructure, and everyday engineering.",
