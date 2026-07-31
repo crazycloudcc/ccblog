@@ -58,6 +58,11 @@ export type CcblogConfig = {
   /** App Store sync config. Only used when features.apps is true. */
   apps: {
     developerId: number;
+    /**
+     * Optional tagline overrides keyed by App Store app name. Names not
+     * listed here fall back to the first sentence of the app description.
+     */
+    taglines?: Record<string, string>;
   };
   /** Playground toolchain config. Only used when features.playground is true. */
   playground: {

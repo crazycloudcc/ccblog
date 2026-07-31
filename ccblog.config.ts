@@ -50,6 +50,18 @@ const config: CcblogConfig = {
   },
   apps: {
     developerId: 495069166,
+    taglines: {
+      "Final Ticket Plan": "Trade Up to the Final",
+      "Weather Trace": "Local weather forecast",
+      LocalBeats: "Ad-Free · No Internet",
+      "Cheer Loop": "Cheer Text & Doodle",
+      "Travel Speaker": "Voice Translator for Travel",
+      IdeaMic: "Private Voice Idea Notes",
+      "PDF Tools Pro": "Scan, Edit, Merge, Encrypt",
+      "Noise Mixer": "Sleep & Focus Sounds",
+      cYBerScRipts: "Protocol: The Idle Netrunner",
+      EndlessBattle: "Puzzle",
+    },
   },
   playground: {
     githubRepo: "crazycloudcc/ccblog",

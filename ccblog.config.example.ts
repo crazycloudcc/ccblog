@@ -54,6 +54,8 @@ const config: CcblogConfig = {
   apps: {
     // Set your Apple developer ID and flip features.apps to true to enable /apps.
     developerId: 0,
+    // Optional: one-line taglines keyed by App Store app name.
+    // taglines: { "Your App": "A short tagline" },
   },
   playground: {
     // owner/name - used as a fallback for the dev toolchain via /api/toolchain.

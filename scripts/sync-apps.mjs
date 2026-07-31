@@ -32,18 +32,7 @@ const DEVELOPER_ID = Number(
   process.env.APPLE_DEVELOPER_ID ?? process.argv[2] ?? config.apps?.developerId,
 );
 
-const TAGLINES = {
-  "Final Ticket Plan": "Trade Up to the Final",
-  "Weather Trace": "Local weather forecast",
-  LocalBeats: "Ad-Free · No Internet",
-  "Cheer Loop": "Cheer Text & Doodle",
-  "Travel Speaker": "Voice Translator for Travel",
-  IdeaMic: "Private Voice Idea Notes",
-  "PDF Tools Pro": "Scan, Edit, Merge, Encrypt",
-  "Noise Mixer": "Sleep & Focus Sounds",
-  cYBerScRipts: "Protocol: The Idle Netrunner",
-  EndlessBattle: "Puzzle",
-};
+const TAGLINES = config.apps?.taglines ?? {};
 
 function slugify(name) {
   return name
