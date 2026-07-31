@@ -10,8 +10,8 @@ import type { CcblogConfig } from "@/lib/types/config";
  * production set NEXT_PUBLIC_SITE_URL (and optionally NEXT_PUBLIC_CCBLOG_BRANCH).
  */
 const config: CcblogConfig = {
-  name: "crazycloudcc's blog",
-  author: "crazycloudcc",
+  name: "cc's blog",
+  author: "cc",
   handle: "crazycloudcc",
   initials: "cc",
   description: "Notes on software, cloud infrastructure, and everyday engineering.",
@@ -32,7 +32,7 @@ const config: CcblogConfig = {
     {
       label: "GitHub",
       handle: "github.com/crazycloudcc",
-      href: "https://github.com/crazycloudcc",
+      href: "https://github.com/crazycloudcc/ccblog",
       icon: "github",
     },
     {
@@ -53,14 +53,14 @@ const config: CcblogConfig = {
     taglines: {
       "Final Ticket Plan": "Trade Up to the Final",
       "Weather Trace": "Local weather forecast",
-      LocalBeats: "Ad-Free · No Internet",
+      "LocalBeats": "Ad-Free · No Internet",
       "Cheer Loop": "Cheer Text & Doodle",
       "Travel Speaker": "Voice Translator for Travel",
-      IdeaMic: "Private Voice Idea Notes",
+      "IdeaMic": "Private Voice Idea Notes",
       "PDF Tools Pro": "Scan, Edit, Merge, Encrypt",
       "Noise Mixer": "Sleep & Focus Sounds",
-      cYBerScRipts: "Protocol: The Idle Netrunner",
-      EndlessBattle: "Puzzle",
+      "cYBerScRipts": "Protocol: The Idle Netrunner",
+      "EndlessBattle": "Puzzle",
     },
   },
   playground: {
