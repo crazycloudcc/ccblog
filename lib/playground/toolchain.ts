@@ -1,6 +1,9 @@
+import { siteConfig } from "@/lib/site";
+
 export const TOOLCHAIN_TAG = "toolchain-v0.1.1";
 
-export const GITHUB_REPO = "crazycloudcc/ccblog";
+/** GitHub repo (owner/name) for dev toolchain fallback - from ccblog.config.ts. */
+export const GITHUB_REPO = siteConfig.playground.githubRepo;
 
 /** Keep in sync with the browsercc version in package.json. */
 export const BROWSERCC_VERSION = "0.1.1";

@@ -1,3 +1,5 @@
+import { features } from "@/lib/site";
+
 export type AppCategory = "utility" | "game";
 
 export type AppRelease = {
@@ -181,6 +183,9 @@ const categoryLabels: Record<AppCategory, string> = {
 };
 
 export function getApps(): AppRelease[] {
+  if (!features.apps) {
+    return [];
+  }
   return [...apps].sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
 }
 
@@ -201,5 +206,8 @@ export function getAppsByCategory(): {
 }
 
 export function getAppBySlug(slug: string): AppRelease | undefined {
+  if (!features.apps) {
+    return undefined;
+  }
   return apps.find((app) => app.slug === slug);
 }

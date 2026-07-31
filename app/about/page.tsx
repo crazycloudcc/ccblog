@@ -7,28 +7,19 @@ import {
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
+import { siteConfig, socialLinks } from "@/lib/site";
 
-const contacts = [
-  {
-    key: "EMAIL",
-    value: "crazycloudcc@gmail.com",
-    href: "mailto:crazycloudcc@gmail.com",
-  },
-  {
-    key: "GITHUB",
-    value: "github.com/crazycloudcc",
-    href: "https://github.com/crazycloudcc",
-  },
-  {
-    key: "X",
-    value: "x.com/crazycloudccc",
-    href: "https://x.com/crazycloudccc",
-  },
-];
+const contacts = socialLinks.map((link) => ({
+  key: link.label.toUpperCase(),
+  value: link.handle,
+  href: link.href,
+}));
+
+const grepPattern = contacts.map((item) => item.key).join("|");
 
 export const metadata = createPageMetadata({
   title: "About",
-  description: "About crazycloudcc and how to get in touch",
+  description: `About ${siteConfig.author} and how to get in touch`,
   path: "/about",
 });
 
@@ -39,17 +30,16 @@ export default function AboutPage() {
         <TerminalCommand command="cat about.md" />
         <TerminalOutput>
           <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">
-            crazycloudcc&apos;s blog
+            {siteConfig.name}
           </h1>
           <p className="prose-terminal mt-4 text-base leading-[1.8] text-slate">
-            A personal blog by crazycloudcc. I write about software, cloud
-            infrastructure, and the craft of building things that last.
+            A personal blog by {siteConfig.author}. {siteConfig.description}
           </p>
         </TerminalOutput>
       </TerminalPanel>
 
       <TerminalPanel>
-        <TerminalCommand command="env | grep -E 'EMAIL|GITHUB|X'" />
+        <TerminalCommand command={`env | grep -E '${grepPattern}'`} />
         <TerminalOutput>
           <div className="mt-2 space-y-2 text-sm">
             {contacts.map((item) => (
@@ -67,7 +57,9 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-          <TerminalComment className="mt-2">// 3 variables exported</TerminalComment>
+          <TerminalComment className="mt-2">
+            // {contacts.length} variables exported
+          </TerminalComment>
         </TerminalOutput>
       </TerminalPanel>
 

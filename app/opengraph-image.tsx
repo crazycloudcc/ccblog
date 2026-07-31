@@ -1,6 +1,27 @@
 import { ImageResponse } from "next/og";
+import { SITE_URL, features, siteConfig } from "@/lib/site";
 
-export const alt = "crazycloudcc's blog";
+const routeLabels: string[] = [];
+if (features.blog) {
+  routeLabels.push("~/notes");
+}
+if (features.apps) {
+  routeLabels.push("~/apps");
+}
+if (features.playground) {
+  routeLabels.push("playground.cc");
+}
+const routeList = routeLabels.join(" · ");
+
+const domain = (() => {
+  try {
+    return new URL(SITE_URL).host;
+  } catch {
+    return SITE_URL;
+  }
+})();
+
+export const alt = siteConfig.name;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,14 +48,14 @@ export default function OpenGraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div style={{ fontSize: 28, color: "#96e072" }}>crazycloudcc@blog</div>
+          <div style={{ fontSize: 28, color: "#96e072" }}>{`${siteConfig.handle}@blog`}</div>
           <div style={{ fontSize: 64, fontWeight: 600, lineHeight: 1.05, maxWidth: 900 }}>
-            Notes on software, cloud, and everyday engineering.
+            {siteConfig.ogTagline}
           </div>
-          <div style={{ fontSize: 24, color: "#c8c4bc" }}>~/notes · ~/apps · playground.cc</div>
+          <div style={{ fontSize: 24, color: "#c8c4bc" }}>{routeList}</div>
         </div>
 
-        <div style={{ fontSize: 22, color: "#767682" }}>crazycloud.cc</div>
+        <div style={{ fontSize: 22, color: "#767682" }}>{domain}</div>
       </div>
     ),
     { ...size },

@@ -5,17 +5,32 @@
  * Runs automatically before `npm run build` (prebuild hook).
  * Manual refresh: npm run sync:apps
  *
+ * Skipped automatically when features.apps is false in ccblog.config.ts.
+ *
  * Env:
- *   APPLE_DEVELOPER_ID — defaults to 495069166
+ *   APPLE_DEVELOPER_ID — overrides config.apps.developerId
  */
 
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createJiti } from "jiti";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DEVELOPER_ID = Number(process.env.APPLE_DEVELOPER_ID ?? process.argv[2] ?? 495069166);
 const APPS_FILE = path.join(__dirname, "../lib/apps.ts");
+
+// Load the typed site config so the sync respects feature flags.
+const jiti = createJiti(import.meta.url);
+const config = (await jiti.import(path.join(__dirname, "../ccblog.config.ts"))).default;
+
+if (!config.features?.apps) {
+  console.log("[sync-apps] features.apps is false in ccblog.config.ts - skipping sync");
+  process.exit(0);
+}
+
+const DEVELOPER_ID = Number(
+  process.env.APPLE_DEVELOPER_ID ?? process.argv[2] ?? config.apps?.developerId,
+);
 
 const TAGLINES = {
   "Final Ticket Plan": "Trade Up to the Final",

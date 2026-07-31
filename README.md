@@ -12,7 +12,7 @@ Live site: [crazycloud.cc](https://crazycloud.cc) · [中文文档](README.zh-CN
 
 **ccblog** is a Next.js site styled like a macOS terminal session. Posts live as markdown files; the UI leans into `cd`, `cat`, `grep`, and panel chrome rather than a conventional blog layout.
 
-It is meant to be forked: swap `lib/site.ts`, write your own notes under `content/notes/`, and deploy.
+It is meant to be forked: edit `ccblog.config.ts`, write your own notes under `content/notes/`, and deploy.
 
 ### Highlights
 
@@ -54,7 +54,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Configure
 
-Edit `lib/site.ts` for name, author, and description. Set the production URL:
+Edit `ccblog.config.ts` at the repo root - name, author, social links, feature flags, and App Store ID all live there. That single file is all you need to rebrand after a fork. Prefer a clean slate? `cp ccblog.config.example.ts ccblog.config.ts` for a blank, commented template. `npm run build` validates the config and fails fast with clear errors if a field is missing or invalid. Set the production URL:
 
 ```bash
 # .env.local (not committed)
@@ -64,10 +64,11 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 | Variable | When | Purpose |
 |----------|------|---------|
 | `NEXT_PUBLIC_SITE_URL` | Production | Canonical URL for RSS, sitemap, Open Graph |
-| `APPLE_DEVELOPER_ID` | Optional | iTunes Lookup ID for `/apps` sync (defaults to the author's) |
+| `NEXT_PUBLIC_CCBLOG_BRANCH` | Optional | Git branch shown in the terminal status bar |
+| `APPLE_DEVELOPER_ID` | Optional | Overrides `apps.developerId` for `/apps` sync |
 | `NEXT_PUBLIC_TOOLCHAIN_BASE` | Optional | Override Playground WASM CDN in production |
 
-Forking for your own blog? Change `APPLE_DEVELOPER_ID` or remove the `/apps` nav item if you do not ship iOS apps.
+Feature flags in `ccblog.config.ts` (`features.blog`, `features.apps`, `features.playground`, `features.about`) toggle whole routes. `/apps` defaults to **off** - the nav item, sitemap entry, and prebuild App Store sync are all skipped when `features.apps` is false, so a fork with no iOS apps needs no extra cleanup.
 
 A full fork → deploy walkthrough lives in the **Start Up** post (`content/notes/nextjs-blog-setup.md`) on the site.
 

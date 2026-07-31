@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "prebuild": "node scripts/sync-apps.mjs",
+    "prebuild": "node scripts/validate-config.mjs && node scripts/sync-apps.mjs",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
@@ -29,6 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "jiti": "^2.7.0",
     "pagefind": "^1.5.2",
     "tailwindcss": "^4",
     "typescript": "^5"

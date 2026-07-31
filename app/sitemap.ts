@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/posts";
 import { absoluteUrl } from "@/lib/metadata";
+import { isRouteEnabled } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getPosts();
-  const staticRoutes = ["", "/blog", "/apps", "/playground", "/about"];
+  const staticRoutes = ["", "/blog", "/apps", "/playground", "/about"].filter((route) =>
+    isRouteEnabled(route),
+  );
 
   const pages: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: absoluteUrl(route),

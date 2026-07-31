@@ -12,7 +12,7 @@
 
 **ccblog** 是一个模仿 macOS 终端会话的 Next.js 站点。文章以 Markdown 文件存放；界面用 `cd`、`cat`、`grep` 和面板样式组织内容，而不是传统博客布局。
 
-项目面向 fork 自用：改 `lib/site.ts`，在 `content/notes/` 写自己的笔记，然后部署即可。
+项目面向 fork 自用：改 `ccblog.config.ts`，在 `content/notes/` 写自己的笔记，然后部署即可。
 
 ### 功能概览
 
@@ -54,7 +54,7 @@ npm run dev
 
 ### 配置
 
-编辑 `lib/site.ts` 修改站点名称、作者和描述。生产环境需设置站点 URL：
+编辑根目录的 `ccblog.config.ts`——站点名称、作者、社交链接、功能开关和 App Store ID 全都在这里。fork 后只需改这一个文件即可完成品牌替换。想从空白开始？`cp ccblog.config.example.ts ccblog.config.ts` 可得到一份带注释的干净模板；`npm run build` 会校验配置，字段缺失或非法时快速失败并给出清晰报错。生产环境需设置站点 URL：
 
 ```bash
 # .env.local（不提交到 git）
@@ -64,10 +64,11 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 | 变量 | 场景 | 用途 |
 |------|------|------|
 | `NEXT_PUBLIC_SITE_URL` | 生产环境 | RSS、sitemap、Open Graph 的规范 URL |
-| `APPLE_DEVELOPER_ID` | 可选 | `/apps` 同步用的 iTunes Lookup ID（默认作者 ID） |
+| `NEXT_PUBLIC_CCBLOG_BRANCH` | 可选 | 终端状态栏显示的 Git 分支 |
+| `APPLE_DEVELOPER_ID` | 可选 | 覆盖 `apps.developerId`，用于 `/apps` 同步 |
 | `NEXT_PUBLIC_TOOLCHAIN_BASE` | 可选 | 生产环境 Playground WASM CDN 覆盖地址 |
 
-fork 后做自己的博客？请修改 `APPLE_DEVELOPER_ID`，若不发布 iOS 应用可移除导航中的 `/apps`。
+`ccblog.config.ts` 中的功能开关（`features.blog`、`features.apps`、`features.playground`、`features.about`）可整条路由开关。`/apps` 默认**关闭**——当 `features.apps` 为 false 时，导航项、sitemap 条目和 prebuild 的 App Store 同步都会跳过，不发布 iOS 应用的 fork 无需额外清理。
 
 完整的 fork → 部署指南见站内文章 **Start Up**（`content/notes/nextjs-blog-setup.md`）。
 

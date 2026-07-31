@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/terminal/ThemeToggle";
+import { SITE_AUTHOR, SITE_BRANCH } from "@/lib/site";
 
 type TerminalStatusBarProps = {
   postCount: number;
@@ -14,7 +15,7 @@ export function TerminalStatusBar({ postCount }: TerminalStatusBarProps) {
     <div className="terminal-chrome flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-lavender-mist bg-lavender-mist/40 px-4 py-2 font-mono text-[11px] text-fog">
       <div className="flex flex-wrap items-center gap-3">
         <span>
-          <span className="text-code-teal">branch</span>: preview
+          <span className="text-code-teal">branch</span>: {SITE_BRANCH}
         </span>
         <span>
           <span className="text-code-teal">posts</span>: {postCount}
@@ -28,7 +29,7 @@ export function TerminalStatusBar({ postCount }: TerminalStatusBarProps) {
         <Link href="/blog" className="transition-colors hover:text-ink">
           tail -f notes
         </Link>
-        <span>© {year} crazycloudcc</span>
+        <span>© {year} {SITE_AUTHOR}</span>
       </div>
     </div>
   );

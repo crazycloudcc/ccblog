@@ -1,3 +1,5 @@
+import { siteConfig } from "@/lib/site";
+
 export function getTerminalCwd(pathname: string): string {
   if (pathname === "/") {
     return "~";
@@ -31,15 +33,15 @@ export function getFilesystemPath(pathname: string): string {
   const cwd = getTerminalCwd(pathname);
 
   if (cwd === "~") {
-    return "/home/crazycloudcc/blog";
+    return `/home/${siteConfig.handle}/blog`;
   }
 
-  return `/home/crazycloudcc/blog${cwd.slice(1)}`;
+  return `/home/${siteConfig.handle}/blog${cwd.slice(1)}`;
 }
 
 export function getWindowTitle(pathname: string): string {
   const cwd = getTerminalCwd(pathname);
-  return `crazycloudcc@blog:${cwd} — zsh — 80×24`;
+  return `${siteConfig.handle}@blog:${cwd} — zsh — 80×24`;
 }
 
 export function getPageCdCommand(pathname: string): string | null {

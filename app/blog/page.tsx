@@ -5,10 +5,11 @@ import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
 import { getAllSeries, getAllTags, getPosts, getPostsBySeries, getPostsByTag, getRecentPosts } from "@/lib/posts";
+import { SITE_NAME } from "@/lib/site";
 
 export const metadata = createPageMetadata({
   title: "Blog",
-  description: "Writing log from crazycloudcc's blog",
+  description: `Writing log from ${SITE_NAME}`,
   path: "/blog",
 });
 

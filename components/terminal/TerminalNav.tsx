@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getFilesystemPath, getTerminalCwd } from "@/lib/terminal-paths";
+import { isRouteEnabled, siteConfig } from "@/lib/site";
 
 const navItems = [
   { href: "/", label: "~/", match: (path: string) => path === "/" },
@@ -14,7 +15,7 @@ const navItems = [
   { href: "/apps", label: "./apps", match: (path: string) => path === "/apps" },
   { href: "/playground", label: "./playground.cc", match: (path: string) => path === "/playground" },
   { href: "/about", label: "./about.md", match: (path: string) => path === "/about" },
-];
+].filter((item) => isRouteEnabled(item.href));
 
 export function TerminalNav() {
   const pathname = usePathname();
@@ -24,7 +25,7 @@ export function TerminalNav() {
   return (
     <div className="terminal-chrome shrink-0 border-b border-lavender-mist bg-terminal-bg px-4 py-3 font-mono text-sm">
       <div className="text-fog">
-        <span className="text-code-teal">crazycloudcc@blog</span>
+        <span className="text-code-teal">{siteConfig.handle}@blog</span>
         <span className="text-mist">:</span>
         <span className="text-code-cobalt">{cwd}</span>
         <span className="text-mist">$ </span>

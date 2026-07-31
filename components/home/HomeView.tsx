@@ -13,14 +13,14 @@ import {
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import type { Post } from "@/lib/posts";
-import { SITE_LOCALE } from "@/lib/site";
+import { isRouteEnabled, SITE_LOCALE, siteConfig } from "@/lib/site";
 
 const dirEntries = [
   { name: "notes", href: "/blog" },
   { name: "apps", href: "/apps" },
   { name: "playground.cc", href: "/playground" },
   { name: "about.md", href: "/about" },
-];
+].filter((entry) => isRouteEnabled(entry.href));
 
 const STAGES = [
   "intro",
@@ -168,7 +168,7 @@ export function HomeView({ posts }: HomeViewProps) {
 
               {current >= stageIndex("whoami-output") ? (
                 <TerminalOutput>
-                  <span className="hero-fade-in text-ink">crazycloudcc</span>
+                  <span className="hero-fade-in text-ink">{siteConfig.author}</span>
                 </TerminalOutput>
               ) : null}
             </div>

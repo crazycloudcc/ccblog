@@ -1,12 +1,18 @@
 import type { ReactNode } from "react";
 import { CopyButton } from "@/components/ui/CopyButton";
+import { siteConfig } from "@/lib/site";
 
-const SITE_SNIPPET = `export const site = {
-  name: "crazycloudcc's blog",
-  author: "crazycloudcc",
-  topics: ["cloud", "code", "notes"],
-  url: "https://crazycloud.cc",
+function buildSnippet(): string {
+  const topics = siteConfig.topics.map((topic) => `"${topic}"`).join(", ");
+  return `export const site = {
+  name: "${siteConfig.name}",
+  author: "${siteConfig.author}",
+  topics: [${topics}],
+  url: "${siteConfig.url}",
 }`;
+}
+
+const SITE_SNIPPET = buildSnippet();
 
 function Token({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <span className={className}>{children}</span>;
@@ -38,29 +44,32 @@ export function CodeBlock() {
         <Line indent={1}>
           <Token className="text-code-cobalt">name</Token>
           <Token className="text-ink">: </Token>
-          <Token className="text-code-plum">&quot;crazycloudcc&apos;s blog&quot;</Token>
+          <Token className="text-code-plum">&quot;{siteConfig.name}&quot;</Token>
           <Token className="text-ink">,</Token>
         </Line>
         <Line indent={1}>
           <Token className="text-code-cobalt">author</Token>
           <Token className="text-ink">: </Token>
-          <Token className="text-code-plum">&quot;crazycloudcc&quot;</Token>
+          <Token className="text-code-plum">&quot;{siteConfig.author}&quot;</Token>
           <Token className="text-ink">,</Token>
         </Line>
         <Line indent={1}>
           <Token className="text-code-cobalt">topics</Token>
           <Token className="text-ink">: [</Token>
-          <Token className="text-code-plum">&quot;cloud&quot;</Token>
-          <Token className="text-ink">, </Token>
-          <Token className="text-code-plum">&quot;code&quot;</Token>
-          <Token className="text-ink">, </Token>
-          <Token className="text-code-plum">&quot;notes&quot;</Token>
+          {siteConfig.topics.map((topic, index) => (
+            <span key={topic}>
+              <Token className="text-code-plum">&quot;{topic}&quot;</Token>
+              {index < siteConfig.topics.length - 1 ? (
+                <Token className="text-ink">, </Token>
+              ) : null}
+            </span>
+          ))}
           <Token className="text-ink">],</Token>
         </Line>
         <Line indent={1}>
           <Token className="text-code-cobalt">url</Token>
           <Token className="text-ink">: </Token>
-          <Token className="text-code-plum">&quot;https://crazycloud.cc&quot;</Token>
+          <Token className="text-code-plum">&quot;{siteConfig.url}&quot;</Token>
         </Line>
         <Line>
           <Token className="text-ink">{"}"}</Token>
