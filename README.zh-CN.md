@@ -39,6 +39,7 @@
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) 解析文章 frontmatter
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/) + browsercc 驱动 `/playground`
 - [Pagefind](https://pagefind.app) 客户端全文搜索
+- [@vercel/analytics](https://vercel.com/analytics) 隐私友好的访问统计（Vercel 上自动启用；在 `app/layout.tsx` 删除 `<Analytics />` 即可关闭）
 
 ---
 

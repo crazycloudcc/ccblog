@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { WebVitalsReporter } from "@/components/observability/WebVitalsReporter";
 import { SiteStatusProvider } from "@/components/terminal/SiteStatusProvider";
 import { TerminalShell } from "@/components/terminal/TerminalShell";
@@ -40,6 +41,7 @@ export default function RootLayout({
             <TerminalShell postCount={postCount}>{children}</TerminalShell>
           </SiteStatusProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

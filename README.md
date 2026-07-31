@@ -39,6 +39,7 @@ The home page opens with a short boot sequence (notes type in, then settle). The
 - [gray-matter](https://github.com/jonschlinkert/gray-matter) for post frontmatter
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/) + browsercc for `/playground`
 - [Pagefind](https://pagefind.app) for client-side search
+- [@vercel/analytics](https://vercel.com/analytics) for privacy-friendly page-view stats (auto on Vercel; remove `<Analytics />` in `app/layout.tsx` to disable)
 
 ---
 

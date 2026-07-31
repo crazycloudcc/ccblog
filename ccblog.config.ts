@@ -10,14 +10,14 @@ import type { CcblogConfig } from "@/lib/types/config";
  * production set NEXT_PUBLIC_SITE_URL (and optionally NEXT_PUBLIC_CCBLOG_BRANCH).
  */
 const config: CcblogConfig = {
-  name: "crazycloudcc's blog",
+  name: "crazycloudcc's sites",
   author: "crazycloudcc",
   handle: "crazycloudcc",
   initials: "cc",
-  description: "Notes on software, cloud infrastructure, and everyday engineering.",
-  tagline: "code · cloud · notes",
-  ogTagline: "Notes on software, cloud, and everyday engineering.",
-  topics: ["cloud", "code", "notes"],
+  description: "An independent developer's notes on AI, Web3, and game development.",
+  tagline: "AI · Web3 · Game",
+  ogTagline: "Notes on AI, Web3, and game development.",
+  topics: ["ai", "web3", "game"],
   url: "https://crazycloud.cc",
   locale: "en-US",
   lang: "en",

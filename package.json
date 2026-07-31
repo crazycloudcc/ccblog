@@ -15,6 +15,7 @@
   "dependencies": {
     "@bjorn3/browser_wasi_shim": "^0.4.2",
     "@monaco-editor/react": "^4.7.0",
+    "@vercel/analytics": "^2.0.1",
     "browsercc": "^0.1.1",
     "gray-matter": "^4.0.3",
     "monaco-editor": "^0.55.1",

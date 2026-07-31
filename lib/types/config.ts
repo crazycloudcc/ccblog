@@ -37,7 +37,7 @@ export type CcblogConfig = {
   initials: string;
   /** Default meta description. */
   description: string;
-  /** Sidebar subtitle under the avatar, e.g. "code · cloud · notes". */
+  /** Sidebar subtitle under the avatar, e.g. "AI · Web3 · Game". */
   tagline: string;
   /** One-line tagline rendered on the og image. */
   ogTagline: string;
