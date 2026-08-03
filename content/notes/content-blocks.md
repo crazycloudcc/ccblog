@@ -6,6 +6,7 @@ coverLabel: blocks
 tags:
   - meta
   - markdown
+lang: en
 ---
 
 Posts are Markdown, plus a few custom directives that render as terminal-style panels. Each starts with `:::name{title="..."}` and ends with `:::`.

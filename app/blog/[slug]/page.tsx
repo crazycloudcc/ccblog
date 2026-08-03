@@ -8,6 +8,7 @@ import { PostTagLinks } from "@/components/blog/PostTagLinks";
 import { TerminalBackLink } from "@/components/terminal/TerminalBackLink";
 import { formatDateParts, estimateReadingTime, formatReadingTime } from "@/lib/blog-utils";
 import { createPostMetadata, createPageMetadata } from "@/lib/metadata";
+import { SITE_LANG, SITE_LOCALE } from "@/lib/site";
 import {
   getAdjacentPosts,
   getAllSeries,
@@ -51,16 +52,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const { month, day, weekday, year } = formatDateParts(post.date);
+  const { month, day, weekday, year } = formatDateParts(post.date, post.lang ?? SITE_LOCALE);
   const { prev, next } = getAdjacentPosts(slug);
   const related = getRelatedPosts(slug);
-  const readingTime = formatReadingTime(estimateReadingTime(post.content));
+  const readingTime = formatReadingTime(estimateReadingTime(post.content), post.lang);
   const tags = getAllTags();
   const seriesList = getAllSeries();
   const recentPosts = getRecentPosts(5, slug);
 
   return (
-    <article>
+    <article lang={post.lang ?? SITE_LANG}>
       <PostJsonLd post={post} />
       {post.tags.map((tag) => (
         <span key={tag} data-pagefind-filter={`tag:${tag}`} hidden />

@@ -8,6 +8,7 @@ tags:
   - meta
   - web
   - deploy
+lang: en
 ---
 
 This guide walks the full path from **forking the repo** to **a live deployment** of [ccblog](https://github.com/crazycloudcc/ccblog) - a terminal-themed personal blog built with Next.js 16, TypeScript, and Tailwind CSS v4.

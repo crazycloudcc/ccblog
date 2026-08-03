@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Post } from "@/lib/posts";
 import { getPostOgImage } from "@/lib/posts";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 
 type PageMetadataOptions = {
   title?: string;
@@ -10,6 +10,7 @@ type PageMetadataOptions = {
   image?: string;
   type?: "website" | "article";
   publishedTime?: string;
+  lang?: string;
 };
 
 export function absoluteUrl(path = ""): string {
@@ -22,6 +23,14 @@ export function absoluteUrl(path = ""): string {
 
 export function defaultOgImageUrl(): string {
   return absoluteUrl("/opengraph-image");
+}
+
+/** Map a BCP-47 lang (e.g. "zh-CN", "en") to an OpenGraph locale (e.g. "zh_CN", "en_US"). */
+export function ogLocale(lang?: string): string {
+  const base = (lang ?? SITE_LANG).toLowerCase();
+  if (base.startsWith("zh")) return "zh_CN";
+  if (base.startsWith("en")) return "en_US";
+  return base.replace("-", "_");
 }
 
 export function resolvePostOgImage(post: Post): string {
@@ -39,6 +48,7 @@ export function createPageMetadata({
   image,
   type = "website",
   publishedTime,
+  lang,
 }: PageMetadataOptions = {}): Metadata {
   const pageTitle = title ? `${title} — ${SITE_NAME}` : SITE_TITLE;
   const url = absoluteUrl(path);
@@ -56,7 +66,7 @@ export function createPageMetadata({
     },
     openGraph: {
       type,
-      locale: "en_US",
+      locale: ogLocale(lang),
       url,
       siteName: SITE_NAME,
       title: pageTitle,
@@ -83,5 +93,6 @@ export function createPostMetadata(post: Post): Metadata {
     image: resolvePostOgImage(post),
     type: "article",
     publishedTime: `${post.date}T00:00:00.000Z`,
+    lang: post.lang,
   });
 }

@@ -19,8 +19,8 @@ const config: CcblogConfig = {
   ogTagline: "Notes on AI, Web3, and game development.",
   topics: ["ai", "web3", "game"],
   url: "https://crazycloud.cc",
-  locale: "en-US",
-  lang: "en",
+  locale: "zh-CN",
+  lang: "zh-CN",
   branch: "main",
   social: [
     {
@@ -44,7 +44,7 @@ const config: CcblogConfig = {
   ],
   features: {
     blog: true,
-    apps: false,
+    apps: true,
     playground: true,
     about: true,
   },

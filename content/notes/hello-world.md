@@ -6,6 +6,7 @@ coverLabel: launch
 tags:
   - launch
   - meta
+lang: en
 ---
 
 Welcome to your new blog.

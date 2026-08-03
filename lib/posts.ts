@@ -27,6 +27,8 @@ export type Post = {
   ogImage?: string;
   series?: string;
   difficulty?: PostDifficulty;
+  lang?: string;
+  updated?: string;
   runtime?: string;
   prerequisites?: string[];
   playground?: PostPlayground;
@@ -42,6 +44,8 @@ type PostFrontmatter = {
   ogImage?: string;
   series?: string;
   difficulty?: PostDifficulty;
+  lang?: string;
+  updated?: string;
   runtime?: string;
   prerequisites?: string[] | string;
   playground?: PostPlayground;
@@ -133,6 +137,8 @@ function readPostFile(fileName: string, index: number): Post {
     ogImage: frontmatter.ogImage,
     series: frontmatter.series?.trim() || undefined,
     difficulty: normalizeDifficulty(frontmatter.difficulty),
+    lang: frontmatter.lang?.trim() || undefined,
+    updated: frontmatter.updated ? normalizeDate(frontmatter.updated) : undefined,
     runtime: frontmatter.runtime?.trim() || undefined,
     prerequisites: normalizeStringList(frontmatter.prerequisites),
     playground: normalizePlayground(frontmatter.playground),
