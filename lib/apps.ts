@@ -175,34 +175,11 @@ export const apps: AppRelease[] = [
   },
 ];
 
-const categoryOrder: AppCategory[] = ["utility", "game"];
-
-const categoryLabels: Record<AppCategory, string> = {
-  utility: "tools",
-  game: "games",
-};
-
 export function getApps(): AppRelease[] {
   if (!features.apps) {
     return [];
   }
   return [...apps].sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
-}
-
-export function getAppsByCategory(): {
-  category: AppCategory;
-  label: string;
-  items: AppRelease[];
-}[] {
-  const sorted = getApps();
-
-  return categoryOrder
-    .map((category) => ({
-      category,
-      label: categoryLabels[category],
-      items: sorted.filter((app) => app.category === category),
-    }))
-    .filter((group) => group.items.length > 0);
 }
 
 export function getAppBySlug(slug: string): AppRelease | undefined {
