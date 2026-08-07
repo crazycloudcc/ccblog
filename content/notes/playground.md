@@ -37,7 +37,7 @@ Because it runs off the main thread, the editor stays responsive while clang wor
 
 | Control | What it does |
 |---------|--------------|
-| **C / C++** | Switch language. C uses `clang -std=c11`, C++ uses `clang++ -std=c++17`, both with `-Wall -O0` |
+| **C / C++** | Switch language. C uses `clang -std=c11`, C++ uses `clang++ -std=c++17`, both with `-Wall -O0`; C++ adds `-fno-exceptions` (WASI has no EH runtime) |
 | `file: main.cpp` | The filename the compiler sees (read-only) |
 | `example` | Load a reference snippet - hello, a+b, sort, and for C++ also regex/json. It fills the editor; it does not lock editing |
 | **run** | Compile + link + execute. Shortcut: `Cmd/Ctrl + Enter` |
@@ -143,6 +143,8 @@ int main() {
 
 The output panel switches to diagnostics: `main.cpp:4 - expected ';'`. Click the row and the cursor lands on line 4 - no scanning, no line counting. Runtime failures print to stderr and end with a non-zero exit instead.
 
+One constraint to know: the WASI toolchain has no C++ exception runtime, so C++ is compiled with `-fno-exceptions`. Writing `throw`, `try`, or `catch` is a compile error - `cannot use 'throw' with exceptions disabled` - with a hint to use return codes or `std::optional` instead. Allocation failures (e.g. `std::vector`) abort rather than throw `std::bad_alloc`.
+
 ## 5. Share and embed
 
 **share** compresses your source (and stdin, if any) with gzip and base64url, then copies a link like:
@@ -183,7 +185,7 @@ Production never bundles the WASM files into the deploy - the browser fetches th
 ## Quick reference
 
 - **Run**: click **run**, or `Cmd/Ctrl + Enter`
-- **Languages**: C (`clang -std=c11`), C++ (`clang++ -std=c++17`), both `-Wall -O0`
+- **Languages**: C (`clang -std=c11`), C++ (`clang++ -std=c++17 -fno-exceptions`), both `-Wall -O0`
 - **Timeout**: 5 seconds, then killed
 - **Drafts**: auto-saved per language in your browser
 - **Share**: gzip-compressed link, copied to clipboard, max 7500 chars

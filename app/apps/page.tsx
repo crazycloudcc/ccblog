@@ -16,8 +16,6 @@ export const metadata = createPageMetadata({
 
 export default function AppsPage() {
   const total = getApps().length;
-  const utilityCount = getApps().filter((app) => app.category === "utility").length;
-  const gameCount = getApps().filter((app) => app.category === "game").length;
 
   return (
     <>
@@ -29,7 +27,7 @@ export default function AppsPage() {
             Shipped iOS projects on the App Store — mostly utility apps and games.
           </p>
           <TerminalComment>
-            // {total} live · {utilityCount} tools · {gameCount} games
+            // {total} live apps
           </TerminalComment>
         </TerminalOutput>
       </TerminalPanel>

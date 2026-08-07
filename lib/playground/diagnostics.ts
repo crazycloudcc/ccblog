@@ -38,6 +38,9 @@ export function lookupErrorHints(message: string): string[] {
   if (lower.includes("main must return")) {
     hints.push("Ensure main() returns int (C++) or int/void (C) as required.");
   }
+  if (lower.includes("with exceptions disabled")) {
+    hints.push("WASI has no C++ exception runtime, so throw/try/catch are disabled. Rework with return codes or std::optional.");
+  }
 
   return hints;
 }
