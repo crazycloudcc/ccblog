@@ -49,7 +49,7 @@ export function TerminalFeed({ posts, limit, activeTag, activeSeries }: Terminal
                       <span className="font-semibold text-ink">{post.title}</span>
                       <span className="text-mist"> · </span>
                       <span className="text-xs text-fog">
-                        {formatReadingTime(estimateReadingTime(post.content))}
+                        {formatReadingTime(estimateReadingTime(post.content), post.lang)}
                       </span>
                     </div>
                     <p className="prose-terminal mt-1.5 pl-0 text-base leading-[1.7] text-slate">
