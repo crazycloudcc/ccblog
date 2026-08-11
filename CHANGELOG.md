@@ -2,6 +2,49 @@
 
 All notable changes to this project are documented in this file.
 
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project aims to follow [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
+
+### Added
+
+- Fork-friendly site config: `ccblog.config.ts` + `ccblog.config.example.ts`, typed in `lib/types/config.ts`
+- Build-time config validation (`scripts/validate-config.mjs`, `lib/validate-config.ts`)
+- `CONTRIBUTING.md` for template + live-site dual use
+- Per-post Open Graph images (`app/blog/[slug]/opengraph-image.tsx`)
+- Demo notes: playground, content-blocks, binary-search, quicksort, LIS
+- `content/notes/content-blocks.md` documenting interactive directives
+
+### Changed
+
+- README / README.zh-CN rewritten for fork-and-deploy positioning
+- Social icons extracted to a shared terminal chrome module
+
+### Removed
+
+- Sample note `monospace-on-the-web.md` (replaced by stronger demo content)
+
+## [1.1.0] — 2026-07-20
+
+Terminal shell UX release — desktop sidebar, mobile nav, and draggable window chrome.
+
+### Added
+
+- `TerminalSidebar` — desktop left rail with identity, nav, theme toggle, social links
+- `TerminalMobileNav` — compact navigation for small screens
+- `BlogSidebar` — post-list / post-detail side panel wiring
+- `useWindowDrag` — move and edge-resize the terminal window (min size + edge hit zones)
+
+### Changed
+
+- `TerminalTitleBar` refactored for shell layout consistency
+- `TerminalShell` integrates sidebar + mobile nav + drag behavior
+- Blog list / post pages adjusted for the new chrome layout
+- Minor polish on status bar, code panel, and post content wrappers
+
 ## [1.0.0] — 2026-07-03
 
 First public release of **ccblog** — a terminal-themed personal blog built with Next.js 16.
@@ -63,4 +106,6 @@ First public release of **ccblog** — a terminal-themed personal blog built wit
 - `NEXT_PUBLIC_SITE_URL` for production metadata
 - Optional `APPLE_DEVELOPER_ID` for `/apps` sync
 
+[Unreleased]: https://github.com/crazycloudcc/ccblog/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/crazycloudcc/ccblog/releases/tag/v1.1.0
 [1.0.0]: https://github.com/crazycloudcc/ccblog/releases/tag/v1.0.0
