@@ -65,8 +65,8 @@ export function createPageMetadata({
     ...(logo
       ? {
           icons: {
-            icon: [{ url: logo }, { url: "/icon.jpg", type: "image/jpeg", sizes: "192x192" }],
-            apple: [{ url: "/apple-icon.jpg", type: "image/jpeg", sizes: "180x180" }],
+            icon: [{ url: logo }, { url: "/icon.png", type: "image/png", sizes: "192x192" }],
+            apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
           },
         }
       : {}),

@@ -37,8 +37,9 @@ export type CcblogConfig = {
   initials: string;
   /**
    * Optional public path to the site logo (sidebar avatar + optional metadata).
-   * Example: `"/logo.jpg"`. When set, the sidebar circle shows the image;
-   * browser tab icons still come from `app/icon.*` / `app/apple-icon.*`.
+   * Example: `"/logo.png"`. Prefer transparent PNG. When set, the sidebar
+   * circle shows the image; browser tab icons still come from
+   * `app/icon.*` / `app/apple-icon.*`.
    */
   logo?: string;
   /** Default meta description. */
