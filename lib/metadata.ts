@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Post } from "@/lib/posts";
 import { getPostOgImage } from "@/lib/posts";
-import { SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_TITLE, SITE_URL, siteConfig } from "@/lib/site";
 
 type PageMetadataOptions = {
   title?: string;
@@ -54,10 +54,22 @@ export function createPageMetadata({
   const url = absoluteUrl(path);
   const ogImage = image ?? defaultOgImageUrl();
 
+  const logo = siteConfig.logo;
+
   return {
     title: pageTitle,
     description,
     metadataBase: new URL(SITE_URL),
+    // app/icon.* and app/apple-icon.* are picked up automatically; also
+    // declare logo when present so tabs/bookmarks stay consistent after forks.
+    ...(logo
+      ? {
+          icons: {
+            icon: [{ url: logo }, { url: "/icon.jpg", type: "image/jpeg", sizes: "192x192" }],
+            apple: [{ url: "/apple-icon.jpg", type: "image/jpeg", sizes: "180x180" }],
+          },
+        }
+      : {}),
     alternates: {
       canonical: url,
       types: {

@@ -7,7 +7,15 @@ import { TerminalShell } from "@/components/terminal/TerminalShell";
 import { ThemeProvider } from "@/components/terminal/ThemeProvider";
 import { createPageMetadata } from "@/lib/metadata";
 import { getPosts } from "@/lib/posts";
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_URL, socialLinks } from "@/lib/site";
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_LANG,
+  SITE_NAME,
+  SITE_URL,
+  siteConfig,
+  socialLinks,
+} from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = createPageMetadata();
@@ -36,6 +44,9 @@ export default function RootLayout({
         "@id": `${SITE_URL}/#person`,
         name: SITE_AUTHOR,
         url: SITE_URL,
+        ...(siteConfig.logo
+          ? { image: `${SITE_URL}${siteConfig.logo.startsWith("/") ? siteConfig.logo : `/${siteConfig.logo}`}` }
+          : {}),
         sameAs: socialLinks
           .map((link) => link.href)
           .filter((href) => href.startsWith("http")),

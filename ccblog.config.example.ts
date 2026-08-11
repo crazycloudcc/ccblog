@@ -17,6 +17,9 @@ const config: CcblogConfig = {
   author: "yourhandle",
   handle: "yourhandle",
   initials: "yo",
+  // Optional: drop an image in public/ and set the path, e.g. "/logo.jpg".
+  // When set, the sidebar avatar uses it; initials remain the text fallback.
+  // logo: "/logo.jpg",
   description: "Notes on what you build and think about.",
   tagline: "code · notes",
   ogTagline: "Your one-line tagline for social cards.",

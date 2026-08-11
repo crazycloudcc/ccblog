@@ -28,9 +28,23 @@ export function TerminalSidebar() {
     <aside className="terminal-chrome hidden w-52 shrink-0 flex-col justify-between border-r border-lavender-mist bg-lavender-mist/20 lg:flex">
       <div>
         <div className="flex flex-col items-center gap-2 border-b border-lavender-mist/60 px-4 py-5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ink/10 font-mono text-lg font-semibold text-ink">
-            {siteConfig.initials}
-          </div>
+          {siteConfig.logo ? (
+            // eslint-disable-next-line @next/next/no-img-element -- static public brand asset; no size negotiation needed
+            <img
+              src={siteConfig.logo}
+              alt={`${siteConfig.author} logo`}
+              width={48}
+              height={48}
+              className="h-12 w-12 rounded-full object-cover ring-1 ring-lavender-mist/80"
+            />
+          ) : (
+            <div
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-ink/10 font-mono text-lg font-semibold text-ink"
+              aria-hidden
+            >
+              {siteConfig.initials}
+            </div>
+          )}
           <div className="text-center font-mono text-xs">
             <div className="font-semibold text-ink">{siteConfig.author}</div>
             <div className="mt-0.5 text-fog">{siteConfig.tagline}</div>

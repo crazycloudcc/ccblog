@@ -14,6 +14,7 @@ const config: CcblogConfig = {
   author: "crazycloudcc",
   handle: "crazycloudcc",
   initials: "cc",
+  logo: "/logo.jpg",
   description: "An independent developer's notes on AI, Web3, and game development.",
   tagline: "AI · Web3 · Game",
   ogTagline: "Notes on AI, Web3, and game development.",

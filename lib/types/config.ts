@@ -33,8 +33,14 @@ export type CcblogConfig = {
   author: string;
   /** Shell handle, used in the `handle@blog` prompt and /home/<handle>/blog path. */
   handle: string;
-  /** 1-3 char avatar mark shown in the sidebar, e.g. "cc". */
+  /** 1-3 char avatar mark shown in the sidebar when `logo` is unset, e.g. "cc". */
   initials: string;
+  /**
+   * Optional public path to the site logo (sidebar avatar + optional metadata).
+   * Example: `"/logo.jpg"`. When set, the sidebar circle shows the image;
+   * browser tab icons still come from `app/icon.*` / `app/apple-icon.*`.
+   */
+  logo?: string;
   /** Default meta description. */
   description: string;
   /** Sidebar subtitle under the avatar, e.g. "AI · Web3 · Game". */

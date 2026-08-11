@@ -45,6 +45,14 @@ export function validateConfig(config: CcblogConfig): string[] {
     errors.push(`config.url must start with http:// or https:// (got "${config.url}")`);
   }
 
+  if (config.logo !== undefined) {
+    if (typeof config.logo !== "string" || !config.logo.trim()) {
+      errors.push("config.logo must be a non-empty string when set");
+    } else if (!config.logo.startsWith("/")) {
+      errors.push(`config.logo must be a root-relative public path starting with / (got "${config.logo}")`);
+    }
+  }
+
   if (!Array.isArray(config.topics) || config.topics.length === 0) {
     errors.push("config.topics must be a non-empty array of strings");
   } else if (!config.topics.every((topic) => typeof topic === "string" && topic.trim())) {
