@@ -45,6 +45,10 @@ ccblog is meant to be forked in minutes, so **never hardcode a name, handle, soc
 
 The committed `ccblog.config.ts` carries the maintainer's real data because this repo powers the live site. Don't replace it with placeholder values in a PR.
 
+`source.href` is the **upstream template** URL, not personal identity. Leave it pointing at `https://github.com/crazycloudcc/ccblog` in both the live config and the example so forks credit the project.
+
+Outward-facing copy (README first screen, launch posts) should sell the terminal shell and the in-browser C/C++ playground. Do not lead with `/apps` — that catalog is the maintainer's App Store list and is off by default for forks.
+
 ## Common changes
 
 **Add a social icon** - add the path to `components/terminal/social-icons.tsx` and the key to `SocialIcon` in `lib/types/config.ts`. Forkers then pick it by key in `config.social`.

@@ -93,6 +93,12 @@ export async function buildPlaygroundShareUrl(
   return href;
 }
 
+/** Path + query only, so embeds work on preview hosts and localhost. */
+export async function buildPlaygroundSharePath(payload: PlaygroundSharePayload): Promise<string> {
+  const url = new URL(await buildPlaygroundShareUrl(payload, "https://ccblog.local"));
+  return `${url.pathname}${url.search}`;
+}
+
 export async function buildPlaygroundEmbedUrl(
   payload: PlaygroundSharePayload,
   origin = typeof window === "undefined" ? "https://crazycloud.cc" : window.location.origin,

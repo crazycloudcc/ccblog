@@ -69,6 +69,14 @@ function parseDirectiveAttrs(raw?: string): Record<string, string> {
   return attrs;
 }
 
+function unescapeDirectiveAttr(value?: string): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  return value.replace(/\\n/g, "\n").replace(/\\t/g, "\t");
+}
+
 function extractFencedCode(body: string): { language?: string; code: string; rest: string } {
   const match = body.match(/```(\w*)\n?([\s\S]*?)```/);
   if (!match) {
@@ -279,7 +287,7 @@ function parseDirective(name: string, attrsRaw: string | undefined, body: string
         lang,
         readonly: attrs.readonly === "true" || attrs.readonly === "1",
         source: extracted.code,
-        stdin: attrs.stdin,
+        stdin: unescapeDirectiveAttr(attrs.stdin),
         title: attrs.title,
       };
     }

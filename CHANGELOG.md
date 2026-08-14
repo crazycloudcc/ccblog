@@ -17,11 +17,17 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 - Per-post Open Graph images (`app/blog/[slug]/opengraph-image.tsx`)
 - Demo notes: playground, content-blocks, binary-search, quicksort, LIS
 - `content/notes/content-blocks.md` documenting interactive directives
+- Optional `config.source` credit in the status bar and `/about` (forks keep the upstream URL)
+- README / README.zh-CN first screen: template hook, Use this template, Deploy with Vercel, quicksort demo link
+- `docs/fork-dry-run.md` second-account deploy checklist
+- `docs/media/README.md` shot list for the README hero GIF
 
 ### Changed
 
 - README / README.zh-CN rewritten for fork-and-deploy positioning
 - Social icons extracted to a shared terminal chrome module
+- Start Up note: Deploy button, Use this template, first-deploy-is-demo identity
+- Quicksort note: share-oriented excerpt, default stdin on the in-article runner
 
 ### Removed
 

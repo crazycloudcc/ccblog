@@ -5,9 +5,35 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?logo=node.js&logoColor=white)
 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 
-终端风格的个人博客与小实验场——Markdown 笔记、站内搜索，以及完全在浏览器中运行的 C/C++ Playground。
+可 fork 的终端博客。C / C++ 在浏览器里编译运行。改一个配置文件，然后部署。
 
-**在线站点：** [crazycloud.cc](https://crazycloud.cc) · **English:** [README.md](README.md)
+[Use this template](https://github.com/crazycloudcc/ccblog/generate)
+&nbsp;·&nbsp;
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcrazycloudcc%2Fccblog&env=NEXT_PUBLIC_SITE_URL&envDescription=Canonical%20public%20URL%20(e.g.%20https%3A%2F%2Fyour-domain.com)&project-name=ccblog&repository-name=ccblog)
+&nbsp;·&nbsp;
+[在线演示](https://crazycloud.cc)
+&nbsp;·&nbsp;
+[在文章里跑一遍快排](https://crazycloud.cc/blog/quicksort)
+&nbsp;·&nbsp;
+[English](README.md)
+
+![ccblog 终端启动与浏览器内 C++ 运行](docs/media/boot-and-run.gif)
+
+<p align="center">
+  <img src="docs/media/home-dark.png" alt="首页终端会话" width="32%" />
+  <img src="docs/media/playground-run.png" alt="Playground 编译运行" width="32%" />
+  <img src="docs/media/quicksort-embed.png" alt="文章内快排注释块" width="32%" />
+</p>
+
+### 为什么 fork 这个
+
+- 改 `ccblog.config.ts` 就能换品牌：名字、社交链接、功能开关
+- 浏览器内 **C11 / C++17**（clang → WASM，无服务端、不用安装）
+- 文章可嵌入可运行代码（`:::playground`），以及 annotate / steps / bench
+- 静态搜索（Pagefind）、RSS、sitemap、JSON-LD、Open Graph
+- 没有 iOS 应用就保持 `features.apps` 关闭（example 配置的默认值）
+
+第一次 Deploy 看起来仍是 demo 站。把 `ccblog.config.example.ts` 拷成 `ccblog.config.ts`，设置 `NEXT_PUBLIC_SITE_URL`，再部署一次。
 
 ---
 
@@ -15,7 +41,7 @@
 
 **ccblog** 是一个模仿 macOS 终端会话的 Next.js 站点。文章以 Markdown 文件存放；界面用 `cd`、`cat`、`grep` 和面板样式组织内容，而非传统博客布局。
 
-项目天生面向 fork：改一个配置文件，放入你的文章，部署即可。
+首页有一段简短的启动动效（笔记逐行打出后落位）。主题支持浅色 / 深色 / 跟随系统，并尊重 `prefers-reduced-motion`。
 
 ### 功能概览
 
@@ -24,11 +50,9 @@
 | **博客** | Markdown + frontmatter，标签与系列筛选，阅读时长，上一篇/下一篇，相关文章 |
 | **搜索** | [Pagefind](https://pagefind.app/) 静态索引，`postbuild` 时生成 |
 | **Playground** | 基于 [browsercc](https://www.npmjs.com/package/browsercc) WASM 的 C11 / C++17 编译运行——Monaco 编辑器、stdin、分享链接、编译阶段可视化 |
-| **Apps** | 可选：构建时从 iTunes Lookup API 同步 App Store 应用列表 |
 | **内容块** | 文章内支持 `:::trace`、`:::bench`、`:::annotate`、`:::playground` 等指令 |
 | **元数据** | RSS、sitemap、JSON-LD、Open Graph 图片 |
-
-首页有一段简短的启动动效（笔记逐行打出后落位）。主题支持浅色 / 深色 / 跟随系统，并尊重 `prefers-reduced-motion`。
+| **Apps** | 可选的 App Store 目录；除非打开 `features.apps`，否则不出现 |
 
 ---
 
@@ -48,23 +72,31 @@
 **环境要求：** Node.js 20+，npm 9+。
 
 ```bash
-# 1. 在 GitHub 上 Fork，然后克隆你的 fork
+# 1. 用 Use this template（或 Fork），然后克隆你的副本
 git clone https://github.com/<your-username>/ccblog.git
 cd ccblog
 npm install
 
-# 2. 改成你自己的
-cp ccblog.config.example.ts ccblog.config.ts   # 可选：带注释的空白模板
-#    编辑 ccblog.config.ts -> name、author、social、url、feature flags
+# 2. 先改成你的，再做第一次认真部署
+cp ccblog.config.example.ts ccblog.config.ts
+#    改 name、author、social、url
+#    没有 Apple 开发者 ID 就保持 features.apps 为 false
 
 # 3. 本地运行
 npm run dev    # http://localhost:3000
 
 # 4. 部署到 Vercel
-#    在 https://vercel.com/new 导入仓库，设置 NEXT_PUBLIC_SITE_URL，部署。
+#    点上面的 Deploy 按钮，或在 https://vercel.com/new 导入仓库
+#    设置 NEXT_PUBLIC_SITE_URL 为你的生产地址
 ```
 
-以上就是全部流程。`npm run build` 会校验 `ccblog.config.ts`，并在 `/apps` 关闭时跳过可选的 App Store 同步——不发布 iOS 应用的 fork 无需额外清理。完整走查见站内文章 **Start Up**（`content/notes/nextjs-blog-setup.md`）。
+第一次部署如果跳过第 2 步，会踩这些坑：
+
+- 仓库里的 `ccblog.config.ts` 是 **demo 身份**。不拷 example，站点仍是 crazycloudcc，还可能同步 demo 的 App Store 列表。
+- `/blog` 搜索依赖 `npm run build`（Pagefind 在 `postbuild` 生成）。只跑 `next dev` 没有索引。
+- 生产环境的 Playground WASM 从 unpkg 拉取，不打进部署包。
+
+以上就是全部流程。完整走查见站内文章 **Start Up**（`content/notes/nextjs-blog-setup.md`）。维护者干跑清单：`docs/fork-dry-run.md`。
 
 ---
 

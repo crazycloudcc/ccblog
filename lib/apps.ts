@@ -44,12 +44,12 @@ export const apps: AppRelease[] = [
     "description": "Weather Trace shows current conditions, hourly forecasts, and daily outlooks based on your location.",
     "appStoreUrl": "https://apps.apple.com/us/app/weather-trace/id6761846937",
     "releaseDate": "2026-05-08",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "tags": [
       "Weather",
       "Utilities"
     ],
-    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b1/18/cd/b118cd93-f898-3873-5cfa-1c5cab005be0/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
+    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/29/dd/b9/29ddb935-2e57-4570-52a3-3298703e0dd1/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "slug": "localbeats",
@@ -74,27 +74,27 @@ export const apps: AppRelease[] = [
     "description": "Cheer Loop helps you create bold cheering text and hand-drawn doodles for matches, concerts, and live events.",
     "appStoreUrl": "https://apps.apple.com/us/app/cheer-loop/id6761043891",
     "releaseDate": "2026-03-27",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "tags": [
       "Entertainment",
       "Sports"
     ],
-    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a8/16/91/a8169107-4cfd-d1d5-6804-e34102a36801/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
+    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/93/ee/62/93ee623b-0db8-31c5-e328-4cb064a1e1d5/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "slug": "travel-speaker",
     "name": "Travel Speaker",
     "category": "utility",
     "tagline": "Voice Translator for Travel",
-    "description": "Travel Speaker helps you communicate abroad with fast voice and text translation.",
+    "description": "Translate signs, menus, speech, and typed text while you travel.",
     "appStoreUrl": "https://apps.apple.com/us/app/travel-speaker/id6755930707",
     "releaseDate": "2026-03-26",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "tags": [
       "Travel",
       "Utilities"
     ],
-    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d8/37/ba/d837ba0b-4dd0-eac5-f768-ac41db117691/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
+    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/09/82/37/098237e3-6458-9f9d-fe68-daea1ce24293/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "slug": "ideamic",
@@ -116,30 +116,30 @@ export const apps: AppRelease[] = [
     "name": "PDF Tools Pro",
     "category": "utility",
     "tagline": "Scan, Edit, Merge, Encrypt",
-    "description": "PDF Tools Pro helps you handle everyday PDF tasks quickly: open and organize files, annotate with highlight/underline/strikeout and handwriting, reorder/rotate/",
+    "description": "PDF Tools Pro keeps everyday PDF work on your iPhone or iPad.",
     "appStoreUrl": "https://apps.apple.com/us/app/pdf-tools-pro/id6760276378",
     "releaseDate": "2026-03-20",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "tags": [
       "Productivity",
       "Utilities"
     ],
-    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c2/a0/89/c2a0895c-d4bb-a90f-7035-daffd4c8175c/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
+    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/19/d9/f5/19d9f5ac-5324-762b-9d22-b51c17fccb8b/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "slug": "noise-mixer",
     "name": "Noise Mixer",
     "category": "utility",
     "tagline": "Sleep & Focus Sounds",
-    "description": "Noise Mixer helps you build focus and sleep soundscapes with white noise, rain, and ambient mixes.",
+    "description": "Noise Mixer helps you create calm soundscapes for sleep, focus, and relaxation.",
     "appStoreUrl": "https://apps.apple.com/us/app/noise-mixer/id6759958402",
     "releaseDate": "2026-03-14",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "tags": [
       "Health & Fitness",
       "Music"
     ],
-    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d6/3b/3a/d63b3afe-d686-8ac8-e606-dd966ca6f121/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
+    "iconUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/fd/c2/bf/fdc2bf0f-c0f5-7088-7e3e-d86fee460702/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "slug": "cyberscripts",

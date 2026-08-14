@@ -79,4 +79,16 @@ export type CcblogConfig = {
      */
     githubRepo: string;
   };
+  /**
+   * Upstream template credit. Forks should keep this pointing at the original
+   * repo so live sites can link back. Omit or set enabled: false to hide it.
+   */
+  source?: {
+    /** Short name shown in chrome, e.g. "ccblog". */
+    label: string;
+    /** Upstream template repo URL. */
+    href: string;
+    /** Default true when `source` is set. */
+    enabled?: boolean;
+  };
 };

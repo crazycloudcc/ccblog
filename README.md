@@ -5,9 +5,35 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933?logo=node.js&logoColor=white)
 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 
-A terminal-themed personal blog and small web lab - markdown notes, in-browser search, and a C/C++ playground that runs entirely in the browser.
+Forkable terminal blog. C and C++ compile in the browser. One config file, then deploy.
 
-**Live site:** [crazycloud.cc](https://crazycloud.cc) · **中文文档:** [README.zh-CN.md](README.zh-CN.md)
+[Use this template](https://github.com/crazycloudcc/ccblog/generate)
+&nbsp;·&nbsp;
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcrazycloudcc%2Fccblog&env=NEXT_PUBLIC_SITE_URL&envDescription=Canonical%20public%20URL%20(e.g.%20https%3A%2F%2Fyour-domain.com)&project-name=ccblog&repository-name=ccblog)
+&nbsp;·&nbsp;
+[Live demo](https://crazycloud.cc)
+&nbsp;·&nbsp;
+[Run quicksort in the article](https://crazycloud.cc/blog/quicksort)
+&nbsp;·&nbsp;
+[中文文档](README.zh-CN.md)
+
+![ccblog terminal boot and in-browser C++ run](docs/media/boot-and-run.gif)
+
+<p align="center">
+  <img src="docs/media/home-dark.png" alt="Home terminal session" width="32%" />
+  <img src="docs/media/playground-run.png" alt="Playground compile and run" width="32%" />
+  <img src="docs/media/quicksort-embed.png" alt="Annotated quicksort in a post" width="32%" />
+</p>
+
+### Why fork this
+
+- Rebrand by editing `ccblog.config.ts` — name, social links, feature flags
+- In-browser **C11 / C++17** via clang-in-WASM (no server, no install)
+- Posts can embed a live runner (`:::playground`) plus annotate / steps / bench blocks
+- Static search (Pagefind), RSS, sitemap, JSON-LD, Open Graph
+- No App Store? Leave `features.apps` off (the default in the example config)
+
+The first Deploy still looks like the demo site. Copy `ccblog.config.example.ts` over `ccblog.config.ts`, set `NEXT_PUBLIC_SITE_URL`, and redeploy.
 
 ---
 
@@ -15,7 +41,7 @@ A terminal-themed personal blog and small web lab - markdown notes, in-browser s
 
 **ccblog** is a Next.js site styled like a macOS terminal session. Posts live as markdown files; the UI leans into `cd`, `cat`, `grep`, and panel chrome rather than a conventional blog layout.
 
-It is built to be forked: edit one config file, drop in your notes, deploy.
+The home page opens with a short boot sequence (notes type in, then settle). Theme follows light / dark / system, with reduced-motion respected throughout.
 
 ### Highlights
 
@@ -24,11 +50,9 @@ It is built to be forked: edit one config file, drop in your notes, deploy.
 | **Blog** | Markdown + frontmatter, tag & series filters, reading time, prev/next, related posts |
 | **Search** | [Pagefind](https://pagefind.app/) static index, built on `postbuild` |
 | **Playground** | C11 / C++17 compile & run via [browsercc](https://www.npmjs.com/package/browsercc) WASM - Monaco editor, stdin, share links, compile timeline |
-| **Apps** | Optional App Store catalog synced from the iTunes Lookup API at build time |
 | **Content blocks** | `:::trace`, `:::bench`, `:::annotate`, `:::playground` directives in posts |
 | **Meta** | RSS, sitemap, JSON-LD, Open Graph image |
-
-The home page opens with a short boot sequence (notes type in, then settle). Theme follows light / dark / system, with reduced-motion respected throughout.
+| **Apps** | Optional App Store catalog, off unless you turn `features.apps` on |
 
 ---
 
@@ -48,23 +72,31 @@ The home page opens with a short boot sequence (notes type in, then settle). The
 **Requirements:** Node.js 20+, npm 9+.
 
 ```bash
-# 1. Fork on GitHub, then clone your fork
+# 1. Use this template (or fork), then clone your copy
 git clone https://github.com/<your-username>/ccblog.git
 cd ccblog
 npm install
 
-# 2. Make it yours
-cp ccblog.config.example.ts ccblog.config.ts   # optional: blank, commented template
-#    edit ccblog.config.ts -> name, author, social links, url, feature flags
+# 2. Make it yours — do this before the first real deploy
+cp ccblog.config.example.ts ccblog.config.ts
+#    edit name, author, social links, url
+#    leave features.apps false unless you have an Apple developer ID
 
 # 3. Run locally
 npm run dev    # http://localhost:3000
 
 # 4. Deploy on Vercel
-#    Import the repo at https://vercel.com/new, set NEXT_PUBLIC_SITE_URL, deploy.
+#    Use the Deploy button above, or Import the repo at https://vercel.com/new
+#    Set NEXT_PUBLIC_SITE_URL to your production URL
 ```
 
-That is the whole loop. `npm run build` validates `ccblog.config.ts` and skips the optional App Store sync when `/apps` is off - a fork with no iOS apps needs no extra cleanup. For a detailed walkthrough, see the **Start Up** post (`content/notes/nextjs-blog-setup.md`).
+A few things the first deploy will otherwise get wrong:
+
+- The committed `ccblog.config.ts` is the **demo identity**. Until you copy the example file, the site still says crazycloudcc and may sync the demo App Store list.
+- Search on `/blog` needs `npm run build` (Pagefind is generated at `postbuild`). `next dev` alone has no index.
+- Playground WASM is fetched from unpkg in production, not bundled into the deploy.
+
+That is the whole loop. For a detailed walkthrough, see the **Start Up** post (`content/notes/nextjs-blog-setup.md`). Maintainer dry-run: `docs/fork-dry-run.md`.
 
 ---
 

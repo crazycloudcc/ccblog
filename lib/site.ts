@@ -3,6 +3,11 @@ import config from "@/ccblog.config";
 
 export type { CcblogConfig, Features, SocialLink, SocialIcon } from "@/lib/types/config";
 
+export type SiteSource = {
+  label: string;
+  href: string;
+};
+
 /** Full typed site config (sourced from ccblog.config.ts). */
 export const siteConfig: CcblogConfig = config;
 
@@ -28,6 +33,22 @@ export const features: Features = config.features;
 
 /** Apple developer ID for /apps sync. Only used when features.apps is true. */
 export const APPLE_DEVELOPER_ID = config.apps.developerId;
+
+/** Upstream template credit for chrome / about. Null when unset or disabled. */
+export const siteSource: SiteSource | null = (() => {
+  const source = config.source;
+  if (!source || source.enabled === false) {
+    return null;
+  }
+
+  const label = source.label.trim();
+  const href = source.href.trim();
+  if (!label || !href) {
+    return null;
+  }
+
+  return { label, href };
+})();
 
 const ROUTE_FEATURE: Record<string, keyof Features | undefined> = {
   "/": undefined, // home is always enabled

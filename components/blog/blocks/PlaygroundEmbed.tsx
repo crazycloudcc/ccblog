@@ -12,34 +12,58 @@ type PlaygroundEmbedProps = {
   stdin?: string;
   readonly?: boolean;
   title?: string;
+  /** Prebuilt share URL from the server so the iframe is in the first HTML. */
+  shareUrl?: string;
 };
 
-export function PlaygroundEmbed({ lang, source, stdin, readonly = false, title }: PlaygroundEmbedProps) {
-  const [playgroundUrl, setPlaygroundUrl] = useState<string | null>(null);
-  const [embedUrl, setEmbedUrl] = useState<string | null>(null);
+function withEmbedParam(url: string, readonly: boolean): string {
+  const iframeUrl = new URL(url, "https://ccblog.local");
+  iframeUrl.searchParams.set("embed", "1");
+  if (readonly) {
+    iframeUrl.searchParams.set("readonly", "1");
+  }
+  return `${iframeUrl.pathname}${iframeUrl.search}`;
+}
+
+export function PlaygroundEmbed({
+  lang,
+  source,
+  stdin,
+  readonly = false,
+  title,
+  shareUrl,
+}: PlaygroundEmbedProps) {
+  const [playgroundUrl, setPlaygroundUrl] = useState<string | null>(shareUrl ?? null);
+  const [embedUrl, setEmbedUrl] = useState<string | null>(
+    shareUrl ? withEmbedParam(shareUrl, readonly) : null,
+  );
 
   useEffect(() => {
     let cancelled = false;
 
     async function buildUrls() {
-      const payload = {
-        lang,
-        source,
-        stdin,
-        readonly,
-        title,
-      };
+      try {
+        const payload = {
+          lang,
+          source,
+          stdin,
+          readonly,
+          title,
+        };
 
-      const shareUrl = await buildPlaygroundShareUrl(payload);
-      const iframeUrl = new URL(shareUrl);
-      iframeUrl.searchParams.set("embed", "1");
-      if (readonly) {
-        iframeUrl.searchParams.set("readonly", "1");
-      }
+        const shareUrl = await buildPlaygroundShareUrl(payload);
+        const iframeUrl = new URL(shareUrl);
+        iframeUrl.searchParams.set("embed", "1");
+        if (readonly) {
+          iframeUrl.searchParams.set("readonly", "1");
+        }
 
-      if (!cancelled) {
-        setPlaygroundUrl(shareUrl);
-        setEmbedUrl(iframeUrl.toString());
+        if (!cancelled) {
+          setPlaygroundUrl(shareUrl);
+          setEmbedUrl(iframeUrl.toString());
+        }
+      } catch (error) {
+        console.error("[playground-embed] failed to build share url", error);
       }
     }
 

@@ -1,6 +1,6 @@
 ---
 title: Quicksort in C++
-excerpt: "Sort an array with quicksort - partition, recurse, and run it live in the browser playground."
+excerpt: "Quicksort you can edit and run in the browser — no install, no server."
 date: 2026-08-04
 coverLabel: rn-01
 tags:
@@ -13,7 +13,9 @@ difficulty: intermediate
 lang: en
 ---
 
-This is the first of the **Runnable Notes** - short algorithm write-ups where every snippet actually runs in your browser. No copy-paste into an IDE: hit run, feed it stdin, read the output.
+This is the first of the **Runnable Notes** - short algorithm write-ups where every snippet actually runs in your browser. No copy-paste into an IDE: **run the snippet below**, change a number, run it again.
+
+The same runner lives at `/playground`. The site itself is a [forkable template](https://github.com/crazycloudcc/ccblog/generate).
 
 **Quicksort** sorts in-place by picking a pivot, partitioning the array into values smaller and larger, then recursing on each side. Average `O(n log n)`, worst case `O(n^2)`.
 
@@ -68,7 +70,7 @@ For random data the choice barely matters. For hostile or nearly-sorted data, ra
 
 The full program reads `n`, then `n` integers, and prints them sorted. It runs right here - edit the code, change the stdin, hit run:
 
-:::playground{title="quicksort.cpp" lang="cpp"}
+:::playground{title="quicksort.cpp" lang="cpp" stdin="5\n3 1 4 1 5"}
 ```cpp
 #include <iostream>
 #include <vector>

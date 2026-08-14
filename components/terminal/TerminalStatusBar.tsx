@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/terminal/ThemeToggle";
-import { SITE_AUTHOR, SITE_BRANCH } from "@/lib/site";
+import { SITE_AUTHOR, SITE_BRANCH, siteSource } from "@/lib/site";
 
 type TerminalStatusBarProps = {
   postCount: number;
@@ -25,7 +25,17 @@ export function TerminalStatusBar({ postCount }: TerminalStatusBarProps) {
           <span className="text-code-teal">encoding</span>: utf-8
         </span>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
+        {siteSource ? (
+          <a
+            href={siteSource.href}
+            target="_blank"
+            rel="noreferrer"
+            className="transition-colors hover:text-ink"
+          >
+            <span className="text-code-teal">template</span>: {siteSource.label}
+          </a>
+        ) : null}
         <Link href="/blog" className="transition-colors hover:text-ink">
           tail -f notes
         </Link>

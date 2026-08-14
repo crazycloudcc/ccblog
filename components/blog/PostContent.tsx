@@ -5,6 +5,7 @@ import { PlaygroundEmbed } from "@/components/blog/blocks/PlaygroundEmbed";
 import { StepsCodeBlock } from "@/components/blog/blocks/StepsCodeBlock";
 import { TraceBlock } from "@/components/blog/blocks/TraceBlock";
 import { CodePanel } from "@/components/ui/CodePanel";
+import { buildPlaygroundSharePath } from "@/lib/playground/share";
 import { resolvePlaygroundSnippet } from "@/lib/playground/snippets";
 import { parsePostContent } from "@/lib/parse-post-content";
 import type { PostPlayground } from "@/lib/posts";
@@ -14,9 +15,31 @@ type PostContentProps = {
   playground?: PostPlayground;
 };
 
-export function PostContent({ content, playground }: PostContentProps) {
+export async function PostContent({ content, playground }: PostContentProps) {
   const blocks = parsePostContent(content);
   const snippet = playground?.slug ? resolvePlaygroundSnippet(playground.slug) : null;
+  const playgroundShareUrls = await Promise.all(
+    blocks.map((block) =>
+      block.type === "playground"
+        ? buildPlaygroundSharePath({
+            lang: block.lang,
+            source: block.source,
+            stdin: block.stdin,
+            readonly: block.readonly,
+            title: block.title,
+          })
+        : Promise.resolve(undefined),
+    ),
+  );
+  const snippetShareUrl = snippet
+    ? await buildPlaygroundSharePath({
+        lang: snippet.lang,
+        source: snippet.source,
+        stdin: snippet.stdin,
+        readonly: playground?.readonly,
+        title: snippet.title,
+      })
+    : undefined;
 
   return (
     <div className="prose-terminal space-y-6">
@@ -98,6 +121,7 @@ export function PostContent({ content, playground }: PostContentProps) {
                 stdin={block.stdin}
                 readonly={block.readonly}
                 title={block.title}
+                shareUrl={playgroundShareUrls[index]}
               />
             );
 
@@ -177,6 +201,7 @@ export function PostContent({ content, playground }: PostContentProps) {
           stdin={snippet.stdin}
           readonly={playground?.readonly}
           title={snippet.title}
+          shareUrl={snippetShareUrl}
         />
       ) : null}
     </div>

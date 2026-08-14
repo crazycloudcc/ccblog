@@ -64,6 +64,13 @@ const config: CcblogConfig = {
     // owner/name - used as a fallback for the dev toolchain via /api/toolchain.
     githubRepo: "yourhandle/yourrepo",
   },
+  // Upstream template credit shown in the status bar and /about.
+  // Keep this URL so your live site links back to the template.
+  source: {
+    label: "ccblog",
+    href: "https://github.com/crazycloudcc/ccblog",
+    enabled: true,
+  },
 };
 
 export default config;

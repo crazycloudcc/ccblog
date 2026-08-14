@@ -85,6 +85,25 @@ export function validateConfig(config: CcblogConfig): string[] {
     }
   }
 
+  if (config.source !== undefined) {
+    const source = config.source;
+    if (!source || typeof source !== "object") {
+      errors.push("config.source must be an object when set");
+    } else {
+      if (typeof source.label !== "string" || !source.label.trim()) {
+        errors.push("config.source.label must be a non-empty string");
+      }
+      if (typeof source.href !== "string" || !source.href.trim()) {
+        errors.push("config.source.href must be a non-empty string");
+      } else if (!/^https?:\/\//.test(source.href)) {
+        errors.push(`config.source.href must start with http:// or https:// (got "${source.href}")`);
+      }
+      if (source.enabled !== undefined && typeof source.enabled !== "boolean") {
+        errors.push("config.source.enabled must be a boolean when set");
+      }
+    }
+  }
+
   if (!Array.isArray(config.social)) {
     errors.push("config.social must be an array");
   } else {

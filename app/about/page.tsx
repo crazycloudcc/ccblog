@@ -7,7 +7,7 @@ import {
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
-import { siteConfig, socialLinks } from "@/lib/site";
+import { siteConfig, siteSource, socialLinks } from "@/lib/site";
 
 const contacts = socialLinks.map((link) => ({
   key: link.label.toUpperCase(),
@@ -62,6 +62,37 @@ export default function AboutPage() {
           </TerminalComment>
         </TerminalOutput>
       </TerminalPanel>
+
+      {siteSource ? (
+        <TerminalPanel title="os-release">
+          <TerminalCommand command="cat /etc/os-release" />
+          <TerminalOutput>
+            <div className="mt-2 space-y-1 font-mono text-sm">
+              <div>
+                <span className="text-code-cobalt">NAME</span>
+                <span className="text-mist">=</span>
+                <span className="text-code-plum">&quot;{siteSource.label}&quot;</span>
+              </div>
+              <div className="flex flex-wrap gap-x-0">
+                <span className="text-code-cobalt">HOME_URL</span>
+                <span className="text-mist">=</span>
+                <Link
+                  href={siteSource.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-code-plum hover:text-code-cobalt hover:underline"
+                >
+                  {siteSource.href}
+                </Link>
+              </div>
+            </div>
+            <p className="prose-terminal mt-4 text-sm leading-[1.8] text-slate">
+              This site is a forkable terminal blog and C/C++ playground. Use the
+              template on GitHub to make it yours.
+            </p>
+          </TerminalOutput>
+        </TerminalPanel>
+      ) : null}
 
       <TerminalPanel>
         <TerminalCommand command="ls notes" />

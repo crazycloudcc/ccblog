@@ -67,6 +67,11 @@ const config: CcblogConfig = {
   playground: {
     githubRepo: "crazycloudcc/ccblog",
   },
+  source: {
+    label: "ccblog",
+    href: "https://github.com/crazycloudcc/ccblog",
+    enabled: true,
+  },
 };
 
 export default config;

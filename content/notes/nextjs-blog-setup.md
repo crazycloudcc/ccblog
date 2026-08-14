@@ -27,7 +27,21 @@ Optional:
 
 ## 1. Get the project
 
-### Option A - Fork (recommended for your own blog)
+### Option 0 - Deploy button
+
+Skip the local clone if you only want a live preview: use **[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcrazycloudcc%2Fccblog&env=NEXT_PUBLIC_SITE_URL&envDescription=Canonical%20public%20URL%20(e.g.%20https%3A%2F%2Fyour-domain.com)&project-name=ccblog&repository-name=ccblog)**. Set `NEXT_PUBLIC_SITE_URL` to the preview host Vercel gives you. The first deploy still uses the demo identity - see **First deploy still looks like the demo** below, then push a config change and redeploy.
+
+### Option A - Use this template (recommended)
+
+1. Open [Use this template](https://github.com/crazycloudcc/ccblog/generate).
+2. Create the repository under your account, then clone it:
+
+```bash
+git clone git@github.com:<your-username>/ccblog.git
+cd ccblog
+```
+
+### Option B - Fork
 
 1. Open [github.com/crazycloudcc/ccblog](https://github.com/crazycloudcc/ccblog) and click **Fork**.
 2. Clone your fork:
@@ -37,7 +51,7 @@ git clone git@github.com:<your-username>/ccblog.git
 cd ccblog
 ```
 
-### Option B - Clone directly
+### Option C - Clone the demo repo
 
 ```bash
 git clone git@github.com:crazycloudcc/ccblog.git
@@ -52,7 +66,7 @@ npm install
 
 ## 3. Configure the site
 
-All identity, social links, and feature flags live in `ccblog.config.ts` at the repo root - that one file is the whole rebrand surface. Edit it directly, or start from a blank template:
+All identity, social links, and feature flags live in `ccblog.config.ts` at the repo root - that one file is the whole rebrand surface. The committed file is the **live demo**. Start from the blank template before you treat the site as yours:
 
 ```bash
 cp ccblog.config.example.ts ccblog.config.ts
@@ -138,19 +152,28 @@ npm run lint
 
 ## 7. Deploy
 
+### First deploy still looks like the demo
+
+`ccblog.config.ts` in this repo is crazycloudcc's live site. A template clone or the Deploy button will ship that identity until you overwrite the file and redeploy.
+
+- Copy `ccblog.config.example.ts` → `ccblog.config.ts` and set your name, handle, url, and social links.
+- Leave `features.apps` **false** unless you have an Apple developer ID. Otherwise `/apps` lists the demo App Store titles.
+- Keep `source.href` pointed at `https://github.com/crazycloudcc/ccblog` so your site credits the template.
+- Set `NEXT_PUBLIC_SITE_URL` to *your* host. If it is missing, RSS and Open Graph still name `crazycloud.cc`.
+
 ### Vercel (recommended)
 
-1. Push your fork to GitHub.
-2. In [Vercel](https://vercel.com/new), **Import** the repository.
-3. Framework preset: **Next.js** (auto-detected).
-4. Add environment variable:
-   - `NEXT_PUBLIC_SITE_URL` = `https://your-domain.com`
-5. Deploy.
+0. Fastest: the **[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcrazycloudcc%2Fccblog&env=NEXT_PUBLIC_SITE_URL&envDescription=Canonical%20public%20URL%20(e.g.%20https%3A%2F%2Fyour-domain.com)&project-name=ccblog&repository-name=ccblog)** button on the README. Then fix the config as above and redeploy.
+1. Or push your template copy to GitHub and **Import** it at [Vercel](https://vercel.com/new).
+2. Framework preset: **Next.js** (auto-detected).
+3. Add environment variable:
+   - `NEXT_PUBLIC_SITE_URL` = `https://your-domain.com` (or the `*.vercel.app` preview, no trailing slash)
+4. Deploy.
 
 Vercel runs `npm run build` on each push to `main`. The `prebuild` and `postbuild` hooks run as part of that command - no extra build-step configuration needed.
 
-6. After deploy, attach your custom domain under **Project -> Settings -> Domains**.
-7. Update `NEXT_PUBLIC_SITE_URL` to match the final domain and redeploy if you changed it.
+5. After deploy, attach your custom domain under **Project -> Settings -> Domains**.
+6. Update `NEXT_PUBLIC_SITE_URL` to match the final domain and redeploy if you changed it.
 
 ### Other Node hosts
 
@@ -198,12 +221,14 @@ Forks inherit this workflow. Set `NEXT_PUBLIC_SITE_URL` in the workflow `env` bl
 Checklist:
 
 - [ ] `/` - home boot animation and notes feed
-- [ ] `/blog` - post list and `grep -R` search
+- [ ] `/blog` - post list and `grep -R` search (needs a production build, not only `next dev`)
 - [ ] `/blog/<slug>` - article renders, prev/next links work
-- [ ] `/feed.xml` - RSS contains your posts
+- [ ] `/blog/quicksort` - in-article playground Run works (first load fetches the WASM toolchain)
+- [ ] `/feed.xml` - RSS contains your posts and your host, not crazycloud.cc
 - [ ] `/sitemap.xml` - all routes listed
 - [ ] `/opengraph-image` - default OG card
 - [ ] `/playground` - compile and run a hello-world snippet
+- [ ] `/apps` is absent unless you set `features.apps: true`
 - [ ] Theme toggle (light / dark / system) persists across reloads
 
 ## Quick reference
