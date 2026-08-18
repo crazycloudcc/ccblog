@@ -15,9 +15,10 @@ const config: CcblogConfig = {
   handle: "crazycloudcc",
   initials: "cc",
   logo: "/logo.png",
-  description: "An independent developer's notes on AI, Web3, and game development.",
+  description:
+    "Terminal-themed notes and a browser C/C++ playground — markdown, clang-in-WASM, no install.",
   tagline: "AI · Web3 · Game",
-  ogTagline: "Notes on AI, Web3, and game development.",
+  ogTagline: "Terminal blog. C and C++ compile in the browser.",
   topics: ["ai", "web3", "game"],
   url: "https://crazycloud.cc",
   locale: "zh-CN",

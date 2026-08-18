@@ -5,17 +5,23 @@ import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
 import { getAllSeries, getAllTags, getPosts, getPostsBySeries, getPostsByTag, getRecentPosts } from "@/lib/posts";
-import { SITE_NAME } from "@/lib/site";
-
-export const metadata = createPageMetadata({
-  title: "Blog",
-  description: `Writing log from ${SITE_NAME}`,
-  path: "/blog",
-});
 
 type BlogPageProps = {
   searchParams: Promise<{ tag?: string; series?: string }>;
 };
+
+export async function generateMetadata({ searchParams }: BlogPageProps) {
+  const { tag, series } = await searchParams;
+  const filtered = Boolean(tag?.trim() || series?.trim());
+
+  return createPageMetadata({
+    title: "Notes",
+    description:
+      "Runnable C/C++ notes on a terminal-themed blog. Compile in the browser with clang-in-WASM — no install.",
+    path: "/blog",
+    robots: filtered ? { index: false, follow: true } : undefined,
+  });
+}
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { tag, series } = await searchParams;

@@ -21,6 +21,9 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 - README / README.zh-CN first screen: template hook, Use this template, Deploy with Vercel, quicksort demo link
 - `docs/fork-dry-run.md` second-account deploy checklist
 - `docs/media/README.md` shot list for the README hero GIF
+- Chinese hero note `liulanqi-bianyi-cpp` (browser C++ compile, no install)
+- Home page crawlable `h1` + intro (SSR, not behind the boot sequence)
+- `proxy.ts` sets `X-Robots-Tag: noindex` on `/playground?z=` / `embed=1` and `/blog?tag=` / `?series=`
 
 ### Changed
 
@@ -28,6 +31,9 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 - Social icons extracted to a shared terminal chrome module
 - Start Up note: Deploy button, Use this template, first-deploy-is-demo identity
 - Quicksort note: share-oriented excerpt, default stdin on the in-article runner
+- Site / home / notes / playground / about meta copy matches the real product (terminal blog + in-browser C++)
+- Sitemap `lastModified` uses post `updated` or `date`, not `new Date()` at build
+- RSS `<language>` follows `SITE_LANG`
 
 ### Removed
 

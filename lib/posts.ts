@@ -158,8 +158,27 @@ function loadPosts(): Post[] {
   return files.map((file, index) => readPostFile(file, index));
 }
 
+export function getPostModified(post: Post): string {
+  return post.updated ?? post.date;
+}
+
 export function getPosts(): Post[] {
   return loadPosts().sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/** Latest `updated` or `date` among all notes, for sitemap lastmod. */
+export function getLatestContentDate(): Date {
+  const posts = loadPosts();
+  let latest = "1970-01-01";
+
+  for (const post of posts) {
+    const modified = getPostModified(post);
+    if (modified > latest) {
+      latest = modified;
+    }
+  }
+
+  return new Date(`${latest}T00:00:00.000Z`);
 }
 
 export function getPostBySlug(slug: string): Post | undefined {

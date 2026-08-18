@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Post } from "@/lib/posts";
 import { getPostOgImage } from "@/lib/posts";
-import { SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_TITLE, SITE_URL, siteConfig } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_URL, siteConfig } from "@/lib/site";
 
 type PageMetadataOptions = {
   title?: string;
@@ -11,6 +11,7 @@ type PageMetadataOptions = {
   type?: "website" | "article";
   publishedTime?: string;
   lang?: string;
+  robots?: Metadata["robots"];
 };
 
 export function absoluteUrl(path = ""): string {
@@ -49,8 +50,9 @@ export function createPageMetadata({
   type = "website",
   publishedTime,
   lang,
+  robots,
 }: PageMetadataOptions = {}): Metadata {
-  const pageTitle = title ? `${title} — ${SITE_NAME}` : SITE_TITLE;
+  const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} · terminal blog & in-browser C/C++`;
   const url = absoluteUrl(path);
   const ogImage = image ?? defaultOgImageUrl();
 
@@ -92,6 +94,7 @@ export function createPageMetadata({
       description,
       images: [ogImage],
     },
+    ...(robots ? { robots } : {}),
   };
 }
 

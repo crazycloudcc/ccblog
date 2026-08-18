@@ -19,7 +19,7 @@ const grepPattern = contacts.map((item) => item.key).join("|");
 
 export const metadata = createPageMetadata({
   title: "About",
-  description: `About ${siteConfig.author} and how to get in touch`,
+  description: `${siteConfig.author}'s terminal blog and in-browser C/C++ playground. Fork the template on GitHub.`,
   path: "/about",
 });
 
@@ -33,7 +33,9 @@ export default function AboutPage() {
             {siteConfig.name}
           </h1>
           <p className="prose-terminal mt-4 text-base leading-[1.8] text-slate">
-            A personal blog by {siteConfig.author}. {siteConfig.description}
+            A personal blog by {siteConfig.author}. Terminal-themed notes, and a
+            C11 / C++17 playground that compiles in the browser with clang-in-WASM —
+            no install, no server. {siteConfig.description}
           </p>
         </TerminalOutput>
       </TerminalPanel>

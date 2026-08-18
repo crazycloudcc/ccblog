@@ -1,6 +1,6 @@
 import { absoluteUrl } from "@/lib/metadata";
 import { getPosts } from "@/lib/posts";
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function escapeXml(value: string): string {
   return value
@@ -38,7 +38,7 @@ export async function GET() {
     <title>${escapeXml(SITE_NAME)}</title>
     <link>${SITE_URL}</link>
     <description>${escapeXml(SITE_DESCRIPTION)}</description>
-    <language>en-us</language>
+    <language>${escapeXml(SITE_LANG.toLowerCase())}</language>
     <managingEditor>${escapeXml(SITE_AUTHOR)}</managingEditor>
     <atom:link href="${absoluteUrl("/feed.xml")}" rel="self" type="application/rss+xml" />
     ${items}

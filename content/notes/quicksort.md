@@ -138,3 +138,5 @@ Paste into the stdin box and run:
 The first run is slower - that is the one-time WASM toolchain fetch. After that, runs drop to tens of milliseconds.
 
 Next in the series: **Binary Search** - the divide-and-conquer counterpart, where the pivot choice is fixed and the trap is off-by-one.
+
+中文导览（同一套 runner）：[在浏览器里编译运行 C++](/blog/liulanqi-bianyi-cpp)。

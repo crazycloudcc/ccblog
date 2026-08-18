@@ -13,7 +13,7 @@ import {
 } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import type { Post } from "@/lib/posts";
-import { isRouteEnabled, SITE_LOCALE, siteConfig } from "@/lib/site";
+import { isRouteEnabled, SITE_LOCALE, siteConfig, siteSource } from "@/lib/site";
 
 const dirEntries = [
   { name: "notes", href: "/blog" },
@@ -47,7 +47,54 @@ type HomeViewProps = {
 function NotesSection({ posts }: { posts: Post[] }) {
   return (
     <TerminalPanel title="notes" className="border-b-0 px-0 py-0 md:px-0 md:py-0">
-      <TerminalCommand command="tail -n 4 notes" />
+      <h1 className="prose-terminal text-2xl font-semibold leading-[1.25] text-ink">
+        终端博客，浏览器里编译运行 C++
+      </h1>
+      <p className="prose-terminal mt-3 max-w-3xl text-base leading-[1.8] text-slate">
+        不用安装编译器。笔记是 Markdown；
+        {isRouteEnabled("/playground") ? (
+          <>
+            {" "}
+            <Link href="/playground" className="font-semibold text-ink hover:text-code-cobalt">
+              /playground
+            </Link>{" "}
+            用 clang 在浏览器里编成 WebAssembly。
+          </>
+        ) : (
+          " 站点带一个浏览器内 C/C++ 实验场。"
+        )}
+        {siteSource ? (
+          <>
+            可以{" "}
+            <Link
+              href={`${siteSource.href.replace(/\/$/, "")}/generate`}
+              className="font-semibold text-ink hover:text-code-cobalt"
+            >
+              fork 成你的站
+            </Link>
+            。
+          </>
+        ) : (
+          "改一个配置文件就能部署。"
+        )}
+        先跑一篇{" "}
+        <Link href="/blog/liulanqi-bianyi-cpp" className="font-semibold text-ink hover:text-code-cobalt">
+          中文导览
+        </Link>
+        {isRouteEnabled("/blog") ? (
+          <>
+            {" "}
+            或{" "}
+            <Link href="/blog/quicksort" className="font-semibold text-ink hover:text-code-cobalt">
+              Quicksort
+            </Link>
+          </>
+        ) : null}
+        。
+      </p>
+      <div className="mt-6">
+        <TerminalCommand command="tail -n 4 notes" />
+      </div>
       <div className="mt-4">
         <TerminalFeed posts={posts} limit={4} />
       </div>
