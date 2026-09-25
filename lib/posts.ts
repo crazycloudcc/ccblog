@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { seriesCatalog } from "@/lib/series";
 
 export type PostCover = {
   from: string;
@@ -26,6 +27,10 @@ export type Post = {
   tags: string[];
   ogImage?: string;
   series?: string;
+  /** Public series path segment, e.g. "browser-cpp" → /blog/series/browser-cpp. */
+  seriesSlug?: string;
+  /** When false, the note stays reachable but leaves sitemap, RSS, and public lists. */
+  index: boolean;
   difficulty?: PostDifficulty;
   lang?: string;
   updated?: string;
@@ -43,6 +48,8 @@ type PostFrontmatter = {
   tags?: string[] | string;
   ogImage?: string;
   series?: string;
+  seriesSlug?: string;
+  index?: boolean;
   difficulty?: PostDifficulty;
   lang?: string;
   updated?: string;
@@ -110,6 +117,10 @@ function normalizePlayground(value: unknown): PostPlayground | undefined {
   };
 }
 
+function normalizeIndex(value: unknown): boolean {
+  return value !== false;
+}
+
 function normalizeTags(value: unknown): string[] {
   if (!value) {
     return [];
@@ -136,6 +147,8 @@ function readPostFile(fileName: string, index: number): Post {
     tags: normalizeTags(frontmatter.tags),
     ogImage: frontmatter.ogImage,
     series: frontmatter.series?.trim() || undefined,
+    seriesSlug: frontmatter.seriesSlug?.trim() || undefined,
+    index: normalizeIndex(frontmatter.index),
     difficulty: normalizeDifficulty(frontmatter.difficulty),
     lang: frontmatter.lang?.trim() || undefined,
     updated: frontmatter.updated ? normalizeDate(frontmatter.updated) : undefined,
@@ -166,9 +179,14 @@ export function getPosts(): Post[] {
   return loadPosts().sort((a, b) => b.date.localeCompare(a.date));
 }
 
-/** Latest `updated` or `date` among all notes, for sitemap lastmod. */
+/** Notes that belong in sitemap, RSS, and the public lists. Direct URLs still resolve either way. */
+export function getIndexedPosts(): Post[] {
+  return getPosts().filter((post) => post.index);
+}
+
+/** Latest `updated` or `date` among indexed notes, for sitemap lastmod. */
 export function getLatestContentDate(): Date {
-  const posts = loadPosts();
+  const posts = getIndexedPosts();
   let latest = "1970-01-01";
 
   for (const post of posts) {
@@ -187,30 +205,40 @@ export function getPostBySlug(slug: string): Post | undefined {
 
 export function getPostsByTag(tag: string): Post[] {
   const normalized = tag.trim().toLowerCase();
-  return getPosts().filter((post) => post.tags.includes(normalized));
+  return getIndexedPosts().filter((post) => post.tags.includes(normalized));
 }
 
 export function getPostsBySeries(series: string): Post[] {
   const normalized = series.trim().toLowerCase();
-  return getPosts().filter((post) => post.series?.toLowerCase() === normalized);
+  return getIndexedPosts().filter((post) => post.series?.toLowerCase() === normalized);
 }
 
-export function getAllSeries(): string[] {
-  const series = new Set<string>();
+export function getPostsBySeriesSlug(slug: string): Post[] {
+  return getIndexedPosts().filter((post) => post.seriesSlug === slug);
+}
 
-  for (const post of loadPosts()) {
-    if (post.series) {
-      series.add(post.series);
-    }
-  }
+export type PublicSeries = {
+  slug: string;
+  title: string;
+};
 
-  return [...series].sort();
+/** Series that have a public slug and at least one indexed note. */
+export function getPublicSeries(): PublicSeries[] {
+  const used = new Set(
+    getIndexedPosts()
+      .map((post) => post.seriesSlug)
+      .filter((slug): slug is string => Boolean(slug)),
+  );
+
+  return seriesCatalog
+    .filter((series) => used.has(series.slug))
+    .map((series) => ({ slug: series.slug, title: series.title }));
 }
 
 export function getAllTags(): string[] {
   const tags = new Set<string>();
 
-  for (const post of loadPosts()) {
+  for (const post of getIndexedPosts()) {
     for (const tag of post.tags) {
       tags.add(tag);
     }
@@ -223,7 +251,7 @@ export function getAdjacentPosts(slug: string): {
   prev: Post | null;
   next: Post | null;
 } {
-  const posts = getPosts();
+  const posts = getIndexedPosts();
   const index = posts.findIndex((post) => post.slug === slug);
 
   if (index === -1) {
@@ -245,7 +273,7 @@ export function getRelatedPosts(slug: string, limit = 3): Post[] {
 
   const tagSet = new Set(current.tags);
 
-  return getPosts()
+  return getIndexedPosts()
     .filter((post) => post.slug !== slug)
     .map((post) => ({
       post,
@@ -264,7 +292,7 @@ export function getRelatedPosts(slug: string, limit = 3): Post[] {
 }
 
 export function getRecentPosts(limit = 5, excludeSlug?: string): Post[] {
-  return getPosts()
+  return getIndexedPosts()
     .filter((post) => post.slug !== excludeSlug)
     .slice(0, limit);
 }

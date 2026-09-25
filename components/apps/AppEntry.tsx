@@ -12,7 +12,7 @@ type AppEntryProps = {
 
 export function AppEntry({ app }: AppEntryProps) {
   return (
-    <article className="py-4">
+    <article id={app.slug} className="py-4">
       <div className="flex flex-wrap items-start gap-4">
         <div
           className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[10px] border border-lavender-mist bg-lavender-mist/30 font-mono text-[10px] uppercase tracking-wide text-fog"

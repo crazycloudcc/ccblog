@@ -7,6 +7,7 @@ tags:
   - launch
   - meta
 lang: en
+index: false
 ---
 
 Welcome to your new blog.

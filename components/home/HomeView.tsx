@@ -48,7 +48,7 @@ function NotesSection({ posts }: { posts: Post[] }) {
   return (
     <TerminalPanel title="notes" className="border-b-0 px-0 py-0 md:px-0 md:py-0">
       <h1 className="prose-terminal text-2xl font-semibold leading-[1.25] text-ink">
-        终端博客，浏览器里编译运行 C++
+        浏览器里编译运行 C++
       </h1>
       <p className="prose-terminal mt-3 max-w-3xl text-base leading-[1.8] text-slate">
         不用安装编译器。笔记是 Markdown；

@@ -18,8 +18,8 @@ const contacts = socialLinks.map((link) => ({
 const grepPattern = contacts.map((item) => item.key).join("|");
 
 export const metadata = createPageMetadata({
-  title: "About",
-  description: `${siteConfig.author}'s terminal blog and in-browser C/C++ playground. Fork the template on GitHub.`,
+  title: "关于",
+  description: "crazycloudcc 的终端博客：浏览器里的 C++ 笔记，以及 App Store 上的实用工具和游戏。",
   path: "/about",
 });
 
@@ -29,13 +29,37 @@ export default function AboutPage() {
       <TerminalPanel title="about.md">
         <TerminalCommand command="cat about.md" />
         <TerminalOutput>
-          <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">
-            {siteConfig.name}
-          </h1>
+          <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">关于</h1>
           <p className="prose-terminal mt-4 text-base leading-[1.8] text-slate">
-            A personal blog by {siteConfig.author}. Terminal-themed notes, and a
-            C11 / C++17 playground that compiles in the browser with clang-in-WASM —
-            no install, no server. {siteConfig.description}
+            这是 {siteConfig.author} 的终端博客。笔记写 clang 怎样在浏览器里把 C 和 C++
+            编成 WebAssembly，入口在{" "}
+            <Link href="/playground" className="font-semibold text-ink hover:text-code-cobalt">
+              /playground
+            </Link>{" "}
+            和{" "}
+            <Link href="/blog/series/browser-cpp" className="font-semibold text-ink hover:text-code-cobalt">
+              浏览器里的 C++
+            </Link>
+            。
+          </p>
+          <p className="prose-terminal mt-4 text-base leading-[1.8] text-slate">
+            App Store 上还有实用工具和游戏，目录在{" "}
+            <Link href="/apps" className="font-semibold text-ink hover:text-code-cobalt">
+              /apps
+            </Link>
+            。其中{" "}
+            <Link href="/apps#localbeats-offline-player" className="font-semibold text-ink hover:text-code-cobalt">
+              LocalBeats: Offline Player
+            </Link>{" "}
+            离线播放设备上的音乐和媒体文件；
+            <Link href="/apps#cyberscripts" className="font-semibold text-ink hover:text-code-cobalt">
+              cYBerScRipts
+            </Link>{" "}
+            和{" "}
+            <Link href="/apps#endlessbattle" className="font-semibold text-ink hover:text-code-cobalt">
+              EndlessBattle
+            </Link>{" "}
+            是游戏。
           </p>
         </TerminalOutput>
       </TerminalPanel>
@@ -89,8 +113,7 @@ export default function AboutPage() {
               </div>
             </div>
             <p className="prose-terminal mt-4 text-sm leading-[1.8] text-slate">
-              This site is a forkable terminal blog and C/C++ playground. Use the
-              template on GitHub to make it yours.
+              这个站的模板在 GitHub 上，可以 fork 成你自己的终端博客。
             </p>
           </TerminalOutput>
         </TerminalPanel>

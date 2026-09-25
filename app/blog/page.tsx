@@ -4,7 +4,14 @@ import { TerminalFeed } from "@/components/blog/TerminalFeed";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { createPageMetadata } from "@/lib/metadata";
-import { getAllSeries, getAllTags, getPosts, getPostsBySeries, getPostsByTag, getRecentPosts } from "@/lib/posts";
+import {
+  getIndexedPosts,
+  getPostsBySeries,
+  getPostsByTag,
+  getPublicSeries,
+  getAllTags,
+  getRecentPosts,
+} from "@/lib/posts";
 
 type BlogPageProps = {
   searchParams: Promise<{ tag?: string; series?: string }>;
@@ -15,9 +22,8 @@ export async function generateMetadata({ searchParams }: BlogPageProps) {
   const filtered = Boolean(tag?.trim() || series?.trim());
 
   return createPageMetadata({
-    title: "Notes",
-    description:
-      "Runnable C/C++ notes on a terminal-themed blog. Compile in the browser with clang-in-WASM — no install.",
+    title: "笔记",
+    description: "浏览器里用 clang 编译运行 C++ 的中文笔记。每篇只讲一个坑，代码可以在页面里跑。",
     path: "/blog",
     robots: filtered ? { index: false, follow: true } : undefined,
   });
@@ -31,9 +37,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     ? getPostsBySeries(activeSeries)
     : activeTag
       ? getPostsByTag(activeTag)
-      : getPosts();
+      : getIndexedPosts();
   const tags = getAllTags();
-  const seriesList = getAllSeries();
+  const seriesList = getPublicSeries();
   const recentPosts = getRecentPosts(5);
   const command = activeSeries
     ? `grep -R "series: ${activeSeries}" notes/`
@@ -44,6 +50,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   return (
     <TerminalPanel title="notes">
       <TerminalCommand command={command} />
+      <h1 className="prose-terminal mt-4 text-3xl font-semibold text-ink">浏览器里的 C++ 笔记</h1>
+      <p className="prose-terminal mt-3 max-w-3xl text-base leading-[1.8] text-slate">
+        这些笔记讲 clang 如何在浏览器里把 C 和 C++ 编成 WebAssembly。每篇只讲一个坑，代码可以在页面里跑。
+      </p>
       <p className="mt-3 font-mono text-xs text-code-teal">
         // streaming {posts.length} entries · ctrl+c to stop (just kidding)
       </p>

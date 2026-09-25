@@ -132,6 +132,8 @@ date: 2026-07-08
 tags:
   - nextjs
 series: my-series        # optional
+seriesSlug: my-series    # optional; public page at /blog/series/my-series
+index: false             # optional; keep the URL, omit it from sitemap, RSS, and the public list
 difficulty: intermediate # optional
 ---
 ```

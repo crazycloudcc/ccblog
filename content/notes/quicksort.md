@@ -1,27 +1,57 @@
 ---
-title: Quicksort in C++
-excerpt: "Quicksort you can edit and run in the browser — no install, no server."
+title: "快排退化成 O(n²)：已排序数组却取 a[lo] 当基准"
+excerpt: "已排序的 1 2 3 4 5，基准取第一个元素，每次分区都有一边是空的。排序结果仍然对，递归变成一条链。"
 date: 2026-08-04
+updated: 2026-09-25
 coverLabel: rn-01
 tags:
   - algorithm
   - cpp
   - playground
   - sorting
-series: "Runnable Notes"
+series: "浏览器里的 C++"
+seriesSlug: browser-cpp
 difficulty: intermediate
-lang: en
+lang: zh-CN
+runtime: browsercc
 ---
 
-This is the first of the **Runnable Notes** - short algorithm write-ups where every snippet actually runs in your browser. No copy-paste into an IDE: **run the snippet below**, change a number, run it again.
+系列入口在 [在浏览器里编译运行 C++](/blog/liulanqi-bianyi-cpp)。这篇不讲快排的全部，只讲一件事：数组已经有序，基准却取 `a[lo]`，递归深度变成 `n`。
 
-The same runner lives at `/playground`. The site itself is a [forkable template](https://github.com/crazycloudcc/ccblog/generate).
+结果先说清楚。这样写**仍然能排对**。错的是代价：每一层只扔掉一个元素，比较次数从平均的 `O(n log n)` 退化成 `O(n²)`。`n = 5` 在浏览器里感觉不出来，形状已经是一条链。
 
-**Quicksort** sorts in-place by picking a pivot, partitioning the array into values smaller and larger, then recursing on each side. Average `O(n log n)`, worst case `O(n^2)`.
+## 已排序，基准取第一个
 
-## The partition step
+数组 `[1, 2, 3, 4, 5]`，分区时 `pivot = a[lo] = 1`。1 是这一段里最小的，扫完之后它左边没有元素，右边是 `[2, 3, 4, 5]`。
 
-Everything interesting happens in `partition` - pick a pivot, sweep the range, and end with the pivot in its final sorted position:
+下一层又取新区间的第一个元素 `2`，左边还是空的，右边是 `[3, 4, 5]`。一直到只剩 `5`。调用栈是：
+
+```text
+[1, 2, 3, 4, 5]
+  [2, 3, 4, 5]
+    [3, 4, 5]
+      [4, 5]
+        [5]
+```
+
+五层，每层做一遍线性扫描。元素个数再大一个数量级，比较次数就按平方长。
+
+`a[hi]` 在这份升序数组上是镜像，不是解药。最后一个元素是 `5`，是这一段的最大值，分区之后右边是空的，左边是 `[1, 2, 3, 4]`，同样是 `n` 层。旧笔记里「末元素在随机数据上大致均衡」只对**不有序**的输入成立。升序数组的两端都贴着最值。
+
+:::cases{title="基准怎么选"}
+### 这段输入上会退化
+```cpp
+int pivot = a[lo];   // [1,2,3,4,5] 上每次左边为空
+```
+### 同一段输入的另一端
+```cpp
+int pivot = a[hi];   // [1,2,3,4,5] 上每次右边为空
+```
+:::
+
+随机或打乱过的数据里，两端当基准通常还能切开。真要挡住已排序输入，得换基准：随机下标，或取首、中、尾的中位数。那是下一步，不是这篇要跑的程序。
+
+分区本身还是那几行。基准定下来以后，小的放左边，大的放右边，基准落到最终位置：
 
 :::annotate{title="quicksort.cpp · partition"}
 ```cpp
@@ -38,37 +68,40 @@ int partition(std::vector<int>& a, int lo, int hi) {
     return i + 1;
 }
 ```
-- line 2: pick the last element as the pivot
-- line 3: i tracks the boundary of values <= pivot; start one below lo
-- line 4: scan every element except the pivot itself
-- line 5: this value belongs on the left side
-- line 6: grow the boundary, then swap the value into it
-- line 10: move the pivot to just after the last small value
-- line 11: its index is the split point for recursion
+- line 2: 这份可运行代码取的是末元素。升序输入上它会退化，见上文
+- line 3: i 是「小于等于基准」一侧的边界
+- line 4: 扫描除基准外的每个元素
+- line 5: 这个值应该去左边
+- line 10: 把基准换到左边那一堆的后面
+- line 11: 返回值就是递归切开的位置
 :::
 
-After `partition` returns `p`, everything at indices `<= p` is `<= pivot` and the pivot itself is fixed. Recurse on `[lo, p-1]` and `[p+1, hi]` until the range is empty.
+`partition` 返回 `p` 之后，下标 `<= p` 的值都 `<=` 基准，基准本身不再移动。再排 `[lo, p - 1]` 和 `[p + 1, hi]`，区间空了就停。
 
-## Pivot choice matters
+把 `[1, 2, 3, 4, 5]` 按「基准取当前区间第一个元素」写开，每一层只确认一个数的最终位置：
 
-The pivot decides how balanced the recursion is. Picking the last element (above) is simple and correct, but the classic trap is picking the first element on already-sorted input - one side is empty every time, and you recurse `n` deep:
+| 层 | 区间 | 基准 | 左边 | 右边 |
+|----|------|------|------|------|
+| 1 | 1 2 3 4 5 | 1 | 空 | 2 3 4 5 |
+| 2 | 2 3 4 5 | 2 | 空 | 3 4 5 |
+| 3 | 3 4 5 | 3 | 空 | 4 5 |
+| 4 | 4 5 | 4 | 空 | 5 |
 
-:::cases{title="Pivot choice"}
-### good
-```cpp
-int pivot = a[hi];   // last element: balanced on random input
-```
-### bad
-```cpp
-int pivot = a[lo];   // first element: O(n^2) on sorted input
-```
-:::
+四层之后还剩一个元素，不用再排。比较次数是 4+3+2+1。输出仍是 `1 2 3 4 5`，因为每个基准最后都落到它唯一可能的位置，只是没有任何一层把区间切成两半。
 
-For random data the choice barely matters. For hostile or nearly-sorted data, randomize the pivot or use median-of-three.
+## 一条链有多少次比较
 
-## Run it
+`n = 5` 且每次只切掉基准自己时，各层扫描长度是 4、3、2、1，一共 10 次。一般地，这是 `n(n - 1) / 2`。`n = 1000` 时大约 50 万次比较，`n = 10000` 时大约 5000 万次。排序结果仍对，只是这一路不再是对数层。
 
-The full program reads `n`, then `n` integers, and prints them sorted. It runs right here - edit the code, change the stdin, hit run:
+对照一份能切开的输入。`[2, 4, 1, 5, 3]`，基准取末元素 `3`。比 3 小的是 2、1，比 3 大的是 4、5。基准落到中间之后，左右两边都还有东西，下一层的区间长度是 2 和 2，而不是 4 和 0。同一份分区代码，差别只在基准落在区间的什么位置。
+
+所以「末元素」不是一种稳定的好策略。它在这篇的默认 stdin `3 1 4 1 5` 上碰巧把 5 放在最后，左边仍有四个数要排，但那四个数不是升序的整段最值贴边。升序的 `1 2 3 4 5` 上，末元素和首元素一样差。
+
+浏览器里的 5 秒限制也解释了为什么小例子会骗人。`n = 5` 的平方次比较远远到不了超时，stdout 又和正确的对数版本一样。要看见退化，得看递归深度或比较次数，不能只看打印出来的那一行。
+
+## 在这里跑
+
+下面的程序读 `n`，再读 `n` 个整数，按末元素当基准排好后打印。默认 stdin `3 1 4 1 5` 的最后一个数是 5，它是这五个数里的最大值，第一层分区的右边是空的，左边四个还要继续排。stdout 仍是排好的 `1 1 3 4 5`。把 stdin 改成 `5` 和 `1 2 3 4 5`，stdout 还是这一行。退化在递归有几层，不在打印对不对。
 
 :::playground{title="quicksort.cpp" lang="cpp" stdin="5\n3 1 4 1 5"}
 ```cpp
@@ -114,29 +147,13 @@ int main() {
 ```
 :::
 
-A run looks like this - the four compile phases, then the sorted output on stdout:
+| stdin | stdout |
+|-------|--------|
+| `5` 然后 `3 1 4 1 5` | `1 1 3 4 5` |
+| `5` 然后 `1 2 3 4 5` | `1 2 3 4 5`（结果对，末元素基准仍是一条链） |
+| `6` 然后 `6 5 4 3 2 1` | `1 2 3 4 5 6` |
+| `4` 然后 `2 2 2 2` | `2 2 2 2` |
 
-:::trace{title="quicksort.cpp run"}
-toolchain: 380ms
-compile: 90ms
-link: 40ms
-run: 6ms
-stdout: |
-  1 1 3 4 5
-:::
+第一次会慢，那是在下载工具链。之后通常是几十毫秒。
 
-## Try it
-
-Paste into the stdin box and run:
-
-| stdin | expected stdout |
-|-------|-----------------|
-| `5` then `3 1 4 1 5` | `1 1 3 4 5` |
-| `6` then `6 5 4 3 2 1` | `1 2 3 4 5 6` |
-| `4` then `2 2 2 2` | `2 2 2 2` |
-
-The first run is slower - that is the one-time WASM toolchain fetch. After that, runs drop to tens of milliseconds.
-
-Next in the series: **Binary Search** - the divide-and-conquer counterpart, where the pivot choice is fixed and the trap is off-by-one.
-
-中文导览（同一套 runner）：[在浏览器里编译运行 C++](/blog/liulanqi-bianyi-cpp)。
+上一篇是 [二分查找的中点和窗口](/blog/binary-search)。下一篇是 [最长上升子序列里 lower_bound 必须严格](/blog/longest-increasing-subsequence)。系列目录在 [浏览器里的 C++](/blog/series/browser-cpp)。

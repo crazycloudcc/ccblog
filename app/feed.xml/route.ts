@@ -1,5 +1,5 @@
 import { absoluteUrl } from "@/lib/metadata";
-import { getPosts } from "@/lib/posts";
+import { getIndexedPosts } from "@/lib/posts";
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_LANG, SITE_NAME, SITE_URL } from "@/lib/site";
 
 function escapeXml(value: string): string {
@@ -12,7 +12,7 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const posts = getPosts();
+  const posts = getIndexedPosts();
 
   const items = posts
     .map((post) => {

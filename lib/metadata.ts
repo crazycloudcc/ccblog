@@ -52,7 +52,7 @@ export function createPageMetadata({
   lang,
   robots,
 }: PageMetadataOptions = {}): Metadata {
-  const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} · terminal blog & in-browser C/C++`;
+  const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — 浏览器里编译运行 C++`;
   const url = absoluteUrl(path);
   const ogImage = image ?? defaultOgImageUrl();
 
@@ -109,5 +109,6 @@ export function createPostMetadata(post: Post): Metadata {
     type: "article",
     publishedTime: `${post.date}T00:00:00.000Z`,
     lang: post.lang,
+    robots: post.index ? undefined : { index: false, follow: true },
   });
 }

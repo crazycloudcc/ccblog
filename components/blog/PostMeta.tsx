@@ -19,12 +19,16 @@ export function PostMeta({ post }: PostMetaProps) {
         <div>
           <span className="text-code-teal">series</span>
           <span className="text-mist">: </span>
-          <Link
-            href={`/blog?series=${encodeURIComponent(post.series)}`}
-            className="text-code-cobalt hover:text-ink"
-          >
-            {post.series}
-          </Link>
+          {post.seriesSlug ? (
+            <Link
+              href={`/blog/series/${post.seriesSlug}`}
+              className="text-code-cobalt hover:text-ink"
+            >
+              {post.series}
+            </Link>
+          ) : (
+            <span className="text-fog">{post.series}</span>
+          )}
         </div>
       ) : null}
 

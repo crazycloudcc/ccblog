@@ -132,6 +132,8 @@ date: 2026-07-08
 tags:
   - nextjs
 series: my-series        # 可选
+seriesSlug: my-series    # 可选；公开页在 /blog/series/my-series
+index: false             # 可选；保留 URL，但不进 sitemap、RSS 和默认列表
 difficulty: intermediate # 可选
 ---
 ```

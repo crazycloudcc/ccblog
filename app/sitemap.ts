@@ -1,10 +1,16 @@
 import type { MetadataRoute } from "next";
-import { getLatestContentDate, getPostModified, getPosts } from "@/lib/posts";
+import {
+  getIndexedPosts,
+  getLatestContentDate,
+  getPostModified,
+  getPostsBySeriesSlug,
+  getPublicSeries,
+} from "@/lib/posts";
 import { absoluteUrl } from "@/lib/metadata";
 import { isRouteEnabled } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getPosts();
+  const posts = getIndexedPosts();
   const latest = getLatestContentDate();
   const staticRoutes = ["", "/blog", "/apps", "/playground", "/about"].filter((route) =>
     isRouteEnabled(route),
@@ -24,5 +30,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...pages, ...postPages];
+  const seriesPages: MetadataRoute.Sitemap = isRouteEnabled("/blog")
+    ? getPublicSeries().map((series) => {
+        const seriesPosts = getPostsBySeriesSlug(series.slug);
+        const latestModified = seriesPosts.reduce((max, post) => {
+          const modified = getPostModified(post);
+          return modified > max ? modified : max;
+        }, "1970-01-01");
+
+        return {
+          url: absoluteUrl(`/blog/series/${series.slug}`),
+          lastModified: new Date(`${latestModified}T00:00:00.000Z`),
+          changeFrequency: "monthly" as const,
+          priority: 0.8,
+        };
+      })
+    : [];
+
+  return [...pages, ...seriesPages, ...postPages];
 }

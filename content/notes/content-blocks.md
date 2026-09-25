@@ -7,6 +7,7 @@ tags:
   - meta
   - markdown
 lang: en
+index: false
 ---
 
 Posts are Markdown, plus a few custom directives that render as terminal-style panels. Each starts with `:::name{title="..."}` and ends with `:::`.

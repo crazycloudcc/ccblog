@@ -11,10 +11,10 @@ import { createPostMetadata, createPageMetadata } from "@/lib/metadata";
 import { SITE_LANG, SITE_LOCALE } from "@/lib/site";
 import {
   getAdjacentPosts,
-  getAllSeries,
   getAllTags,
   getPostBySlug,
   getPosts,
+  getPublicSeries,
   getRecentPosts,
   getRelatedPosts,
 } from "@/lib/posts";
@@ -57,11 +57,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const related = getRelatedPosts(slug);
   const readingTime = formatReadingTime(estimateReadingTime(post.content), post.lang);
   const tags = getAllTags();
-  const seriesList = getAllSeries();
+  const seriesList = getPublicSeries();
   const recentPosts = getRecentPosts(5, slug);
 
   return (
-    <article lang={post.lang ?? SITE_LANG}>
+    <article lang={post.lang ?? SITE_LANG} {...(post.index ? {} : { "data-pagefind-ignore": true })}>
       <PostJsonLd post={post} />
       {post.tags.map((tag) => (
         <span key={tag} data-pagefind-filter={`tag:${tag}`} hidden />

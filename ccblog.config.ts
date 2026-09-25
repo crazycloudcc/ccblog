@@ -10,16 +10,15 @@ import type { CcblogConfig } from "@/lib/types/config";
  * production set NEXT_PUBLIC_SITE_URL (and optionally NEXT_PUBLIC_CCBLOG_BRANCH).
  */
 const config: CcblogConfig = {
-  name: "crazycloudcc's sites",
+  name: "crazycloudcc",
   author: "crazycloudcc",
   handle: "crazycloudcc",
   initials: "cc",
   logo: "/logo.png",
-  description:
-    "Terminal-themed notes and a browser C/C++ playground — markdown, clang-in-WASM, no install.",
-  tagline: "AI · Web3 · Game",
-  ogTagline: "Terminal blog. C and C++ compile in the browser.",
-  topics: ["ai", "web3", "game"],
+  description: "在浏览器里用 clang 编译运行 C++ 的中文笔记，不用安装编译器。",
+  tagline: "浏览器 C++ · 笔记",
+  ogTagline: "浏览器里编译运行 C++，不用安装。",
+  topics: ["cpp", "wasm", "notes"],
   url: "https://crazycloud.cc",
   locale: "zh-CN",
   lang: "zh-CN",

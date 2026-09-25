@@ -11,6 +11,10 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 
 ### Added
 
+- Optional note frontmatter `index: false` (URL stays up; sitemap, RSS, and public lists skip it) and `seriesSlug` for `/blog/series/[slug]`
+- Indexable series page for 浏览器里的 C++ (`/blog/series/browser-cpp`)
+- Chinese notes: browser clang pillar, three algorithm pits, empty-stdin `scanf`, real browsercc diagnostics, LocalBeats
+- Self-hosted Rubik and IBM Plex Mono (no Google Fonts stylesheet)
 - Fork-friendly site config: `ccblog.config.ts` + `ccblog.config.example.ts`, typed in `lib/types/config.ts`
 - Build-time config validation (`scripts/validate-config.mjs`, `lib/validate-config.ts`)
 - `CONTRIBUTING.md` for template + live-site dual use
@@ -27,6 +31,8 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 
 ### Changed
 
+- Site copy, titles, and descriptions describe the Chinese in-browser C++ notes
+- Sample notes `hello-world`, `content-blocks`, `nextjs-blog-setup`, and `playground` are `index: false`
 - README / README.zh-CN rewritten for fork-and-deploy positioning
 - Social icons extracted to a shared terminal chrome module
 - Start Up note: Deploy button, Use this template, first-deploy-is-demo identity

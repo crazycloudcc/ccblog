@@ -8,6 +8,7 @@ tags:
   - playground
   - wasm
 lang: en
+index: false
 ---
 
 `/playground` is a C/C++ environment that runs entirely in your browser. Write code on the left, hit **run**, and a real compiler builds it to WebAssembly and executes it - no server, no install, no container behind the request. The toolchain is a WASM build of clang + lld + a WASI sysroot, fetched once and cached.
@@ -31,7 +32,7 @@ Every click of **run** drives the same pipeline inside a Web Worker:
 4. execute main
 :::
 
-Because it runs off the main thread, the editor stays responsive while clang works. Execution is hard-capped at **5 seconds** - infinite loops and blocking reads are killed, not hung.
+Because it runs off the main thread, the editor stays responsive while clang works. Execution is hard-capped at **5 seconds**. Infinite loops are killed. Stdin is a fixed buffer: an empty buffer is EOF, so one `scanf` returns immediately instead of blocking.
 
 ## The toolbar
 
@@ -101,7 +102,7 @@ int main() {
 - line 7: write the sum to stdout
 :::
 
-With `3 4` in the stdin box, the run prints `7`. If you forget to fill stdin and the program blocks, execution times out after 5 seconds and the panel hints that the program may be waiting for input.
+With `3 4` in the stdin box, the run prints `7`. An empty stdin box is a zero-length file. A single `scanf` then returns EOF immediately. The 5-second cap is for runs that do not return, such as an infinite loop.
 
 ## 3. Reading the output
 

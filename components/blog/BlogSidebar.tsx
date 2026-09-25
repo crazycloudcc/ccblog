@@ -1,12 +1,13 @@
 import Link from "next/link";
-import type { Post } from "@/lib/posts";
+import type { Post, PublicSeries } from "@/lib/posts";
 
 type BlogSidebarProps = {
   tags: string[];
-  series: string[];
+  series: PublicSeries[];
   recentPosts: Post[];
   activeTag?: string;
   activeSeries?: string;
+  activeSeriesSlug?: string;
 };
 
 export function BlogSidebar({
@@ -15,6 +16,7 @@ export function BlogSidebar({
   recentPosts,
   activeTag,
   activeSeries,
+  activeSeriesSlug,
 }: BlogSidebarProps) {
   return (
     <aside className="lg:sticky lg:top-4 space-y-6 font-mono text-xs">
@@ -25,7 +27,7 @@ export function BlogSidebar({
             <Link
               href="/blog"
               className={`rounded-[4px] border px-2 py-1 transition-colors ${
-                !activeTag && !activeSeries
+                !activeTag && !activeSeries && !activeSeriesSlug
                   ? "border-ink/20 bg-ink text-paper"
                   : "border-lavender-mist text-fog hover:border-fog/40 hover:text-ink"
               }`}
@@ -55,15 +57,16 @@ export function BlogSidebar({
           <div className="flex flex-wrap gap-1.5">
             {series.map((item) => (
               <Link
-                key={item}
-                href={`/blog?series=${encodeURIComponent(item)}`}
+                key={item.slug}
+                href={`/blog/series/${item.slug}`}
                 className={`rounded-[4px] border px-2 py-1 transition-colors ${
-                  activeSeries === item
+                  activeSeriesSlug === item.slug ||
+                  (activeSeries !== undefined && activeSeries.toLowerCase() === item.title.toLowerCase())
                     ? "border-ink/20 bg-ink text-paper"
                     : "border-lavender-mist text-fog hover:border-fog/40 hover:text-ink"
                 }`}
               >
-                {item}
+                {item.title}
               </Link>
             ))}
           </div>

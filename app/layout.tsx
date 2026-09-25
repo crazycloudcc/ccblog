@@ -6,7 +6,7 @@ import { SiteStatusProvider } from "@/components/terminal/SiteStatusProvider";
 import { TerminalShell } from "@/components/terminal/TerminalShell";
 import { ThemeProvider } from "@/components/terminal/ThemeProvider";
 import { createPageMetadata } from "@/lib/metadata";
-import { getPosts } from "@/lib/posts";
+import { getIndexedPosts } from "@/lib/posts";
 import {
   SITE_AUTHOR,
   SITE_DESCRIPTION,
@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const postCount = getPosts().length;
+  const postCount = getIndexedPosts().length;
 
   const siteJsonLd = {
     "@context": "https://schema.org",
@@ -58,16 +58,6 @@ export default function RootLayout({
     <html lang={SITE_LANG} className="h-full antialiased" suppressHydrationWarning>
       <head>
         <Script src="/theme-init.js" strategy="beforeInteractive" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Rubik:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body className="min-h-full text-ink">
         <script
