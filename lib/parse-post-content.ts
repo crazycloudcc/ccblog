@@ -1,8 +1,16 @@
+import MarkdownIt, { type Token } from "markdown-it";
+
 export type ContentBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string }
   | { type: "ul"; items: string[] }
   | { type: "ol"; items: string[] }
+  | {
+      type: "table";
+      headers: string[];
+      rows: string[][];
+      alignments: ("left" | "center" | "right" | null)[];
+    }
   | { type: "image"; alt: string; src: string }
   | { type: "video"; title: string; src: string }
   | { type: "code"; text: string; language?: string }
@@ -51,6 +59,9 @@ const videoPattern = /^::video\[([^\]]*)\]\(([^)]+)\)$/;
 const videoUrlPattern = /\.(mp4|webm|ogg|mov)(\?.*)?$/i;
 const fencedCodePattern = /```(\w*)\n?([\s\S]*?)```/g;
 const directivePattern = /^:::(\w+)(?:\{([^}]*)\})?\r?\n([\s\S]*?)\r?\n:::\s*(?:\r?\n|$)/gm;
+// Use the existing Markdown parser for table boundaries and escaped pipes.
+// Cells remain Markdown strings and are rendered by the safe inline renderer.
+const tableMarkdown = new MarkdownIt({ html: false, linkify: false });
 
 function parseDirectiveAttrs(raw?: string): Record<string, string> {
   if (!raw?.trim()) {
@@ -338,6 +349,64 @@ function parseBlock(block: string): ContentBlock {
   return { type: "paragraph", text: trimmed };
 }
 
+function parseSimpleBlocks(text: string): ContentBlock[] {
+  return text
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map(parseBlock);
+}
+
+function parseTable(tokens: Token[]): Extract<ContentBlock, { type: "table" }> {
+  const rows: string[][] = [];
+  const alignments: ("left" | "center" | "right" | null)[] = [];
+  let row: string[] = [];
+
+  for (const token of tokens) {
+    if (token.type === "tr_open") {
+      row = [];
+      rows.push(row);
+    } else if (token.type === "inline") {
+      row.push(token.content);
+    } else if (token.type === "th_open") {
+      const style = token.attrGet("style");
+      const alignment = typeof style === "string" ? style.replace("text-align:", "") : undefined;
+      alignments.push(
+        alignment === "left" || alignment === "center" || alignment === "right" ? alignment : null,
+      );
+    }
+  }
+
+  return { type: "table", headers: rows.shift() ?? [], rows, alignments };
+}
+
+function parseUnfencedText(text: string): ContentBlock[] {
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  const tokens = tableMarkdown.parse(text, {});
+  const blocks: ContentBlock[] = [];
+  let lastLine = 0;
+
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    if (token.type !== "table_open" || token.level !== 0 || !token.map) {
+      continue;
+    }
+
+    const [start, end] = token.map;
+    blocks.push(...parseSimpleBlocks(lines.slice(lastLine, start).join("\n")));
+    let closeIndex = index + 1;
+    while (closeIndex < tokens.length && tokens[closeIndex].type !== "table_close") {
+      closeIndex += 1;
+    }
+    blocks.push(parseTable(tokens.slice(index + 1, closeIndex)));
+    lastLine = end;
+    index = closeIndex;
+  }
+
+  blocks.push(...parseSimpleBlocks(lines.slice(lastLine).join("\n")));
+  return blocks;
+}
+
 function parseTextBlocks(text: string): ContentBlock[] {
   const blocks: ContentBlock[] = [];
   let lastIndex = 0;
@@ -347,13 +416,7 @@ function parseTextBlocks(text: string): ContentBlock[] {
     const before = text.slice(lastIndex, index).trim();
 
     if (before) {
-      blocks.push(
-        ...before
-          .split("\n\n")
-          .map((block) => block.trim())
-          .filter(Boolean)
-          .map(parseBlock),
-      );
+      blocks.push(...parseUnfencedText(before));
     }
 
     blocks.push({
@@ -367,13 +430,7 @@ function parseTextBlocks(text: string): ContentBlock[] {
 
   const tail = text.slice(lastIndex).trim();
   if (tail) {
-    blocks.push(
-      ...tail
-        .split("\n\n")
-        .map((block) => block.trim())
-        .filter(Boolean)
-        .map(parseBlock),
-    );
+    blocks.push(...parseUnfencedText(tail));
   }
 
   return blocks;

@@ -154,6 +154,49 @@ export async function PostContent({ content, playground }: PostContentProps) {
               </ol>
             );
 
+          case "table":
+            return (
+              <div
+                key={index}
+                role="region"
+                aria-label="文章表格"
+                tabIndex={0}
+                className="min-w-0 max-w-full overflow-x-auto overscroll-x-contain rounded-[4px] border border-lavender-mist focus-visible:outline-2 focus-visible:outline-code-teal"
+              >
+                <table className="w-full min-w-max border-collapse text-sm leading-6 text-slate">
+                  <thead className="bg-lavender-mist/30 text-ink">
+                    <tr>
+                      {block.headers.map((header, cellIndex) => (
+                        <th
+                          key={cellIndex}
+                          scope="col"
+                          className="px-4 py-3 font-semibold"
+                          style={{ textAlign: block.alignments[cellIndex] ?? "left" }}
+                        >
+                          <InlineMarkdown text={header} />
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {block.rows.map((row, rowIndex) => (
+                      <tr key={rowIndex} className="border-t border-lavender-mist/60">
+                        {row.map((cell, cellIndex) => (
+                          <td
+                            key={cellIndex}
+                            className="px-4 py-3 align-top"
+                            style={{ textAlign: block.alignments[cellIndex] ?? "left" }}
+                          >
+                            <InlineMarkdown text={cell} />
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+
           case "image":
             return (
               <figure key={index} className="overflow-hidden rounded-[4px] border border-lavender-mist">

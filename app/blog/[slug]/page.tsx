@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <TerminalPanel title="content">
         <div className="grid gap-8 lg:grid-cols-[1fr_256px]">
-          <div>
+          <div className="min-w-0">
             <div data-pagefind-body>
               <h1
                 className="prose-terminal text-[32px] font-semibold leading-[1.15] text-ink sm:text-[40px]"

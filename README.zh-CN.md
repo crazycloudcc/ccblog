@@ -140,6 +140,8 @@ difficulty: intermediate # 可选
 
 文件名即 URL（`/blog/my-post`）。正文支持标准 Markdown、代码块、图片，以及自定义块（`:::trace`、`:::bench`、`:::annotate`、`:::playground` 等）——示例见 `content/notes/content-blocks.md`。
 
+管道表格会生成语义 HTML 表格，窄屏下只在表格内横向滚动。表格需要表头和分隔行；用 `:---`、`:---:`、`---:` 设置对齐。单元格里的字面管道写为 `\|`，行内代码里也需要转义。单元格复用段落的安全行内格式和链接规则；原始 HTML 按文字显示。
+
 ---
 
 ## 常用脚本

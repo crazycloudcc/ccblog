@@ -142,6 +142,8 @@ Inline links, code spans, bold, emphasis, and strikethrough render in headings, 
 
 The filename becomes the URL (`/blog/my-post`). The body supports standard markdown, fenced code, images, and custom blocks (`:::trace`, `:::bench`, `:::annotate`, `:::playground`, …) - see `content/notes/content-blocks.md` for examples.
 
+Pipe tables render as semantic HTML tables and scroll within the article on narrow screens. Include a header and separator row; use `:---`, `:---:`, or `---:` for alignment. Escape a literal pipe as `\|`, including inside inline code. Cells use the same safe inline formatting and link rules as paragraphs; raw HTML is displayed as text.
+
 ---
 
 ## Scripts
