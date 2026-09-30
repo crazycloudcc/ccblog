@@ -404,7 +404,7 @@ export function PlaygroundPage() {
         </div>
       ) : null}
 
-      <div className={`mt-4 grid gap-4 ${isEmbed ? "grid-cols-1" : "lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:items-stretch"}`}>
+      <div className={`mt-4 grid grid-cols-1 gap-4 ${isEmbed ? "" : "lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:items-stretch"}`}>
         <div className={isEmbed ? "h-[min(280px,45vh)]" : "h-[min(560px,70vh)]"}>
           <CodeEditor
             ref={editorRef}
