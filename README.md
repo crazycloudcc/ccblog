@@ -49,7 +49,7 @@ The home page opens with a short boot sequence (notes type in, then settle). The
 |------|----------------|
 | **Blog** | Markdown + frontmatter, tag & series filters, reading time, prev/next, related posts |
 | **Search** | [Pagefind](https://pagefind.app/) static index, built on `postbuild` |
-| **Playground** | C11 / C++17 compile & run via [browsercc](https://www.npmjs.com/package/browsercc) WASM - Monaco editor, stdin, share links, compile timeline |
+| **Playground** | C11 / C++17 compile & run via [browsercc](https://www.npmjs.com/package/browsercc) WASM - Monaco editor, stdin, stdout/stderr, actual exit codes, share links, compile timeline |
 | **Content blocks** | `:::trace`, `:::bench`, `:::annotate`, `:::playground` directives in posts |
 | **Meta** | RSS, sitemap, JSON-LD, Open Graph image |
 | **Apps** | Optional App Store catalog, off unless you turn `features.apps` on |
@@ -151,7 +151,7 @@ npm run dev          # local dev (webpack)
 npm run build        # validate config -> sync apps -> build -> pagefind index
 npm run start        # serve the production build
 npm run lint         # eslint
-npm test             # inline Markdown regression tests
+npm test             # Markdown, playground runtime/output, and layout regression tests
 npm run sync:apps    # refresh lib/apps.ts from the iTunes API
 ```
 

@@ -49,7 +49,7 @@
 |------|------|
 | **博客** | Markdown + frontmatter，标签与系列筛选，阅读时长，上一篇/下一篇，相关文章 |
 | **搜索** | [Pagefind](https://pagefind.app/) 静态索引，`postbuild` 时生成 |
-| **Playground** | 基于 [browsercc](https://www.npmjs.com/package/browsercc) WASM 的 C11 / C++17 编译运行——Monaco 编辑器、stdin、分享链接、编译阶段可视化 |
+| **Playground** | 基于 [browsercc](https://www.npmjs.com/package/browsercc) WASM 的 C11 / C++17 编译运行——Monaco 编辑器、stdin、stdout/stderr、实际退出码、分享链接、编译阶段可视化 |
 | **内容块** | 文章内支持 `:::trace`、`:::bench`、`:::annotate`、`:::playground` 等指令 |
 | **元数据** | RSS、sitemap、JSON-LD、Open Graph 图片 |
 | **Apps** | 可选的 App Store 目录；除非打开 `features.apps`，否则不出现 |
@@ -149,6 +149,7 @@ npm run dev          # 本地开发（webpack）
 npm run build        # 校验配置 -> 同步 apps -> 构建 -> 生成 pagefind 索引
 npm run start        # 启动生产构建
 npm run lint         # ESLint
+npm test             # Markdown、Playground 运行与输出、布局回归测试
 npm run sync:apps    # 从 iTunes API 刷新 lib/apps.ts
 ```
 

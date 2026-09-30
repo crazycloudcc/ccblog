@@ -42,7 +42,7 @@ int main(void) {
 ```
 :::
 
-没有 `got`，也没有 timeout。程序打印完那一行就返回了。
+没有 `got`，也没有 timeout。程序打印完那一行就返回了，面板显示 `[exit 1]`，因为 `n` 不是 1。
 
 ## 42 和 abc 不是同一种失败
 
@@ -65,11 +65,11 @@ int main(void) {
 
 把上面第二段的 stdin 改成 `abc`，再 Run，应看到 `scanf=0 value=0`。
 
-| stdin | 实测 stdout | 含义 |
-|-------|-------------|------|
-| 空 | `scanf=-1 value=0` | 文件结束 |
-| `42` 加换行 | `scanf=1 value=42` | 读到整数 |
-| `abc` 加换行 | `scanf=0 value=0` | 有输入，但不是整数 |
+| stdin | stdout | 退出码 | 含义 |
+|-------|--------|--------|------|
+| 空 | `scanf=-1 value=0` | 1 | 文件结束 |
+| `42` 加换行 | `scanf=1 value=42` | 0 | 读到整数 |
+| `abc` 加换行 | `scanf=0 value=0` | 1 | 有输入，但不是整数 |
 
 `cin >> value` 走的也是这个文件。空文件上提取失败，流会置位，函数返回，同样不会为了等下一次按键停住。这个面板不是终端，没有人会在运行途中再往里面打字。
 
@@ -83,6 +83,10 @@ int main(void) {
 
 若你自己写了 `while (scanf("%d", &x) != 1) {}` 这种不看 EOF 的循环，空输入上 `scanf` 每次都立刻返回 `-1`，循环倒是会转满 5 秒。烧掉时间的是循环，不是读。
 
-面板上的 `exit 0` 也不能拿来对 `main` 的返回值。运行器在 `wasi.start` 正常返回时把状态记成成功，`return 1` 仍可能显示 `exit 0`。上面三行 stdout 才是这次测量能对上的结果。
+面板会显示程序实际的 WASI 退出码。`wasi.start` 捕获 `proc_exit` 后返回退出码，运行器保留这个值：`return 0` 显示 `[exit 0]`，`return 1` 显示 `[exit 1]`，stdout 和 stderr 都会保留。旧版运行器曾忽略这个返回值，导致 `return 1` 也显示 0；这个问题已修复。
+
+内建的 `a+b.cpp` 也可以验证：stdin 空着时，`cin` 提取失败，stdout 为空，退出码为 1；输入 `20 22` 后输出 `42`，退出码为 0。输入框里的 `1 2` 是 placeholder，不是预填输入。
+
+非零退出说明程序主动返回了非零值，不会被标成 `runtime error`。真正的 WASM trap 或运行异常会显示 `runtime error`，保留异常前的输出并追加错误信息；这种情况没有程序返回的退出码。
 
 编译失败是还没有模块。三则真实诊断在 [浏览器里 clang 报错怎么读](/blog/clang-diagnostics)。系列目录在 [浏览器里的 C++](/blog/series/browser-cpp)。

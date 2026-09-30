@@ -33,8 +33,8 @@ export type CompileResult = {
 export type ExecuteResult = {
   stdout: string;
   stderr: string;
-  status: "success" | "runtime_error";
-  exitCode: number;
+  status: "success" | "nonzero_exit" | "runtime_error";
+  exitCode?: number;
 };
 
 function createLocateFile(toolchainBase: string) {
@@ -216,31 +216,31 @@ export async function runModule(
   ];
 
   const wasi = new WASI([], [], fds);
-  const instance = await WebAssembly.instantiate(module, {
-    wasi_snapshot_preview1: wasi.wasiImport,
-  });
-
   try {
-    wasi.start(
+    const instance = await WebAssembly.instantiate(module, {
+      wasi_snapshot_preview1: wasi.wasiImport,
+    });
+    // start catches WASI proc_exit and returns its code; a nonzero exit is not a trap.
+    const exitCode = wasi.start(
       instance as WebAssembly.Instance & {
         exports: { memory: WebAssembly.Memory; _start: () => unknown };
       },
     );
+
+    return {
+      status: exitCode === 0 ? "success" : "nonzero_exit",
+      stdout,
+      stderr,
+      exitCode,
+    };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error ?? "Program execution failed");
     return {
       status: "runtime_error",
       stdout,
-      stderr: error instanceof Error ? error.message : "Program execution failed",
-      exitCode: 1,
+      stderr: `${stderr}${stderr && !stderr.endsWith("\n") ? "\n" : ""}${message}`,
     };
   }
-
-  return {
-    status: "success",
-    stdout,
-    stderr,
-    exitCode: 0,
-  };
 }
 
 export async function preloadToolchain(

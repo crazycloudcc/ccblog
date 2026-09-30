@@ -49,7 +49,7 @@ export type RunRequest = {
   toolchainBase: string;
 };
 
-export type RunResultStatus = "success" | "compile_error" | "runtime_error" | "timeout";
+export type RunResultStatus = "success" | "nonzero_exit" | "compile_error" | "runtime_error" | "timeout";
 
 export type RunResult = {
   type: "result";

@@ -87,7 +87,7 @@ self.onmessage = async (event: MessageEvent<RunRequest>) => {
       stdout: "",
       stderr: error instanceof Error ? error.message : "Unknown worker error",
       timing: { totalMs: Math.round(performance.now() - startedAt) },
-      metrics: { exitCode: 1 },
+      metrics: {},
     };
     postPhase("done");
     self.postMessage(payload);

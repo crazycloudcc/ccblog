@@ -1,13 +1,13 @@
 "use client";
 
-import type { PlaygroundLanguage } from "@/lib/playground/types";
+import type { PlaygroundLanguage, RunResultStatus } from "@/lib/playground/types";
 import { templates } from "@/lib/playground/templates";
 
 type RunToolbarProps = {
   language: PlaygroundLanguage;
   fileName: string;
   running: boolean;
-  status: "idle" | "running" | "compiling" | "success" | "compile_error" | "runtime_error" | "timeout";
+  status: RunResultStatus | "idle" | "running" | "compiling";
   ready: boolean;
   sharing?: boolean;
   shareMessage?: string | null;

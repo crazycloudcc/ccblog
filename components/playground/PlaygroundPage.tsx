@@ -28,6 +28,7 @@ import type {
   CompileTiming,
   PhaseMessage,
   RunResult,
+  RunResultStatus,
   SandboxMetrics,
 } from "@/lib/playground/types";
 
@@ -69,7 +70,7 @@ export function PlaygroundPage() {
   const [stdout, setStdout] = useState("");
   const [stderr, setStderr] = useState("");
   const [status, setStatus] = useState<
-    "idle" | "running" | "compiling" | "success" | "compile_error" | "runtime_error" | "timeout"
+    RunResultStatus | "idle" | "running" | "compiling"
   >("idle");
   const [timing, setTiming] = useState<CompileTiming | null>(null);
   const [metadata, setMetadata] = useState<CompileMetadata | null>(null);

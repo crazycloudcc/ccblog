@@ -18,10 +18,11 @@ type OutputPanelProps = {
   onDiagnosticClick?: (diagnostic: CompileDiagnostic) => void;
 };
 
-function statusLabel(status: OutputPanelProps["status"]): string {
+function statusLabel(status: OutputPanelProps["status"], exitCode?: number): string {
   switch (status) {
     case "success":
-      return "exit 0";
+    case "nonzero_exit":
+      return exitCode === undefined ? "exited" : `exit ${exitCode}`;
     case "compile_error":
       return "compile error";
     case "runtime_error":
@@ -57,7 +58,8 @@ export function OutputPanel({
     status === "timeout" ? "[timeout] execution stopped after 5s — check for infinite loops or blocking stdin reads" : "",
     metrics?.timedOut ? "[timeout]" : "",
     timing?.totalMs !== undefined ? `$ done in ${timing.totalMs}ms` : "",
-    metrics?.exitCode !== undefined && status === "success" ? `[exit ${metrics.exitCode}]` : "",
+    metrics?.exitCode !== undefined && (status === "success" || status === "nonzero_exit")
+      ? `[exit ${metrics.exitCode}]` : "",
   ].filter(Boolean);
 
   const outputText = lines.length > 0 ? lines.join("\n") : "";
@@ -101,7 +103,7 @@ export function OutputPanel({
       <div className="flex min-h-0 flex-1 flex-col rounded-[8px] border border-lavender-mist bg-obsidian/95">
         <div className="flex items-center justify-between border-b border-lavender-mist/40 px-3 py-2 font-mono text-[11px]">
           <span className="text-code-teal">
-            stdout / stderr · <span className="text-fog">{statusLabel(status)}</span>
+            stdout / stderr · <span className="text-fog">{statusLabel(status, metrics?.exitCode)}</span>
           </span>
           {outputText ? (
             <CopyButton text={outputText} className="border-lavender-mist/40 text-paper/70 hover:text-paper" />
