@@ -31,6 +31,8 @@ export function TerminalShell({ children, postCount }: TerminalShellProps) {
       className="terminal-desk relative h-screen overflow-hidden px-3 py-4 md:px-6 md:py-8"
       onPointerMove={onPointerMove as unknown as React.PointerEventHandler}
       onPointerUp={onPointerUp as unknown as React.PointerEventHandler}
+      onPointerCancel={onPointerUp as unknown as React.PointerEventHandler}
+      onLostPointerCapture={onPointerUp as unknown as React.PointerEventHandler}
     >
       <div
         ref={windowRef}

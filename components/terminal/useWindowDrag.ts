@@ -1,13 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-
-type WindowRect = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
+import { fitWindowRect, resizeDimension, type WindowRect } from "./window-geometry";
 
 type DragMode = "move" | "resize-e" | "resize-s" | "resize-se" | null;
 
@@ -45,32 +39,24 @@ export function useWindowDrag() {
   const startMouseRef = useRef({ x: 0, y: 0 });
   const startRectRef = useRef<WindowRect>({ x: 0, y: 0, width: 0, height: 0 });
 
-  const initRect = useCallback(() => {
-    if (!windowRef.current) return;
-    const parent = windowRef.current.parentElement;
-    if (!parent) return;
-
-    const parentRect = parent.getBoundingClientRect();
-    const windowRect = windowRef.current.getBoundingClientRect();
-
-    setRect({
-      x: windowRect.left - parentRect.left,
-      y: windowRect.top - parentRect.top,
-      width: windowRect.width,
-      height: windowRect.height,
-    });
-  }, []);
-
+  // Leave untouched windows in normal CSS layout. Only dragging/resizing opts
+  // into pixel positioning, so viewport changes never freeze the default shell.
   useEffect(() => {
-    if (rect) return;
-
-    const frame = requestAnimationFrame(initRect);
-    return () => cancelAnimationFrame(frame);
-  }, [rect, initRect]);
+    const parent = windowRef.current?.parentElement;
+    if (!parent) return;
+    const observer = new ResizeObserver(() => {
+      modeRef.current = null;
+      setResizeCursor("");
+      const bounds = parent.getBoundingClientRect();
+      setRect((current) => current ? fitWindowRect(current, bounds) : current);
+    });
+    observer.observe(parent);
+    return () => observer.disconnect();
+  }, []);
 
   const onPointerDown = useCallback(
     (event: PointerEvent) => {
-      if (!windowRef.current || !rect) return;
+      if (!windowRef.current) return;
       if (event.button !== 0) return;
 
       const domRect = windowRef.current.getBoundingClientRect();
@@ -90,7 +76,17 @@ export function useWindowDrag() {
       }
 
       startMouseRef.current = { x: event.clientX, y: event.clientY };
-      startRectRef.current = { ...rect };
+      const parent = windowRef.current.parentElement;
+      if (!parent) return;
+      const parentRect = parent.getBoundingClientRect();
+      const current = rect ?? {
+        x: domRect.left - parentRect.left,
+        y: domRect.top - parentRect.top,
+        width: domRect.width,
+        height: domRect.height,
+      };
+      startRectRef.current = { ...current };
+      setRect(current);
       event.preventDefault();
       (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
     },
@@ -99,7 +95,7 @@ export function useWindowDrag() {
 
   const onPointerMove = useCallback(
     (event: PointerEvent) => {
-      if (!windowRef.current || !rect) return;
+      if (!windowRef.current) return;
 
       const mode = modeRef.current;
 
@@ -130,24 +126,27 @@ export function useWindowDrag() {
         const next = { ...start };
 
         if (mode === "resize-e" || mode === "resize-se") {
-          next.width = clamp(start.width + dx, MIN_WIDTH, parentRect.width - start.x);
+          next.width = resizeDimension(start.width + dx, MIN_WIDTH, parentRect.width - start.x);
         }
 
         if (mode === "resize-s" || mode === "resize-se") {
-          next.height = clamp(start.height + dy, MIN_HEIGHT, parentRect.height - start.y);
+          next.height = resizeDimension(start.height + dy, MIN_HEIGHT, parentRect.height - start.y);
         }
 
         setRect(next);
       }
     },
-    [rect],
+    [],
   );
 
   const onPointerUp = useCallback(() => {
     modeRef.current = null;
+    setResizeCursor("");
   }, []);
 
   const resetPosition = useCallback(() => {
+    modeRef.current = null;
+    setResizeCursor("");
     setRect(null);
   }, []);
 
