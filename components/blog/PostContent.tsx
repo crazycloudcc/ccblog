@@ -1,3 +1,4 @@
+import { InlineMarkdown } from "@/components/blog/InlineMarkdown";
 import { AnnotatedCodeBlock } from "@/components/blog/blocks/AnnotatedCodeBlock";
 import { BenchmarkBlock } from "@/components/blog/blocks/BenchmarkBlock";
 import { CasesCodeBlock } from "@/components/blog/blocks/CasesCodeBlock";
@@ -48,7 +49,7 @@ export async function PostContent({ content, playground }: PostContentProps) {
           case "heading":
             return (
               <h2 key={index} className="text-2xl font-semibold text-ink">
-                {block.text}
+                <InlineMarkdown text={block.text} />
               </h2>
             );
 
@@ -132,7 +133,9 @@ export async function PostContent({ content, playground }: PostContentProps) {
                 className="list-disc space-y-2 pl-5 text-base leading-7 text-slate"
               >
                 {block.items.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>
+                    <InlineMarkdown text={item} />
+                  </li>
                 ))}
               </ul>
             );
@@ -144,7 +147,9 @@ export async function PostContent({ content, playground }: PostContentProps) {
                 className="list-decimal space-y-2 pl-5 text-base leading-7 text-slate"
               >
                 {block.items.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item}>
+                    <InlineMarkdown text={item} />
+                  </li>
                 ))}
               </ol>
             );
@@ -188,7 +193,7 @@ export async function PostContent({ content, playground }: PostContentProps) {
           case "paragraph":
             return (
               <p key={index} className="text-base leading-7 text-slate">
-                {block.text}
+                <InlineMarkdown text={block.text} />
               </p>
             );
         }

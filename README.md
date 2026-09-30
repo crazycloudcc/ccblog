@@ -138,6 +138,8 @@ difficulty: intermediate # optional
 ---
 ```
 
+Inline links, code spans, bold, emphasis, and strikethrough render in headings, paragraphs, and list items. Raw HTML stays escaped; links support relative URLs, HTTP(S), and email. Custom blocks and fenced code keep their existing rendering.
+
 The filename becomes the URL (`/blog/my-post`). The body supports standard markdown, fenced code, images, and custom blocks (`:::trace`, `:::bench`, `:::annotate`, `:::playground`, …) - see `content/notes/content-blocks.md` for examples.
 
 ---
@@ -149,6 +151,7 @@ npm run dev          # local dev (webpack)
 npm run build        # validate config -> sync apps -> build -> pagefind index
 npm run start        # serve the production build
 npm run lint         # eslint
+npm test             # inline Markdown regression tests
 npm run sync:apps    # refresh lib/apps.ts from the iTunes API
 ```
 
