@@ -14,8 +14,8 @@ export async function generateMetadata({ searchParams }: PlaygroundRouteProps) {
   const parameterized = Boolean(params.z || params.embed === "1");
 
   return createPageMetadata({
-    title: "浏览器里的 C++",
-    description: "在浏览器里用 clang 编译运行 C11 和 C++17，源码不上传，限时 5 秒。",
+    title: "C/C++ 在线编译器 · C Playground",
+    description: "免费的 C/C++ 在线编译器（C Playground）：在浏览器里用 clang 编译运行 C11 和 C++17，支持预填 stdin、编译诊断和代码分享。编译无需上传源码，执行限时 5 秒，不支持 C++ 异常。",
     path: "/playground",
     robots: parameterized ? { index: false, follow: true } : undefined,
   });
@@ -29,13 +29,30 @@ export default async function Page({ searchParams }: PlaygroundRouteProps) {
     <>
       {embedded ? null : (
         <TerminalPanel title="playground.cc">
-          <h1 className="prose-terminal text-2xl font-semibold leading-[1.25] text-ink">浏览器里的 C++</h1>
+          <h1 className="prose-terminal text-2xl font-semibold leading-[1.25] text-ink">
+            C/C++ 在线编译器
+          </h1>
           <p className="prose-terminal mt-3 max-w-3xl text-base leading-[1.8] text-slate">
-            clang 在你的浏览器里编译，源码不会上传。单次运行限时 5 秒。原理和限制写在{" "}
+            C Playground：选择 C11 或 C++17，在浏览器里用 clang 编译运行，无需安装编译器，也无需上传源码。
+            适合验证小程序、练习算法和查看编译诊断。
+          </p>
+          <p className="prose-terminal mt-2 max-w-3xl text-sm leading-[1.8] text-slate">
+            使用 scanf / cin 时，请先填好 stdin；运行期间不能追加输入。单次执行限时 5 秒，C++ 不支持异常。
+            首次打开需要下载 WebAssembly 工具链。
+          </p>
+          <p className="prose-terminal mt-3 max-w-3xl text-sm leading-[1.8] text-slate">
+            使用指南：{" "}
             <Link href="/blog/liulanqi-bianyi-cpp" className="font-semibold text-ink hover:text-code-cobalt">
-              这篇笔记
+              编译原理与限制
             </Link>
-            。
+            {" · "}
+            <Link href="/blog/scanf-stdin" className="font-semibold text-ink hover:text-code-cobalt">
+              scanf 与 stdin
+            </Link>
+            {" · "}
+            <Link href="/blog/clang-diagnostics" className="font-semibold text-ink hover:text-code-cobalt">
+              读懂 clang 报错
+            </Link>
           </p>
         </TerminalPanel>
       )}
