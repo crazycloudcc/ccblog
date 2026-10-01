@@ -2,6 +2,7 @@
 title: "空 stdin 上 scanf 立刻得到 EOF"
 excerpt: "输入框空着不是卡住。browsercc 0.1.1 里这段 stdin 是已经给完的文件，scanf(\"%d\") 马上返回 -1。"
 date: 2026-09-25
+updated: 2026-10-01
 coverLabel: stdin
 tags:
   - cpp
@@ -85,8 +86,8 @@ int main(void) {
 
 面板会显示程序实际的 WASI 退出码。`wasi.start` 捕获 `proc_exit` 后返回退出码，运行器保留这个值：`return 0` 显示 `[exit 0]`，`return 1` 显示 `[exit 1]`，stdout 和 stderr 都会保留。旧版运行器曾忽略这个返回值，导致 `return 1` 也显示 0；这个问题已修复。
 
-内建的 `a+b.cpp` 也可以验证：stdin 空着时，`cin` 提取失败，stdout 为空，退出码为 1；输入 `20 22` 后输出 `42`，退出码为 0。输入框里的 `1 2` 是 placeholder，不是预填输入。
+内建的 `a+b.cpp` 也可以验证：stdin 空着时，`cin` 提取失败，stdout 为空，退出码为 1；输入 `20 22` 后输出 `42`，退出码为 0。选择这个示例只会载入代码，保留输入框已有的内容；点 stdin 旁的「载入示例输入」会填入 `3 4`，再 Run 得到 `7`。输入框非空时会先让你确认替换，取消则保留原输入。placeholder 不是预填输入。
 
 非零退出说明程序主动返回了非零值，不会被标成 `runtime error`。真正的 WASM trap 或运行异常会显示 `runtime error`，保留异常前的输出并追加错误信息；这种情况没有程序返回的退出码。
 
-编译失败是还没有模块。三则真实诊断在 [浏览器里 clang 报错怎么读](/blog/clang-diagnostics)。系列目录在 [浏览器里的 C++](/blog/series/browser-cpp)。
+编译失败是还没有模块。四则真实诊断在 [浏览器里 clang 报错怎么读](/blog/clang-diagnostics)。系列目录在 [浏览器里的 C++](/blog/series/browser-cpp)。

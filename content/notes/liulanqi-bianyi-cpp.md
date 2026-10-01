@@ -2,7 +2,7 @@
 title: 在浏览器里编译运行 C++，不用装编译器
 excerpt: 打开就能 Run。clang 在浏览器里把 C++ 编成 WebAssembly，源码不上传，也没有后台容器。
 date: 2026-08-14
-updated: 2026-09-25
+updated: 2026-10-01
 coverLabel: wasm-zh
 tags:
   - cpp
@@ -37,7 +37,7 @@ lang: zh-CN
 四步都在页面自己的 Web Worker 里：
 
 1. 下载 clang、lld 和一份 WASI sysroot。体积不小，所以第一次会停一下。浏览器把它们缓存之后，再跑就不再走网络。
-2. `clang++` 按 C++17 编译，旗帜是 `-std=c++17 -Wall -O0 -fno-exceptions`。`-O0` 是为了看行为，不适合拿来比性能。`-fno-exceptions` 是因为这套 WASI 没有 C++ 异常运行时，`throw` 会在链接期找不到 `__cxa_*`。
+2. `clang++` 按 C++17 编译，旗帜是 `-std=c++17 -Wall -O0 -fno-exceptions`。`-O0` 是为了看行为，不适合拿来比性能。`-fno-exceptions` 禁用 C++ 异常，直接写 `throw` / `try` 会在编译期被拒绝；这套 WASI 也没有可用的 C++ 异常运行时。
 3. `wasm-ld` 把目标文件链成一个 wasm 模块。
 4. `WebAssembly.instantiate` 配上 WASI，从 `_start` 跑你的 `main`。墙钟限制是 5 秒。到点之后面板写的是：`[timeout] execution stopped after 5s — check for infinite loops or blocking stdin reads`。
 
@@ -84,16 +84,16 @@ int main() {
 - **第三方库。** sysroot 里没有它们，也没有包管理器可以把它们装进来。
 - **读你的磁盘。** WASI 看见的文件系统是工具链准备好的那一份，不是你电脑上的目录。
 - **不返回的循环。** 执行超过 5 秒会被停掉。一次 `scanf` 遇到空文件会马上返回，不会靠这个超时。两者的差别写在 [scanf 那篇](/blog/scanf-stdin)。
-- **C++ 异常。** `throw` / `try` 会在链接期报 `__cxa_allocate_exception` 一类未定义符号。用返回值或 `std::optional` 表达失败。
+- **C++ 异常。** 当前旗帜禁用了异常，`throw` / `try` 会在编译期报 `with exceptions disabled`。用返回值或 `std::optional` 表达失败；最小复现见 [clang 报错说明](/blog/clang-diagnostics)。
 - **性能结论。** `-O0` 加上 WASM 的启动成本，不能拿来和本机 `clang -O2` 比快慢。
 
-编译失败时长什么样，三则最小例子在 [浏览器里 clang 报错怎么读](/blog/clang-diagnostics)。
+编译失败时长什么样，四则最小例子在 [浏览器里 clang 报错怎么读](/blog/clang-diagnostics)。
 
 ## 页面上实际有什么
 
-[`/playground`](/playground) 左边是编辑器，右边是输出。工具栏切 C 或 C++，**Run** 开始编译。stdin 是单独一栏，只有程序要读输入时才需要填，提示文字是 `optional · for cin / scanf`。
+[`/playground`](/playground) 左边是编辑器，右边是输出。工具栏切 C 或 C++，**Run** 开始编译。stdin 是单独一栏，只有程序要读输入时才需要填，标签是 `stdin (for cin / scanf)`，空框提示「程序需要输入时，在运行前填入」。
 
-输出面板先给阶段耗时，再给 clang 的诊断。编译失败时，诊断带文件名和行号，点一下会跳到编辑器对应行。编译通过之后，同一块区域改显示 stdout / stderr。成功时状态是 `exit 0`。编译失败是 `compile error`。跑起来之后自己返回非零，是 `runtime error`。五秒到了是 `timeout`。这四者不是一类问题：前一个发生在还没有 wasm 模块的时候，后三个发生在模块已经开始执行之后。
+输出面板先给阶段耗时，再给 clang 的诊断。编译失败时，诊断带文件名和行号，点一下会跳到编辑器对应行。编译通过之后，同一块区域改显示 stdout / stderr。正常返回时状态显示实际退出码：`return 0` 是 `exit 0`，`return 1` 是 `exit 1`，stdout / stderr 都会保留。编译或链接失败是 `compile error`，还没有可运行的 wasm 模块。真正的 WASM trap 或运行异常才显示 `runtime error`，没有程序返回的退出码。执行超过五秒是 `timeout`。具体输入和退出码可以对照 [scanf 那篇](/blog/scanf-stdin)。
 
 分享会复制一条带压缩参数的链接，打开后恢复代码和 stdin。带 `?z=` 或 `embed=1` 的地址响应头是 `noindex`，免得每一份草稿都变成搜索结果。
 
@@ -110,7 +110,7 @@ C++ 的命令是 `clang++ main.cpp -std=c++17 -Wall -O0 -fno-exceptions`。
 - `-std=c++17` 决定能用哪些语言特性。更新的标准没有打开。
 - `-Wall` 打开一批常见警告。警告不会让 Run 失败，诊断区收的是 error 和 fatal error。
 - `-O0` 几乎不做优化。循环还在，变量也还在，方便对照源码。它不代表这段 C++ 在本机上的速度。
-- `-fno-exceptions` 关掉异常。这套 WASI 没有 `__cxa_allocate_exception` 那套运行时，留着异常，链接期就会报未定义符号。
+- `-fno-exceptions` 关掉异常。直接写 `throw` / `try` 会得到 `cannot use … with exceptions disabled` 编译错误。移除这面旗帜也不代表这套 WASI 就能提供 C++ 异常运行时。
 
 C 是 `clang main.c -std=c11 -Wall -O0`，没有最后那面旗帜，因为 C 没有这套异常运行时。
 
