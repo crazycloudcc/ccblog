@@ -49,7 +49,7 @@ The home page opens with a short boot sequence (notes type in, then settle). The
 |------|----------------|
 | **Blog** | Markdown + frontmatter, tag & series filters, reading time, prev/next, related posts |
 | **Search** | [Pagefind](https://pagefind.app/) static index, built on `postbuild` |
-| **Playground** | C11 / C++17 compile & run via [browsercc](https://www.npmjs.com/package/browsercc) WASM - Monaco editor, stdin, stdout/stderr, actual exit codes, share links, compile timeline |
+| **Playground** | C11 / C++17 compile & run via [browsercc](https://www.npmjs.com/package/browsercc) WASM - Monaco editor, explicit sample-input loading with overwrite confirmation, stdin, stdout/stderr, actual exit codes, share links, compile timeline |
 | **Content blocks** | `:::trace`, `:::bench`, `:::annotate`, `:::playground` directives in posts |
 | **Meta** | RSS, sitemap, JSON-LD, Open Graph image |
 | **Apps** | Optional App Store catalog, off unless you turn `features.apps` on |

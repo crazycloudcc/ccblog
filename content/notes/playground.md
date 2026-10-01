@@ -2,6 +2,7 @@
 title: Playground
 excerpt: Compile and run C/C++ in the browser - what /playground does and how to use it.
 date: 2026-08-06
+updated: 2026-10-01
 coverLabel: playground
 tags:
   - meta
@@ -40,7 +41,7 @@ Because it runs off the main thread, the editor stays responsive while clang wor
 |---------|--------------|
 | **C / C++** | Switch language. C uses `clang -std=c11`, C++ uses `clang++ -std=c++17`, both with `-Wall -O0`; C++ adds `-fno-exceptions` (WASI has no EH runtime) |
 | `file: main.cpp` | The filename the compiler sees (read-only) |
-| `example` | Load a reference snippet - hello, a+b, sort, and for C++ also regex/json. It fills the editor; it does not lock editing |
+| `example` | Load a reference snippet - hello, a+b, sort, and for C++ also regex/json. It fills the editor and preserves stdin; it does not lock editing |
 | **run** | Compile + link + execute. Shortcut: `Cmd/Ctrl + Enter` |
 | **clear** | Reset the editor to an empty skeleton for the current language |
 | **share** | Copy a compressed link that restores this code and stdin |
@@ -82,7 +83,9 @@ The first run is slower - that is the one-time toolchain fetch shown as the `too
 
 ## 2. Reading input
 
-Below the editor is a small **stdin** panel. It only matters when your program reads input - leave it empty for hello world. Pick `a+b.cpp` and type two numbers into stdin:
+Below the editor is a small **stdin** panel. It only matters when your program reads input - leave it empty for hello world. Pick `a+b.cpp` and click **载入示例输入** beside stdin to load `3 4`, or type two numbers yourself. Examples that read input show their expected format. Selecting an example never changes stdin; loading a sample asks you to replace or cancel when existing input differs. Editing the example hides its sample hint, and read-only links cannot change input.
+
+For a+b:
 
 :::annotate{title="a+b.cpp"}
 ```cpp

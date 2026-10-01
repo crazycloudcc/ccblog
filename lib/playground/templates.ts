@@ -1,6 +1,13 @@
 import type { PlaygroundLanguage } from "@/lib/playground/types";
 
-export const templates: Record<PlaygroundLanguage, { label: string; source: string }[]> = {
+export type PlaygroundTemplate = {
+  label: string;
+  source: string;
+  sampleStdin?: string;
+  inputHint?: string;
+};
+
+export const templates: Record<PlaygroundLanguage, PlaygroundTemplate[]> = {
   c: [
     {
       label: "hello.c",
@@ -13,6 +20,8 @@ int main(void) {
     },
     {
       label: "a+b.c",
+      sampleStdin: "3 4\n",
+      inputHint: "输入两个整数，用空格或换行分隔。",
       source: `#include <stdio.h>
 
 int main(void) {
@@ -26,6 +35,8 @@ int main(void) {
     },
     {
       label: "sort.c",
+      sampleStdin: "5\n4 1 5 2 3\n",
+      inputHint: "先输入整数个数 n，再输入 n 个整数。",
       source: `#include <stdio.h>
 #include <stdlib.h>
 
@@ -74,6 +85,8 @@ int main() {
     },
     {
       label: "a+b.cpp",
+      sampleStdin: "3 4\n",
+      inputHint: "输入两个整数，用空格或换行分隔。",
       source: `#include <iostream>
 
 int main() {
@@ -87,6 +100,8 @@ int main() {
     },
     {
       label: "sort.cpp",
+      sampleStdin: "5\n4 1 5 2 3\n",
+      inputHint: "先输入整数个数 n，再输入 n 个整数。",
       source: `#include <algorithm>
 #include <iostream>
 #include <vector>
@@ -110,6 +125,8 @@ int main() {
     },
     {
       label: "regex.cpp",
+      sampleStdin: "Items: 12 apples and 34 oranges\n",
+      inputHint: "输入一行文本，提取其中独立的整数。",
       source: `#include <iostream>
 #include <regex>
 #include <string>
@@ -133,6 +150,8 @@ int main() {
     },
     {
       label: "json.cpp",
+      sampleStdin: "{\"name\":\"Ada\"}\n",
+      inputHint: "输入单行 JSON，包含紧凑的 \"name\":\"值\"；此示例只演示字符串查找。",
       source: `#include <iostream>
 #include <string>
 
@@ -165,4 +184,9 @@ int main() {
 
 export function getDefaultSource(language: PlaygroundLanguage): string {
   return templates[language][0].source;
+}
+
+/** Only unmodified examples in the active language may offer sample input. */
+export function findTemplate(language: PlaygroundLanguage, source: string): PlaygroundTemplate | undefined {
+  return templates[language].find((template) => template.source === source);
 }

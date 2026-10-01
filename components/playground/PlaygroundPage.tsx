@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CodeEditor, type CodeEditorHandle } from "@/components/playground/CodeEditor";
+import { StdinPanel } from "@/components/playground/StdinPanel";
+import { findTemplate } from "@/lib/playground/templates";
 import { OutputPanel } from "@/components/playground/OutputPanel";
 import { RunToolbar } from "@/components/playground/RunToolbar";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
@@ -351,6 +353,8 @@ export function PlaygroundPage() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [handleRun, ready, running, readonly]);
 
+  const currentTemplate = findTemplate(language, source);
+
   const panelTitle = shareTitle ? `playground.cc · ${shareTitle}` : "playground.cc";
 
   const workspace = (
@@ -418,19 +422,13 @@ export function PlaygroundPage() {
         </div>
 
         <div className={`flex flex-col gap-3 ${isEmbed ? "h-[min(220px,35vh)]" : "h-[min(560px,70vh)]"}`}>
-          <div className="flex shrink-0 flex-col rounded-[8px] border border-lavender-mist">
-            <div className="border-b border-lavender-mist/40 px-3 py-2 font-mono text-[11px] text-code-teal">
-              stdin <span className="text-fog">(optional · for cin / scanf)</span>
-            </div>
-            <textarea
-              value={stdin}
-              onChange={(event) => setStdin(event.target.value)}
-              readOnly={readonly}
-              placeholder="1 2"
-              className="min-h-[72px] resize-y bg-terminal-bg px-3 py-3 font-mono text-[12px] leading-6 text-ink outline-none placeholder:text-mist disabled:opacity-70"
-              spellCheck={false}
-            />
-          </div>
+          <StdinPanel
+            key={`${language}:${currentTemplate?.label ?? "custom"}:${readonly}`}
+            template={currentTemplate}
+            stdin={stdin}
+            readonly={readonly}
+            onChange={setStdin}
+          />
           <div className="min-h-0 flex-1">
             <OutputPanel
               compileOutput={compileOutput}
@@ -470,7 +468,7 @@ export function PlaygroundPage() {
       <TerminalPanel title="man playground">
         <ul className="space-y-2 font-mono text-sm text-fog">
           <li>- The main editor accepts any C/C++ code; drafts are saved locally in your browser.</li>
-          <li>- The example dropdown loads reference code only; it does not limit editing.</li>
+          <li>- The example dropdown loads code only and preserves stdin. Use 载入示例输入 beside stdin to try its sample input.</li>
           <li>- stdin is only required when your program reads input; leave it empty for hello world.</li>
           <li>- Shortcut: Cmd/Ctrl + Enter to run; execution stops automatically after 5 seconds.</li>
           <li>- Compile errors show structured diagnostics; click to jump to the line.</li>
