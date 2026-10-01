@@ -421,7 +421,7 @@ export function PlaygroundPage() {
           />
         </div>
 
-        <div className={`flex flex-col gap-3 ${isEmbed ? "h-[min(220px,35vh)]" : "h-[min(560px,70vh)]"}`}>
+        <div className={`flex flex-col gap-3 ${isEmbed ? "min-h-[min(220px,35vh)]" : "min-h-[min(560px,70vh)]"}`}>
           <StdinPanel
             key={`${language}:${currentTemplate?.label ?? "custom"}:${readonly}`}
             template={currentTemplate}
@@ -429,7 +429,7 @@ export function PlaygroundPage() {
             readonly={readonly}
             onChange={setStdin}
           />
-          <div className="min-h-0 flex-1">
+          <div className="min-h-[220px] flex-1">
             <OutputPanel
               compileOutput={compileOutput}
               stdout={stdout}

@@ -11,6 +11,8 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 
 ### Added
 
+- Playground sample stdin and format hints for unchanged built-in examples, with explicit load/replace/cancel controls that preserve existing input
+
 - Optional note frontmatter `index: false` (URL stays up; sitemap, RSS, and public lists skip it) and `seriesSlug` for `/blog/series/[slug]`
 - Indexable series page for 浏览器里的 C++ (`/blog/series/browser-cpp`)
 - Chinese notes: browser clang pillar, three algorithm pits, empty-stdin `scanf`, real browsercc diagnostics, LocalBeats
@@ -28,6 +30,11 @@ Work on `main` after `v1.1.0` that is not yet tagged. Candidates for **v1.2.0**.
 - Chinese hero note `liulanqi-bianyi-cpp` (browser C++ compile, no install)
 - Home page crawlable `h1` + intro (SSR, not behind the boot sequence)
 - `proxy.ts` sets `X-Robots-Tag: noindex` on `/playground?z=` / `embed=1` and `/blog?tag=` / `?series=`
+
+### Fixed
+
+- Existing short-viewport/embedded Playground overlap: Monaco now respects its editor row, and stdin/output panels grow with their contents
+- Existing share-link stream backpressure: gzip compression/decompression consume output while writing, preserving the current URL format and old links
 
 ### Changed
 

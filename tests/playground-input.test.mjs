@@ -147,3 +147,14 @@ test("confirmation is announced and cancel/replace restore focus to the persiste
   h.click("替换");
   assert.equal(focused, 2);
 });
+
+
+test("short and embedded layouts keep editor inside its row and let stdin/output grow", () => {
+  const editor = readFileSync(new URL("../components/playground/CodeEditor.tsx", import.meta.url), "utf8");
+  const page = readFileSync(new URL("../components/playground/PlaygroundPage.tsx", import.meta.url), "utf8");
+  assert.match(editor, /flex h-full min-h-0 flex-col overflow-hidden/);
+  assert.doesNotMatch(editor, /min-h-\[420px\]/);
+  assert.ok(page.includes('isEmbed ? "h-[min(280px,45vh)]" : "h-[min(560px,70vh)]"'));
+  assert.ok(page.includes('isEmbed ? "min-h-[min(220px,35vh)]" : "min-h-[min(560px,70vh)]"'));
+  assert.match(page, /<div className="min-h-\[220px\] flex-1">\s*<OutputPanel/);
+});

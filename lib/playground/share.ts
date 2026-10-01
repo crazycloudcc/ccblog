@@ -35,21 +35,17 @@ function base64UrlToBytes(value: string): Uint8Array {
 
 async function gzipText(text: string): Promise<Uint8Array> {
   const input = new TextEncoder().encode(text);
-  const stream = new CompressionStream("gzip");
-  const writer = stream.writable.getWriter();
-  await writer.write(input);
-  await writer.close();
-  const buffer = await new Response(stream.readable).arrayBuffer();
+  // Consume as we write: waiting for writer.close() before reading can
+  // deadlock when CompressionStream applies readable-side backpressure.
+  const stream = new Blob([input]).stream().pipeThrough(new CompressionStream("gzip"));
+  const buffer = await new Response(stream).arrayBuffer();
   return new Uint8Array(buffer);
 }
 
 async function gunzipText(bytes: Uint8Array): Promise<string> {
-  const stream = new DecompressionStream("gzip");
-  const writer = stream.writable.getWriter();
   const payload = new Uint8Array(bytes);
-  await writer.write(payload);
-  await writer.close();
-  const buffer = await new Response(stream.readable).arrayBuffer();
+  const stream = new Blob([payload]).stream().pipeThrough(new DecompressionStream("gzip"));
+  const buffer = await new Response(stream).arrayBuffer();
   return new TextDecoder().decode(buffer);
 }
 
