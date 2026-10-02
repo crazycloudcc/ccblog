@@ -2,7 +2,7 @@
 title: "空 stdin 上 scanf 立刻得到 EOF"
 excerpt: "输入框空着不是卡住。browsercc 0.1.1 里这段 stdin 是已经给完的文件，scanf(\"%d\") 马上返回 -1。"
 date: 2026-09-25
-updated: 2026-10-01
+updated: 2026-10-02
 coverLabel: stdin
 tags:
   - cpp
@@ -16,7 +16,7 @@ lang: zh-CN
 runtime: browsercc
 ---
 
-系列入口在 [在浏览器里编译运行 C++](/blog/liulanqi-bianyi-cpp)。面板上的 timeout 文案提到 blocking stdin，容易让人以为输入框空着，`scanf` 会等到 5 秒。用这套运行时量过：不会。
+系列入口在 [在浏览器里编译运行 C++](/blog/liulanqi-bianyi-cpp)。输入框空着时，`scanf` 不会等到 5 秒。用这套运行时量过：它会马上得到 EOF。
 
 ## 空文件会马上结束
 
@@ -78,9 +78,9 @@ int main(void) {
 
 `/playground` 在编译完成、开始执行时启动 5000 毫秒的定时器。到点还没收到结果，就把 worker 停掉。状态变成 `timeout`，stderr 写成 `Execution timed out after 5 seconds.`，输出区再加一行：
 
-`[timeout] execution stopped after 5s — check for infinite loops or blocking stdin reads`
+`[timeout] execution stopped after 5s — check for infinite loops or input loops that ignore EOF`
 
-这句把死循环和阻塞读写在一起。当前这个 shim 的 stdin 不会阻塞。会走到这句的，是进程一直不返回，例如 [二分查找](/blog/binary-search) 里窗口不缩小的那个循环。`scanf` 本身在空文件上 2 毫秒就返回了。
+当前这个 shim 的 stdin 不会阻塞。提示里的 input loops 指忽略 EOF、反复读取的循环，不是等待用户继续输入。会走到超时的，是进程一直不返回，例如 [二分查找](/blog/binary-search) 里窗口不缩小的那个循环。`scanf` 本身在空文件上 2 毫秒就返回了。
 
 若你自己写了 `while (scanf("%d", &x) != 1) {}` 这种不看 EOF 的循环，空输入上 `scanf` 每次都立刻返回 `-1`，循环倒是会转满 5 秒。烧掉时间的是循环，不是读。
 

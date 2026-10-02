@@ -55,7 +55,7 @@ export function OutputPanel({
     compileOutput.trim(),
     stdout.trim(),
     stderr.trim(),
-    status === "timeout" ? "[timeout] execution stopped after 5s — check for infinite loops or blocking stdin reads" : "",
+    status === "timeout" ? "[timeout] execution stopped after 5s — check for infinite loops or input loops that ignore EOF" : "",
     metrics?.timedOut ? "[timeout]" : "",
     timing?.totalMs !== undefined ? `$ done in ${timing.totalMs}ms` : "",
     metrics?.exitCode !== undefined && (status === "success" || status === "nonzero_exit")
@@ -64,7 +64,7 @@ export function OutputPanel({
 
   const outputText = lines.length > 0 ? lines.join("\n") : "";
   const placeholder = "Run your code to see output here.";
-  const showStdinHint =
+  const showTimeoutHint =
     status === "timeout" && !stdout.trim() && !stderr.trim() && compileOutput.trim() === "";
 
   return (
@@ -112,9 +112,9 @@ export function OutputPanel({
         <pre className="flex-1 overflow-auto px-3 py-3 font-mono text-[12px] leading-6 text-paper/90">
           {outputText || placeholder}
         </pre>
-        {showStdinHint ? (
+        {showTimeoutHint ? (
           <div className="border-t border-lavender-mist/30 px-3 py-2 font-mono text-[11px] text-code-plum">
-            // hint: program may be waiting for stdin — add input in the panel above
+            // hint: stdin is preloaded and ends at EOF — check that input loops stop at EOF
           </div>
         ) : null}
       </div>

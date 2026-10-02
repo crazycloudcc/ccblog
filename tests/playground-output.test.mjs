@@ -40,3 +40,17 @@ test("runtime failures retain output and never display a synthetic process exit"
   assert.ok(html.includes("before trap\nprogram diagnostic\nunreachable"));
   assert.ok(!html.includes("[exit "));
 });
+
+
+test("timeout guidance describes preloaded stdin without claiming blocking reads", () => {
+  for (const stderr of ["", "Execution timed out after 5 seconds."]) {
+    const html = render("timeout", undefined, "", stderr);
+    assert.ok(html.includes("check for infinite loops or input loops that ignore EOF"));
+    assert.ok(!html.includes("blocking stdin"));
+    assert.ok(!html.includes("waiting for stdin"));
+    assert.ok(!html.includes("[exit "));
+    if (!stderr) {
+      assert.ok(html.includes("stdin is preloaded and ends at EOF"));
+    }
+  }
+});
