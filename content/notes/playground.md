@@ -2,7 +2,7 @@
 title: Playground
 excerpt: Compile and run C/C++ in the browser - what /playground does and how to use it.
 date: 2026-08-06
-updated: 2026-10-01
+updated: 2026-10-02
 coverLabel: playground
 tags:
   - meta
@@ -15,6 +15,8 @@ index: false
 `/playground` is a C/C++ environment that runs entirely in your browser. Write code on the left, hit **run**, and a real compiler builds it to WebAssembly and executes it - no server, no install, no container behind the request. The toolchain is a WASM build of clang + lld + a WASI sysroot, fetched once and cached.
 
 This post is the tour: what the page does, the controls, and a few runs from hello world to a compile error.
+
+[Open the C/C++ Playground](/playground) to follow along. Choose C11 or C++17 in the toolbar, then select an example and click **run**.
 
 ## How it runs
 

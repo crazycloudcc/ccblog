@@ -2,7 +2,7 @@
 title: 在浏览器里编译运行 C++，不用装编译器
 excerpt: 打开就能 Run。clang 在浏览器里把 C++ 编成 WebAssembly，源码不上传，也没有后台容器。
 date: 2026-08-14
-updated: 2026-10-01
+updated: 2026-10-02
 coverLabel: wasm-zh
 tags:
   - cpp
@@ -39,7 +39,7 @@ lang: zh-CN
 1. 下载 clang、lld 和一份 WASI sysroot。体积不小，所以第一次会停一下。浏览器把它们缓存之后，再跑就不再走网络。
 2. `clang++` 按 C++17 编译，旗帜是 `-std=c++17 -Wall -O0 -fno-exceptions`。`-O0` 是为了看行为，不适合拿来比性能。`-fno-exceptions` 禁用 C++ 异常，直接写 `throw` / `try` 会在编译期被拒绝；这套 WASI 也没有可用的 C++ 异常运行时。
 3. `wasm-ld` 把目标文件链成一个 wasm 模块。
-4. `WebAssembly.instantiate` 配上 WASI，从 `_start` 跑你的 `main`。墙钟限制是 5 秒。到点之后面板写的是：`[timeout] execution stopped after 5s — check for infinite loops or blocking stdin reads`。
+4. `WebAssembly.instantiate` 配上 WASI，从 `_start` 跑你的 `main`。墙钟限制是 5 秒。到点之后面板写的是：`[timeout] execution stopped after 5s — check for infinite loops or input loops that ignore EOF`。
 
 C 走另一条：`clang`，`-std=c11 -Wall -O0`，源文件名是 `main.c`。语言在 Playground 的工具栏里切换。
 
