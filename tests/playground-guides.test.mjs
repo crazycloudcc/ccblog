@@ -27,12 +27,12 @@ test("the playground tour opens with a usable link to the clean tool route", asy
   assert.match(metadata.alternates.canonical, /\/blog\/playground$/);
 });
 
-test("both indexed input guides quote the rendered timeout guidance accurately", () => {
+test("indexed guides quote the rendered timeout guidance accurately", () => {
   const html = renderToStaticMarkup(createElement(OutputPanel, {
     compileOutput: "", stdout: "", stderr: "Execution timed out after 5 seconds.",
     status: "timeout", timing: null, metadata: null, metrics: null, diagnostics: [],
   }));
-  for (const slug of ["liulanqi-bianyi-cpp", "scanf-stdin"]) {
+  for (const slug of ["liulanqi-bianyi-cpp", "scanf-stdin", "binary-search"]) {
     const post = getPostBySlug(slug);
     const quote = post.content.match(/`(\[timeout\] execution stopped[^`]+)`/)?.[1];
     assert.ok(quote, `${slug} has the timeout message`);

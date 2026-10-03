@@ -2,7 +2,7 @@
 title: Playground
 excerpt: Compile and run C/C++ in the browser - what /playground does and how to use it.
 date: 2026-08-06
-updated: 2026-10-02
+updated: 2026-10-03
 coverLabel: playground
 tags:
   - meta
@@ -102,9 +102,9 @@ int main() {
     return 0;
 }
 ```
-- line 4: read two ints from stdin
-- line 5: bail out cleanly on bad input
-- line 7: write the sum to stdout
+- line 5: read two ints from stdin
+- line 6: bail out cleanly on bad input
+- line 8: write the sum to stdout
 :::
 
 With `3 4` in the stdin box, the run prints `7`. An empty stdin box is a zero-length file. A single `scanf` then returns EOF immediately. The 5-second cap is for runs that do not return, such as an infinite loop.
@@ -147,7 +147,7 @@ int main() {
 ```
 :::
 
-The output panel switches to diagnostics: `main.cpp:4 - expected ';'`. Click the row and the cursor lands on line 4 - no scanning, no line counting. Runtime failures print to stderr and end with a non-zero exit instead.
+The output panel switches to diagnostics: `main.cpp:4 - expected ';'`. Click the row and the cursor lands on line 4 - no scanning, no line counting. A program that returns a non-zero status shows its actual exit code, such as `[exit 1]`. A WASM trap or execution exception shows `runtime error`, preserves earlier output, and appends the error to stderr; it has no program exit code.
 
 One constraint to know: the WASI toolchain has no C++ exception runtime, so C++ is compiled with `-fno-exceptions`. Writing `throw`, `try`, or `catch` is a compile error - `cannot use 'throw' with exceptions disabled` - with a hint to use return codes or `std::optional` instead. Allocation failures (e.g. `std::vector`) abort rather than throw `std::bad_alloc`.
 
@@ -182,7 +182,7 @@ The toolchain loads from different places depending on environment:
 
 | Environment | Source |
 |-------------|--------|
-| **Development** | `/api/toolchain` -> `node_modules/browsercc`, falling back to a GitHub release |
+| **Development** | `/api/toolchain` -> a GitHub release, falling back to `node_modules/browsercc` |
 | **Production** | [unpkg](https://unpkg.com/browsercc@0.1.1/dist/) CDN (default) |
 | **Self-hosted** | Set `NEXT_PUBLIC_TOOLCHAIN_BASE` to your own CDN |
 

@@ -2,7 +2,7 @@
 title: "二分查找死循环：mid 写成 (lo + hi) / 2"
 excerpt: "两个独立的坑：有符号加法溢出，以及测完 mid 却不把窗口缩小。后者会在浏览器里撞上 5 秒超时。"
 date: 2026-08-05
-updated: 2026-09-25
+updated: 2026-10-03
 coverLabel: rn-02
 tags:
   - algorithm
@@ -65,7 +65,7 @@ int binarySearch(const std::vector<int>& a, int target) {
 
 Playground 的墙钟是 5 秒。循环停不下来时，面板状态是 timeout，并打印：
 
-stderr 是 `Execution timed out after 5 seconds.` 输出区另外一行是 `[timeout] execution stopped after 5s — check for infinite loops or blocking stdin reads`。这套 stdin 其实不会阻塞，那半句是提示文案；这篇的循环是真的不返回。空文件上的一次 `scanf` 会马上结束，写在 [scanf 那篇](/blog/scanf-stdin)。
+stderr 是 `Execution timed out after 5 seconds.` 输出区另外一行是 `[timeout] execution stopped after 5s — check for infinite loops or input loops that ignore EOF`。这套 stdin 不会阻塞；提示里的 input loops 指忽略 EOF 的输入循环。这篇的循环则是搜索窗口没有缩小，一直不返回。空文件上的一次 `scanf` 会马上结束，写在 [scanf 那篇](/blog/scanf-stdin)。
 
 :::cases{title="收窄窗口"}
 ### good
