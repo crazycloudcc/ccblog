@@ -36,9 +36,27 @@ int main(void) {
     {
       label: "sort.c",
       sampleStdin: "5\n4 1 5 2 3\n",
-      inputHint: "先输入整数个数 n，再输入 n 个整数。",
-      source: `#include <stdio.h>
+      inputHint: "先输入整数个数 n（0–10000），再输入 n 个整数。",
+      source: `#include <errno.h>
+#include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+int read_int(int* value) {
+    char token[64];
+    if (scanf("%63s", token) != 1 || strlen(token) == 63) {
+        return 0;
+    }
+    char* end;
+    errno = 0;
+    long parsed = strtol(token, &end, 10);
+    if (errno == ERANGE || end == token || *end != '\\0' || parsed < INT_MIN || parsed > INT_MAX) {
+        return 0;
+    }
+    *value = (int)parsed;
+    return 1;
+}
 
 int compare(const void* left, const void* right) {
     int a = *(const int*)left;
@@ -48,17 +66,27 @@ int compare(const void* left, const void* right) {
 
 int main(void) {
     int count = 0;
-    if (scanf("%d", &count) != 1) {
+    if (!read_int(&count) || count < 0 || count > 10000) {
+        fprintf(stderr, "Expected a count from 0 to 10000.\\n");
         return 1;
+    }
+    if (count == 0) {
+        printf("\\n");
+        return 0;
     }
 
     int* values = (int*)malloc((size_t)count * sizeof(int));
     if (!values) {
+        fprintf(stderr, "Could not allocate the sorting buffer.\\n");
         return 1;
     }
 
     for (int i = 0; i < count; i++) {
-        scanf("%d", &values[i]);
+        if (!read_int(&values[i])) {
+            fprintf(stderr, "Expected %d integers after the count.\\n", count);
+            free(values);
+            return 1;
+        }
     }
 
     qsort(values, (size_t)count, sizeof(int), compare);
@@ -101,19 +129,34 @@ int main() {
     {
       label: "sort.cpp",
       sampleStdin: "5\n4 1 5 2 3\n",
-      inputHint: "先输入整数个数 n，再输入 n 个整数。",
+      inputHint: "先输入整数个数 n（0–10000），再输入 n 个整数。",
       source: `#include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
+
+bool read_int(int& value) {
+    std::string token;
+    if (!(std::cin >> token)) {
+        return false;
+    }
+    std::istringstream parser(token);
+    return (parser >> value) && parser.eof();
+}
 
 int main() {
     int n;
-    if (!(std::cin >> n)) {
+    if (!read_int(n) || n < 0 || n > 10000) {
+        std::cerr << "Expected a count from 0 to 10000.\\n";
         return 1;
     }
     std::vector<int> values(n);
     for (int& value : values) {
-        std::cin >> value;
+        if (!read_int(value)) {
+            std::cerr << "Expected " << n << " integers after the count.\\n";
+            return 1;
+        }
     }
     std::sort(values.begin(), values.end());
     for (int value : values) {

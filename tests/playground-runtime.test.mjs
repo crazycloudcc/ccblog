@@ -14,6 +14,7 @@ const { WASI } = await jiti.import("@bjorn3/browser_wasi_shim");
 let additionModule;
 let outputModule;
 let scanfModule;
+const sortingModules = {};
 
 before(async () => {
   // Use the locked browsercc toolchain and the real WASI shim, without a CDN.
@@ -32,6 +33,9 @@ before(async () => {
   }
 
   try {
+    for (const language of ["c", "cpp"]) {
+      sortingModules[language] = await compile(language, templates[language].find(({ label }) => label === `sort.${language}`).source);
+    }
     additionModule = await compile("cpp", templates.cpp.find(({ label }) => label === "a+b.cpp").source);
     outputModule = await compile("c", `#include <stdio.h>
 int main(void) {
@@ -152,3 +156,28 @@ test("the scanf article example reports EOF, valid input, and invalid input accu
     });
   }
 });
+
+for (const language of ["c", "cpp"]) {
+  test(`sort.${language} sorts its unchanged sample and supports zero elements`, async () => {
+    const template = templates[language].find(({ label }) => label === `sort.${language}`);
+    for (const [stdin, stdout] of [[template.sampleStdin, "1 2 3 4 5 \n"], ["0\n", "\n"], ["10000\n" + "1 ".repeat(10000), "1 ".repeat(10000) + "\n"], ["4\n-2 8 -2 0\n", "-2 -2 0 8 \n"], ["3\n2147483647 -2147483648 +0\n", "-2147483648 0 2147483647 \n"]]) {
+      assert.deepEqual(await runModule(sortingModules[language], stdin), {
+        status: "success", stdout, stderr: "", exitCode: 0,
+      });
+    }
+  });
+  test(`sort.${language} rejects missing, invalid, negative, and oversized counts`, async () => {
+    for (const stdin of ["", "hello\n", "-1\n", "10001\n", "2147483647\n", "4294967296\n", "-4294967296\n", "4294967297\n9\n", "0oops\n", "999999999999999999999999999999999999999999999999999999999999999999999999999\n"]) {
+      assert.deepEqual(await runModule(sortingModules[language], stdin), {
+        status: "nonzero_exit", stdout: "", stderr: "Expected a count from 0 to 10000.\n", exitCode: 1,
+      });
+    }
+  });
+  test(`sort.${language} rejects truncated and invalid element input without invented output`, async () => {
+    for (const stdin of ["3\n9\n", "3\n9 nope 2\n", "3\n9 4294967296 2\n", "3\n9 2 7oops\n", "3\n9 2147483648 2\n"]) {
+      assert.deepEqual(await runModule(sortingModules[language], stdin), {
+        status: "nonzero_exit", stdout: "", stderr: "Expected 3 integers after the count.\n", exitCode: 1,
+      });
+    }
+  });
+}
