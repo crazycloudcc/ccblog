@@ -103,9 +103,14 @@ int partition(std::vector<int>& a, int lo, int hi) {
 
 下面的程序读 `n`，再读 `n` 个整数，按末元素当基准排好后打印。默认 stdin `3 1 4 1 5` 的最后一个数是 5，它是这五个数里的最大值，第一层分区的右边是空的，左边四个还要继续排。stdout 仍是排好的 `1 1 3 4 5`。把 stdin 改成 `5` 和 `1 2 3 4 5`，stdout 是 `1 2 3 4 5`。退化在递归有几层，不在打印对不对。
 
+这个教学例子把 `n` 限在 1–1000，避免随手输入一个巨大数就分配大数组、进入很深的递归。每个输入项必须是完整的 `int` 整数；缺项、混入文字或超出范围时，stderr 会说明原因，状态是 `exit 1`，stdout 留空，不会把没读到的值当作 0 排序。只使用计数后前 `n` 个整数，多余输入不参与排序。
+
 :::playground{title="quicksort.cpp" lang="cpp" stdin="5\n3 1 4 1 5"}
 ```cpp
 #include <iostream>
+#include <sstream>
+#include <string>
+#include <utility>
 #include <vector>
 
 int partition(std::vector<int>& a, int lo, int hi) {
@@ -129,14 +134,27 @@ void quicksort(std::vector<int>& a, int lo, int hi) {
     }
 }
 
+bool read_int(int& value) {
+    std::string token;
+    if (!(std::cin >> token)) {
+        return false;
+    }
+    std::istringstream parser(token);
+    return (parser >> value) && parser.eof();
+}
+
 int main() {
     int n;
-    if (!(std::cin >> n) || n <= 0) {
+    if (!read_int(n) || n < 1 || n > 1000) {
+        std::cerr << "Expected a count from 1 to 1000.\n";
         return 1;
     }
     std::vector<int> a(n);
     for (int i = 0; i < n; i++) {
-        std::cin >> a[i];
+        if (!read_int(a[i])) {
+            std::cerr << "Expected " << n << " integers after the count.\n";
+            return 1;
+        }
     }
     quicksort(a, 0, n - 1);
     for (int i = 0; i < n; i++) {
@@ -153,6 +171,8 @@ int main() {
 | `5` 然后 `1 2 3 4 5` | `1 2 3 4 5`（结果对，末元素基准仍是一条链） |
 | `6` 然后 `6 5 4 3 2 1` | `1 2 3 4 5 6` |
 | `4` 然后 `2 2 2 2` | `2 2 2 2` |
+
+试着把 stdin 改成 `3` 和 `9 2`，或 `3` 和 `9 2 7oops`：两种都会得到 stderr `Expected 3 integers after the count.`、空 stdout 和 `exit 1`。把完整的三个整数补齐，再 Run 才会输出排序结果。
 
 第一次会慢，那是在下载工具链。之后通常是几十毫秒。
 

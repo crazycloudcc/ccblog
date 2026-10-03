@@ -14,6 +14,7 @@ const { WASI } = await jiti.import("@bjorn3/browser_wasi_shim");
 let additionModule;
 let outputModule;
 let scanfModule;
+let quicksortModule;
 const sortingModules = {};
 
 before(async () => {
@@ -51,6 +52,10 @@ int main(void) {
     const article = await readFile(new URL("../content/notes/scanf-stdin.md", import.meta.url), "utf8");
     const source = article.match(/```cpp\n([\s\S]*?)\n```/)[1];
     scanfModule = await compile("cpp", source);
+    const quicksortArticle = await readFile(new URL("../content/notes/quicksort.md", import.meta.url), "utf8");
+    const quicksortSource = quicksortArticle.match(/:::playground[^\n]*\n```cpp\n([\s\S]*?)\n```/)?.[1];
+    assert.ok(quicksortSource, "quicksort article has one runnable example");
+    quicksortModule = await compile("cpp", quicksortSource);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -181,3 +186,37 @@ for (const language of ["c", "cpp"]) {
     }
   });
 }
+
+
+test("quicksort article sorts valid input, including the maximum recursive case", async () => {
+  for (const [stdin, stdout] of [
+    ["5\n3 1 4 1 5", "1 1 3 4 5\n"],
+    ["5\n1 2 3 4 5", "1 2 3 4 5\n"],
+    ["6\n6 5 4 3 2 1", "1 2 3 4 5 6\n"],
+    ["4\n2 2 2 2", "2 2 2 2\n"],
+    ["1\n-7", "-7\n"],
+    ["3\n2147483647 -2147483648 +0", "-2147483648 0 2147483647\n"],
+    ["2\n9 -2 100", "-2 9\n"],
+    ["1000\n" + "1 ".repeat(1000), Array(1000).fill(1).join(" ") + "\n"],
+  ]) {
+    assert.deepEqual(await runModule(quicksortModule, stdin), {
+      status: "success", stdout, stderr: "", exitCode: 0,
+    });
+  }
+});
+
+test("quicksort article rejects invalid counts before allocating the vector", async () => {
+  for (const stdin of ["", "hello", "0", "-1", "1001", "2147483647", "4294967296", "3oops"]) {
+    assert.deepEqual(await runModule(quicksortModule, stdin), {
+      status: "nonzero_exit", stdout: "", stderr: "Expected a count from 1 to 1000.\n", exitCode: 1,
+    });
+  }
+});
+
+test("quicksort article rejects missing or malformed integers without fabricating zeroes", async () => {
+  for (const stdin of ["3\n9", "3\n9 nope 2", "3\n9 2 7oops", "3\n9 2147483648 2", "3\n9 -2147483649 2", "3\n9 1.5 2"]) {
+    assert.deepEqual(await runModule(quicksortModule, stdin), {
+      status: "nonzero_exit", stdout: "", stderr: "Expected 3 integers after the count.\n", exitCode: 1,
+    });
+  }
+});
