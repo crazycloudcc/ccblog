@@ -59,6 +59,8 @@ function getEmptySource(language: "c" | "cpp"): string {
 
 export function PlaygroundPage() {
   const searchParams = useSearchParams();
+  const shareQuery = searchParams.toString();
+  const [resolvedShareQuery, setResolvedShareQuery] = useState<string | null>(null);
   const [language, setLanguage] = useState<"c" | "cpp">("cpp");
   const [source, setSource] = useState(() => loadDraft("cpp") ?? getEmptySource("cpp"));
   const [stdin, setStdin] = useState("");
@@ -107,28 +109,36 @@ export function PlaygroundPage() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function loadShare() {
-      const params = new URLSearchParams(searchParams.toString());
-      if (!hasShareParams(params)) {
-        setStdin(loadStdin());
-        return;
-      }
+      const params = new URLSearchParams(shareQuery);
+      const payload = hasShareParams(params) ? await decodeSharePayload(params) : null;
+      // A newer URL or unmount owns the editor now, including when this decode
+      // failed. Never let an older result reset or persist the current editor.
+      if (cancelled) return;
 
-      const payload = await decodeSharePayload(params);
-      if (!payload) {
+      if (payload) {
+        setLanguage(payload.lang);
+        setSource(payload.source);
+        setStdin(payload.stdin ?? "");
+        setReadonly(payload.readonly ?? false);
+        setShareTitle(payload.title ?? null);
+      } else {
+        // Match a fresh ordinary editor when leaving a share or opening an
+        // invalid one. Restore the draft before allowing persistence again.
+        setLanguage("cpp");
+        setSource(loadDraft("cpp") ?? getEmptySource("cpp"));
         setStdin(loadStdin());
-        return;
+        setReadonly(false);
+        setShareTitle(null);
       }
-
-      setLanguage(payload.lang);
-      setSource(payload.source);
-      setStdin(payload.stdin ?? "");
-      setReadonly(payload.readonly ?? false);
-      setShareTitle(payload.title ?? null);
+      setResolvedShareQuery(shareQuery);
     }
 
     void loadShare();
-  }, [searchParams]);
+    return () => { cancelled = true; };
+  }, [shareQuery]);
 
   const handleLanguageChange = useCallback((nextLanguage: "c" | "cpp") => {
     if (nextLanguage === language) {
@@ -142,16 +152,16 @@ export function PlaygroundPage() {
   }, [language]);
 
   useEffect(() => {
-    if (!readonly) {
+    if (resolvedShareQuery === shareQuery && !readonly) {
       saveDraft(language, source);
     }
-  }, [language, source, readonly]);
+  }, [language, source, readonly, resolvedShareQuery, shareQuery]);
 
   useEffect(() => {
-    if (!readonly) {
+    if (resolvedShareQuery === shareQuery && !readonly) {
       saveStdin(stdin);
     }
-  }, [stdin, readonly]);
+  }, [stdin, readonly, resolvedShareQuery, shareQuery]);
 
   useEffect(() => {
     let cancelled = false;
