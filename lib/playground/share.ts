@@ -65,7 +65,8 @@ export async function buildPlaygroundShareUrl(
   url.searchParams.set("lang", payload.lang);
   url.searchParams.set("z", await encodeParam(payload.source));
 
-  if (payload.stdin?.trim()) {
+  // Whitespace is input too: a blank line must not become EOF when shared.
+  if (payload.stdin) {
     url.searchParams.set("in", await encodeParam(payload.stdin));
   }
 

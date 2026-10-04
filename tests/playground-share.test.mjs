@@ -27,6 +27,36 @@ test("each small example roundtrips with its sample stdin and readonly", { timeo
   }
 });
 
+const shareBuilders = [
+  ["URL", buildPlaygroundShareUrl],
+  ["embed", buildPlaygroundEmbedUrl],
+  ["relative path", buildPlaygroundSharePath],
+];
+
+for (const [name, build] of shareBuilders) {
+  test(`${name} roundtrips whitespace-only stdin and surrounding whitespace`, async () => {
+    for (const stdin of [" ", "\n", "\t\r\n", "\n\n", "  42\t\r\n", "\u00a0\u3000"]) {
+      const payload = { lang: "c", source: "int main(void) { return 0; }", stdin };
+      const url = new URL(await build(payload, "https://preview.example"), "https://preview.example");
+      assert.equal(url.searchParams.has("in"), true, `${name}: ${JSON.stringify(stdin)}`);
+      const decoded = await decodeSharePayload(url.searchParams);
+      assert.ok(decoded);
+      assert.equal(decoded.stdin, stdin, `${name}: ${JSON.stringify(stdin)}`);
+    }
+  });
+
+  test(`${name} keeps empty and omitted stdin absent from the URL`, async () => {
+    for (const input of [{}, { stdin: undefined }, { stdin: "" }]) {
+      const payload = { lang: "c", source: "int main(void) { return 0; }", ...input };
+      const url = new URL(await build(payload, "https://preview.example"), "https://preview.example");
+      assert.equal(url.searchParams.has("in"), false);
+      const decoded = await decodeSharePayload(url.searchParams);
+      assert.ok(decoded);
+      assert.equal(decoded.stdin, undefined);
+    }
+  });
+}
+
 test("large compressible code and stdin roundtrip without stream backpressure deadlock", { timeout: 10000 }, async () => {
   await roundtrip({
     lang: "cpp",
