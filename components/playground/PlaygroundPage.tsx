@@ -84,8 +84,6 @@ export function PlaygroundPage() {
   const workerRef = useRef<Worker | null>(null);
   const editorRef = useRef<CodeEditorHandle | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const languageInitializedRef = useRef(false);
-  const sharedAppliedRef = useRef(false);
 
   const languageConfig = useMemo(() => getLanguageConfig(language), [language]);
   const toolchainBase = useMemo(() => resolveToolchainBase(), []);
@@ -122,7 +120,6 @@ export function PlaygroundPage() {
         return;
       }
 
-      sharedAppliedRef.current = true;
       setLanguage(payload.lang);
       setSource(payload.source);
       setStdin(payload.stdin ?? "");
@@ -133,19 +130,15 @@ export function PlaygroundPage() {
     void loadShare();
   }, [searchParams]);
 
-  useEffect(() => {
-    if (!languageInitializedRef.current) {
-      languageInitializedRef.current = true;
+  const handleLanguageChange = useCallback((nextLanguage: "c" | "cpp") => {
+    if (nextLanguage === language) {
       return;
     }
 
-    if (sharedAppliedRef.current) {
-      sharedAppliedRef.current = false;
-      return;
-    }
-
-    const draft = loadDraft(language);
-    setSource(draft ?? getEmptySource(language));
+    // Change both together so a shared snippet cannot leak into the other
+    // language's draft. Share loading already supplies its own source.
+    setSource(loadDraft(nextLanguage) ?? getEmptySource(nextLanguage));
+    setLanguage(nextLanguage);
   }, [language]);
 
   useEffect(() => {
@@ -368,7 +361,7 @@ export function PlaygroundPage() {
         sharing={sharing}
         shareMessage={shareMessage}
         readonly={readonly}
-        onLanguageChange={setLanguage}
+        onLanguageChange={handleLanguageChange}
         onExampleChange={setSource}
         onRun={handleRun}
         onClear={() => setSource(getEmptySource(language))}
