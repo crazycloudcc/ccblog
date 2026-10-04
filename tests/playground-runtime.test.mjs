@@ -11,6 +11,8 @@ const { compileSource, runModule } = await jiti.import("../lib/playground/compil
 const { templates } = await jiti.import("../lib/playground/templates.ts");
 const { WASI } = await jiti.import("@bjorn3/browser_wasi_shim");
 
+const { buildPlaygroundShareUrl, decodeSharePayload } = await jiti.import("../lib/playground/share.ts");
+
 let additionModule;
 let outputModule;
 let scanfModule;
@@ -218,5 +220,19 @@ test("quicksort article rejects missing or malformed integers without fabricatin
     assert.deepEqual(await runModule(quicksortModule, stdin), {
       status: "nonzero_exit", stdout: "", stderr: "Expected 3 integers after the count.\n", exitCode: 1,
     });
+  }
+});
+
+test("sharing leading-BOM stdin preserves actual scanf failure rather than succeeding", async () => {
+  for (const stdin of ["\uFEFF20 22\n", "\uFEFF", "20 22\n"]) {
+    const source = templates.cpp.find(({ label }) => label === "a+b.cpp").source;
+    const url = new URL(await buildPlaygroundShareUrl({ lang: "cpp", source, stdin }, "https://preview.example"));
+    const decoded = await decodeSharePayload(url.searchParams);
+    assert.ok(decoded);
+    const before = await runModule(additionModule, stdin);
+    const after = await runModule(additionModule, decoded.stdin ?? "");
+    assert.deepEqual(after, before, `runtime parity for ${JSON.stringify(stdin)}`);
+    assert.equal(after.exitCode, stdin.startsWith("\uFEFF") ? 1 : 0);
+    assert.equal(decoded.stdin, stdin);
   }
 });

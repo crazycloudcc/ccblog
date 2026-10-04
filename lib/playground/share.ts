@@ -46,7 +46,8 @@ async function gunzipText(bytes: Uint8Array): Promise<string> {
   const payload = new Uint8Array(bytes);
   const stream = new Blob([payload]).stream().pipeThrough(new DecompressionStream("gzip"));
   const buffer = await new Response(stream).arrayBuffer();
-  return new TextDecoder().decode(buffer);
+  // Treat a leading BOM as payload text, not a signature to strip.
+  return new TextDecoder("utf-8", { ignoreBOM: true }).decode(buffer);
 }
 
 async function encodeParam(text: string): Promise<string> {

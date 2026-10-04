@@ -45,6 +45,18 @@ for (const [name, build] of shareBuilders) {
     }
   });
 
+  test(`${name} preserves leading, repeated, and internal BOM characters in source and stdin`, async () => {
+    for (const text of ["\uFEFF", "\uFEFF42\n", "\uFEFF\uFEFF42", "a\uFEFFb", "\n\uFEFF42"]) {
+      const payload = { lang: "c", source: text, stdin: text, readonly: true };
+      const url = new URL(await build(payload, "https://preview.example"), "https://preview.example");
+      const decoded = await decodeSharePayload(url.searchParams);
+      assert.ok(decoded);
+      assert.equal(decoded.source, text, `${name} source: ${JSON.stringify(text)}`);
+      assert.equal(decoded.stdin, text, `${name} stdin: ${JSON.stringify(text)}`);
+      assert.equal(decoded.readonly, true);
+    }
+  });
+
   test(`${name} keeps empty and omitted stdin absent from the URL`, async () => {
     for (const input of [{}, { stdin: undefined }, { stdin: "" }]) {
       const payload = { lang: "c", source: "int main(void) { return 0; }", ...input };
@@ -96,4 +108,18 @@ test("invalid or damaged payloads return null instead of leaving decoding pendin
   for (const query of ["", "lang=rust&z=abc", "lang=cpp&z=%%%", "lang=c&z=YWJj", `lang=cpp&z=${gzipSync("hello").toString("base64url")}&in=YWJj`]) {
     assert.equal(await decodeSharePayload(new URLSearchParams(query)), null);
   }
+});
+
+test("legacy gzip/base64url payloads retain leading BOM in both fields", async () => {
+  const source = "\uFEFF#include <stdio.h>\nint main(void) { return 0; }";
+  const stdin = "\uFEFF42\n";
+  const params = new URLSearchParams({
+    lang: "c", z: gzipSync(source).toString("base64url"), in: gzipSync(stdin).toString("base64url"),
+    readonly: "1", embed: "1",
+  });
+  const decoded = await decodeSharePayload(params);
+  assert.ok(decoded);
+  assert.equal(decoded.source, source);
+  assert.equal(decoded.stdin, stdin);
+  assert.equal(decoded.readonly, true);
 });
