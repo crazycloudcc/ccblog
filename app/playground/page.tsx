@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { QuickStartLink } from "@/components/playground/QuickStartLink";
 import { QuickStartExamples } from "@/components/playground/QuickStartExamples";
 import { PlaygroundPage } from "@/components/playground/PlaygroundPage";
 import { TerminalLoadingPanel } from "@/components/terminal/TerminalLoadingPanel";
@@ -42,9 +43,7 @@ export default async function Page({ searchParams }: PlaygroundRouteProps) {
             首次打开需要下载 WebAssembly 工具链。
           </p>
           <p className="mt-4">
-            <Link href="#quick-start" prefetch={false} className="inline-block rounded border border-code-teal/40 bg-code-teal/10 px-3 py-2 font-mono text-sm text-ink hover:bg-code-teal/20">
-              运行示例 · Try C / C++ examples
-            </Link>
+            <QuickStartLink />
           </p>
           <p className="prose-terminal mt-3 max-w-3xl text-sm leading-[1.8] text-slate">
             使用指南：{" "}

@@ -10,6 +10,7 @@ const jiti = createJiti(import.meta.url, {
   alias: { "@": fileURLToPath(new URL("..", import.meta.url)) },
 });
 const { default: Link } = await jiti.import("next/link");
+const { QuickStartLink } = await jiti.import("../components/playground/QuickStartLink.tsx");
 const { quickStartExamples } = await jiti.import("../lib/playground/quick-start.ts");
 const { templates } = await jiti.import("../lib/playground/templates.ts");
 const { QuickStartExamples } = await jiti.import("../components/playground/QuickStartExamples.tsx");
@@ -59,7 +60,8 @@ test("SSR gallery exposes code, stdin, stdout and safe host-relative runnable li
 test("only the ordinary landing page includes quick-start content and its jump link", async () => {
   const page = await Page({ searchParams: Promise.resolve({}) });
   assert.match(renderToStaticMarkup(page.props.children[0]), /href="#quick-start"/);
-  const jump = elements(page.props.children[0]).find(({ props }) => props?.href === "#quick-start");
+  assert.ok(elements(page.props.children[0]).some(({ type }) => type === QuickStartLink));
+  const jump = QuickStartLink();
   // Native fragment anchors leave App Router history stale when returning from a shared example.
   assert.equal(jump.type, Link);
   assert.equal(jump.props.prefetch, false);
@@ -90,5 +92,28 @@ test("every advertised output is produced by the bundled clang and WASI runtime"
     }
   } finally {
     globalThis.fetch = originalFetch;
+  }
+});
+
+
+test("repeated quick-start clicks still scroll when the URL already has the fragment", () => {
+  const previousDocument = globalThis.document;
+  let calls = 0;
+  globalThis.document = {
+    getElementById(id) {
+      assert.equal(id, "quick-start");
+      return { scrollIntoView() { calls++; } };
+    },
+  };
+  try {
+    const jump = QuickStartLink();
+    jump.props.onNavigate();
+    jump.props.onNavigate();
+    assert.equal(calls, 2);
+    globalThis.document.getElementById = () => null;
+    assert.doesNotThrow(() => jump.props.onNavigate());
+  } finally {
+    if (previousDocument === undefined) delete globalThis.document;
+    else globalThis.document = previousDocument;
   }
 });
