@@ -56,6 +56,8 @@ The home page opens with a short boot sequence (notes type in, then settle). The
 
 ---
 
+The `/playground` quick-start gallery shows runnable C Hello World, C stdin addition, and C++ sorting examples with expected output. Read-only example links preload code and input without overwriting local drafts; the editor’s example menu remains available for editing.
+
 ## Stack
 
 - [Next.js 16](https://nextjs.org) (App Router) · React 19 · TypeScript

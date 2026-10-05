@@ -56,6 +56,8 @@
 
 ---
 
+`/playground` 的快速开始区提供 C Hello World、C stdin 求和与 C++ 排序示例及预期输出。只读示例链接同时载入代码和输入，不覆盖本地草稿；要修改代码，可在编辑器的 example 菜单载入同名示例。
+
 ## 技术栈
 
 - [Next.js 16](https://nextjs.org)（App Router）· React 19 · TypeScript

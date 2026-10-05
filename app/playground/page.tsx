@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { QuickStartExamples } from "@/components/playground/QuickStartExamples";
 import { PlaygroundPage } from "@/components/playground/PlaygroundPage";
 import { TerminalLoadingPanel } from "@/components/terminal/TerminalLoadingPanel";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
@@ -40,6 +41,11 @@ export default async function Page({ searchParams }: PlaygroundRouteProps) {
             使用 scanf / cin 时，请先填好 stdin；运行期间不能追加输入。单次执行限时 5 秒，C++ 不支持异常。
             首次打开需要下载 WebAssembly 工具链。
           </p>
+          <p className="mt-4">
+            <a href="#quick-start" className="inline-block rounded border border-code-teal/40 bg-code-teal/10 px-3 py-2 font-mono text-sm text-ink hover:bg-code-teal/20">
+              运行示例 · Try C / C++ examples
+            </a>
+          </p>
           <p className="prose-terminal mt-3 max-w-3xl text-sm leading-[1.8] text-slate">
             使用指南：{" "}
             <Link href="/blog/liulanqi-bianyi-cpp" className="font-semibold text-ink hover:text-code-cobalt">
@@ -67,6 +73,7 @@ export default async function Page({ searchParams }: PlaygroundRouteProps) {
       >
         <PlaygroundPage />
       </Suspense>
+      {embedded ? null : await QuickStartExamples()}
     </>
   );
 }
