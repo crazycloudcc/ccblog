@@ -9,6 +9,7 @@ const jiti = createJiti(import.meta.url, {
   jsx: { runtime: "automatic" },
   alias: { "@": fileURLToPath(new URL("..", import.meta.url)) },
 });
+const { default: Link } = await jiti.import("next/link");
 const { quickStartExamples } = await jiti.import("../lib/playground/quick-start.ts");
 const { templates } = await jiti.import("../lib/playground/templates.ts");
 const { QuickStartExamples } = await jiti.import("../components/playground/QuickStartExamples.tsx");
@@ -58,6 +59,10 @@ test("SSR gallery exposes code, stdin, stdout and safe host-relative runnable li
 test("only the ordinary landing page includes quick-start content and its jump link", async () => {
   const page = await Page({ searchParams: Promise.resolve({}) });
   assert.match(renderToStaticMarkup(page.props.children[0]), /href="#quick-start"/);
+  const jump = elements(page.props.children[0]).find(({ props }) => props?.href === "#quick-start");
+  // Native fragment anchors leave App Router history stale when returning from a shared example.
+  assert.equal(jump.type, Link);
+  assert.equal(jump.props.prefetch, false);
   assert.match(renderToStaticMarkup(page.props.children[2]), /Run your first program/);
   for (const params of [{ z: "payload" }, { embed: "1" }, { z: "payload", embed: "1" }]) {
     const embedded = await Page({ searchParams: Promise.resolve(params) });
