@@ -93,7 +93,7 @@ int main() {
 
 [`/playground`](/playground) 左边是编辑器，右边是输出。工具栏切 C 或 C++，**Run** 开始编译。stdin 是单独一栏，只有程序要读输入时才需要填，标签是 `stdin (for cin / scanf)`，空框提示「程序需要输入时，在运行前填入」。
 
-输出面板先给阶段耗时，再给 clang 的诊断。编译失败时，诊断带文件名和行号，点一下会跳到编辑器对应行。编译通过之后，同一块区域改显示 stdout / stderr。正常返回时状态显示实际退出码：`return 0` 是 `exit 0`，`return 1` 是 `exit 1`，stdout / stderr 都会保留。编译或链接失败是 `compile error`，还没有可运行的 wasm 模块。真正的 WASM trap 或运行异常才显示 `runtime error`，没有程序返回的退出码。执行超过五秒是 `timeout`。具体输入和退出码可以对照 [scanf 那篇](/blog/scanf-stdin)。
+输出面板先给阶段耗时，再给 clang 的诊断。编译失败时，诊断带文件名和行号，点一下会跳到编辑器对应行。编译器日志、stdout 和 stderr 分区显示，各自的复制按钮只复制对应的原文，保留空格、制表符和换行，不混入命令、耗时或退出状态。正常返回时状态显示实际退出码：`return 0` 是 `exit 0`，`return 1` 是 `exit 1`，stdout / stderr 都会保留。编译或链接失败是 `compile error`，还没有可运行的 wasm 模块。真正的 WASM trap 或运行异常才显示 `runtime error`，没有程序返回的退出码。执行超过五秒是 `timeout`。具体输入和退出码可以对照 [scanf 那篇](/blog/scanf-stdin)。
 
 分享会复制一条带压缩参数的链接，打开后恢复代码和 stdin。带 `?z=` 或 `embed=1` 的地址响应头是 `noindex`，免得每一份草稿都变成搜索结果。
 

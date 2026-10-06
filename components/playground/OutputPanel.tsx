@@ -50,22 +50,15 @@ export function OutputPanel({
   activePhase,
   onDiagnosticClick,
 }: OutputPanelProps) {
-  const lines = [
-    metadata ? `$ ${metadata.compilerProgram} ${metadata.fileName} ${metadata.flags.join(" ")}` : "",
-    compileOutput.trim(),
-    stdout.trim(),
-    stderr.trim(),
-    status === "timeout" ? "[timeout] execution stopped after 5s — check for infinite loops or input loops that ignore EOF" : "",
-    metrics?.timedOut ? "[timeout]" : "",
-    timing?.totalMs !== undefined ? `$ done in ${timing.totalMs}ms` : "",
-    metrics?.exitCode !== undefined && (status === "success" || status === "nonzero_exit")
-      ? `[exit ${metrics.exitCode}]` : "",
-  ].filter(Boolean);
-
-  const outputText = lines.length > 0 ? lines.join("\n") : "";
-  const placeholder = "Run your code to see output here.";
+  const hasProgramResult = ["success", "nonzero_exit", "runtime_error", "timeout"].includes(status);
+  const showStdout = hasProgramResult || stdout.length > 0;
+  // The worker repeats compiler failures in stderr; they are not program output.
+  const showStderr = stderr.length > 0 && !(status === "compile_error" && stderr === compileOutput);
+  const command = metadata
+    ? `$ ${metadata.compilerProgram} ${metadata.fileName} ${metadata.flags.join(" ")}`
+    : "";
   const showTimeoutHint =
-    status === "timeout" && !stdout.trim() && !stderr.trim() && compileOutput.trim() === "";
+    status === "timeout" && stdout.length === 0 && stderr.length === 0 && compileOutput.length === 0;
 
   return (
     <div className="flex h-full min-h-[220px] flex-col gap-2">
@@ -101,17 +94,36 @@ export function OutputPanel({
       ) : null}
 
       <div className="flex min-h-0 flex-1 flex-col rounded-[8px] border border-lavender-mist bg-obsidian/95">
-        <div className="flex items-center justify-between border-b border-lavender-mist/40 px-3 py-2 font-mono text-[11px]">
-          <span className="text-code-teal">
-            stdout / stderr · <span className="text-fog">{statusLabel(status, metrics?.exitCode)}</span>
-          </span>
-          {outputText ? (
-            <CopyButton text={outputText} className="border-lavender-mist/40 text-paper/70 hover:text-paper" />
+        <div className="border-b border-lavender-mist/40 px-3 py-2 font-mono text-[11px] text-code-teal">
+          output · <span className="text-paper/70">{statusLabel(status, metrics?.exitCode)}</span>
+        </div>
+        <div className="min-h-0 flex-1 overflow-auto">
+          {command ? (
+            <pre aria-label="Compiler command" className="overflow-auto px-3 py-2 font-mono text-[11px] text-paper/70">
+              {command}
+            </pre>
+          ) : null}
+          {compileOutput.length > 0 ? <OutputStream label="compiler" text={compileOutput} /> : null}
+          {showStdout ? <OutputStream label="stdout" text={stdout} /> : null}
+          {showStderr ? <OutputStream label="stderr" text={stderr} /> : null}
+          {!command && !compileOutput && !showStdout && !stderr ? (
+            <p className="px-3 py-3 font-mono text-[12px] leading-6 text-paper/70">
+              {status === "compiling" || status === "running"
+                ? "Waiting for output…"
+                : "Run your code to see output here."}
+            </p>
           ) : null}
         </div>
-        <pre className="flex-1 overflow-auto px-3 py-3 font-mono text-[12px] leading-6 text-paper/90">
-          {outputText || placeholder}
-        </pre>
+        {status === "timeout" ? (
+          <p className="border-t border-lavender-mist/30 px-3 py-2 font-mono text-[11px] text-code-plum">
+            [timeout] execution stopped after 5s — check for infinite loops or input loops that ignore EOF
+          </p>
+        ) : null}
+        {timing?.totalMs !== undefined ? (
+          <p className="border-t border-lavender-mist/30 px-3 py-2 font-mono text-[11px] text-paper/70">
+            $ done in {timing.totalMs}ms
+          </p>
+        ) : null}
         {showTimeoutHint ? (
           <div className="border-t border-lavender-mist/30 px-3 py-2 font-mono text-[11px] text-code-plum">
             // hint: stdin is preloaded and ends at EOF — check that input loops stop at EOF
@@ -119,5 +131,31 @@ export function OutputPanel({
         ) : null}
       </div>
     </div>
+  );
+}
+
+/** Keep program bytes separate from UI status, commands, and other streams. */
+function OutputStream({ label, text }: { label: string; text: string }) {
+  return (
+    <section aria-label={`${label} output`} className="border-t border-lavender-mist/30">
+      <div className="flex items-center justify-between gap-2 px-3 py-2 font-mono text-[11px]">
+        <span className="text-code-teal">{label}</span>
+        {text.length > 0 ? (
+          <CopyButton
+            text={text}
+            label={`copy ${label}`}
+            copiedLabel={`${label} copied`}
+            className="shrink-0 border-lavender-mist/40 text-paper/70 hover:text-paper"
+          />
+        ) : null}
+      </div>
+      {text.length > 0 ? (
+        <pre aria-label={`${label} contents`} className="min-h-9 overflow-auto px-3 pb-3 font-mono text-[12px] leading-6 text-paper/90">
+          {text}
+        </pre>
+      ) : (
+        <p className="px-3 pb-3 font-mono text-[11px] text-paper/60">No {label} output.</p>
+      )}
+    </section>
   );
 }

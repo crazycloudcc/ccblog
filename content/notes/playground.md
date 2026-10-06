@@ -115,9 +115,11 @@ The right panel has three parts:
 
 - A **phase timeline** - toolchain, compile, link, run - with per-phase timings.
 - **Diagnostics** (only on compile error) - one row per error, clickable to jump the cursor to the line and column.
-- **stdout / stderr** - the echoed compile command, compiler messages, program output, a `$ done in Xms` total, and an `[exit N]` marker.
+- **Output streams** - separately labeled `compiler`, `stdout`, and `stderr` sections. Each copy button copies only that stream, preserving spaces, tabs, and newlines. The command, duration, and exit status stay outside the copied output. Empty successful output is shown as `No stdout output.`
 
-The status chip on the right tells you how it ended:
+For example, `printf("  hello\n\n");` keeps both leading spaces and both newlines in **copy stdout**. Compiler warnings and messages written to stderr are not included in that copy.
+
+The output header tells you how it ended:
 
 | Status | Meaning |
 |--------|---------|
