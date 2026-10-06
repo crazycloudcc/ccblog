@@ -2,7 +2,7 @@
 title: 浏览器里 clang 报错怎么读
 excerpt: 四则用 browsercc 0.1.1 实际编译得到的诊断：缺分号、未定义符号、异常被禁用、找不到头文件。
 date: 2026-09-25
-updated: 2026-10-01
+updated: 2026-10-06
 coverLabel: diag
 tags:
   - cpp
@@ -42,7 +42,7 @@ main.cpp:3:35: error: expected ';' after expression
 
 `3:35` 是第 3 行第 35 列，箭头指在 `std::endl` 后面。clang 认为表达式到这里应该结束。下一行的 `return` 不是这行输出的一部分，所以它不会说「return 写错了」。补上分号再编，这则 error 就消失。
 
-警告不会让 Run 停在 compile error。诊断区收的是 `error` 和 `fatal error`。
+警告不会让 Run 停在 compile error。诊断区收的是带有文件、行、列位置的 `error` 和 `fatal error`；链接器的 undefined symbol 等消息通常只显示在原始 compiler 日志中。
 
 ## 未定义符号
 

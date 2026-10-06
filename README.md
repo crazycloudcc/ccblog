@@ -221,3 +221,9 @@ Built and maintained by [crazycloudcc](https://github.com/crazycloudcc). Questio
 ## License
 
 [MIT](LICENSE) © 2026 crazycloudcc
+
+## AI-readable documentation pilot
+
+`/llms.txt` is a small curated index, not a full-site dump or a search requirement. The three selected public C/C++ notes expose `/blog/<slug>/index.md`, generated from the same `content/notes` source as HTML. Selection lives in `lib/ai-docs.ts`; unlisted notes and disabled blog/playground features are excluded. Keep implementation facts current in the original notes, not a parallel documentation copy.
+
+The introductory Chinese tutorial offers a previewable, clipboard-only reading prompt containing public article URLs and citation/uncertainty instructions. It does not read editor state or submit anything to an AI service. No new analytics, model API, crawler policy, or training permission is added. This follows the optional [llms.txt proposal](https://llmstxt.org/); [Google's AI features guidance](https://developers.google.com/search/docs/appearance/ai-features) does not require a special AI text file and publication does not guarantee inclusion or traffic.

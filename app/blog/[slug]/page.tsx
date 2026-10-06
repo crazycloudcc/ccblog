@@ -1,3 +1,6 @@
+import { AiReadingPrompt } from "@/components/blog/AiReadingPrompt";
+import { AI_PROMPT_SLUG, aiDocPath, getAiDoc } from "@/lib/ai-docs";
+import { buildAiReadingPrompt } from "@/lib/ai-reading-prompt";
 import { notFound } from "next/navigation";
 import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import { PostContent } from "@/components/blog/PostContent";
@@ -8,7 +11,7 @@ import { PostTagLinks } from "@/components/blog/PostTagLinks";
 import { TerminalBackLink } from "@/components/terminal/TerminalBackLink";
 import { formatDateParts, estimateReadingTime, formatReadingTime } from "@/lib/blog-utils";
 import { createPostMetadata, createPageMetadata } from "@/lib/metadata";
-import { SITE_LANG, SITE_LOCALE } from "@/lib/site";
+import { SITE_LANG, SITE_LOCALE, SITE_URL } from "@/lib/site";
 import {
   getAdjacentPosts,
   getAllTags,
@@ -41,7 +44,8 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     return createPageMetadata({ title: "Post not found", path: "/blog" });
   }
 
-  return createPostMetadata(post);
+  const metadata = createPostMetadata(post);
+  return getAiDoc(slug) ? { ...metadata, alternates: { ...metadata.alternates, types: { "text/markdown": `${SITE_URL}${aiDocPath(slug)}` } } } : metadata;
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -101,6 +105,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {post.title}
               </h1>
               <p className="prose-terminal mt-4 text-lg leading-[1.7] text-slate">{post.excerpt}</p>
+
+              {slug === AI_PROMPT_SLUG && getAiDoc(slug) ? (
+                <AiReadingPrompt prompt={buildAiReadingPrompt(`${SITE_URL}/blog/${slug}`, `${SITE_URL}${aiDocPath(slug)}`)} markdownUrl={aiDocPath(slug)} />
+              ) : null}
 
               <div className="mt-10">
                 <PostContent content={post.content} playground={post.playground} />

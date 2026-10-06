@@ -57,6 +57,7 @@ export default function RootLayout({
   return (
     <html lang={SITE_LANG} className="h-full antialiased" suppressHydrationWarning>
       <head>
+        <link rel="describedby" href="/llms.txt" />
         <Script src="/theme-init.js" strategy="beforeInteractive" />
       </head>
       <body className="min-h-full text-ink">

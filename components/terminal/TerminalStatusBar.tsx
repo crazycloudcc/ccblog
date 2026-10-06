@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/terminal/ThemeToggle";
-import { SITE_AUTHOR, SITE_BRANCH, siteSource } from "@/lib/site";
+import { SITE_AUTHOR, SITE_BRANCH, SITE_LANG, features, siteSource } from "@/lib/site";
 
 type TerminalStatusBarProps = {
   postCount: number;
@@ -26,6 +26,11 @@ export function TerminalStatusBar({ postCount }: TerminalStatusBarProps) {
         </span>
       </div>
       <div className="flex flex-wrap items-center gap-4">
+        {features.blog && features.playground ? (
+          <a href="/llms.txt" className="transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-code-teal">
+            {SITE_LANG.startsWith("zh") ? "AI 阅读文档" : "AI reading docs"}
+          </a>
+        ) : null}
         {siteSource ? (
           <a
             href={siteSource.href}
