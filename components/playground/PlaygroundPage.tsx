@@ -6,6 +6,7 @@ import { CodeEditor, type CodeEditorHandle } from "@/components/playground/CodeE
 import { StdinPanel } from "@/components/playground/StdinPanel";
 import { findTemplate } from "@/lib/playground/templates";
 import { OutputPanel } from "@/components/playground/OutputPanel";
+import { ShareControl } from "@/components/playground/ShareControl";
 import { RunToolbar } from "@/components/playground/RunToolbar";
 import { TerminalCommand } from "@/components/terminal/TerminalCommand";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
@@ -17,7 +18,6 @@ import { preloadToolchain } from "@/lib/playground/compile-run";
 import { recordMetric } from "@/lib/observability/client-metrics";
 import { report } from "@/lib/observability/report";
 import {
-  buildPlaygroundShareUrl,
   decodeSharePayload,
   hasShareParams,
 } from "@/lib/playground/share";
@@ -68,8 +68,6 @@ export function PlaygroundPage() {
   const [shareTitle, setShareTitle] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [running, setRunning] = useState(false);
-  const [sharing, setSharing] = useState(false);
-  const [shareMessage, setShareMessage] = useState<string | null>(null);
   const [compileOutput, setCompileOutput] = useState("");
   const [stdout, setStdout] = useState("");
   const [stderr, setStderr] = useState("");
@@ -322,22 +320,6 @@ export function PlaygroundPage() {
     });
   }, [createWorker, language, languageConfig.fileName, source, stdin, toolchainBase]);
 
-  const handleShare = useCallback(async () => {
-    setSharing(true);
-    setShareMessage(null);
-
-    try {
-      const url = await buildPlaygroundShareUrl({ lang: language, source, stdin });
-      await navigator.clipboard.writeText(url);
-      setShareMessage("link copied");
-      window.setTimeout(() => setShareMessage(null), 2000);
-    } catch (error) {
-      setShareMessage(error instanceof Error ? error.message : "share failed");
-    } finally {
-      setSharing(false);
-    }
-  }, [language, source, stdin]);
-
   const handleDiagnosticClick = useCallback((diagnostic: { line: number; column?: number }) => {
     editorRef.current?.revealLine(diagnostic.line, diagnostic.column);
   }, []);
@@ -368,14 +350,18 @@ export function PlaygroundPage() {
         running={running}
         status={status}
         ready={ready}
-        sharing={sharing}
-        shareMessage={shareMessage}
         readonly={readonly}
         onLanguageChange={handleLanguageChange}
         onExampleChange={setSource}
         onRun={handleRun}
         onClear={() => setSource(getEmptySource(language))}
-        onShare={handleShare}
+        shareControl={<ShareControl
+          language={language}
+          source={source}
+          stdin={stdin}
+          navigationKey={shareQuery}
+          disabled={resolvedShareQuery !== shareQuery}
+        />}
       />
 
       {!ready ? (

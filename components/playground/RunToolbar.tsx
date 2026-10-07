@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import type { PlaygroundLanguage, RunResultStatus } from "@/lib/playground/types";
 import { templates } from "@/lib/playground/templates";
 
@@ -9,14 +10,12 @@ type RunToolbarProps = {
   running: boolean;
   status: RunResultStatus | "idle" | "running" | "compiling";
   ready: boolean;
-  sharing?: boolean;
-  shareMessage?: string | null;
+  shareControl: ReactNode;
   readonly?: boolean;
   onLanguageChange: (language: PlaygroundLanguage) => void;
   onExampleChange: (source: string) => void;
   onRun: () => void;
   onClear: () => void;
-  onShare: () => void;
 };
 
 export function RunToolbar({
@@ -25,14 +24,12 @@ export function RunToolbar({
   running,
   status,
   ready,
-  sharing = false,
-  shareMessage,
+  shareControl,
   readonly = false,
   onLanguageChange,
   onExampleChange,
   onRun,
   onClear,
-  onShare,
 }: RunToolbarProps) {
   return (
     <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
@@ -103,22 +100,13 @@ export function RunToolbar({
             clear
           </button>
 
-          <button
-            type="button"
-            onClick={onShare}
-            disabled={sharing}
-            className="rounded-[4px] border border-lavender-mist px-3 py-1.5 text-fog transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {sharing ? "sharing..." : "share"}
-          </button>
+          {shareControl}
         </>
       ) : (
         <span className="rounded-[4px] border border-code-plum/40 bg-code-plum/10 px-3 py-1.5 text-code-plum">
           readonly
         </span>
       )}
-
-      {shareMessage ? <span className="text-code-teal">{shareMessage}</span> : null}
 
       <span className="text-fog">
         <span className="text-code-teal">toolchain</span>: {ready ? "ready" : "loading"}
