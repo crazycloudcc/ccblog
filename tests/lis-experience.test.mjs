@@ -195,7 +195,7 @@ test("invalid input preserves applied diagrams and progress; valid bounded data 
 
 test("accessible plots expose real provenance, no fake tails path, and finite negative/zero geometry", () => {
   const ui = setup();
-  for (const raw of ["-999", "0", "999", "-999, 0, 999", Array(12).fill(0).join(" ")]) {
+  for (const raw of ["-999", "0", "999", "-3, 2", "-999, 0, 999", Array(12).fill(0).join(" ")]) {
     ui.apply(raw); ui.end();
     const nodes = ui.render(), svgs = nodes.filter((node) => node.type === "svg");
     assert.equal(svgs.length, 2);
@@ -209,6 +209,7 @@ test("accessible plots expose real provenance, no fake tails path, and finite ne
       }
     }
     assert.equal(elements(ui.tails()).filter((node) => node.type === "polyline").length, 0);
+    assert.equal(elements(ui.tails()).filter((node) => node.type === "line" && node.props.className === "zeroLine").length, 1);
     for (const name of ["原数组图，可左右滚动", "tails 柱图，可左右滚动", "C++ 代码，可左右滚动"]) {
       const region = nodes.find((node) => node.props?.["aria-label"] === name);
       assert.equal(region.props.tabIndex, 0); assert.equal(region.props.role, "region");
@@ -235,6 +236,52 @@ test("actual React server rendering preserves nonempty SVG titles and the full i
   assert.match(html, /data-witness-indices="0,1,2,5"/);
   assert.match(html, /Static reading preserved/);
   assert.match(html, /<noscript>/);
+});
+
+test("controls precede the stage and all eight C++ lines are separate blocks without duplicate newlines", () => {
+  const ui = setup();
+  const nodes = ui.render();
+  const controls = nodes.findIndex((node) => node.props?.["aria-label"] === "单步控制");
+  const graph = nodes.findIndex((node) => node.props?.["aria-label"] === "真实子序列图");
+  assert.ok(controls >= 0 && controls < graph);
+  const code = ui.find("code");
+  assert.equal(code.props.children.length, 8);
+  assert.ok(code.props.children.every((line) => !text(line).includes("\n")));
+  assert.equal(code.props.children.filter((line) => line.props["aria-current"] === "step").length, 1);
+  assert.match(text(ui.diagram()), /已读、未入路径/);
+  const css = read("../components/visualizations/LisExperience.module.css");
+  assert.match(css, /\.codeLine, \.activeCode\s*\{[^}]*display: block/);
+  assert.match(css, /\.controls\s*\{[^}]*position: sticky; top: 0/);
+  assert.doesNotMatch(css, /margin-top: auto/);
+});
+
+test("only the exact LIS route skips the duplicate terminal command, preserving children and other routes", () => {
+  let pathname = "/learn/longest-increasing-subsequence";
+  const jsx = (type, props) => ({ type, props });
+  const imports = {
+    "react/jsx-runtime": { jsx, jsxs: jsx, Fragment: "fragment" },
+    "next/navigation": { usePathname: () => pathname },
+    react: { useRef: (value) => ({ current: value }), useEffect() {} },
+    "@/components/home/usePrefersReducedMotion": { usePrefersReducedMotion: () => false },
+    "@/components/terminal/TerminalCommand": { TerminalCommand: "TerminalCommand" },
+    "@/lib/observability/client-metrics": { recordMetric() {} },
+    "@/lib/terminal-paths": { getPageCdCommand: (path) => path === "/" ? null : `cd .${path}` },
+  };
+  const exports = {};
+  new Function("exports", "require", compile("../components/terminal/TerminalPageEntry.tsx"))(exports, (id) => { assert.ok(id in imports, id); return imports[id]; });
+  const child = jsx("article", { children: "LIS lesson" });
+  const render = () => exports.TerminalPageEntry({ children: child });
+  const lis = render();
+  assert.equal(lis.props.children, child);
+  assert.equal(elements(lis).filter((node) => node.type === "TerminalCommand").length, 0);
+  for (const path of ["/learn", "/blog/longest-increasing-subsequence", "/learn/longest-increasing-subsequence/extra", "/learn/binary-search", "/about"]) {
+    pathname = path;
+    const nodes = elements(render());
+    assert.equal(nodes.filter((node) => node.type === "TerminalCommand").length, 1, path);
+    assert.ok(nodes.includes(child), path);
+  }
+  pathname = "/"; assert.equal(render().props.children, child);
+  pathname = "/learn/longest-increasing-subsequence"; assert.equal(render().props.children, child);
 });
 
 test("LIS route retains server reading and shell, with reduced-motion and narrow-screen layout", () => {

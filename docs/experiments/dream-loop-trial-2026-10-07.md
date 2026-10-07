@@ -27,7 +27,21 @@
 - Review found a real React 19 SSR issue: a multi-child SVG title serialized empty. Fixed using one string expression and added a real React SSR regression test. Also fixed unread point/legend contrast (light theme prior contrast about 2.40:1) by using the darker slate outline.
 - **186 tests, full ESLint, TypeScript and production build pass** at 15:12 UTC. Build generated 36 static routes; Pagefind indexed 15 pages. Built LIS HTML includes a real SVG path, full static lesson, Notes link and correct canonical URL.
 - Build's existing App Store sync changed unrelated app metadata locally; those generated source changes were restored and excluded from the trial commit.
-- Actual after screenshots and independent visual review are pending. No visual score, improvement percentage, FPS result, deployment acceptance or full-loop completion is claimed yet.
+### Round 1 actual browser and independent visual review (15:43–15:48 UTC)
+
+- Preview commit [`fc1cdac`](https://github.com/crazycloudcc/ccblog/commit/fc1cdac363d848f4a43e11e4461adb81bb62f763), exact tested tree `f89822d4e7edce94b8c613041a0de8a6249b1c1a`; [CI 37646115537](https://github.com/crazycloudcc/ccblog/actions/runs/37646115537) succeeded. [Preview deployment](https://vercel.com/chainboxapp/ccblog/H2oKJvCtZMvSnyrJyd5MdLoTMqzh) read-only inspection verified Ready, exact SHA, Preview environment and `dev.crazycloud.cc` binding. Main remained unchanged during review.
+- [Actual first-fold screenshot](dream-loop-2026-10-07/after-round1.jpg), [actual replacement-state screenshot](dream-loop-2026-10-07/after-round1-replace.jpg), both 1180 × 757, unedited captures of deployed preview.
+- [Independent visual verdict](dream-loop-2026-10-07/visual-review-round1.md): **6.8/10**, composition 1.3/3, color 2.5/3, surfaces 2.4/3, details 0.6/1. This is one reviewer's rubric score, not an objective quality metric. No numerical baseline improvement claimed.
+- Main gap: first fold shows the real-path plot but hides tails, code and all controls. Correct mathematical comparison cannot be seen together. Reviewer recommends reclaiming redundant header height, compacting annotations and keeping controls reachable.
+- Additional live-browser defect found by implementation owner: all eight C++ lines rendered in one horizontal row (inline-block children inside pre), so only line 1 was visible. Live DOM confirmed eight 351px-wide spans, pre height 54px. The independently passing algorithm and SSR tests did not establish correct CSS layout. Round 2 must fix this and the large empty space above code.
+- [Live interaction evidence](dream-loop-2026-10-07/browser-round1-results.json): reset, keyboard End, duplicate strict result 1, duplicate nondecreasing result 3, invalid-input preservation, and ±999 input passed. These are actual browser controls, separate from source-level tests. One ambiguous alert locator was corrected by selecting the observed paragraph alert; it was a test locator issue, not an app defect.
+- End-to-end time includes ~25 minutes of tool/approval waiting during evidence upload; actual token and monetary cost remain unknown. No extra credentials or paid API service was introduced. The ordinary Git push lacked local credentials; existing authorized GitHub Git-data connector published the exact tested tree, with expected-SHA non-force branch update.
+### Round 2 corrective implementation (15:46–15:53 UTC)
+
+- Removed only LIS's redundant cd row while retaining its terminal shell and navigation. Compacted heading, plot annotations and tails geometry. Moved previous/next/reset/slider above the stage in an opaque sticky row.
+- Fixed C++ CSS to render eight separate block rows; removed forced blank lines and right-column auto-push whitespace. Added an explicit orange off-path-point legend. Preserved the zero reference line for negative-value tails.
+- Added code-layout, control-order and exact-route regression coverage. **188/188 tests, full ESLint, TypeScript, production build and a rerun of the independent algorithm/UI/real-SSR script pass** on the frozen round-two source.
+- Round-two after capture and fresh independent visual reassessment pending. Production remains unchanged.
 
 Local scratch context is ignored under `.dream-loop/`; persistent evidence is linked in this document. Browser captures retain their original JPEG bytes without image edits; generated targets are PNG.
 

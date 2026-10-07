@@ -1,0 +1,9 @@
+Source hashes {
+  'lib/visualizations/lis-witness.ts': '9ffcbc7e814a3f404d6d7abce8fe6cc1095cd0a23c0addb25338f7ef392279a5',
+  'components/visualizations/LisExperience.tsx': 'ad6828a8d48b9c915e501bd7cc6890060741f97fdd71a8abdd394149ac6acb44',
+  'components/visualizations/LisExperience.module.css': '8466ce8ab5dbe1df204fd4e0e963d351579262579376b8dbb94749b7dba44fc1',
+  'app/learn/[slug]/page.tsx': '77c95eb6715fa4717ce33855aa5b9564ff068ff2f888086a7bbea086dec1e1fe'
+}
+Algorithm PASS { arrayCount: 19846, frameCount: 307898 }
+Deterministic UI PASS: states, controls, invalid-input preservation, extremes, accessible references
+Real SSR PASS: full static companion, route links, one h1, witness, metadata path, nonempty accessible title
