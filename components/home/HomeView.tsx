@@ -17,6 +17,7 @@ import { isRouteEnabled, SITE_LOCALE, siteConfig, siteSource } from "@/lib/site"
 
 const dirEntries = [
   { name: "notes", href: "/blog" },
+  { name: "图解实验室", href: "/learn" },
   { name: "apps", href: "/apps" },
   { name: "playground.cc", href: "/playground" },
   { name: "about.md", href: "/about" },

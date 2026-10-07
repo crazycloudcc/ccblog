@@ -116,7 +116,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <aside className="mt-6 rounded-lg border border-mist bg-paper p-4 text-sm leading-7">
                   <p className="font-semibold text-ink">配套交互笔记</p>
                   <p className="text-slate">{getLesson(slug)!.description}</p>
-                  <Link href={`/blog/${slug}/visual`} className="text-code-cobalt underline underline-offset-4">打开：{getLesson(slug)!.title} →</Link>
+                  <Link href={`/learn/${slug}`} className="text-code-cobalt underline underline-offset-4">打开：{getLesson(slug)!.title} →</Link>
                 </aside>
               ) : null}
 

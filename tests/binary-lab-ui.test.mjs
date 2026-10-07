@@ -238,7 +238,7 @@ test("both lanes expose independent SVG names, simultaneous outcomes, and held t
 
 test("only the exact binary lab route bypasses the terminal, with drag hooks isolated to its mounted window", () => {
   const jsx = (type, props) => ({ type, props });
-  let pathname = "/blog/binary-search/visual", dragCalls = 0;
+  let pathname = "/learn/binary-search", dragCalls = 0;
   const imports = {
     "react/jsx-runtime": { jsx, jsxs: jsx },
     "next/navigation": { usePathname: () => pathname },
@@ -252,7 +252,7 @@ test("only the exact binary lab route bypasses the terminal, with drag hooks iso
   const render = () => exports.TerminalShell({ children: child, postCount: 42 });
   const lab = render(); assert.equal(lab.type, "main"); assert.equal(lab.props.children, child); assert.equal(dragCalls, 0);
   let windowType;
-  for (const path of ["/", "/blog/binary-search", "/blog/longest-increasing-subsequence/visual", "/blog/binary-search/visual/extra"]) {
+  for (const path of ["/", "/blog/binary-search", "/learn/longest-increasing-subsequence", "/learn/binary-search/extra"]) {
     pathname = path; const shell = render();
     assert.equal(typeof shell.type, "function", path);
     windowType ??= shell.type; assert.equal(shell.type, windowType);
@@ -263,7 +263,7 @@ test("only the exact binary lab route bypasses the terminal, with drag hooks iso
   assert.equal(dragCalls, 0);
   const shell = render(), window = shell.type(shell.props); assert.equal(dragCalls, 1);
   assert.ok(elements(window).some((node) => node.type === "TerminalStatusBar" && node.props.postCount === 42));
-  pathname = "/blog/binary-search/visual"; assert.equal(render().type, "main"); assert.equal(dragCalls, 1);
+  pathname = "/learn/binary-search"; assert.equal(render().type, "main"); assert.equal(dragCalls, 1);
   pathname = "/blog/binary-search"; const returned = render(); assert.equal(returned.type, windowType);
   returned.type(returned.props); assert.equal(dragCalls, 2);
 });

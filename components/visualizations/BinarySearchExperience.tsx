@@ -106,7 +106,7 @@ export function BinarySearchExperience() {
   const result = b.status === "stalled" ? "同一个 mid，被反复比较。" : a.status === "found" ? "答案找到后，正确轨道停止。" : a.status === "missing" ? "窗口为空，也是一种明确答案。" : "每一步，都要让问题变小。";
 
   return <article className={`${s.lab} ${!motion || reducedMotion ? s.noMotion : ""}`} lang="zh-CN">
-    <nav className={s.nav} aria-label="实验室导航"><Link href="/blog/binary-search">← 返回文章</Link><span className={s.brand}>CC / ALGORITHM LAB</span><Link href="/blog/longest-increasing-subsequence/visual">下一课：LIS →</Link></nav>
+    <nav className={s.nav} aria-label="实验室导航"><Link href="/blog/binary-search">← 返回文章</Link><Link href="/learn" className={s.brand}>图解实验室</Link><Link href="/learn/longest-increasing-subsequence">下一课：LIS →</Link></nav>
     <header className={s.header} data-pagefind-body>
       <div><p className={s.eyebrow}>EXPERIMENT 01 · BINARY SEARCH</p><h1 data-pagefind-meta="title">二分查找，<span>看见收缩。</span></h1><p className={s.subtitle}>同一组数字，两种更新规则。看一个窗口抵达答案，另一个停在原地。</p></div>
       <div className={s.target}><div><span>本次寻找</span><strong>{target}</strong></div><span>有序数组<br />0 起始下标</span></div>

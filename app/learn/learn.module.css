@@ -1,0 +1,26 @@
+.lab { max-width: 1160px; margin: auto; padding: clamp(24px, 5vw, 64px); color: var(--theme-ink); }
+.header { padding-bottom: 40px; }
+.eyebrow { font: 12px/1.5 monospace; letter-spacing: .12em; color: var(--theme-code-teal); }
+.header h1 { font-size: clamp(36px, 5vw, 60px); line-height: 1.2; font-weight: 650; margin: 18px 0; letter-spacing: -.045em; }
+.intro { font-size: clamp(20px, 2.5vw, 28px); line-height: 1.5; }
+.description { color: var(--theme-slate); line-height: 1.9; font-size: 14px; margin-top: 12px; }
+.categories { display: flex; gap: 12px; margin-top: 24px; }
+.categories a { border: 1px solid var(--theme-code-teal); border-radius: 24px; padding: 8px 20px; color: var(--theme-code-teal); font-size: 14px; }
+.sectionTitle { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--theme-mist); margin-bottom: 24px; }
+.sectionTitle h2 { font-size: 22px; font-weight: 600; }
+.sectionTitle span { font-size: 12px; color: var(--theme-slate); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.card { min-width: 0; border: 1px solid var(--theme-mist); border-radius: 16px; overflow: hidden; }
+.preview { display: block; background: var(--theme-border); padding: 16px 4px; color: var(--theme-ink); }
+.preview svg { width: 100%; height: auto; }
+.cardBody { padding: 24px; }
+.card h3 { font-size: 22px; line-height: 1.5; font-weight: 600; margin-top: 12px; }
+.facts { display: grid; gap: 10px; margin: 24px 0; font-size: 12px; }
+.facts div { display: flex; gap: 16px; }
+.facts dt { flex: 0 0 60px; color: var(--theme-slate); }
+.facts dd { min-width: 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; }
+.actions a, .footer a { color: var(--theme-code-cobalt); text-decoration: underline; text-underline-offset: 4px; }
+.lab a:focus-visible { outline: 3px solid var(--theme-code-cobalt); outline-offset: -3px; border-radius: 4px; }
+.footer { margin-top: 40px; border-top: 1px solid var(--theme-mist); padding-top: 24px; font-size: 13px; line-height: 1.9; color: var(--theme-slate); }
+@media (max-width: 720px) { .grid { grid-template-columns: minmax(0, 1fr); } .cardBody { padding: 20px; } .lab { padding: 24px 18px; } }

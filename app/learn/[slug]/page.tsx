@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const lesson = getLesson(slug);
   if (!lesson) notFound();
-  return createPageMetadata({ title: lesson.title, description: lesson.description, path: `/blog/${slug}/visual`, lang: "zh-CN" });
+  return createPageMetadata({ title: lesson.title, description: lesson.description, path: `/learn/${slug}`, lang: "zh-CN" });
 }
 export default async function VisualLessonPage({ params }: Props) {
   const { slug } = await params;
@@ -21,13 +21,14 @@ export default async function VisualLessonPage({ params }: Props) {
   if (!lesson) notFound();
   if (slug === "binary-search") return <BinarySearchExperience />;
   return <article lang="zh-CN">
-    <TerminalPanel title={`${slug} / visual`}>
+    <TerminalPanel title={`${slug} / learn`}>
       <nav aria-label="配套阅读" className="flex flex-wrap gap-4 text-sm">
+        <Link href="/learn" className="text-code-cobalt underline underline-offset-4">← 图解实验室</Link>
         <Link href={`/blog/${slug}`} className="text-code-cobalt underline underline-offset-4">← 回到原文与 C++ 代码</Link>
-        <Link href={`/blog/${slug === "binary-search" ? "longest-increasing-subsequence" : "binary-search"}/visual`} className="text-code-cobalt underline underline-offset-4">{slug === "binary-search" ? "下一个实验：LIS" : "前置实验：二分查找"}</Link>
+        <Link href={`/learn/${slug === "binary-search" ? "longest-increasing-subsequence" : "binary-search"}`} className="text-code-cobalt underline underline-offset-4">{slug === "binary-search" ? "下一个实验：LIS" : "前置实验：二分查找"}</Link>
       </nav>
       <header className="mt-7" data-pagefind-body>
-        <p className="text-sm text-code-teal">INTERACTIVE NOTE / 配套交互笔记</p>
+        <p className="text-sm text-code-teal">VISUAL LAB / 图解实验室</p>
         <h1 className="mt-3 text-3xl font-semibold leading-tight text-ink" data-pagefind-meta="title">{lesson.title}</h1>
         <p className="mt-4 text-base leading-8 text-slate">{lesson.description}</p>
         <ul className="mt-5 list-disc space-y-2 pl-5 text-sm text-slate">{lesson.goals.map((goal) => <li key={goal}>{goal}</li>)}</ul>

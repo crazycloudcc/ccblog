@@ -13,13 +13,13 @@ import { isRouteEnabled } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getIndexedPosts();
   const latest = getLatestContentDate();
-  const staticRoutes = ["", "/blog", "/apps", "/playground", "/about"].filter((route) =>
+  const staticRoutes = ["", "/blog", "/learn", "/apps", "/playground", "/about"].filter((route) =>
     isRouteEnabled(route),
   );
 
   const pages: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: absoluteUrl(route),
-    lastModified: latest,
+    lastModified: route === "/learn" ? new Date("2026-10-07T00:00:00.000Z") : latest,
     changeFrequency: route === "" || route === "/blog" ? "weekly" : "monthly",
     priority: route === "" ? 1 : 0.8,
   }));
@@ -48,9 +48,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       })
     : [];
 
-  const visualPages: MetadataRoute.Sitemap = isRouteEnabled("/blog")
+  const visualPages: MetadataRoute.Sitemap = isRouteEnabled("/learn")
     ? Object.keys(lessons).map((slug) => ({
-        url: absoluteUrl(`/blog/${slug}/visual`),
+        url: absoluteUrl(`/learn/${slug}`),
         lastModified: new Date("2026-10-07T00:00:00.000Z"),
         changeFrequency: "monthly" as const,
         priority: 0.6,

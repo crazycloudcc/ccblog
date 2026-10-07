@@ -15,6 +15,7 @@ const navItems = [
     icon: "n",
     match: (path: string) => path === "/blog" || path.startsWith("/blog/"),
   },
+  { href: "/learn", label: "图解实验室", icon: "l", match: (path: string) => path === "/learn" || path.startsWith("/learn/") },
   { href: "/apps", label: "apps", icon: "a", match: (path: string) => path === "/apps" },
   { href: "/playground", label: "playground", icon: "p", match: (path: string) => path === "/playground" },
   { href: "/about", label: "about", icon: "i", match: (path: string) => path === "/about" },
@@ -60,6 +61,7 @@ export function TerminalSidebar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
+              aria-current={active ? "page" : undefined}
                     className={`flex items-center gap-2.5 rounded-[4px] px-3 py-2 font-mono text-xs transition-colors ${
                       active
                         ? "bg-ink/10 text-ink"

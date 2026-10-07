@@ -5,6 +5,10 @@ export function getTerminalCwd(pathname: string): string {
     return "~";
   }
 
+  if (pathname === "/learn" || pathname.startsWith("/learn/")) {
+    return `~${pathname}`;
+  }
+
   if (pathname === "/blog") {
     return "~/notes";
   }
@@ -51,6 +55,10 @@ export function getWindowTitle(pathname: string): string {
 export function getPageCdCommand(pathname: string): string | null {
   if (pathname === "/") {
     return null;
+  }
+
+  if (pathname === "/learn" || pathname.startsWith("/learn/")) {
+    return `cd .${pathname}`;
   }
 
   if (pathname === "/blog") {

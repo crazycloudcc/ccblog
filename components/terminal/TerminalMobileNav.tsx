@@ -12,6 +12,7 @@ const navItems = [
     label: "notes",
     match: (path: string) => path === "/blog" || path.startsWith("/blog/"),
   },
+  { href: "/learn", label: "图解实验室", match: (path: string) => path === "/learn" || path.startsWith("/learn/") },
   { href: "/apps", label: "apps", match: (path: string) => path === "/apps" },
   { href: "/playground", label: "play", match: (path: string) => path === "/playground" },
   { href: "/about", label: "about", match: (path: string) => path === "/about" },
@@ -41,6 +42,7 @@ export function TerminalMobileNav() {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={active ? "page" : undefined}
               className={`rounded-[4px] border px-2.5 py-1 text-xs transition-colors ${
                 active
                   ? "border-ink/20 bg-ink text-paper"

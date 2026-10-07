@@ -17,7 +17,7 @@ type TerminalShellProps = {
 
 export function TerminalShell({ children, postCount }: TerminalShellProps) {
   const pathname = usePathname();
-  return pathname === "/blog/binary-search/visual"
+  return pathname === "/learn/binary-search"
     ? <main>{children}</main>
     : <TerminalWindow postCount={postCount}>{children}</TerminalWindow>;
 }

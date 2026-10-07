@@ -1,5 +1,9 @@
 export const lessons = {
   "binary-search": {
+    category: "算法",
+    difficulty: "入门",
+    prerequisites: "数组下标、大小比较",
+    estimatedMinutes: 10,
     title: "二分查找：窗口怎样缩小",
     description: "逐步观察 lo、hi、mid，比较正确更新与窗口停滞，区分未命中和死循环。",
     goals: ["认出闭区间 [lo, hi] 与本轮中点", "解释为什么比较后必须跳过 mid", "区分窗口停滞与整数溢出"],
@@ -9,6 +13,10 @@ export const lessons = {
     answer: "仍是 [0, 1]，中点也仍是 0。窗口没有缩小。改成 lo = mid + 1 后窗口变为 [1, 1]，下一轮命中。",
   },
   "longest-increasing-subsequence": {
+    category: "算法",
+    difficulty: "进阶",
+    prerequisites: "数组、二分查找",
+    estimatedMinutes: 15,
     title: "LIS：替换结尾，还是延长",
     description: "一步一格观察 tails，切换严格递增与非下降，理解相等元素为何不能延长严格 LIS。",
     goals: ["理解 tails 每格对应的最小结尾", "对比 lower_bound 与 upper_bound", "解释 tails 不一定是一条真实子序列"],

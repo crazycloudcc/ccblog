@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version,
   },
+  async redirects() {
+    return [
+      { source: "/blog/binary-search/visual", destination: "/learn/binary-search", permanent: true },
+      { source: "/blog/longest-increasing-subsequence/visual", destination: "/learn/longest-increasing-subsequence", permanent: true },
+    ];
+  },
   transpilePackages: ["browsercc"],
   webpack: (config, { isServer }) => {
     config.experiments = {
