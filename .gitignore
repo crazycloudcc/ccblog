@@ -46,3 +46,6 @@ next-env.d.ts
 # obsolete local toolchain copy (production uses unpkg CDN)
 /public/toolchain
 /.claude
+
+# Dream Loop local working context
+/.dream-loop/

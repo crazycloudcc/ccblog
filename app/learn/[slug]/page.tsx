@@ -1,4 +1,5 @@
 import { BinarySearchExperience } from "@/components/visualizations/BinarySearchExperience";
+import { LisExperience } from "@/components/visualizations/LisExperience";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
@@ -23,6 +24,7 @@ export default async function VisualLessonPage({ params }: Props) {
   if (!lesson) notFound();
   const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
   if (slug === "binary-search") return <>{schema}<BinarySearchExperience><LessonReading slug={slug} /></BinarySearchExperience></>;
+  if (slug === "longest-increasing-subsequence") return <>{schema}<LisExperience><LessonReading slug={slug} /></LisExperience></>;
   return <article lang="zh-CN">
     {schema}
     <TerminalPanel title={`${slug} / learn`}>

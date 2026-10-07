@@ -1,0 +1,109 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ccblog@1.1.0 prebuild
+> node scripts/validate-config.mjs && node scripts/sync-apps.mjs
+
+[validate-config] ccblog.config.ts OK
+[sync-apps] Fetched 12 apps for developer 495069166
+[sync-apps] Updated /workspace/scratch/75dc47362778/ccblog-inputs/lib/apps.ts
+
+> ccblog@1.1.0 build
+> next build --webpack
+
+▲ Next.js 16.2.10 (webpack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.8s
+  Running TypeScript ...
+  Finished TypeScript in 3.5s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/36) ...
+  Generating static pages using 8 workers (9/36)
+  Generating static pages using 8 workers (18/36)
+  Generating static pages using 8 workers (27/36)
+✓ Generating static pages using 8 workers (36/36) in 665ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/session/geo
+├ ƒ /api/toolchain/[file]
+├ ○ /apple-icon.png
+├ ○ /apps
+├ ƒ /blog
+├ ● /blog/[slug]
+│ ├ /blog/clang-diagnostics
+│ ├ /blog/localbeats
+│ ├ /blog/scanf-stdin
+│ └ [+8 more paths]
+├ ● /blog/[slug]/index.md
+│ ├ /blog/liulanqi-bianyi-cpp/index.md
+│ ├ /blog/scanf-stdin/index.md
+│ └ /blog/clang-diagnostics/index.md
+├ ƒ /blog/-/opengraph-image
+├ ● /blog/series/[slug]
+│ └ /blog/series/browser-cpp
+├ ○ /contact
+├ ƒ /feed.xml
+├ ○ /icon.png
+├ ○ /learn
+├ ● /learn/[slug]
+│ ├ /learn/binary-search
+│ └ /learn/longest-increasing-subsequence
+├ ● /learn/[slug]/index.md
+│ ├ /learn/binary-search/index.md
+│ └ /learn/longest-increasing-subsequence/index.md
+├ ○ /llms.txt
+├ ○ /opengraph-image
+├ ƒ /playground
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> ccblog@1.1.0 postbuild
+> pagefind --site .next/server/app --output-path public/pagefind
+
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/workspace/scratch/75dc47362778/ccblog-inputs"
+Source:       ".next/server/app"
+Output:       "public/pagefind"
+
+[Walking source directory]
+Found 21 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: zh-cn
+
+[Building search indexes]
+Total:
+  Indexed 1 language
+  Indexed 15 pages
+  Indexed 2077 words
+  Indexed 1 filter
+  Indexed 0 sorts
+Note: Pagefind doesn't support stemming for the language zh-cn.
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh-cn.
+Search will still work, but will not match across root words.
+
+Finished in 0.182 seconds
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
