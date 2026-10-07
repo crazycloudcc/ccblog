@@ -176,7 +176,14 @@ export function NotesSearch() {
         <input
           type="search"
           value={query}
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => {
+            if (event.target.value === query) return;
+            setQuery(event.target.value);
+            // A new query owns a fresh view, even when it cancels an in-flight search.
+            setLoading(Boolean(event.target.value.trim()) && indexReady === true);
+            setResults([]);
+            setSearchError(null);
+          }}
           placeholder='"keyword" notes/'
           disabled={indexReady === false}
           className="ml-2 w-full max-w-md rounded-[4px] border border-lavender-mist bg-terminal-bg px-3 py-2 text-sm text-ink outline-none placeholder:text-mist disabled:cursor-not-allowed disabled:opacity-60"
