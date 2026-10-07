@@ -41,7 +41,24 @@
 - Removed only LIS's redundant cd row while retaining its terminal shell and navigation. Compacted heading, plot annotations and tails geometry. Moved previous/next/reset/slider above the stage in an opaque sticky row.
 - Fixed C++ CSS to render eight separate block rows; removed forced blank lines and right-column auto-push whitespace. Added an explicit orange off-path-point legend. Preserved the zero reference line for negative-value tails.
 - Added code-layout, control-order and exact-route regression coverage. **188/188 tests, full ESLint, TypeScript, production build and a rerun of the independent algorithm/UI/real-SSR script pass** on the frozen round-two source.
-- Round-two after capture and fresh independent visual reassessment pending. Production remains unchanged.
+### Round 2 acceptance and production (15:55–15:59 UTC)
+
+- [Actual round-two first fold](dream-loop-2026-10-07/after-round2.jpg) and [replacement step](dream-loop-2026-10-07/after-round2-replace.jpg), same 1180 × 757 viewport as round 1.
+- [Fresh independent visual verdict](dream-loop-2026-10-07/visual-review-round2.md): **8.0/10**, narrowly reaches the trial threshold (composition 2.3/3, color 2.5/3, surfaces 2.4/3, details 0.8/1). The two rounds use different fresh reviewers applying the same rubric; 6.8 → 8.0 is a directional review result, not a calibrated learning-effect or traffic measurement.
+- Both meaningful charts, eight separate code rows and immediate controls now appear together. Remaining issues: source-index labels and the lower code note are just below the laptop fold; secondary text is small. These are retained as follow-up opportunities rather than concealed by a perfect-score claim.
+- [Actual live round-two checks](dream-loop-2026-10-07/browser-round2-results.json): step 5 replacement has length 3 and replacement code line 7; step 6 append has length 4; reset and keyboard End pass. Live DOM confirms eight vertically distinct code rows (19.25px step), fixing the observed one-row defect.
+- Product commit [`3f9fc32d3284fed0cd90b0310257cc1c5f2675e0`](https://github.com/crazycloudcc/ccblog/commit/3f9fc32d3284fed0cd90b0310257cc1c5f2675e0), exact tested tree `1494f2d9c2cfb923daadc715f4ad695bcd4405f7`. [Preview CI 37647761010](https://github.com/crazycloudcc/ccblog/actions/runs/37647761010) succeeded; [preview deployment](https://vercel.com/chainboxapp/ccblog/2rMGt2Fw4JeaRX4rL7ZvEJEsJKri) Ready, exact SHA and dev domain verified.
+- Main was fast-forwarded only after that preview acceptance. [Production CI 37648237056](https://github.com/crazycloudcc/ccblog/actions/runs/37648237056) succeeded. [Production deployment](https://vercel.com/chainboxapp/ccblog/3a4nbb8pvWZ4ZrmokQsae9g3msPh) Ready, exact SHA, Production environment and `crazycloud.cc` binding verified in the existing read-only dashboard session. Deployment was triggered by Git only.
+- [Live production lesson](https://crazycloud.cc/learn/longest-increasing-subsequence) and [actual production screenshot](dream-loop-2026-10-07/production-round2.jpg) verified. The canonical is `https://crazycloud.cc/learn/longest-increasing-subsequence`, with one h1. Browser navigation from `/blog/longest-increasing-subsequence/visual?trial=dream-loop` reached the corresponding `/learn/` path **preserving the query**. Permanent 308 configuration is covered by repository tests; a raw HTTP response-code capture was not taken in this round.
+- This documentation receipt follows the accepted product commit without further product-code changes; later documentation-only Git commits may move branch HEADs while preserving the reviewed implementation.
+
+## First-session outcome and limitations
+
+Two implemented/captured/independently-reviewed rounds, one generated target, about **67 minutes from 14:52 to 15:59 UTC** (22:52–23:59 Shanghai on October 7), including roughly 25 minutes of tool/approval waiting. Receipt documentation extends into October 8; this remains one revision of the October 7 lesson, not a new October 8 article.
+
+The core target→code→real screenshot→independent review→iteration cycle actually ran. The value shown is concrete: it caught a real CSS layout failure missed by the source tests and improved the first-fold comparison. It has **not** demonstrated improved learning outcomes, conversion or organic traffic. Cost/quota figures remain unknown. This manual SVG lesson has no auto-play/render loop or specified FPS target; no FPS benchmark was measured. Narrow-phone rendering, screen-reader behavior, cross-browser coverage and dark-theme visual review remain unverified in a real browser.
+
+Recommended day-two focus within the trial: validate narrow-screen legibility and the source-index explanation, and see whether the additional iteration time is worthwhile. Do not expand to other projects or continue past the three-day trial without the owner's decision.
 
 Local scratch context is ignored under `.dream-loop/`; persistent evidence is linked in this document. Browser captures retain their original JPEG bytes without image edits; generated targets are PNG.
 

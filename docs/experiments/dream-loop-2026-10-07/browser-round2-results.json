@@ -1,0 +1,48 @@
+{
+  "replacement": "已读 5 / 6。读到 2：第一个 >= 2 的位置是 1，用 2 替换 5；严格递增子序列长度仍是 3。",
+  "rows": [
+    {
+      "current": null,
+      "text": "1vector<int> tails;",
+      "y": 504.5625
+    },
+    {
+      "current": null,
+      "text": "2for (int x : nums) {",
+      "y": 523.8125
+    },
+    {
+      "current": null,
+      "text": "3  auto it = lower_bound(",
+      "y": 543.0625
+    },
+    {
+      "current": null,
+      "text": "4    tails.begin(), tails.end(), x);",
+      "y": 562.3125
+    },
+    {
+      "current": null,
+      "text": "5  if (it == tails.end())",
+      "y": 581.5625
+    },
+    {
+      "current": null,
+      "text": "6    tails.push_back(x);",
+      "y": 600.8125
+    },
+    {
+      "current": "step",
+      "text": "7  else *it = x;",
+      "y": 620.0625
+    },
+    {
+      "current": null,
+      "text": "8}",
+      "y": 639.3125
+    }
+  ],
+  "final": "已读 6 / 6。读到 8：找不到 >= 8 的结尾，追加到 tails[3]；严格递增子序列长度变为 4。",
+  "reset": "已读 0 / 6。还未读取输入，tails 为空，严格递增子序列长度为 0。tails 存最小结尾，不保证是一条真实子序列。",
+  "keyboardEnd": "已读 6 / 6。读到 8：找不到 >= 8 的结尾，追加到 tails[3]；严格递增子序列长度变为 4。"
+}

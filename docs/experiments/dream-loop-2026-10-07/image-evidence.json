@@ -1,0 +1,42 @@
+{
+  "after-round1-replace.jpg": {
+    "sha256": "74f5899c769c1f539113ac5627fb3f92d46d089b0a7e3478fa9a59ffea62efd7",
+    "bytes": 84023,
+    "kind": "actual browser capture"
+  },
+  "after-round1.jpg": {
+    "sha256": "b257dc700f1f7e69538474c70ae05324a379fc5d28f43d8fd7d86cbca501228b",
+    "bytes": 82886,
+    "kind": "actual browser capture"
+  },
+  "baseline.jpg": {
+    "sha256": "cd3745906aa49d1e8bd11a9caba908b7179f38f50cdc520f2cb8d230be727cef",
+    "bytes": 78276,
+    "kind": "actual browser capture"
+  },
+  "production-round2.jpg": {
+    "sha256": "93665ba5f07412d0daacefdbd1b6a048557e950808682e38c466b0d4e0071029",
+    "bytes": 100232,
+    "kind": "actual browser capture"
+  },
+  "baseline-final.jpg": {
+    "sha256": "0483e015d26974aad70eac432e9dbe352e94b24caba670872dead2ad4a0f393c",
+    "bytes": 90321,
+    "kind": "actual browser capture"
+  },
+  "after-round2-replace.jpg": {
+    "sha256": "aeabb8598c36ea13feb806be400ddb1499d8042bc4c6087de8ed2a3dd73d8879",
+    "bytes": 100123,
+    "kind": "actual browser capture"
+  },
+  "target-generated.png": {
+    "sha256": "f69e53330a55ae75fedec53afc5e7b1ee0c639e9f894b9a5ca19420ba37338f9",
+    "bytes": 1535427,
+    "kind": "generated target"
+  },
+  "after-round2.jpg": {
+    "sha256": "6b118ad65957c1bf2b0c1e9b322fb7083c8b6df360134454738cfaf814425e27",
+    "bytes": 99832,
+    "kind": "actual browser capture"
+  }
+}
