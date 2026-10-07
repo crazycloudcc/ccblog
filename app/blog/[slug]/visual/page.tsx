@@ -1,3 +1,4 @@
+import { BinarySearchExperience } from "@/components/visualizations/BinarySearchExperience";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
@@ -18,6 +19,7 @@ export default async function VisualLessonPage({ params }: Props) {
   const { slug } = await params;
   const lesson = getLesson(slug);
   if (!lesson) notFound();
+  if (slug === "binary-search") return <BinarySearchExperience />;
   return <article lang="zh-CN">
     <TerminalPanel title={`${slug} / visual`}>
       <nav aria-label="配套阅读" className="flex flex-wrap gap-4 text-sm">

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { DevToolsRoot } from "@/components/dev/DevToolsRoot";
 import { TerminalMobileNav } from "@/components/terminal/TerminalMobileNav";
 import { TerminalPageEntry } from "@/components/terminal/TerminalPageEntry";
@@ -15,6 +16,13 @@ type TerminalShellProps = {
 };
 
 export function TerminalShell({ children, postCount }: TerminalShellProps) {
+  const pathname = usePathname();
+  return pathname === "/blog/binary-search/visual"
+    ? <main>{children}</main>
+    : <TerminalWindow postCount={postCount}>{children}</TerminalWindow>;
+}
+
+function TerminalWindow({ children, postCount }: TerminalShellProps) {
   const {
     windowRef,
     titleBarRef,
