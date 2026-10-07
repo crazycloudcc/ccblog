@@ -9,6 +9,10 @@ export function getTerminalCwd(pathname: string): string {
     return "~/notes";
   }
 
+  if (pathname.startsWith("/blog/") && pathname.endsWith("/visual")) {
+    return `~/notes/${pathname.slice("/blog/".length, -"/visual".length)}/visual`;
+  }
+
   if (pathname.startsWith("/blog/")) {
     const slug = pathname.slice("/blog/".length);
     return `~/notes/${slug}.md`;
@@ -51,6 +55,10 @@ export function getPageCdCommand(pathname: string): string | null {
 
   if (pathname === "/blog") {
     return "cd ./notes";
+  }
+
+  if (pathname.startsWith("/blog/") && pathname.endsWith("/visual")) {
+    return `cd ./notes/${pathname.slice("/blog/".length, -"/visual".length)}/visual`;
   }
 
   if (pathname.startsWith("/blog/")) {

@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { getLesson } from "@/lib/visualizations/lessons";
 import { AiReadingPrompt } from "@/components/blog/AiReadingPrompt";
 import { AI_PROMPT_SLUG, aiDocPath, getAiDoc } from "@/lib/ai-docs";
 import { buildAiReadingPrompt } from "@/lib/ai-reading-prompt";
@@ -108,6 +110,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
               {slug === AI_PROMPT_SLUG && getAiDoc(slug) ? (
                 <AiReadingPrompt prompt={buildAiReadingPrompt(`${SITE_URL}/blog/${slug}`, `${SITE_URL}${aiDocPath(slug)}`)} markdownUrl={aiDocPath(slug)} />
+              ) : null}
+
+              {getLesson(slug) ? (
+                <aside className="mt-6 rounded-lg border border-mist bg-paper p-4 text-sm leading-7">
+                  <p className="font-semibold text-ink">配套交互笔记</p>
+                  <p className="text-slate">{getLesson(slug)!.description}</p>
+                  <Link href={`/blog/${slug}/visual`} className="text-code-cobalt underline underline-offset-4">打开：{getLesson(slug)!.title} →</Link>
+                </aside>
               ) : null}
 
               <div className="mt-10">

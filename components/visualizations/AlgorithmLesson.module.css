@@ -1,0 +1,22 @@
+.lesson { --viz-accent: #157d78; color: var(--theme-ink); }
+.card { border: 1px solid var(--theme-mist); border-radius: 12px; padding: clamp(16px, 3vw, 28px); margin-top: 20px; background: color-mix(in srgb, var(--theme-paper) 94%, #14b8a6 6%); }
+.controls { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; }
+.field { display: flex; flex: 1 1 180px; flex-direction: column; gap: 6px; font-size: 14px; }
+.field input, .field select { width: 100%; min-height: 44px; border: 1px solid var(--theme-mist); border-radius: 6px; padding: 8px 10px; background: var(--theme-paper); color: var(--theme-ink); }
+.button { min-height: 44px; border: 1px solid var(--viz-accent); border-radius: 6px; padding: 8px 14px; color: var(--theme-ink); background: var(--theme-paper); cursor: pointer; }
+.button:disabled { opacity: .45; cursor: default; }
+.lesson :is(button, input, select, summary, a):focus-visible { outline: 3px solid var(--theme-code-cobalt); outline-offset: 3px; }
+.cells { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; list-style: none; margin: 0; }
+.cell { display: flex; flex: 0 0 64px; min-height: 92px; flex-direction: column; justify-content: center; align-items: center; border: 1px solid var(--theme-mist); border-radius: 8px; background: var(--theme-paper); }
+.cell strong { font-size: 22px; }
+.cell small { font-size: 11px; }
+.active { border: 3px solid var(--viz-accent); background: color-mix(in srgb, var(--theme-paper) 86%, #14b8a6 14%); }
+.outside { color: var(--theme-slate); border-style: dashed; }
+.current { border: 3px solid var(--theme-code-cobalt); }
+.label { min-height: 20px; font-size: 11px; font-weight: 600; }
+.status { min-height: 4em; margin: 16px 0; padding: 14px; border-left: 3px solid var(--viz-accent); background: var(--theme-paper); line-height: 1.8; }
+.step { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 20px; }
+.step input { flex: 1 1 180px; min-width: 0; min-height: 44px; accent-color: var(--viz-accent); }
+.metrics { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 12px 0; font-family: monospace; }
+.error { color: var(--theme-code-rust); margin-top: 12px; }
+.caption { font-size: 13px; line-height: 1.8; margin-top: 10px; }

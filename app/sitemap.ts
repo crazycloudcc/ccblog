@@ -1,3 +1,4 @@
+import { lessons } from "@/lib/visualizations/lessons";
 import type { MetadataRoute } from "next";
 import {
   getIndexedPosts,
@@ -47,5 +48,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       })
     : [];
 
-  return [...pages, ...seriesPages, ...postPages];
+  const visualPages: MetadataRoute.Sitemap = isRouteEnabled("/blog")
+    ? Object.keys(lessons).map((slug) => ({
+        url: absoluteUrl(`/blog/${slug}/visual`),
+        lastModified: new Date("2026-10-07T00:00:00.000Z"),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      }))
+    : [];
+
+  return [...pages, ...seriesPages, ...postPages, ...visualPages];
 }
