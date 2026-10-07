@@ -15,7 +15,7 @@ const { AiReadingPrompt } = await jiti.import("../components/blog/AiReadingPromp
 test("curated index is small and all entries resolve to original public notes", () => {
   const index = docs.renderLlmsIndex();
   assert.ok(Buffer.byteLength(index) < 4000);
-  assert.equal((index.match(/^- \[/gm) ?? []).length, 3);
+  assert.equal((index.match(/^- \[/gm) ?? []).length, 5);
   assert.match(index, /不改变抓取、训练/);
   for (const slug of docs.AI_DOC_SLUGS) {
     const post = docs.getAiDoc(slug);
@@ -60,7 +60,7 @@ test("disabled features expose no selected note bodies", () => {
       features[key] = false;
       assert.equal(docs.getAiDoc(docs.AI_PROMPT_SLUG), undefined);
       assert.deepEqual(generateStaticParams(), []);
-      assert.doesNotMatch(docs.renderLlmsIndex(), /^- \[/m);
+      assert.doesNotMatch(docs.renderLlmsIndex(), /\/blog\/[^\s]+\/index\.md/);
     } finally { features[key] = old; }
   }
 });

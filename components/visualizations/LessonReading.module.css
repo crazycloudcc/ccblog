@@ -1,0 +1,12 @@
+.reading { max-width: 1460px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid currentColor; color: inherit; font-size: 14px; line-height: 1.9; }
+.reading h2 { font-size: 24px; font-weight: 600; margin: .7rem 0; }
+.reading h3 { font-size: 17px; font-weight: 600; margin: 1.25rem 0 .5rem; }
+.reading p { margin: .7rem 0; }
+.reading ul, .reading ol { padding-left: 1.4rem; }
+.reading ul { list-style: disc; }
+.reading ol { list-style: decimal; }
+.reading li { margin: .5rem 0; }
+.reading a { text-decoration: underline; text-underline-offset: 4px; }
+.byline { font-size: 12px; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media (max-width: 760px) { .columns { grid-template-columns: 1fr; gap: 0; } }

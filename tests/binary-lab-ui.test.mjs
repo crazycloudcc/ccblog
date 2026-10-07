@@ -8,6 +8,8 @@ const compile = (path) => ts.transpileModule(readFileSync(new URL(path, import.m
 }).outputText;
 const traces = {};
 new Function("exports", compile("../lib/visualizations/traces.ts"))(traces);
+const lessonData = {};
+new Function("exports", compile("../lib/visualizations/lessons.ts"))(lessonData);
 const source = compile("../components/visualizations/BinarySearchExperience.tsx");
 const motionSource = compile("../components/home/usePrefersReducedMotion.ts");
 const elements = (node) => Array.isArray(node) ? node.flatMap(elements) : node && typeof node === "object" ? [node, ...elements(node.props?.children)] : [];
@@ -54,6 +56,7 @@ function setup({ reducedMotion = false } = {}) {
     "react/jsx-runtime": { jsx, jsxs: jsx, Fragment: "fragment" },
     "next/link": { default: ({ children, ...props }) => jsx("a", { ...props, children }) },
     "@/lib/visualizations/traces": traces,
+    "@/lib/visualizations/lessons": lessonData,
     "@/components/home/usePrefersReducedMotion": motion,
     "./BinarySearchExperience.module.css": { default: new Proxy({}, { get: (_, key) => key }) },
   };
@@ -65,7 +68,7 @@ function setup({ reducedMotion = false } = {}) {
     do {
       assert.ok(++passes < 10, "effects must settle");
       cursor = 0; dirty = false; pending = [];
-      tree = expand(exports.BinarySearchExperience());
+      tree = expand(exports.BinarySearchExperience({}));
       pending.forEach((effect) => effect());
     } while (dirty);
     return elements(tree);

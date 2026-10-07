@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { binaryTrace, parseValues, type BinaryState } from "@/lib/visualizations/traces";
 import { usePrefersReducedMotion } from "@/components/home/usePrefersReducedMotion";
+import { lessons } from "@/lib/visualizations/lessons";
 import s from "./BinarySearchExperience.module.css";
 
 const examples = [
@@ -64,7 +65,7 @@ function Lane({ values, trace, step, broken }: { values: number[]; trace: Binary
   </section>;
 }
 
-export function BinarySearchExperience() {
+export function BinarySearchExperience({ children }: { children?: ReactNode }) {
   const [values, setValues] = useState(examples[0].values);
   const [target, setTarget] = useState(examples[0].target);
   const [draft, setDraft] = useState(examples[0].values.join(" "));
@@ -108,7 +109,7 @@ export function BinarySearchExperience() {
   return <article className={`${s.lab} ${!motion || reducedMotion ? s.noMotion : ""}`} lang="zh-CN">
     <nav className={s.nav} aria-label="实验室导航"><Link href="/blog/binary-search">← 返回文章</Link><Link href="/learn" className={s.brand}>图解实验室</Link><Link href="/learn/longest-increasing-subsequence">下一课：LIS →</Link></nav>
     <header className={s.header} data-pagefind-body>
-      <div><p className={s.eyebrow}>EXPERIMENT 01 · BINARY SEARCH</p><h1 data-pagefind-meta="title">二分查找，<span>看见收缩。</span></h1><p className={s.subtitle}>同一组数字，两种更新规则。看一个窗口抵达答案，另一个停在原地。</p></div>
+      <div><p className={s.eyebrow}>EXPERIMENT 01 · BINARY SEARCH</p><h1 data-pagefind-meta="title">{lessons["binary-search"].title}</h1><p className={s.subtitle}>同一组数字，两种更新规则。看一个窗口抵达答案，另一个停在原地。</p></div>
       <div className={s.target}><div><span>本次寻找</span><strong>{target}</strong></div><span>有序数组<br />0 起始下标</span></div>
     </header>
     <div className={s.layout}>
@@ -142,9 +143,10 @@ export function BinarySearchExperience() {
         <div className={s.legend}><span><i style={{ background: "#5eead4" }} />剩余搜索区间</span><span><i style={{ background: "#fbbf24" }} />正在比较的 mid</span><span><i style={{ background: "repeating-linear-gradient(45deg,#53657c 0 1px,transparent 1px 4px)", border: "1px solid #53657c" }} />已排除</span><span>数字下方的小字是下标</span></div>
         <p role="status" aria-live={playing ? "off" : "polite"} aria-atomic="true" className="sr-only">第 {step + 1} 步。正确轨道：{a.message} 错误轨道：{b.message}</p>
         <section className={s.insight} data-pagefind-body><div><p className={s.eyebrow}>TAKEAWAY</p><h2>{result}</h2><p>保留 mid 并不一定每次都失败，但一旦新区间与旧区间相同，下一轮会重复同一次比较。本演示识别停滞后停止，不实际执行无限循环。</p></div><div><p className={s.eyebrow}>TRY TO EXPLAIN</p><details className="mt-3"><summary>[1, 3] 找 3，为什么 lo = mid 会卡住？</summary><p className="mt-3">第一次 mid = 0，a[0] = 1。lo = mid 使窗口仍为 [0, 1]；正确的 lo = mid + 1 将窗口变为 [1, 1]，下一轮命中 3。</p></details></div></section>
-        <noscript><p>交互控制需要 JavaScript。静态图展示第一轮；[1, 3] 查找 3 的完整文字推演仍在上面的自测中。</p></noscript>
+        <noscript><p>交互控制需要 JavaScript。静态图展示第一轮；下方结论和完整文字推演无需点击即可阅读。</p></noscript>
       </div>
     </div>
+    {children}
     <footer className={s.footer}><p>这是闭区间版本：lo ≤ hi 时比较，lo &gt; hi 时不存在。中点为 lo + floor((hi − lo) / 2)。小整数图形不模拟 C++ 有符号溢出；溢出是另一类问题。</p><p><Link href="/blog/binary-search">继续阅读原文与可运行 C++ →</Link> · 教学视觉参考 <a href="https://github.com/andyhuo520/aetherviz-master">AetherViz Master（MIT）</a>，本站独立实现 SVG 实验。</p></footer>
   </article>;
 }

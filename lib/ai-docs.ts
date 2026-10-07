@@ -1,5 +1,6 @@
 import { getPostBySlug, getPostModified, type Post } from "@/lib/posts";
-import { features, SITE_NAME, SITE_URL } from "@/lib/site";
+import { lessons } from "@/lib/visualizations/lessons";
+import { features, isRouteEnabled, SITE_NAME, SITE_URL } from "@/lib/site";
 
 /** Deliberately curated: no private drafts, unlisted notes, or full-site dump. */
 export const AI_DOC_SLUGS = ["liulanqi-bianyi-cpp", "scanf-stdin", "clang-diagnostics"] as const;
@@ -41,5 +42,6 @@ export function renderAiDoc(post: Post): string {
 
 export function renderLlmsIndex(): string {
   const docs = AI_DOC_SLUGS.map(getAiDoc).filter((post): post is Post => Boolean(post));
-  return `# ${SITE_NAME}\n\n> 浏览器内 C11 / C++17 Playground 与中文实践笔记。clang / lld 编译为 WebAssembly，程序通过 WASI 在浏览器 Worker 中运行。\n\n这是精选阅读索引，不是完整站点导出。文档由现有公开笔记生成；引用时请使用文档内的原文地址。不能访问来源或来源没有说明时，请明确说明未知，不要猜测支持范围。此索引不改变抓取、训练或内容使用权限，也不承诺搜索收录、排名或 AI 引用。\n\n## 使用与限制\n\n${docs.map((post) => `- [${post.title}](${SITE_URL}${aiDocPath(post.slug)}): ${post.excerpt}`).join("\n")}\n`;
+  const learnDocs = isRouteEnabled("/learn") ? Object.entries(lessons).map(([slug, lesson]) => `- [${lesson.title}](${SITE_URL}/learn/${slug}/index.md): ${lesson.description}`).join("\n") : "";
+  return `# ${SITE_NAME}\n\n> 交互图解实验室、浏览器内 C11 / C++17 Playground 与中文实践笔记。clang / lld 编译为 WebAssembly，程序通过 WASI 在浏览器 Worker 中运行。\n\n这是精选阅读索引，不是完整站点导出。文档由现有公开笔记和课程数据生成；引用时请使用文档内的原文地址。不能访问来源或来源没有说明时，请明确说明未知，不要猜测支持范围。此索引不改变抓取、训练或内容使用权限，也不承诺搜索收录、排名或 AI 引用。\n\n## 使用与限制\n\n${docs.map((post) => `- [${post.title}](${SITE_URL}${aiDocPath(post.slug)}): ${post.excerpt}`).join("\n")}\n\n## 图解实验室\n\n${learnDocs}\n`;
 }

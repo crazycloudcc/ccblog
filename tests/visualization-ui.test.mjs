@@ -56,8 +56,8 @@ test("LIS strict/nondecreasing toggling, slider, and counterexample produce corr
 test("visual lessons preserve server text, reciprocal links, metadata and sitemap entries", () => {
   const read = (p) => readFileSync(new URL(p, import.meta.url), "utf8");
   const page = read("../app/learn/[slug]/page.tsx");
-  assert.match(page, /<noscript>/); assert.match(page, /lesson.summary/); assert.match(page, /lesson.invariant/); assert.match(page, /<details/); assert.match(page, /generateStaticParams/); assert.match(page, /createPageMetadata/);
+  assert.match(page, /<noscript>/); assert.match(page, /<LessonReading/); assert.match(page, /lesson.invariant/); assert.match(read("../components/visualizations/LessonReading.tsx"), /lesson.answer/); assert.match(page, /generateStaticParams/); assert.match(page, /createPageMetadata/);
   assert.match(page, /href=\{`\/blog\/\$\{slug\}`\}/); assert.match(read("../app/blog/[slug]/page.tsx"), /href=\{`\/learn\/\$\{slug\}`\}/);
-  assert.match(read("../app/sitemap.ts"), /Object.keys\(lessons\)/);
+  assert.match(read("../app/sitemap.ts"), /Object.entries\(lessons\)/);
   assert.doesNotMatch(read("../components/visualizations/AlgorithmLesson.tsx"), /setInterval|requestAnimationFrame|fetch\(|<iframe|<script/);
 });

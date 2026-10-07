@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { TerminalPanel } from "@/components/terminal/TerminalPanel";
 import { AlgorithmLesson } from "@/components/visualizations/AlgorithmLesson";
 import { getLesson, lessons, type LessonSlug } from "@/lib/visualizations/lessons";
-import { createPageMetadata } from "@/lib/metadata";
+import { LessonReading } from "@/components/visualizations/LessonReading";
+import { lessonStructuredData } from "@/lib/visualizations/lesson-publication";
+import { absoluteUrl, createPageMetadata } from "@/lib/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
@@ -13,14 +15,16 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const lesson = getLesson(slug);
   if (!lesson) notFound();
-  return createPageMetadata({ title: lesson.title, description: lesson.description, path: `/learn/${slug}`, lang: "zh-CN" });
+  return createPageMetadata({ title: lesson.title, description: lesson.description, path: `/learn/${slug}`, image: absoluteUrl(lesson.ogImage), type: "article", publishedTime: lesson.published, lang: "zh-CN" });
 }
 export default async function VisualLessonPage({ params }: Props) {
   const { slug } = await params;
   const lesson = getLesson(slug);
   if (!lesson) notFound();
-  if (slug === "binary-search") return <BinarySearchExperience />;
+  const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
+  if (slug === "binary-search") return <>{schema}<BinarySearchExperience><LessonReading slug={slug} /></BinarySearchExperience></>;
   return <article lang="zh-CN">
+    {schema}
     <TerminalPanel title={`${slug} / learn`}>
       <nav aria-label="配套阅读" className="flex flex-wrap gap-4 text-sm">
         <Link href="/learn" className="text-code-cobalt underline underline-offset-4">← 图解实验室</Link>
@@ -36,16 +40,7 @@ export default async function VisualLessonPage({ params }: Props) {
       </header>
       <noscript><p className="mt-6 text-code-rust">交互实验需要 JavaScript。下方的文字推演与原文链接仍可阅读。</p></noscript>
       <AlgorithmLesson key={slug} slug={slug as LessonSlug} />
-      <section className="mt-8 space-y-4 text-sm leading-7 text-slate" aria-labelledby="takeaway-title" data-pagefind-body>
-        <h2 id="takeaway-title" className="text-xl font-semibold text-ink">03 / 带走这个规律</h2>
-        <p>{lesson.summary}</p>
-        <details className="rounded-lg border border-mist p-4">
-          <summary className="cursor-pointer font-semibold text-ink">想一想：{lesson.question}</summary>
-          <p className="mt-3">{lesson.answer}</p>
-        </details>
-        {slug === "binary-search" && <p>中点溢出是另一类问题：C++ 有符号整数溢出属于未定义行为，不能保证卷回某个负数。本页的有限小整数不会触发它。原文讨论的安全中点公式适用于合法、非负的数组下标。</p>}
-        <p>继续阅读 <Link href={`/blog/${slug}`} className="text-code-cobalt underline underline-offset-4">原文、边界条件与可运行的 C++</Link>，再把观察到的状态和代码逐行对照。</p>
-      </section>
+      <LessonReading slug={slug as LessonSlug} />
       <footer className="mt-8 border-t border-mist pt-4 text-xs leading-6 text-fog">
         教学布局参考 <a href="https://github.com/andyhuo520/aetherviz-master" className="underline underline-offset-4">AetherViz Master</a>（MIT）：学习目标、实时状态、单步实验与可展开自测。本站独立实现，沿用博客主题，无新增外部脚本或图形库。
       </footer>

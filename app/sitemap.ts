@@ -1,3 +1,4 @@
+import { latestLessonUpdate } from "@/lib/visualizations/lesson-publication";
 import { lessons } from "@/lib/visualizations/lessons";
 import type { MetadataRoute } from "next";
 import {
@@ -19,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const pages: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: absoluteUrl(route),
-    lastModified: route === "/learn" ? new Date("2026-10-07T00:00:00.000Z") : latest,
+    lastModified: route === "/learn" ? new Date(`${latestLessonUpdate}T00:00:00.000Z`) : latest,
     changeFrequency: route === "" || route === "/blog" ? "weekly" : "monthly",
     priority: route === "" ? 1 : 0.8,
   }));
@@ -49,9 +50,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     : [];
 
   const visualPages: MetadataRoute.Sitemap = isRouteEnabled("/learn")
-    ? Object.keys(lessons).map((slug) => ({
+    ? Object.entries(lessons).map(([slug, lesson]) => ({
         url: absoluteUrl(`/learn/${slug}`),
-        lastModified: new Date("2026-10-07T00:00:00.000Z"),
+        lastModified: new Date(`${lesson.updated}T00:00:00.000Z`),
         changeFrequency: "monthly" as const,
         priority: 0.6,
       }))

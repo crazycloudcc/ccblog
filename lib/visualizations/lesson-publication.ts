@@ -1,0 +1,25 @@
+import { lessons, type LessonSlug } from "./lessons";
+import { absoluteUrl } from "@/lib/metadata";
+import { siteConfig } from "@/lib/site";
+
+export const latestLessonUpdate = Object.values(lessons).map((lesson) => lesson.updated).sort().at(-1)!;
+export function lessonStructuredData(slug: LessonSlug) {
+  const lesson = lessons[slug];
+  const url = absoluteUrl(`/learn/${slug}`);
+  return { "@context": "https://schema.org", "@graph": [
+    { "@type": "Article", "@id": `${url}#article`, url, mainEntityOfPage: url,
+      headline: lesson.title, description: lesson.description, inLanguage: "zh-CN",
+      author: { "@type": "Person", name: siteConfig.author },
+      datePublished: lesson.published, dateModified: lesson.updated,
+      image: absoluteUrl(lesson.ogImage), articleSection: "图解实验室" },
+    { "@type": "BreadcrumbList", itemListElement: [
+      { "@type": "ListItem", position: 1, name: "首页", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "图解实验室", item: absoluteUrl("/learn") },
+      { "@type": "ListItem", position: 3, name: lesson.title, item: url },
+    ] },
+  ] };
+}
+export function renderLessonMarkdown(slug: LessonSlug) {
+  const l = lessons[slug];
+  return `# ${l.title}\n\n${l.description}\n\n原文 / Canonical: ${absoluteUrl(`/learn/${slug}`)}\n作者: ${siteConfig.author}\n首次发布: ${l.published}\n更新: ${l.updated}\n\n本阅读版与网页共用课程数据；互动请访问原文。\n\n## 一句话答案\n\n${l.shortAnswer}\n\n## 适用条件与边界\n\n${l.conditions}\n\n## 不变量\n\n${l.invariant}\n\n## 逐步例子\n\n${l.steps.map((step, i) => `${i + 1}. ${step}`).join("\n")}\n\n## 复杂度\n\n${l.complexity}\n\n## 常见误区\n\n${l.mistakes.map((item) => `- ${item}`).join("\n")}\n\n## 自测\n\n${l.question}\n\n${l.answer}\n\n## 参考资料\n\n${l.references.map((ref) => `- [${ref.label}](${ref.url})`).join("\n")}\n\n[推导与 C++ 代码](${absoluteUrl(`/blog/${slug}`)})\n`;
+}
