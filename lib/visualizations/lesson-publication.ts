@@ -2,6 +2,10 @@ import { lessons, type LessonSlug } from "./lessons";
 import { absoluteUrl } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site";
 
+export function lessonAuthor(aboutEnabled = siteConfig.features.about, origin = absoluteUrl()) {
+  return { "@type": "Person", name: siteConfig.author, ...(aboutEnabled ? { url: `${origin.replace(/\/$/, "")}/about` } : {}) };
+}
+
 export const latestLessonUpdate = Object.values(lessons).map((lesson) => lesson.updated).sort().at(-1)!;
 export function lessonStructuredData(slug: LessonSlug) {
   const lesson = lessons[slug];
@@ -9,7 +13,7 @@ export function lessonStructuredData(slug: LessonSlug) {
   return { "@context": "https://schema.org", "@graph": [
     { "@type": "Article", "@id": `${url}#article`, url, mainEntityOfPage: url,
       headline: lesson.title, description: lesson.description, inLanguage: "zh-CN",
-      author: { "@type": "Person", name: siteConfig.author },
+      author: lessonAuthor(),
       datePublished: lesson.published, dateModified: lesson.updated,
       image: absoluteUrl(lesson.ogImage), articleSection: "图解实验室" },
     { "@type": "BreadcrumbList", itemListElement: [

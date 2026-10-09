@@ -32,7 +32,7 @@ export function TerminalPageEntry({ children }: TerminalPageEntryProps) {
   }, [pathname]);
 
   // These graph-first lessons already identify the page inside the terminal.
-  if (!cdCommand || ["/learn/longest-increasing-subsequence", "/learn/pythagorean-theorem"].includes(pathname)) {
+  if (!cdCommand || ["/learn/binary-search-on-answer", "/learn/longest-increasing-subsequence", "/learn/pythagorean-theorem"].includes(pathname)) {
     return <>{children}</>;
   }
 

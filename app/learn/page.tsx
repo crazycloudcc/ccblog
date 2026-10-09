@@ -5,13 +5,17 @@ import s from "./learn.module.css";
 
 export const metadata = createPageMetadata({
   title: "图解实验室",
-  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列与勾股定理的面积拼补。",
+  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案与勾股定理的面积拼补。",
   path: "/learn",
   lang: "zh-CN",
 });
 
 function LessonPreview({ slug }: { slug: string }) {
   const binary = slug === "binary-search";
+  if (slug === "binary-search-on-answer") return <svg viewBox="0 0 480 220" role="img" aria-label="产量阶梯在9秒跨过8件需求线，找到第一个可行时刻">
+    <path d="M40 180H440 M40 180V32" fill="none" stroke="currentColor" /><path d="M40 180H90V158H140V130H190V108H240V82H290V58H340V32H440" fill="none" stroke="#245b50" strokeWidth="4" />
+    <path d="M40 82H440" stroke="#914a2e" strokeDasharray="6 5" /><circle cx="240" cy="82" r="8" fill="#914a2e"/><text x="252" y="77" fill="currentColor" fontSize="16">9秒：8件，首次够用</text><text x="40" y="208" fill="currentColor" fontSize="14">搜索时间 / 先证明单调，再缩小区间</text>
+  </svg>;
   if (slug === "pythagorean-theorem") return <svg viewBox="0 0 480 220" role="img" aria-label="勾股定理面积拼补：斜边平方25等于两块直角边平方9加16">
     <polygon points="90,32 186,104 114,200 18,128" fill="#bad8ce" stroke="#245b50" strokeWidth="2" />
     <text x="102" y="120" textAnchor="middle" fill="#245b50" fontSize="23">c² = 25</text><text x="220" y="122" textAnchor="middle" fill="currentColor" fontSize="26">=</text>
