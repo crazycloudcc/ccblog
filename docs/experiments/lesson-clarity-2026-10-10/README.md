@@ -25,3 +25,11 @@ Dream Loop 目标：保留当前纸色终端布局和图形主舞台，在参考
 等待最终测试 / lint / types / config / 冻结源 build / Pagefind、精确 preview CI 与 Ready、真实可用截图和独立视觉评审，满足后才推进 main。此记录尚不声明发布成功。既有本地浏览器安全阻止不重试绕过；只用原本许可的 dev.crazycloud.cc 云端预览。窄窗口不等于真机触屏 / 屏幕阅读器验收。GSC / 精确生产 host 完整 UTC 日统计未读取，未知。
 
 22:00 UTC 最终本地 207/207 tests、lint、tsc、config、冻结源 Next webpack build 40 路由、Pagefind 17 页均通过。测试断言修正后的结果；未改生产算法。下一步仅发布 preview 验收，main 尚未改。
+
+## 最终验收与实际发布
+
+- 最终产品提交 `393cef346cd824c2a5f5e78b15a8ae54ab61a092`，仅 4 个实现/测试文件及本记录。207/207 tests、lint、types、config、冻结构建/Pagefind 全过。
+- [Preview CI 37996880510](https://github.com/crazycloudcc/ccblog/actions/runs/37996880510) success；[preview 部署](https://vercel.com/chainboxapp/ccblog/GMkUz7QSp21PFysYZ2bkkvHyHqhT) Ready / Preview / dev.crazycloud.cc / 精确 SHA 实读。
+- 实际云端 Chromium 1180×757 与 500×757 截图：LIS 延伸段/链接换行正常；勾股数定义和正实数说明可读；双向新链接实际导航成功。独立审阅四张基线/最终截图无阻塞。完整图形舞台未重复全量目视验收；算法和舞台源码哈希未变，原回归全过。窄窗口不等同手机真机或屏幕阅读器。
+- 22:05 UTC 同一已验收 SHA 非强推推进 main；[生产 CI 37997294685](https://github.com/crazycloudcc/ccblog/actions/runs/37997294685) success；22:07 UTC 实读[生产部署](https://vercel.com/chainboxapp/ccblog/81C1ceTdRxi7Qf3XCrqE5KhPAxkd) Ready / Production / crazycloud.cc / 精确 SHA。
+- 本批为现有三课的讲解与延伸链接维护，不计新篇；没有增加文章或改变首次发布日期。未读取完整 UTC 日生产分析，流量与收录影响未知，不保证排名。

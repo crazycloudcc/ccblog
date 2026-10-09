@@ -59,3 +59,10 @@
 - 正式产品提交 `4e6783ad9ca872bc643a92333eaa65f1e79419ec`，205/205 测试、lint/types/config/冻结 build/Pagefind 通过；独立数学穷举 565,500 场景、6,171,558 帧，C++ UBSan 边界覆盖；Dream Loop 首轮 7.6 后修正，最终视觉 8.5/10。桌面与 500px 窄窗口真实截图、键盘验证通过；不声称真机触屏/屏幕阅读器验收。
 - 精确 [preview CI 37961356766](https://github.com/crazycloudcc/ccblog/actions/runs/37961356766) success 后同 SHA 推进 main；[生产部署](https://vercel.com/chainboxapp/ccblog/92GskeS98BPimkUGqbBVmQUZom9X) Ready / Production / crazycloud.cc / 精确 SHA 已实读；精确 [生产 CI 37961767542](https://github.com/crazycloudcc/ccblog/actions/runs/37961767542) 于 16:50:13 UTC success。
 - 含同批可选作者URL维护，不另计文章。完整来源、Dream Loop目标及已知限制见 [本次记录](experiments/dream-loop-2026-10-10/README.md)。
+
+## 2026-10-10 既有课程澄清维护（不是新日更）
+
+- 2026-10-09 22:07 UTC（Asia/Shanghai 10 月 10 日 06:07）确认生产部署 Ready：LIS 与二分答案增加静态双向延伸链接，明确 end / 追加与已证明可行 hi 的不同；勾股日期例子补三个正整数定义及 (1,1,√2) 反例。
+- 产品提交 `393cef346cd824c2a5f5e78b15a8ae54ab61a092`；207/207 tests、lint/types/config/冻结 build/Pagefind；独立数学/源码及真实桌面/500px 窄窗口截图评审通过。图形算法未改，不将维护记新篇。
+- 精确 [preview CI](https://github.com/crazycloudcc/ccblog/actions/runs/37996880510)、[生产 CI](https://github.com/crazycloudcc/ccblog/actions/runs/37997294685) success；[生产部署](https://vercel.com/chainboxapp/ccblog/81C1ceTdRxi7Qf3XCrqE5KhPAxkd) Ready / Production / crazycloud.cc / 精确 SHA 实读。10 月 10 日唯一新篇仍为二分答案。
+- [范围、Dream Loop 与限制](experiments/lesson-clarity-2026-10-10/README.md)。没有声称手机真机、屏幕阅读器、收录或流量提升。
