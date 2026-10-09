@@ -255,7 +255,7 @@ test("controls precede the stage and all eight C++ lines are separate blocks wit
   assert.doesNotMatch(css, /margin-top: auto/);
 });
 
-test("only the exact LIS route skips the duplicate terminal command, preserving children and other routes", () => {
+test("only the exact LIS and Pythagorean routes skip the duplicate terminal command, preserving children and other routes", () => {
   let pathname = "/learn/longest-increasing-subsequence";
   const jsx = (type, props) => ({ type, props });
   const imports = {
@@ -274,7 +274,10 @@ test("only the exact LIS route skips the duplicate terminal command, preserving 
   const lis = render();
   assert.equal(lis.props.children, child);
   assert.equal(elements(lis).filter((node) => node.type === "TerminalCommand").length, 0);
-  for (const path of ["/learn", "/blog/longest-increasing-subsequence", "/learn/longest-increasing-subsequence/extra", "/learn/binary-search", "/about"]) {
+  pathname = "/learn/pythagorean-theorem";
+  assert.equal(elements(render()).filter((node) => node.type === "TerminalCommand").length, 0);
+  assert.equal(render().props.children, child);
+  for (const path of ["/learn", "/learn/pythagorean-theorem/extra", "/blog/pythagorean-theorem", "/blog/longest-increasing-subsequence", "/learn/longest-increasing-subsequence/extra", "/learn/binary-search", "/about"]) {
     pathname = path;
     const nodes = elements(render());
     assert.equal(nodes.filter((node) => node.type === "TerminalCommand").length, 1, path);

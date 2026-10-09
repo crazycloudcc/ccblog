@@ -53,3 +53,21 @@
 - 用户明确要求重新发起已失效的同一图片上传审批。再次只读核对本地 hash 与远端 404 后，仅重发原 `create_blob` 一次。
 - 新审批后的原调用成功返回 blob `9278713330a18538faf2b61097a97b9ead503c92`，与本地目标图 hash 一致；保留同一目标图，无重复制作或绕过审批。
 - 至此仍未创建文章提交；随后续做原 preview → 真实视觉审阅 → production 流程。
+
+## Round 1：精确 preview 与真实视觉反馈（08:49–08:53 UTC）
+
+- 用户随后明确允许现有 GitHub 连接器创建 Git 提交并更新 preview/main，由 Vercel 自动部署。未使用 Vercel 手动部署，未新建环境、分支或凭据。
+- 提交 [`cb67bdfd4717762bf749c32e4937d78ea8a9febe`](https://github.com/crazycloudcc/ccblog/commit/cb67bdfd4717762bf749c32e4937d78ea8a9febe)，tree `991dd9368d4e2be33f3aa8bc3ffbc4e9b412b246` 与已验证本地树一致；作者匹配本仓库既有 crazycloud 身份。expected-SHA 非强制更新 preview，main 保持 `7c20084fb048200ac5d81839e31c91c01fa41720`。
+- [精确 preview CI 37907379751](https://github.com/crazycloudcc/ccblog/actions/runs/37907379751) success；[Vercel preview](https://vercel.com/chainboxapp/ccblog/9mhLsQaKaoRw1FM6wxsogSau3Cqk) 只读核验 Ready、Preview 环境、精确 commit 与 dev.crazycloud.cc 绑定。
+- [真实首屏](preview-round1.jpg)、[移动中](preview-midpoint.jpg)、[a=1/b=8 边界](preview-extremes.jpg) 均由 dot 云端浏览器截图，未编辑图像。
+- [真实交互结果](browser-round1-results.json)：重置、50% 说明、原生键盘 Home/End 调边长与进度、反例从 60° 用方向键到 90°，数据/图形/公式同步；不是源码测试替代浏览器。
+- 独立视觉审阅指出：首屏核心等式被终端底栏遮住，图形在面板内过小，极小方块标签挤压，移动中重要限制约 9px。首版不得直接发布到 main。
+
+## Round 2 修正与复验
+
+- 去掉本课冗余 cd 路径栏，等式置于说明前，数值及面积符号分组排版；图形放大，1–8 范围不换行。
+- 极小方块面积标签改为外侧引线；移动中重叠限制改为 12px HTML 图注，避免 SVG 缩放后过小。
+- 补充两课精确路径白名单与等式顺序回归。数学坐标与模型没有改变，仍须重新完整测试并重新验证精确 preview 的真实画面。
+
+- Round 2 最终实现将进度滑块与 a/b 控制并排置于舞台前，将主图上限增至 340px。最终 198/198 tests、全仓 lint、TypeScript、配置、冻结源 production build 和 Pagefind 全部通过，日志见 [checks-round2](checks-round2/)。旧测试将“允许重叠”锁在 SVG 内，迁移为真实 HTML 图注后已相应更新定位；没有删除提示或放宽数学断言。
+- [首轮独立视觉报告](visual-review-round1.md)评分 6/10，构图1/3、色彩对比2/3、表面3/3、细节0/1；这是审阅者主观评分，不是学习效果或流量指标。二轮必须用新真实截图复核。

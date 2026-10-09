@@ -233,7 +233,7 @@ test("source-level controls switch stages, preserve the fixed reference and full
     assert.deepEqual(drawnPolygons(ui.plots()[0], "triangle"), reference);
     assert.equal(ui.render().filter((node) => node.type === "button" && node.props["aria-pressed"] === true).length, 1);
     if (value === 50) {
-      assert.match(text(ui.plots()[1]), /允许重叠/);
+      assert.match(text(ui.find("p", (node) => node.props.className === "motionNote")), /允许重叠.*终点再比较剩余面积/);
       assert.equal(drawnPolygons(ui.plots()[1], "cSquare").length, 0);
       assert.equal(elements(ui.plots()[1]).filter((node) => ["aSquare", "bSquare"].includes(node.props.className)).length, 0);
       assert.match(text(ui.find("section", (node) => node.props.className === "conclusion")), /不用此时的空白面积作证明/);
@@ -312,6 +312,9 @@ test("actual React SSR includes accessible diagrams, bounded labelled controls a
   assert.match(inputs[2], /min="0"/); assert.match(inputs[2], /max="100"/); assert.match(inputs[2], /value="100"/);
   assert.match(inputs[3], /min="30"/); assert.match(inputs[3], /max="150"/); assert.match(inputs[3], /step="15"/);
   assert.match(html, /a²=9/); assert.match(html, /b²=16/); assert.match(html, /c² = 25/);
+  assert.ok(html.indexOf('class="equation"') < html.indexOf("去掉相同部分，余下面积相等"), "proof equation precedes the explanation");
+  assert.match(html, /class="equationTerm"/);
+  assert.ok(html.indexOf('class="progress"') < html.indexOf('class="stage"'), "all progress controls precede the stage");
   assert.doesNotMatch(html, /NaN|Infinity|undefined|<script\b/);
   const lesson = data.lessons["pythagorean-theorem"];
   for (const value of [lesson.shortAnswer, lesson.conditions, lesson.invariant, lesson.complexity, lesson.answer, ...lesson.steps, ...lesson.mistakes]) {

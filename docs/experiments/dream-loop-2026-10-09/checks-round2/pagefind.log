@@ -1,0 +1,34 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ccblog@1.1.0 postbuild
+> pagefind --site .next/server/app --output-path public/pagefind
+
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/workspace/scratch/75dc47362778/ccblog-inputs"
+Source:       ".next/server/app"
+Output:       "public/pagefind"
+
+[Walking source directory]
+Found 22 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: zh-cn
+
+[Building search indexes]
+Total:
+  Indexed 1 language
+  Indexed 16 pages
+  Indexed 2254 words
+  Indexed 1 filter
+  Indexed 0 sorts
+Note: Pagefind doesn't support stemming for the language zh-cn.
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh-cn.
+Search will still work, but will not match across root words.
+
+Finished in 0.215 seconds

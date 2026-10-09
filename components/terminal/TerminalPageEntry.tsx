@@ -31,8 +31,8 @@ export function TerminalPageEntry({ children }: TerminalPageEntryProps) {
     previousPathRef.current = pathname;
   }, [pathname]);
 
-  // This graph-first lesson already identifies the page inside the terminal.
-  if (!cdCommand || pathname === "/learn/longest-increasing-subsequence") {
+  // These graph-first lessons already identify the page inside the terminal.
+  if (!cdCommand || ["/learn/longest-increasing-subsequence", "/learn/pythagorean-theorem"].includes(pathname)) {
     return <>{children}</>;
   }
 
