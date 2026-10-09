@@ -35,6 +35,7 @@ test('author identity uses enabled about page and configured origin only',()=>{
 test('interactive publication keeps meaningful stage and interaction accessibility',()=>{
  const source=readFileSync(new URL('../components/visualizations/AnswerSearchExperience.tsx',import.meta.url),'utf8');
  for(const text of ['<svg','requestAnimationFrame','cancelAnimationFrame','visibilitychange','aria-live="polite"','aria-label="探索时间"','/learn/binary-search','<noscript>','prefers']) { if(text!=='prefers')assert.ok(source.includes(text),text); }
+ assert.ok(source.includes('value={Number(displayTime)}'), 'native range uses the same downward-rounded time as text');
  assert.ok(source.includes('if (input.error'));assert.ok(source.includes('usePrefersReducedMotion'));
  assert.doesNotMatch(source,/\/blog\/binary-search-on-answer/);
 });
@@ -53,4 +54,5 @@ test('real React SSR exposes SVG math and literal C++ line breaks', async()=>{
  assert.ok(html.indexOf('aria-label="探索时间"') < html.indexOf('<svg'), 'exploration control precedes the tall graph');
  const css=readFileSync(new URL('../components/visualizations/AnswerSearchExperience.module.css',import.meta.url),'utf8');
  assert.ok(css.includes('white-space:pre-wrap'), 'core code wraps instead of clipping');
+ assert.match(css,/\.code i\{[^}]*text-indent:0/, 'line numbers do not inherit hanging indent');
 });

@@ -86,7 +86,7 @@ export function AnswerSearchExperience({ children }: { children: ReactNode }) {
       <div className={s.workspace}>
         <figure className={s.figure}>
           <figcaption><strong>01 / 同时开工，同一条时间轴</strong><span>{mode === "explore" ? "拖动时间，观察产量" : `二分状态 ${step + 1} / ${frames.length}`}</span></figcaption>
-          <label className={s.timeSlider}>探索时间 <strong>{displayTime} 秒</strong><input aria-label="探索时间" type="range" min="0" max={limit} step="0.1" value={time} onChange={e => explore(Number(e.target.value))} /></label>
+          <label className={s.timeSlider}>探索时间 <strong>{displayTime} 秒</strong><input aria-label="探索时间" type="range" min="0" max={limit} step="0.1" value={Number(displayTime)} onChange={e => explore(Number(e.target.value))} /></label>
           <svg className={s.graph} viewBox="0 0 640 430" role="img" aria-labelledby="answer-graph-title answer-graph-desc">
             <title id="answer-graph-title">{`${displayTime} 秒，完成 ${count} 件，需求 ${target} 件，${enough ? "已够用" : "还不够"}`}</title>
             <desc id="answer-graph-desc">每行是一台机器，圆环表示正在制作的进度，圆点表示完成的产品。下图阶梯只在产品完成时上升。青色可行时间从最早答案开始；橙色虚线是探索时间。动画中的非整数时刻不是二分代码的一次执行。</desc>
