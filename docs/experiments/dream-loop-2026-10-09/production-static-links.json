@@ -1,0 +1,23 @@
+{
+  "/sitemap.xml": {
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "/llms.txt": {
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "/learn": {
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "/blog/binary-search": {
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "/learn/binary-search": {
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "/blog/longest-increasing-subsequence": {
+    "error": "HTTP Error 403: Forbidden"
+  },
+  "/learn/longest-increasing-subsequence": {
+    "error": "HTTP Error 403: Forbidden"
+  }
+}

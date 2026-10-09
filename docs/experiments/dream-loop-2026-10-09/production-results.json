@@ -1,0 +1,78 @@
+{
+  "commit": "ede3089962251dc5edf2e3c77c530289778f84dc",
+  "checkedAt": "2026-10-09T09:10:11.942Z",
+  "url": "https://crazycloud.cc/learn/pythagorean-theorem",
+  "document": {
+    "canonical": "https://crazycloud.cc/learn/pythagorean-theorem",
+    "dateArithmetic": true,
+    "dateExample": true,
+    "h1Count": 1,
+    "license": [
+      {
+        "href": "https://github.com/andyhuo520/aetherviz-master",
+        "text": "AetherViz Master（MIT）"
+      }
+    ],
+    "markdown": [
+      "https://crazycloud.cc/learn/pythagorean-theorem/index.md"
+    ],
+    "ranges": [
+      {
+        "max": "8",
+        "min": "1",
+        "name": "直角边 a",
+        "value": "3"
+      },
+      {
+        "max": "8",
+        "min": "1",
+        "name": "直角边 b",
+        "value": "4"
+      },
+      {
+        "max": "100",
+        "min": "0",
+        "name": null,
+        "value": "100"
+      },
+      {
+        "max": "150",
+        "min": "30",
+        "name": "两边夹角",
+        "value": "60"
+      }
+    ],
+    "title": "勾股定理（Pythagorean Theorem）图解：四块三角形，拼出平方和 — crazycloudcc"
+  },
+  "formula": "25c²=9a²+16b²去掉相同部分，余下面积相等相同外框 (a+b)² = 49，减去同样四块三角形 4×ab/2 = 24，剩余面积都是 25。",
+  "vercel": {
+    "url": "https://vercel.com/chainboxapp/ccblog/44KfUjfFgq6orYgZe1gdXP5dZwpx",
+    "status": "Ready",
+    "environment": "Production",
+    "domain": "crazycloud.cc",
+    "commit": "ede3089962251dc5edf2e3c77c530289778f84dc"
+  },
+  "ci": {
+    "id": 37909364377,
+    "conclusion": "success",
+    "branch": "main"
+  },
+  "redirects": [
+    {
+      "path": "/blog/binary-search/visual?release=pythagorean",
+      "status": 308,
+      "location": "/learn/binary-search?release=pythagorean"
+    },
+    {
+      "path": "/blog/longest-increasing-subsequence/visual?release=pythagorean",
+      "status": 308,
+      "location": "/learn/longest-increasing-subsequence?release=pythagorean"
+    }
+  ],
+  "markdown": {
+    "headStatus": 200,
+    "contentType": "text/markdown; charset=utf-8",
+    "browser": "ERR_BLOCKED_BY_CLIENT",
+    "bodyVerifiedOnline": false
+  }
+}

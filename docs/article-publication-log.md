@@ -29,12 +29,12 @@
 
 ## 每日新篇状态
 
-本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-09 16:59（Asia/Shanghai；2026-10-09 08:59 UTC）。
+本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-09 17:11（Asia/Shanghai；2026-10-09 09:11 UTC）。
 
 | 北京时间日期 | 主题 | 新篇状态 | 选题确认 | 文章 URL | 新文章提交 | 新文章验证 / 发布 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | 未定 | 未发布，当日新篇目标未完成 | 七日候选及日期 / 顺序仍待审核 | 无 | 无 | 未进行新文章验收；无新文章上线 |
-| 2026-10-09 | 勾股定理：四块三角形，拼出平方和 | 首版 preview 已部署；独立视觉审阅发现布局缺口，二轮修正待复验，未正式发布 | 2026-10-09 11:49 用户明确授权启动新文章；其余七日候选未据此逐项获批 | `/learn/pythagorean-theorem`（计划发布路径） | 首版 cb67bdf；二轮修正待提交 | 含 10/24/26 日期例子的最终本地源已重跑完整 198/198 回归、lint、TypeScript、配置校验、冻结源 production build 与 Pagefind（16 页），全部通过；静态 HTML/Markdown/sitemap/llms 已核验。独立数学与 React 19 SSR 审阅已完成（19,796 帧），日期段独立内容校对通过。首版精确 preview CI 37907379751 success，Vercel Ready/dev 域名核验通过；真实截图独立视觉评分 6/10，公式折叠、图形偏小，二轮已修正并重跑 198 项及完整本地检查；二轮精确 preview 与生产仍未验证 |
+| 2026-10-09 | 勾股定理：四块三角形，拼出平方和 | 已正式发布（当日唯一新篇） | 2026-10-09 11:49 用户明确授权启动及 preview 通过后发布；其余七日候选未据此逐项获批 | [正式文章](https://crazycloud.cc/learn/pythagorean-theorem) | 首版 cb67bdf；正式版 [ede3089962251dc5edf2e3c77c530289778f84dc](https://github.com/crazycloudcc/ccblog/commit/ede3089962251dc5edf2e3c77c530289778f84dc) | 198/198 测试、lint、TypeScript、配置、冻结源 build/Pagefind 全过；独立数学覆盖 19,796 帧。Dream Loop 第一轮 6/10 后修正，第二轮独立视觉 8/10；真实桌面及 500px 窄窗口、键盘、起终点/中点/两向极值通过。精确 [preview CI 37908460303](https://github.com/crazycloudcc/ccblog/actions/runs/37908460303) 与 [生产 CI 37909364377](https://github.com/crazycloudcc/ccblog/actions/runs/37909364377) success；[生产部署](https://vercel.com/chainboxapp/ccblog/44KfUjfFgq6orYgZe1gdXP5dZwpx) Ready / Production / 精确 SHA / crazycloud.cc 已核实。线上公式、canonical、日期例子和 MIT 署名正常，两条旧路由实测 HTTP 308 保留 query；[详情与限制](experiments/dream-loop-2026-10-09/README.md) |
 
 ## 2026-10-07 栏目迁移（不是新日更）
 

@@ -22,7 +22,7 @@
 - 另有 30°–150° 夹角实验，展示直角条件和 60° 的 c²=13 反例。键盘原生滑块、静态服务端正文、Markdown、Article/BreadcrumbList、真实日期 sitemap、独立 OG 和 llms 索引一起交付。
 - 不添加不存在的 Notes；保留旧二分/LIS 的双向入口、canonical 与固定两条旧 308 路由。
 
-## 当前验证
+## 首版本地验证（历史阶段）
 
 - 首版既有 188/188 tests、完整 ESLint、TypeScript、production build 通过，Pagefind 16 页。
 - [独立数学/SSR审查](math-review.md)已完成：新增 10 项回归，全仓 198/198 通过；覆盖 19,796 帧。真实 preview 截图、交互与独立视觉审阅尚未执行。
@@ -71,3 +71,23 @@
 
 - Round 2 最终实现将进度滑块与 a/b 控制并排置于舞台前，将主图上限增至 340px。最终 198/198 tests、全仓 lint、TypeScript、配置、冻结源 production build 和 Pagefind 全部通过，日志见 [checks-round2](checks-round2/)。旧测试将“允许重叠”锁在 SVG 内，迁移为真实 HTML 图注后已相应更新定位；没有删除提示或放宽数学断言。
 - [首轮独立视觉报告](visual-review-round1.md)评分 6/10，构图1/3、色彩对比2/3、表面3/3、细节0/1；这是审阅者主观评分，不是学习效果或流量指标。二轮必须用新真实截图复核。
+
+
+## Round 2 真实验收与正式发布（2026-10-09 09:01–09:11 UTC）
+
+- 精确最终实现提交 `ede3089962251dc5edf2e3c77c530289778f84dc`，tree `26edfc27972ceef6f20228184b25e2b475fca1dc`。此后没有改产品代码。
+- [preview CI 37908460303](https://github.com/crazycloudcc/ccblog/actions/runs/37908460303) success；[Vercel preview](https://vercel.com/chainboxapp/ccblog/GKYmSWcARgd4ZZsDRSrWw88ZZqkT) 只读核验 Ready、Preview、精确 SHA 与 dev.crazycloud.cc。
+- [二轮首屏](preview-round2.jpg)、[起点](preview-round2-start.jpg)、[中点](preview-round2-midpoint.jpg)、[a1/b8 极值](preview-round2-extremes.jpg) 均为真实 dot 云端 Chromium 截图；等式和更大几何主体已进入首屏。
+- 通过正常桌面窗口拖拽取得真实 **500×757 CSS viewport**，不是 DevTools 仿真：[窄屏首屏](preview-round2-narrow-top.jpg)、[下滚后的图形与等式](preview-round2-narrow-stage.jpg)、[a8/b1 反向极值](preview-round2-narrow-reverse-extreme.jpg)。document scrollWidth 与 clientWidth 均为 500，无所检 main 元素右溢；完成后恢复 1181px 窗口。
+- [二轮实际交互结果](browser-round2-results.json)：Home/End 调两边、50% 步骤、最终比较、反向极值、夹角由 Home 加四次方向键到 90°、重置到 3/4/0/60 均同步更新图/公式/说明。采集控制台有浏览器扩展 metadata 错误，过滤 chrome-extension 来源后未见应用 error/warn；不称整个浏览器零错误。
+- [独立二轮视觉报告](visual-review-round2.md) **8/10 通过**（composition 2/3、color/contrast 2/3、surfaces 3/3、details 1/1），审阅者实际看上述新图；已展示状态无发布阻断。剩余 P2 是桌面终态解释标题在折叠边沿、小编号对比偏弱。
+- 09:08 UTC，以 expected SHA `7c20084fb048200ac5d81839e31c91c01fa41720` 非强制将 **同一个已验提交** 推进 main；由 Git 自动触发生产，未在 Vercel 手动部署。
+- [精确生产 CI 37909364377](https://github.com/crazycloudcc/ccblog/actions/runs/37909364377) success；[Vercel 生产 44KfUjfFgq6orYgZe1gdXP5dZwpx](https://vercel.com/chainboxapp/ccblog/44KfUjfFgq6orYgZe1gdXP5dZwpx) 实际只读核验 Ready、Production、main、精确 SHA 和 crazycloud.cc。
+- [生产页面](https://crazycloud.cc/learn/pythagorean-theorem) 于北京时间 **2026-10-09 17:10** 实际打开：[生产截图](production.jpg)、[线上结果](production-results.json)。单 h1、生产 canonical、25=9+16、10/24/26 静态日期例子及算式、原滑块 1–8、AetherViz MIT 可见署名均正常。
+- 两条旧 `/blog/binary-search/visual` 和 `/blog/longest-increasing-subsequence/visual` 经线上 HEAD 实测 **HTTP 308**，Location 分别为对应 `/learn/…?release=pythagorean`，查询参数保持。不是只从 Next 配置推断。
+- Markdown 线上 HEAD 返回 200、`text/markdown; charset=utf-8`；随后云浏览器打开正文得到 `ERR_BLOCKED_BY_CLIENT`，未改路径或用其他路线规避，**线上 Markdown 正文未验**。本地构建的 Markdown 内容/日期/算式此前已通过完整检查。
+- 响应式验收只覆盖实际桌面与 500px 窄窗口；**没有 320/375px、物理手机、iOS/Android、读屏、200% 缩放、深色主题或 reduced-motion 偏好切换的运行验收**。实现无自动播放/动画循环，静态与对应 CSS 检查不能冒充这些运行证据。沿用用户已有 ccblog 手机/人工验收豁免，不把豁免写成测试通过。
+- 未测真实搜索排名/收录/学习效果，也没有 FPS、LLM token 或美元成本遥测。生成目标 hash 仍为 `9278713330a18538faf2b61097a97b9ead503c92`。
+- 09 UTC 运营轮续做同一篇，未重开文章；Oct 8 未完成如实保留。发布证据归档仅提交 preview，按用户当前要求不为文档记录再次推进 main。
+
+- 静态入口线上补查范围：[HTTP GET 结果](production-static-links.json) 中 sitemap、llms、Learn 索引及旧二分/LIS 双向页均返回 403，已停止，不换客户端或路径绕行；因此不声称这些线上正文已验。sitemap 的先行 HEAD 为 200/application/xml。对应静态构建产物、双向链接、索引规则的源码/回归验证已通过，和线上 GET 未验严格区分。

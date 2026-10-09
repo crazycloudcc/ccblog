@@ -1,0 +1,196 @@
+{
+  "commit": "ede3089962251dc5edf2e3c77c530289778f84dc",
+  "url": "https://dev.crazycloud.cc/learn/pythagorean-theorem",
+  "midpoint": {
+    "descriptions": [
+      "外框边长 7、面积 49。四个全等直角三角形各有直角边 3 和 4，总面积 24。中间正方形边长为斜边 c，面积 25。",
+      "外框边长 7、面积 49。四个全等直角三角形各有直角边 3 和 4，总面积 24。中途可能重叠；此时不把空白当作证明中的剩余面积。"
+    ],
+    "formula": "四块总面积 = 4 × 3 × 4 ÷ 2 = 24只移动，不拉伸、不剪开每块只有平移，大小和形状都不变。中途可能重叠，不用此时的空白面积作证明；拖到终点看两块完整正方形。",
+    "sliders": [
+      "3",
+      "4",
+      "50",
+      "60"
+    ]
+  },
+  "extreme": {
+    "descriptions": [
+      "外框边长 9、面积 81。四个全等直角三角形各有直角边 1 和 8，总面积 16。中间正方形边长为斜边 c，面积 65。",
+      "外框边长 9、面积 81。四个全等直角三角形各有直角边 1 和 8，总面积 16。左上正方形面积 1，右下正方形面积 64，合计 65。"
+    ],
+    "formula": "65c²=1a²+64b²去掉相同部分，余下面积相等相同外框 (a+b)² = 81，减去同样四块三角形 4×ab/2 = 16，剩余面积都是 65。",
+    "sliders": [
+      "1",
+      "8",
+      "100",
+      "60"
+    ]
+  },
+  "narrow": {
+    "clientWidth": 500,
+    "height": 757,
+    "overflows": [],
+    "scrollWidth": 500,
+    "width": 500
+  },
+  "reverseExtreme": {
+    "formula": "65c²=64a²+1b²去掉相同部分，余下面积相等相同外框 (a+b)² = 81，减去同样四块三角形 4×ab/2 = 16，剩余面积都是 65。",
+    "sliders": [
+      "8",
+      "1",
+      "100",
+      "60"
+    ]
+  },
+  "angle90": {
+    "sliders": [
+      "8",
+      "1",
+      "100",
+      "90"
+    ],
+    "svgLabels": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      "两边为3和4、夹角90度的三角形，第三边平方为25"
+    ],
+    "text": []
+  },
+  "console": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:05:56.914Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:05:56.915Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:05:56.916Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:06:29.471Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:06:29.472Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:06:45.805Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:06:45.805Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:16.839Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:16.840Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:16.848Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:16.865Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:16.874Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:16.875Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.737Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.738Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.741Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.781Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.822Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.911Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-09T09:07:32.992Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ],
+  "reset": {
+    "formula": "c² = 49 − 24 = 25先看斜边 c 围出的正方形相同外框 (a+b)² = 49，减去同样四块三角形 4×ab/2 = 24，剩余面积都是 25。",
+    "sliders": [
+      "3",
+      "4",
+      "0",
+      "60"
+    ],
+    "width": 1181
+  },
+  "applicationConsole": []
+}
