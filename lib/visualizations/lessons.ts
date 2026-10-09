@@ -31,11 +31,11 @@ export const lessons = {
     estimatedMinutes: 15,
     title: "最长递增子序列（LIS）图解：替换结尾，还是延长",
     published: "2026-10-07",
-    updated: "2026-10-07",
+    updated: "2026-10-10",
     ogImage: "/images/learn/longest-increasing-subsequence.png",
     shortAnswer: "最长递增子序列（LIS）是在保持原顺序、允许跳过元素的前提下，能取出的最长严格递增序列。维护每种长度的最小结尾 tails，其长度就是 LIS 长度。",
     conditions: "原数组无需排序，也不能先排序再求原问题。严格递增不允许相等；非下降允许相等。空数组长度为 0，单元素长度为 1。图形输入限制为 1–12 个 ±999 整数。",
-    steps: ["输入 [3, 5, 7, 1, 2, 8]：依次读 3、5、7，tails 从 [] 延长为 [3, 5, 7]。", "读 1：替换第一个 ≥ 1 的结尾，得到 [1, 5, 7]；读 2 后得到 [1, 2, 7]。长度仍是 3。", "读 8：没有 ≥ 8 的结尾，追加为 [1, 2, 7, 8]。答案长度 4；一条真实子序列是 [3, 5, 7, 8]。"],
+    steps: ["输入 [3, 5, 7, 1, 2, 8]：依次读 3、5、7，tails 从 [] 延长为 [3, 5, 7]。", "读 1：替换第一个 ≥ 1 的结尾，得到 [1, 5, 7]；读 2 后得到 [1, 2, 7]。长度仍是 3。", "把 tails 的位置看作候选：严格递增判断 tails[i] ≥ x，非下降判断 tails[i] > x。tails 有序，所以两种判定都从 false 变为 true；二分寻找第一个 true。若所有位置都是 false（也包括空 tails），lower_bound / upper_bound 返回尾后位置 end，此时追加 x，不能解引用 end。", "读 8：没有 ≥ 8 的结尾，追加为 [1, 2, 7, 8]。答案长度 4；一条真实子序列是 [3, 5, 7, 8]。"],
     complexityLabel: "复杂度",
     complexity: "用随机访问数组保存 tails，并用二分定位时，最坏时间 O(n log n)，额外空间 O(n)；空数组 O(1)。页面复制逐帧快照的开销不代表算法本身的空间复杂度。",
     mistakes: ["把 tails 当作答案序列：各格可能来自不同子序列，恢复具体答案需要额外记录前驱。", "严格递增找第一个 ≥ x 的位置（lower_bound）；非下降找第一个 > x 的位置（upper_bound）。[2, 2, 2] 的两种答案分别是 1 和 3。", "子序列不要求连续。替换一个结尾不表示改动原数组，也不增加当前答案长度。"],
@@ -92,7 +92,7 @@ export const lessons = {
     estimatedMinutes: 12,
     title: "勾股定理（Pythagorean Theorem）图解：四块三角形，拼出平方和",
     published: "2026-10-09",
-    updated: "2026-10-09",
+    updated: "2026-10-10",
     ogImage: "/images/learn/pythagorean-theorem.png",
     shortAnswer: "在平面直角三角形中，两条直角边长为 a、b，直角对面的斜边长为 c，则 a² + b² = c²。它说的是三个正方形的面积关系，不是两条边长相加等于第三条边长。",
     conditions: "a、b、c 都是正的长度，并使用同一单位。a、b 的夹角必须是 90°，c 才是斜边；不能仅凭图形看起来像直角就套公式。本页讨论平面欧氏几何中的非退化三角形。反过来，在一个三角形中，若最长边 c 满足 a² + b² = c²，则 c 对面的角是直角，这就是勾股定理的逆定理。",
@@ -103,7 +103,7 @@ export const lessons = {
       "两种摆法都没有重叠或遗漏：同一个面积 (a + b)² 的外框，减去同四块三角形的总面积 4 × ab / 2，余下面积必然相等。因此 c² = (a + b)² − 4 × ab / 2 = a² + b²。这个论证适用于任意正的 a、b，并不只验证某一个数值例子。",
       "代入 a = 3、b = 4：外框面积为 7² = 49，四块三角形总面积为 4 × 6 = 24，余下 25。另一种摆法余下 3² + 4² = 9 + 16 = 25，所以 c² = 25，长度 c = 5。",
       "逆定理用来判定直角：已知一个三角形三边为 3、4、5，先选最长边 5，再验算 3² + 4² = 5²，可知 5 对面的角为 90°。这是从边长判断角度，方向与已知直角后求斜边不同。",
-      "日期联想：2026 年 10 月 24 日按“月 / 日 / 两位年份”写作 10/24/26，恰好有 10² + 24² = 100 + 576 = 676 = 26²。WonderLab 与 Seattle Universal Math Museum 已公布当天的勾股主题活动；这里借日期说明一组勾股数，不把它当作通用日期格式或全球统一节日。此例是静态算式；上方实验的直角边滑块仍限 1–8，不能直接输入 10 和 24。",
+      "日期联想：2026 年 10 月 24 日按“月 / 日 / 两位年份”写作 10/24/26，恰好有 10² + 24² = 100 + 576 = 676 = 26²。WonderLab 与 Seattle Universal Math Museum 已公布当天的勾股主题活动；勾股数指满足 a² + b² = c² 的三个正整数；例如 1、1、√2 满足勾股定理，却不是勾股数。这里借日期说明一组勾股数，不把它当作通用日期格式或全球统一节日。此例是静态算式；上方实验的直角边滑块仍限 1–8，不能直接输入 10 和 24。",
     ],
     complexityLabel: "计算与适用范围",
     complexity: "已知两条直角边时，c = √(a² + b²)，长度取正平方根；已知斜边 c 和直角边 a 时，b = √(c² − a²)，且 c > a > 0。边长可为正实数，不要求整数，也不要求 a < b。图中的数值显示可能经过四舍五入，几何恒等式本身是精确的；改变图形的显示大小或只试几个数值，都不能代替一般证明。",
@@ -133,3 +133,15 @@ export type LessonSlug = keyof typeof lessons;
 export function getLesson(slug: string) {
   return Object.prototype.hasOwnProperty.call(lessons, slug) ? lessons[slug as LessonSlug] : undefined;
 }
+
+/** Optional learning extensions; not prerequisites or a new lesson. */
+export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "longest-increasing-subsequence": {
+    slug: "binary-search-on-answer", label: "继续探索：二分答案，寻找第一个可行时刻",
+    explanation: "同样是找第一个 true，候选可以从 tails 的位置换成时间。注意：本课可能返回 end，表示没有满足条件的元素；二分答案课先证明 hi 可行，才在闭区间里收缩。不能把两者的区间边界与无解处理直接混用。",
+  },
+  "binary-search-on-answer": {
+    slug: "longest-increasing-subsequence", label: "相关应用：LIS 中的 lower_bound 与 upper_bound",
+    explanation: "换一个搜索空间：在有序 tails 中找第一个 ≥ x 或 > x 的位置。若不存在就返回 end 并追加，而不是返回一个可解引用的元素；这与本课已有可行 hi 的前提不同。",
+  },
+};

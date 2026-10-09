@@ -70,3 +70,34 @@ test("published examples and boundary statements match the algorithm traces", ()
   }
   assert.deepEqual(lisTrace([3,5,7,1,2,8]).at(-1).tails,[1,2,7,8]);
 });
+
+test("learning extensions preserve first-true end semantics in HTML and Markdown", () => {
+  for (const slug of ["longest-increasing-subsequence", "binary-search-on-answer"]) {
+    const extension = data.lessonExtensions[slug];
+    assert.ok(data.lessons[extension.slug]);
+    const html = renderToStaticMarkup(createElement(component.LessonReading, { slug }));
+    const md = renderLessonMarkdown(slug);
+    assert.ok(html.includes(`/learn/${extension.slug}`));
+    assert.ok(md.includes(`${site.SITE_URL}/learn/${extension.slug}`));
+    const escaped = renderToStaticMarkup(createElement("span", null, extension.explanation)).slice(6, -7);
+    assert.ok(html.includes(escaped));
+    assert.ok(md.includes(extension.explanation));
+    assert.match(extension.explanation, /end/);
+    assert.match(extension.explanation, /hi/);
+  }
+  assert.match(data.lessons["longest-increasing-subsequence"].steps.join(" "), /不能解引用 end/);
+  assert.match(data.lessons["longest-increasing-subsequence"].steps.join(" "), /空 tails/);
+  assert.equal(data.lessons["longest-increasing-subsequence"].published, "2026-10-07");
+  assert.equal(data.lessons["pythagorean-theorem"].published, "2026-10-09");
+  assert.equal(Object.keys(data.lessons).length, 4);
+});
+
+test("integer triples are distinguished from general positive real right triangles", () => {
+  const l = data.lessons["pythagorean-theorem"];
+  const dateExample = l.steps.find(s => s.startsWith("日期联想"));
+  assert.match(dateExample, /三个正整数/);
+  assert.match(dateExample, /1、1、√2.*不是勾股数/);
+  assert.match(l.complexity, /正实数，不要求整数/);
+  assert.equal(10 ** 2 + 24 ** 2, 26 ** 2);
+  assert.equal(1 ** 2 + 1 ** 2, 2);
+});
