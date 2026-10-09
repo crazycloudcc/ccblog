@@ -51,3 +51,21 @@
 - 数学复核确认核心算法和静态 lesson 哈希不变；将滑杆还原位置后的完整组件哈希与原审计版相同，证明行为实现未变。7 项 focused/SSR 通过，新增行号 CSS 回归；最终整套检查再次重跑。
 
 - 16:42 UTC 真实播放过程还发现原生 range 会按 step=0.1 对连续 value 再四舍五入，导致文本 3.2、辅助功能 range 3.3；为避免 8.96 秒被读成 9 秒，把 range value 绑定到与文本相同的向下量化显示值。连续 SVG/time 与产量算法不变。独立审阅确认方向正确，并补做 RAF / hooks 边界回归；最终检查在此修正后重新运行。
+
+## 最终发布候选与验收
+
+- 最终产品提交 `4e6783ad9ca872bc643a92333eaa65f1e79419ec`，树 `90ee9e891ae711b52899802eea526f3468f26f79`。全部 205/205 tests、lint、TypeScript、配置、冻结源 build 与 Pagefind（17 页）在最后 range 修正后通过，详见 `checks/*-final.log`。
+- 精确 [preview CI 37961356766](https://github.com/crazycloudcc/ccblog/actions/runs/37961356766) success；[preview 部署](https://vercel.com/chainboxapp/ccblog/wrPtXEQbZYr9nvgBEgqZYEJFJ3dp) Ready / Preview / 源码完整 SHA 与 dev.crazycloud.cc 实读。
+- 最终独立视觉 **8.5/10**（构图 2.7/3、色彩 2.6/3、材质 2.4/3、细节 0.8/1），通过 8 分门槛。[首轮截图](preview-initial.png) → [最终桌面截图](preview-final-desktop.png)；[独审报告](visual-review-final.md)。评分是本次图像评审，不是用户满意度、性能或流量指标。
+- 真实云端 Chromium 500px 窄窗口：[首屏](preview-final-narrow-top.png)、[完整图形](preview-final-narrow-graph.png)。最终 Home/End 键盘探索读数 0 秒/0 件与 16 秒/15 件正常，reset 返回 9 秒/8 件。窄窗口无可见控件重叠/横向溢出；**没有真实手机、触屏、屏幕阅读器或 FPS 验收**。
+- [数学独审](math-review.md) 后续验证 40 个真实 hooks/RAF 动画采样：实际 8.95238 秒时 range=8.9、显示 8.9、产量 7；切入探索取消 RAF，停在 8.9。算法/lesson 哈希保持不变。
+- 16:48 UTC 重新核对远端 main=`ede3089`、preview=`4e6783a` 无并发变化后，main 以 expected SHA / force=false 推进同一已验收提交。生产 CI、自动部署及最终域名确认需待下一节实际回执；此时不把分支更新冒充正式可用。
+
+## 正式可用回执
+
+- 2026-10-09 16:49 UTC 实读 [生产部署](https://vercel.com/chainboxapp/ccblog/92GskeS98BPimkUGqbBVmQUZom9X)：Ready / Production / main / 精确 `4e6783ad9ca872bc643a92333eaa65f1e79419ec` / crazycloud.cc 域名绑定。
+- 16:49:53 UTC 单次正式站浏览器确认 [新文章](https://crazycloud.cc/learn/binary-search-on-answer) 可读，默认 9.0 秒、8 件、完整静态讲解和 2026-10-10 日期正常。正式发布时间按本次首次实际可读证据记为北京时间 2026-10-10。未为重复 QA 再访问旧路由。
+- 本地最终构建已核验 canonical、Article 日期及 `author.url=https://crazycloud.cc/about`，sitemap 含新课；当前生产网络层这批 metadata 未另行抓取。旧 Notes 与 308/query 配置未更改，回归测试通过。
+- 未读到 GSC / crazycloud.cc Production 完整 UTC 日指标，均为未知；不宣称收录、搜索量、排名或流量增长。
+
+- 精确 [生产 CI 37961767542](https://github.com/crazycloudcc/ccblog/actions/runs/37961767542) 在 2026-10-09 16:50:13 UTC success。后续回执仅提交 preview 的 docs，不再次修改或发布产品 main。

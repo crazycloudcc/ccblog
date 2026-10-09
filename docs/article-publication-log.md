@@ -29,7 +29,7 @@
 
 ## 每日新篇状态
 
-本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-09 17:11（Asia/Shanghai；2026-10-09 09:11 UTC）。
+本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-10 00:50（Asia/Shanghai；2026-10-09 16:50 UTC）。
 
 | 北京时间日期 | 主题 | 新篇状态 | 选题确认 | 文章 URL | 新文章提交 | 新文章验证 / 发布 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -52,8 +52,10 @@
 - 本次是已有两课的 SEO/GEO 基础补齐，不计新篇，不代表任何收录、排名或 AI 引用增长；七日候选继续待审
 - 本条记录变更范围，不冒充上线成功。精确提交、preview / 生产 CI 与部署 Ready / 域名证据由对应发布报告记录；未进行真实桌面/手机画面验收
 
-## 2026-10-10 新文章进行中
+## 2026-10-10 新文章实际发布
 
 - 真正开工：2026-10-10 00:00:35 Asia/Shanghai（2026-10-09 16:00:35 UTC）；此前仅选题研究，不提前计入新一天。
-- 主题：二分答案，最早什么时候够用；计划路径 `/learn/binary-search-on-answer`。当前为实现与验证阶段，尚未正式发布，不计完成日更。
+- 主题：[二分答案：最早什么时候够用](https://crazycloud.cc/learn/binary-search-on-answer)。2026-10-10 00:49:53 Asia/Shanghai（2026-10-09 16:49:53 UTC）首次实际确认正式站可读，计入 10 月 10 日唯一新篇。不是 10 月 9 日第二篇。
+- 正式产品提交 `4e6783ad9ca872bc643a92333eaa65f1e79419ec`，205/205 测试、lint/types/config/冻结 build/Pagefind 通过；独立数学穷举 565,500 场景、6,171,558 帧，C++ UBSan 边界覆盖；Dream Loop 首轮 7.6 后修正，最终视觉 8.5/10。桌面与 500px 窄窗口真实截图、键盘验证通过；不声称真机触屏/屏幕阅读器验收。
+- 精确 [preview CI 37961356766](https://github.com/crazycloudcc/ccblog/actions/runs/37961356766) success 后同 SHA 推进 main；[生产部署](https://vercel.com/chainboxapp/ccblog/92GskeS98BPimkUGqbBVmQUZom9X) Ready / Production / crazycloud.cc / 精确 SHA 已实读；精确 [生产 CI 37961767542](https://github.com/crazycloudcc/ccblog/actions/runs/37961767542) 于 16:50:13 UTC success。
 - 含同批可选作者URL维护，不另计文章。完整来源、Dream Loop目标及已知限制见 [本次记录](experiments/dream-loop-2026-10-10/README.md)。
