@@ -50,4 +50,7 @@ test('real React SSR exposes SVG math and literal C++ line breaks', async()=>{
  assert.match(html,/<title[^>]*>9\.0 秒，完成 8 件，需求 8 件，可行|<title[^>]*>9\.0 秒，完成 8 件，需求 8 件，已够用/);
  assert.match(html,/4 \+ 3 \+ 1 =/);assert.match(html,/role="img"/);assert.match(html,/static lesson/);assert.match(html,/return lo/);assert.match(html,/href="\/learn\/binary-search"/);
  assert.equal((html.match(/<code class=/g)||[]).length,7);
+ assert.ok(html.indexOf('aria-label="探索时间"') < html.indexOf('<svg'), 'exploration control precedes the tall graph');
+ const css=readFileSync(new URL('../components/visualizations/AnswerSearchExperience.module.css',import.meta.url),'utf8');
+ assert.ok(css.includes('white-space:pre-wrap'), 'core code wraps instead of clipping');
 });
