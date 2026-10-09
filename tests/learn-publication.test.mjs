@@ -28,7 +28,8 @@ test("every lesson renders its complete answer without scripts or disclosures", 
       assert.ok(renderLessonMarkdown(slug).includes(value));
     }
     assert.ok(html.includes(site.siteConfig.author));
-    assert.ok(html.includes(`/blog/${slug}`));
+    if (l.notesSlug) assert.ok(html.includes(`/blog/${l.notesSlug}`));
+    else assert.ok(!html.includes(`/blog/${slug}`));
     assert.ok(html.includes(`/learn/${slug}/index.md`));
   }
 });
@@ -44,10 +45,10 @@ test("lesson publication identity, actual dates and PNG cards stay aligned", () 
     const png = readFileSync(new URL(`../public${l.ogImage}`, import.meta.url));
     assert.equal(png.readUInt32BE(16),1200); assert.equal(png.readUInt32BE(20),630);
   }
-  assert.equal(new Set(Object.values(data.lessons).map(l=>l.ogImage)).size,2);
+  assert.equal(new Set(Object.values(data.lessons).map(l=>l.ogImage)).size,Object.keys(data.lessons).length);
 });
 test("learn Markdown routes expose only known lessons with canonical headers", async () => {
-  assert.equal(generateStaticParams().length,2);
+  assert.equal(generateStaticParams().length,Object.keys(data.lessons).length);
   for (const slug of Object.keys(data.lessons)) {
     const response = await GET(new Request("https://example.com"), { params: Promise.resolve({ slug }) });
     assert.equal(response.headers.get("Content-Type"),"text/markdown; charset=utf-8");

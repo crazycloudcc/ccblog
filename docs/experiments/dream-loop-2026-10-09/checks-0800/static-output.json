@@ -1,0 +1,22 @@
+{
+  "checkedAtUTC": "2026-10-09T07:58:00Z",
+  "checks": {
+    "oneH1": true,
+    "canonical": true,
+    "dateExampleInHtmlAndMarkdown": true,
+    "sliderLimitExplained": true,
+    "officialSourcesInHtmlAndMarkdown": true,
+    "notMissingNotesLink": true,
+    "sitemapAndLlmsCanonical": true,
+    "noRemoteScriptSrc": true,
+    "publishedDateInArticleData": true,
+    "pagefindBodyPresent": true
+  },
+  "sourceSha256": {
+    "lib/visualizations/lessons.ts": "014a5c738973992d329e74e26a5b88d79f274e1e9c9482256eb551c5d1ee2d7a",
+    "lib/visualizations/pythagorean.ts": "bdd49ac1cec30dfe1d19b715958157e54bad63d802f9ccbe879c7022ff4ed88a",
+    "components/visualizations/PythagoreanExperience.tsx": "b8db391b54a30a9441710705fedd9e04c10b047f983f40461307f53084020364",
+    "components/visualizations/PythagoreanExperience.module.css": "b712f631823e5e435a6fe714d8a40f546558d675fa356c4f64f3bc534bdde773"
+  },
+  "scope": "Local generated static output only. No preview deployment or browser acceptance."
+}

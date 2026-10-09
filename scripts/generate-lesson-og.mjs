@@ -9,7 +9,19 @@ const cell = (x, y, value, active = true) => `<rect x="${x}" y="${y}" width="92"
 for (const [slug, lesson] of Object.entries(lessons)) {
   const binary = slug === "binary-search";
   let diagram = "";
-  if (binary) {
+  if (slug === "pythagorean-theorem") {
+    const { pythagoreanModel } = await jiti.import("../lib/visualizations/pythagorean.ts");
+    const m = pythagoreanModel(3,4), k=38;
+    for (const [x,final] of [[105,false],[700,true]]) {
+      const points = p => p.map(([a,b]) => `${x+a*k},${225+b*k}`).join(" ");
+      diagram += `<rect x="${x}" y="225" width="266" height="266" fill="#c5d6e9" stroke="#91a8c5"/>`;
+      if (!final) diagram += `<polygon points="${points(m.center)}" fill="#164f48"/>`;
+      else diagram += `<rect x="${x}" y="225" width="114" height="114" fill="#164f48"/><rect x="${x+114}" y="339" width="152" height="152" fill="#284a77"/>`;
+      for(const t of final?m.triangles:m.initial) diagram += `<polygon points="${points(t)}" fill="#45372d" stroke="#f2b36f" stroke-width="2"/>`;
+      diagram += final ? text(x+18,292,"a²=9",23,"#f1f6ff")+text(x+132,418,"b²=16",23,"#f1f6ff") : text(x+78,368,"c²=25",25,"#f1f6ff");
+    }
+    diagram += text(474,372,"25 = 9 + 16",30,"#5eead4");
+  } else if (binary) {
     [[0,4],[3,4],[4,4]].forEach(([lo, hi], row) => {
       const y = 205 + row * 106;
       diagram += text(66,y+40,`[${lo}, ${hi}]`,27,"#8cbcff");
@@ -25,7 +37,7 @@ for (const [slug, lesson] of Object.entries(lessons)) {
     });
     diagram += text(810,294,"minimum",25,"#5eead4") + text(810,332,"endings",25,"#5eead4") + text(810,414,"not the actual",23) + text(810,450,"subsequence",23);
   }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0c1625"/>${text(66,60,"CRAZYCLOUDCC / VISUAL LAB",19,"#5eead4")}${text(66,125,binary?"Binary Search":"Longest Increasing Subsequence",binary?54:46,"#f1f6ff")}${text(66,167,binary?"Find 9. Exclude mid. Shrink the window.":"LIS / Replace an ending, or extend the length.",24)}${diagram}${text(66,575,binary?"Sorted array / closed interval / O(log n)":"Strictly increasing / lower_bound / O(n log n)",24,"#5eead4")}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0c1625"/>${text(66,60,"CRAZYCLOUDCC / VISUAL LAB",19,"#5eead4")}${text(66,125,slug === "pythagorean-theorem" ? "Pythagorean Theorem" : binary?"Binary Search":"Longest Increasing Subsequence",binary?54:46,"#f1f6ff")}${text(66,167,slug === "pythagorean-theorem" ? "Same four triangles. Same frame. Equal remaining areas." : binary?"Find 9. Exclude mid. Shrink the window.":"LIS / Replace an ending, or extend the length.",24)}${diagram}${text(66,575,slug === "pythagorean-theorem" ? "Right triangle / a² + b² = c² / area-preserving dissection" : binary?"Sorted array / closed interval / O(log n)":"Strictly increasing / lower_bound / O(n log n)",24,"#5eead4")}</svg>`;
   const path = `public${lesson.ogImage}`;
   await mkdir(new URL("../public/images/learn/", import.meta.url), { recursive: true });
   await writeFile(path.replace(/\.png$/, ".svg"), svg);

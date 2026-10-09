@@ -8,17 +8,17 @@ const { lessons } = await jiti.import("../lib/visualizations/lessons.ts");
 const { getTerminalCwd, getPageCdCommand } = await jiti.import("../lib/terminal-paths.ts");
 const read = p => readFileSync(new URL(p, import.meta.url), "utf8");
 test("only existing legacy lessons redirect permanently before file-system routes", async () => {
-  assert.deepEqual(await config.redirects(), Object.keys(lessons).map(slug => ({ source: `/blog/${slug}/visual`, destination: `/learn/${slug}`, permanent: true })));
+  assert.deepEqual(await config.redirects(), Object.keys(lessons).filter(slug => lessons[slug].notesSlug).map(slug => ({ source: `/blog/${slug}/visual`, destination: `/learn/${slug}`, permanent: true })));
 });
 test("lesson directory has honest prerequisites, estimates, previews and no empty categories", () => {
   for (const lesson of Object.values(lessons)) {
-    assert.equal(lesson.category, "算法"); assert.ok(lesson.prerequisites); assert.ok(lesson.difficulty);
+    assert.ok(["算法", "几何"].includes(lesson.category)); assert.ok(lesson.prerequisites); assert.ok(lesson.difficulty);
     assert.ok(lesson.estimatedMinutes > 0);
   }
   const home = read("../app/learn/page.tsx");
   assert.match(home, /LessonPreview/); assert.match(home, /role="img"/); assert.match(home, /分钟（估计）/);
   assert.match(home, /CollectionPage/); assert.match(home, /ItemList/);
-  assert.doesNotMatch(home, /已完成|即将上线|勾股|BFS/);
+  assert.doesNotMatch(home, /已完成|即将上线|BFS/);
 });
 test("learn uses independent canonical paths, sitemap and navigation", () => {
   const page = read("../app/learn/[slug]/page.tsx");

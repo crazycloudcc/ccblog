@@ -1,3 +1,4 @@
+import { PythagoreanExperience } from "@/components/visualizations/PythagoreanExperience";
 import { BinarySearchExperience } from "@/components/visualizations/BinarySearchExperience";
 import { LisExperience } from "@/components/visualizations/LisExperience";
 import Link from "next/link";
@@ -23,6 +24,7 @@ export default async function VisualLessonPage({ params }: Props) {
   const lesson = getLesson(slug);
   if (!lesson) notFound();
   const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
+  if (slug === "pythagorean-theorem") return <>{schema}<PythagoreanExperience><LessonReading slug={slug} /></PythagoreanExperience></>;
   if (slug === "binary-search") return <>{schema}<BinarySearchExperience><LessonReading slug={slug} /></BinarySearchExperience></>;
   if (slug === "longest-increasing-subsequence") return <>{schema}<LisExperience><LessonReading slug={slug} /></LisExperience></>;
   return <article lang="zh-CN">
@@ -41,7 +43,7 @@ export default async function VisualLessonPage({ params }: Props) {
         <p className="mt-5 border-l-2 border-code-teal pl-4 text-sm leading-7 text-slate">{lesson.invariant}</p>
       </header>
       <noscript><p className="mt-6 text-code-rust">交互实验需要 JavaScript。下方的文字推演与原文链接仍可阅读。</p></noscript>
-      <AlgorithmLesson key={slug} slug={slug as LessonSlug} />
+      <AlgorithmLesson key={slug} slug={slug as "binary-search" | "longest-increasing-subsequence"} />
       <LessonReading slug={slug as LessonSlug} />
       <footer className="mt-8 border-t border-mist pt-4 text-xs leading-6 text-fog">
         教学布局参考 <a href="https://github.com/andyhuo520/aetherviz-master" className="underline underline-offset-4">AetherViz Master</a>（MIT）：学习目标、实时状态、单步实验与可展开自测。本站独立实现，沿用博客主题，无新增外部脚本或图形库。

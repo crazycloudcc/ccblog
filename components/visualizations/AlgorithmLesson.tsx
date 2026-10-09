@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { binaryTrace, lisTrace, parseValues } from "@/lib/visualizations/traces";
-import type { LessonSlug } from "@/lib/visualizations/lessons";
 import styles from "./AlgorithmLesson.module.css";
 
 const presets = {
@@ -20,7 +19,7 @@ const presets = {
   ],
 };
 
-export function AlgorithmLesson({ slug }: { slug: LessonSlug }) {
+export function AlgorithmLesson({ slug }: { slug: keyof typeof presets }) {
   const binary = slug === "binary-search";
   const first = presets[slug][0];
   const [values, setValues] = useState<number[]>([...first.values]);

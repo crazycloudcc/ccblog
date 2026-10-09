@@ -6,6 +6,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 const jiti = createJiti(import.meta.url, { jsx: { runtime: "automatic" }, alias: { "@": fileURLToPath(new URL("..", import.meta.url)) } });
 const docs = await jiti.import("../lib/ai-docs.ts");
+const { lessons } = await jiti.import("../lib/visualizations/lessons.ts");
 const { SITE_URL, features } = await jiti.import("../lib/site.ts");
 const { buildAiReadingPrompt, copyAiReadingPrompt } = await jiti.import("../lib/ai-reading-prompt.ts");
 const { GET: indexGET } = await jiti.import("../app/llms.txt/route.ts");
@@ -15,7 +16,7 @@ const { AiReadingPrompt } = await jiti.import("../components/blog/AiReadingPromp
 test("curated index is small and all entries resolve to original public notes", () => {
   const index = docs.renderLlmsIndex();
   assert.ok(Buffer.byteLength(index) < 4000);
-  assert.equal((index.match(/^- \[/gm) ?? []).length, 5);
+  assert.equal((index.match(/^- \[/gm) ?? []).length, docs.AI_DOC_SLUGS.length + Object.keys(lessons).length);
   assert.match(index, /不改变抓取、训练/);
   for (const slug of docs.AI_DOC_SLUGS) {
     const post = docs.getAiDoc(slug);

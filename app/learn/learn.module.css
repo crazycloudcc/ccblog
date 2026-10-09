@@ -24,3 +24,5 @@
 .lab a:focus-visible { outline: 3px solid var(--theme-code-cobalt); outline-offset: -3px; border-radius: 4px; }
 .footer { margin-top: 40px; border-top: 1px solid var(--theme-mist); padding-top: 24px; font-size: 13px; line-height: 1.9; color: var(--theme-slate); }
 @media (max-width: 720px) { .grid { grid-template-columns: minmax(0, 1fr); } .cardBody { padding: 20px; } .lab { padding: 24px 18px; } }
+
+.categorySection + .categorySection { margin-top: 38px; }

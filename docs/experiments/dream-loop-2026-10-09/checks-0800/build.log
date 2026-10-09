@@ -1,0 +1,67 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+▲ Next.js 16.2.10 (webpack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.4s
+  Running TypeScript ...
+  Finished TypeScript in 4.0s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/38) ...
+  Generating static pages using 8 workers (9/38)
+  Generating static pages using 8 workers (18/38)
+  Generating static pages using 8 workers (28/38)
+✓ Generating static pages using 8 workers (38/38) in 788ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/session/geo
+├ ƒ /api/toolchain/[file]
+├ ○ /apple-icon.png
+├ ○ /apps
+├ ƒ /blog
+├ ● /blog/[slug]
+│ ├ /blog/clang-diagnostics
+│ ├ /blog/localbeats
+│ ├ /blog/scanf-stdin
+│ └ [+8 more paths]
+├ ● /blog/[slug]/index.md
+│ ├ /blog/liulanqi-bianyi-cpp/index.md
+│ ├ /blog/scanf-stdin/index.md
+│ └ /blog/clang-diagnostics/index.md
+├ ƒ /blog/-/opengraph-image
+├ ● /blog/series/[slug]
+│ └ /blog/series/browser-cpp
+├ ○ /contact
+├ ƒ /feed.xml
+├ ○ /icon.png
+├ ○ /learn
+├ ● /learn/[slug]
+│ ├ /learn/binary-search
+│ ├ /learn/longest-increasing-subsequence
+│ └ /learn/pythagorean-theorem
+├ ● /learn/[slug]/index.md
+│ ├ /learn/binary-search/index.md
+│ ├ /learn/longest-increasing-subsequence/index.md
+│ └ /learn/pythagorean-theorem/index.md
+├ ○ /llms.txt
+├ ○ /opengraph-image
+├ ƒ /playground
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
