@@ -66,3 +66,9 @@
 - 产品提交 `393cef346cd824c2a5f5e78b15a8ae54ab61a092`；207/207 tests、lint/types/config/冻结 build/Pagefind；独立数学/源码及真实桌面/500px 窄窗口截图评审通过。图形算法未改，不将维护记新篇。
 - 精确 [preview CI](https://github.com/crazycloudcc/ccblog/actions/runs/37996880510)、[生产 CI](https://github.com/crazycloudcc/ccblog/actions/runs/37997294685) success；[生产部署](https://vercel.com/chainboxapp/ccblog/81C1ceTdRxi7Qf3XCrqE5KhPAxkd) Ready / Production / crazycloud.cc / 精确 SHA 实读。10 月 10 日唯一新篇仍为二分答案。
 - [范围、Dream Loop 与限制](experiments/lesson-clarity-2026-10-10/README.md)。没有声称手机真机、屏幕阅读器、收录或流量提升。
+
+## 2026-10-10 勾股计算精度提示（不是新日更）
+
+- 2026-10-10 03:09:44UTC（Asia/Shanghai11:09:44）确认生产Ready。共享常见误区补“中间保留精度，最后按要求取近似值”，单位正方形两对角线例子2√2→2.83，对照提前近似1.41+1.41→2.82；不判断外部题目答案。
+- 产品提交 `06ed4a240e4602b143d16acbd2dbbdbf2f13fe18`，208/208tests、lint/types/config/冻结build/Pagefind通过；BigInt精确舍入区间回归、独立数学与真实桌面/500px截图审阅通过。标题/首次发布日期/路由/图形算法未改，不计第二篇。
+- [previewCI38019258727](https://github.com/crazycloudcc/ccblog/actions/runs/38019258727)、[生产CI38019482807](https://github.com/crazycloudcc/ccblog/actions/runs/38019482807) success；[生产部署](https://vercel.com/chainboxapp/ccblog/89jgKisdEu2qwZLVKvh8VVMrxrH8) Ready / Production / crazycloud.cc / 精确SHA实读。[完整证据与限制](experiments/rounding-clarity-2026-10-10/README.md)。

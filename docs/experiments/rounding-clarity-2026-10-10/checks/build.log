@@ -1,0 +1,103 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+▲ Next.js 16.2.10 (webpack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.9s
+  Running TypeScript ...
+  Finished TypeScript in 3.5s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/40) ...
+  Generating static pages using 8 workers (10/40) 
+  Generating static pages using 8 workers (20/40) 
+  Generating static pages using 8 workers (30/40) 
+✓ Generating static pages using 8 workers (40/40) in 14.9s
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/session/geo
+├ ƒ /api/toolchain/[file]
+├ ○ /apple-icon.png
+├ ○ /apps
+├ ƒ /blog
+├ ● /blog/[slug]
+│ ├ /blog/clang-diagnostics
+│ ├ /blog/localbeats
+│ ├ /blog/scanf-stdin
+│ └ [+8 more paths]
+├ ● /blog/[slug]/index.md
+│ ├ /blog/liulanqi-bianyi-cpp/index.md
+│ ├ /blog/scanf-stdin/index.md
+│ └ /blog/clang-diagnostics/index.md
+├ ƒ /blog/-/opengraph-image
+├ ● /blog/series/[slug]
+│ └ /blog/series/browser-cpp
+├ ○ /contact
+├ ƒ /feed.xml
+├ ○ /icon.png
+├ ○ /learn
+├ ● /learn/[slug]
+│ ├ /learn/binary-search
+│ ├ /learn/longest-increasing-subsequence
+│ ├ /learn/binary-search-on-answer
+│ └ /learn/pythagorean-theorem
+├ ● /learn/[slug]/index.md
+│ ├ /learn/binary-search/index.md
+│ ├ /learn/longest-increasing-subsequence/index.md
+│ ├ /learn/binary-search-on-answer/index.md
+│ └ /learn/pythagorean-theorem/index.md
+├ ○ /llms.txt
+├ ○ /opengraph-image
+├ ƒ /playground
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> ccblog@1.1.0 postbuild
+> pagefind --site .next/server/app --output-path public/pagefind
+
+
+Running Pagefind v1.5.2 (Extended)
+Running from: "/workspace/scratch/75dc47362778/ccblog-rounding-20261010"
+Source:       ".next/server/app"
+Output:       "public/pagefind"
+
+[Walking source directory]
+Found 23 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: zh-cn
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 17 pages
+  Indexed 2398 words
+  Indexed 1 filter
+  Indexed 0 sorts
+Note: Pagefind doesn't support stemming for the language zh-cn. 
+Search will still work, but will not match across root words.
+Note: Pagefind doesn't support stemming for the language zh-cn. 
+Search will still work, but will not match across root words.
+
+Finished in 0.229 seconds

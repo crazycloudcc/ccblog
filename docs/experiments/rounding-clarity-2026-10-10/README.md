@@ -21,3 +21,10 @@
 待最终全tests/lint/types/config/冻结源build/Pagefind、独立实现数学审阅、精确preview CI/Ready、可用真实截图和独立视觉审阅后，再将同SHA推进main。此初始记录不是发布成功声明。原本受阻的本地浏览器路线不重试绕过，仅使用已许可dev.crazycloud.cc。桌面窄窗口不等于物理手机、触屏或屏幕阅读器验收。无流量/排名/收录效果声明。
 
 03:03UTC最终本地208/208tests、lint、types、config、冻结Nextwebpackbuild40路由、Pagefind17页均通过。独立只读实现/数学审阅无阻断：1,974,025 < 2,000,000 < 2,002,225；7,980,625 < 8,000,000 < 8,037,225，严格在舍入区间内，无中点歧义；141+141=282。共享HTML/Markdown和原日期已审。基线hash差异仅lessons.ts与learn-publication.test.mjs，另新增此文档。
+
+## 已完成的发布验收
+
+- 精确产品提交 `06ed4a240e4602b143d16acbd2dbbdbf2f13fe18`；[preview CI38019258727](https://github.com/crazycloudcc/ccblog/actions/runs/38019258727) success，[preview部署](https://vercel.com/chainboxapp/ccblog/GWTk834WrEJor9KT748yz4mVT6LX) Ready / Preview / dev.crazycloud.cc / 精确SHA均实读。
+- [维护前基线](baseline.png)、[最终桌面1180×757](final-desktop.png)、[最终窄窗口500×757](final-narrow.png)是真实dot云端浏览器画面。独立截图审阅无阻断：全文、根号、小数正常可读，换行自然，无新增横向截断或重叠，原列表层级保持。鼠标轻遮个别字不是页面缺陷。只审已显示阅读区，不声称重验全部图形舞台或真实手机/读屏。
+- 03:07UTC通过expectedSHA非强推推进同一已验收提交至main；[生产CI38019482807](https://github.com/crazycloudcc/ccblog/actions/runs/38019482807) success；03:09:44UTC实读[生产部署](https://vercel.com/chainboxapp/ccblog/89jgKisdEu2qwZLVKvh8VVMrxrH8) Ready / Production / crazycloud.cc / 精确SHA。
+- 属于已有文章教学澄清，未增加新篇，不宣称流量/排名增长。未重复登录统计，已有实际采集时间与污染限制仍适用。
