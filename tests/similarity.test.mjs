@@ -40,3 +40,13 @@ test('angle markers stay within small triangles even when the shadow is short',(
 });
 
 test('graph-first shell and truthful local magnification keep teaching context visible',()=>{const ui=readFileSync('components/visualizations/SimilarityExperience.tsx','utf8');assert.ok(ui.includes('局部等比放大'));assert.ok(ui.includes('不表示第二个人'));const shell=readFileSync('components/terminal/TerminalPageEntry.tsx','utf8');assert.ok(shell.includes('"/learn/similar-triangles"'));for(let H=4;H<=10;H+=.5)for(let h=1;h<=3;h+=.5)for(let x=1;x<=8;x+=.5){const m=shadowModel(H,h,x),u=Math.min(145/h,150/m.s),r=Math.min(10,m.s*u/4,h*u/4),a=Math.min(20,m.s*u*.6);assert.ok(r/(m.s*u)+r/(h*u)<=1);assert.ok(a<=m.s*u);assert.ok(415+m.s*u<=565);assert.ok(244-h*u>=99);}});
+
+test('similarity area explanation scales both base and perpendicular height',()=>{
+ const text=lessons['similar-triangles'].mistakes.join(' ');
+ assert.ok(text.includes('k=H/h'));assert.ok(text.includes('底和对应的垂直高都乘 k'));assert.ok(text.includes('½×底×高'));
+ const area=vertices=>Math.abs(vertices.reduce((sum,[x,y],i)=>{const [nx,ny]=vertices[(i+1)%vertices.length];return sum+x*ny-nx*y;},0))/2;
+ for(let H=4;H<=10;H+=.5)for(let h=1;h<=3;h+=.5)for(let x=1;x<=8;x+=.5){
+  const m=shadowModel(H,h,x),k=H/h;near(area(m.small),h*m.s/2);near(area(m.big),H*m.q/2);near(area(m.big)/area(m.small),k*k);
+ }
+ const m=shadowModel(6,2,4);assert.equal(area(m.small),2);assert.equal(area(m.big),18);
+});

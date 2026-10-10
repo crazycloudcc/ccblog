@@ -21,7 +21,7 @@ export const lessons = {
       "只因两个三角形都有直角就判相似：还需要第二组对应角相等，本例来自共同的影尖角。",
       "两三角形分别满足勾股定理，但这里连接它们大小的关键是相似比例；不能只把 x、h、s 当作同一个直角三角形的三边。",
       "影长与离灯距离成正比的前提是 H、h 固定。调灯高或身高会改变系数 h/(H−h)，不再是同一个正比例关系。",
-      "放大倍数是对应边长的比 H/h，面积比则是 (H/h)²；图中的半透明轮廓在变换，不是人真的变高。"
+      "放大倍数是对应边长的比 k=H/h，面积比则是 k²：相似放大 k 倍时，底和对应的垂直高都乘 k，所以面积“½×底×高”会乘 k²。图中的半透明轮廓在变换，不是人真的变高。"
     ],
     references: [{label:"Euclid《几何原本》VI.4：对应角相等的三角形，其对应边成比例",url:"https://mathcs.clarku.edu/~djoyce/elements/bookVI/propVI4.html"},{label:"University of Waterloo CEMC：相似与全等、相似三角形课程",url:"https://courseware.cemc.uwaterloo.ca/46?gid=161"},{label:"Mr. Yang：Related Rates 课堂的影子比例提醒（本页只讲相似，不讲求导）",url:"https://mryangteacher.weebly.com/unit-4-related-rates--applications-part-1.html"}],
     goals: ["由直角和共同角识别 AA 相似", "区分 x、s 和 x+s，并正确配对两组边", "观察缩放重合，解释固定条件下的正比例与模型边界"],
