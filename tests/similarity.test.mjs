@@ -38,3 +38,5 @@ test('screen projections preserve equal horizontal and vertical units and fit ex
 test('angle markers stay within small triangles even when the shadow is short',()=>{
  for(let H=4;H<=10;H+=.5)for(let h=1;h<=3;h+=.5)for(let x=1;x<=8;x+=.5){const m=shadowModel(H,h,x),unit=Math.min(490/m.maxQ,260/H),r=Math.min(9,m.s*unit/4,h*unit/4),arc=Math.min(22,m.s*unit*.65);assert.ok(r/(m.s*unit)+r/(h*unit)<=1);assert.ok(arc<=m.s*unit);}
 });
+
+test('graph-first shell and truthful local magnification keep teaching context visible',()=>{const ui=readFileSync('components/visualizations/SimilarityExperience.tsx','utf8');assert.ok(ui.includes('局部等比放大'));assert.ok(ui.includes('不表示第二个人'));const shell=readFileSync('components/terminal/TerminalPageEntry.tsx','utf8');assert.ok(shell.includes('"/learn/similar-triangles"'));for(let H=4;H<=10;H+=.5)for(let h=1;h<=3;h+=.5)for(let x=1;x<=8;x+=.5){const m=shadowModel(H,h,x),u=Math.min(145/h,150/m.s),r=Math.min(10,m.s*u/4,h*u/4),a=Math.min(20,m.s*u*.6);assert.ok(r/(m.s*u)+r/(h*u)<=1);assert.ok(a<=m.s*u);assert.ok(415+m.s*u<=565);assert.ok(244-h*u>=99);}});

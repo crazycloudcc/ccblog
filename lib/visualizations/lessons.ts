@@ -23,7 +23,7 @@ export const lessons = {
       "影长与离灯距离成正比的前提是 H、h 固定。调灯高或身高会改变系数 h/(H−h)，不再是同一个正比例关系。",
       "放大倍数是对应边长的比 H/h，面积比则是 (H/h)²；图中的半透明轮廓在变换，不是人真的变高。"
     ],
-    references: [{label:"University of Waterloo CEMC：相似与全等、相似三角形课程",url:"https://courseware.cemc.uwaterloo.ca/46?gid=161"},{label:"Mr. Yang：Related Rates 课堂的影子比例提醒（本页只讲相似，不讲求导）",url:"https://mryangteacher.weebly.com/unit-4-related-rates--applications-part-1.html"}],
+    references: [{label:"Euclid《几何原本》VI.4：对应角相等的三角形，其对应边成比例",url:"https://mathcs.clarku.edu/~djoyce/elements/bookVI/propVI4.html"},{label:"University of Waterloo CEMC：相似与全等、相似三角形课程",url:"https://courseware.cemc.uwaterloo.ca/46?gid=161"},{label:"Mr. Yang：Related Rates 课堂的影子比例提醒（本页只讲相似，不讲求导）",url:"https://mryangteacher.weebly.com/unit-4-related-rates--applications-part-1.html"}],
     goals: ["由直角和共同角识别 AA 相似", "区分 x、s 和 x+s，并正确配对两组边", "观察缩放重合，解释固定条件下的正比例与模型边界"],
     summary: "灯高6 m、身高2 m，人离灯4 m时影长2 m、影尖距灯6 m。固定两种高度，离灯距离翻倍为8 m，影长变4 m、影尖距灯12 m。",
     invariant: "在平地、竖直、固定点光源且 H>h>0、x>0 的模型中，两三角形始终 AA 相似，H/h=(x+s)/s。以影尖为中心放大 H/h 倍，小三角形恰好覆盖大三角形。",

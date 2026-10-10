@@ -20,6 +20,7 @@ export function SimilarityExperience({children}: {children?:ReactNode}) {
   const tip=left+m.q*unit, foot=left+x*unit, head=ground-h*unit, top=ground-H*unit;
   const iu=Math.min(225/m.q,220/H), ix=30, iy=255;
   const inset=(points:Point[])=>points.map(([a,b])=>`${ix+a*iu},${iy-b*iu}`).join(' ');
+  const zoomUnit=Math.min(145/h,150/m.s), zoomRight=Math.min(10,m.s*zoomUnit/4,h*zoomUnit/4), zoomArc=Math.min(20,m.s*zoomUnit*.6);
   const captions=['两个直角，加上同一个影尖角','围绕影尖放大，找到对应的边','先写对应边，再解出影长'];
   return <article className={s.lab} lang="zh-CN" data-pagefind-body>
     <header className={s.header}><div><p className={s.eyebrow}>几何 / 相似与比例</p><h1 data-pagefind-meta="title">相似三角形 <span>Similar triangles</span></h1><p>路灯下，影长和距离怎样变化？</p></div><p className={s.tagline}>先认对应边，<br/>再写比例式。</p></header>
@@ -41,6 +42,13 @@ export function SimilarityExperience({children}: {children?:ReactNode}) {
         <text x={left} y={top-12} className={s.label}>点光源</text><text x={tip+7} y={ground-12} className={s.label}>影尖 T</text>
         <path d={`M${left} 326H${foot} M${left} 321v10 M${foot} 321v10`} className={s.dimension}/><text x={(left+foot)/2} y="349" textAnchor="middle" className={s.label}>x = {x} m</text>
         <path d={`M${foot} 360H${tip} M${foot} 355v10 M${tip} 355v10`} className={s.shadowLine}/><text x={Math.min(535,Math.max(foot+35,(foot+tip)/2))} y="384" textAnchor="middle" className={s.blueLabel}>s {measure(m.s)} m</text>
+        {m.s*unit<18&&<g aria-label="小三角形局部等比放大，不表示第二个人">
+          <rect x="365" y="42" width="230" height="238" rx="6" className={s.zoomPanel}/><text x="380" y="65" className={s.label}>局部等比放大</text>
+          <polygon points={`415,244 415,${244-h*zoomUnit} ${415+m.s*zoomUnit},244`} className={s.small}/>
+          <path d={`M415 ${244-zoomRight}h${zoomRight}v${zoomRight}`} className={s.angle}/>
+          <path d={`M${415+m.s*zoomUnit-zoomArc} 244 A${zoomArc} ${zoomArc} 0 0 1 ${415+m.s*zoomUnit-zoomArc*Math.cos(Math.atan2(h,m.s))} ${244-zoomArc*Math.sin(Math.atan2(h,m.s))}`} className={s.angle}/>
+          <text x="405" y={244-h*zoomUnit/2} textAnchor="end" className={s.blueLabel}>h</text><text x={415+m.s*zoomUnit/2} y="266" textAnchor="middle" className={s.blueLabel}>s</text><text x={426+m.s*zoomUnit} y="240" className={s.label}>T</text>
+        </g>}
         <text x="310" y="409" textAnchor="middle" className={s.label}>q = x + s {measure(m.q)} m（灯底到影尖）</text>
       </svg><p className={s.hint}>网格每格 1 m。只调 x 时视野固定；换 H、h 后自动适配。影长 s 从脚下开始量。</p></figure>
       <figure className={s.inset}><figcaption><strong>把对应边对齐</strong><span>以 T 为中心</span></figcaption><svg viewBox="0 0 310 294" role="img" aria-label={`小三角形围绕影尖放大${measure(m.scale)}倍，最终放大H/h${measure(m.ratio)}倍后覆盖大三角形`}>
