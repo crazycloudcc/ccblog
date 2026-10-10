@@ -324,3 +324,26 @@ test("actual React SSR includes accessible diagrams, bounded labelled controls a
   assert.match(html, /href="\/learn\/pythagorean-theorem\/index.md"/);
   assert.doesNotMatch(html, /href="\/blog\/pythagorean-theorem"/);
 });
+
+test("altitude clarification preserves right-angle conditions and handles internal or external feet", () => {
+  const lesson = data.lessons["pythagorean-theorem"];
+  const note = lesson.mistakes.find((value) => value.includes("向对边所在直线作高"));
+  assert.match(note, /非直角三角形不能直接对三边套用/);
+  assert.match(note, /形成的两个直角三角形/);
+  assert.match(note, /垂足也可能落在边的延长线上/);
+  assert.match(note, /已知条件是否足够/);
+  assert.doesNotMatch(note, /把原三角形分成/);
+  // Independent coordinates: base endpoints (0,0),(6,0), vertex (x,h).
+  // x inside/outside the base covers acute and obtuse configurations;
+  // each squared distance is checked from coordinates, not the lesson model.
+  for (const [x, h] of [[3, 4], [3, 1], [-2, 4], [8, 4], [0.001, 2], [5.999, 2]]) {
+    const a = [x, h], b = [0, 0], c = [6, 0], foot = [x, 0];
+    close(dot(sub(a, foot), sub(b, foot)), 0);
+    close(dot(sub(a, foot), sub(c, foot)), 0);
+    close(distance2(a, b), h * h + x * x);
+    close(distance2(a, c), h * h + (6 - x) ** 2);
+    assert.ok(area([a, b, c]) > 0);
+    if (x < 0 || x > 6) assert.ok(Math.abs(x) + Math.abs(6 - x) > 6, "external feet do not partition the original base");
+  }
+  assert.equal(lesson.published, "2026-10-09");
+});
