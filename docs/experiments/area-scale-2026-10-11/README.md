@@ -19,6 +19,12 @@
 
 实现后检查真实preview桌面及可用窄窗口截图，独立复评后修正必要问题；375/390手机、真机触控、屏幕阅读器、实测FPS不在本轮已验范围。截图保存在本轮现有验证记录，不通过可选blob重传。
 
-## 当前状态
+## 实际结果
 
-自动检查、独审和精确preview/生产验收进行中，未在此预先声明上线。最终回执将记录提交、CI、Ready、域名和真实可读时间。
+- 产品提交 `0122879633d3605c645fcc54dafe3f385da28db2`。220/220tests、lint/types/config/冻结build/Pagefind均exit0，生成HTML与Markdown包含新句。非历史证据文件逐一核对，产品仅共享课程数据和数学测试改变；模型/UI/样式/路由等精确匹配基线。
+- 独立数学另用射线落地交点和海伦公式复算975组，面积比相对误差至多约6.7×10⁻¹⁶；相似课10项测试独立重跑通过，文案和逐字差异审阅通过。
+- 真实before-reading、after-desktop1180×757及after-narrow500×757由独立审阅者实际看图：新增解释自然换行，未遮挡/横溢，保持既有纸面双栏/窄窗单栏样式，无阻碍项，不需要额外修正。截图仅支持文字区验收，核心SVG源码不变但不把本轮文字截图当作重新验证整个SVG。没有新生成目标图或新的FPS结果。
+- [previewCI38086567511](https://github.com/crazycloudcc/ccblog/actions/runs/38086567511) success；[preview部署](https://vercel.com/chainboxapp/ccblog/HcxjTnSHioKPLqN8Njfpix9FSyuu)实际Ready/Preview/dev.crazycloud.cc/exactSHA。2026-10-10 21:13:01UTC同SHA非强推更新main。
+- [生产CI38086763588](https://github.com/crazycloudcc/ccblog/actions/runs/38086763588) success；[生产部署](https://vercel.com/chainboxapp/ccblog/Esxq5udJgAb5WVwPomSqVbhthVW2)实际Ready/Production/crazycloud.cc/exactSHA。2026-10-10 21:14:29UTC首次实际读到正式新句，日期不变。
+- 一次preview ref操作因GitAPI机制被拒；提供用户2026-10-09明确连接器例外原问答后，原参数仅重试一次成功。没有更换接口、强推、重发可选图片或新建权限。
+- 浏览器恢复原窗口并释放；旧20项工作树保留。此次维护不计另一新篇。

@@ -96,3 +96,10 @@
 - 正式产品提交 `36ca87a4ec6ea87b8a9f4951d6a39ffa2f685db3`；219/219tests、lint/types/config/冻结build/Pagefind通过。独立数学90,951组参数、636,657动画状态、7,279,025断言通过，角标/局部放大追加复审通过；Dream Loop首轮7.6修正至最终8.6，真实1182×757桌面、502×757窄窗口截图独审通过。375/390、真机触屏、屏幕阅读器与实测FPS未验。
 - 精确 [previewCI38068314030](https://github.com/crazycloudcc/ccblog/actions/runs/38068314030) success，Vercel5R2TQUqHfDiW6Tc4bDwVRqGKEhLa Ready/Preview/dev.crazycloud.cc实核后，同SHA非强推更新main；精确 [生产CI38068516130](https://github.com/crazycloudcc/ccblog/actions/runs/38068516130) success，[生产部署](https://vercel.com/chainboxapp/ccblog/BUmS7JWUWJP5SzVYRB1nWqBEAX7a) Ready/Production/crazycloud.cc/exactSHA实核。正式交互x4→8、s2→4、q6→12、代码与canonical验证。
 - 勾股课仅同批增加相似课延伸链接并更新维护日期，不计另一新篇。原Notes、两个308及query规则未改；分类为实际几何内容，canonical/sitemap/Markdown/llms入口回归通过。[完整来源、审阅及限制](experiments/similarity-2026-10-11/README.md)。
+
+## 2026-10-11 相似面积比解释（不是新日更）
+
+- 2026-10-10 21:14:29UTC（Asia/Shanghai10月11日05:14:29）实读正式课新增短推导：相似放大k倍，底和对应垂直高都乘k，因此½×底×高乘k²。原结论正确，此次补原因，不改核心图形/标题/首次发布日期，不计新篇。
+- 产品提交 `0122879633d3605c645fcc54dafe3f385da28db2`；220/220tests、lint/types/config/冻结build/Pagefind全过。独立数学975组射线/海伦公式复算及精确增量审阅通过；Dream Loop真实before→实现→桌面1180×757/500×757窄窗截图→独立文字布局复评通过，无须修正。375/390真机等仍未验。
+- 精确 [previewCI38086567511](https://github.com/crazycloudcc/ccblog/actions/runs/38086567511) success、[preview部署](https://vercel.com/chainboxapp/ccblog/HcxjTnSHioKPLqN8Njfpix9FSyuu) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA推进main；[生产CI38086763588](https://github.com/crazycloudcc/ccblog/actions/runs/38086763588) success、[生产部署](https://vercel.com/chainboxapp/ccblog/Esxq5udJgAb5WVwPomSqVbhthVW2) Ready/Production/crazycloud.cc/exactSHA实核。静态HTML/Markdown同步回归通过。
+- [需求、范围、Dream Loop和限制](experiments/area-scale-2026-10-11/README.md)。外部追问日期冲突未确认，不声称新热度或学习/流量增长。
