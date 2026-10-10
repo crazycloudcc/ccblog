@@ -29,12 +29,14 @@
 
 ## 每日新篇状态
 
-本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-10 00:50（Asia/Shanghai；2026-10-09 16:50 UTC）。
+本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-11 00:41（Asia/Shanghai；2026-10-10 16:41 UTC）。
 
 | 北京时间日期 | 主题 | 新篇状态 | 选题确认 | 文章 URL | 新文章提交 | 新文章验证 / 发布 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-10-08 | 未定 | 未发布，当日新篇目标未完成 | 七日候选及日期 / 顺序仍待审核 | 无 | 无 | 未进行新文章验收；无新文章上线 |
 | 2026-10-09 | 勾股定理：四块三角形，拼出平方和 | 已正式发布（当日唯一新篇） | 2026-10-09 11:49 用户明确授权启动及 preview 通过后发布；其余七日候选未据此逐项获批 | [正式文章](https://crazycloud.cc/learn/pythagorean-theorem) | 首版 cb67bdf；正式版 [ede3089962251dc5edf2e3c77c530289778f84dc](https://github.com/crazycloudcc/ccblog/commit/ede3089962251dc5edf2e3c77c530289778f84dc) | 198/198 测试、lint、TypeScript、配置、冻结源 build/Pagefind 全过；独立数学覆盖 19,796 帧。Dream Loop 第一轮 6/10 后修正，第二轮独立视觉 8/10；真实桌面及 500px 窄窗口、键盘、起终点/中点/两向极值通过。精确 [preview CI 37908460303](https://github.com/crazycloudcc/ccblog/actions/runs/37908460303) 与 [生产 CI 37909364377](https://github.com/crazycloudcc/ccblog/actions/runs/37909364377) success；[生产部署](https://vercel.com/chainboxapp/ccblog/44KfUjfFgq6orYgZe1gdXP5dZwpx) Ready / Production / 精确 SHA / crazycloud.cc 已核实。线上公式、canonical、日期例子和 MIT 署名正常，两条旧路由实测 HTTP 308 保留 query；[详情与限制](experiments/dream-loop-2026-10-09/README.md) |
+| 2026-10-10 | 二分答案：最早什么时候够用 | 已正式发布（当日唯一新篇） | 用户日更自主迭代授权 | [正式文章](https://crazycloud.cc/learn/binary-search-on-answer) | 4e6783ad9ca872bc643a92333eaa65f1e79419ec | 2026-10-09 16:49:53UTC首次正式可读；205tests，详见下方实际发布记录 |
+| 2026-10-11 | 相似三角形：路灯下，影长和距离怎样变化 | 已正式发布（当日唯一新篇） | 用户日更自主迭代授权，真实常青教学需求 | [正式文章](https://crazycloud.cc/learn/similar-triangles) | 36ca87a4ec6ea87b8a9f4951d6a39ffa2f685db3 | 2026-10-10 16:40:54UTC首次正式可读；219tests，独立数学/Dream Loop8.6，精确preview与生产CI/Ready通过；详见下方记录 |
 
 ## 2026-10-07 栏目迁移（不是新日更）
 
@@ -86,8 +88,11 @@
 - 产品提交 `ed6b1738b4b95ba9978e40fd297619a3dfd1aeb5`；210/210tests、lint/types/config/冻结build/Pagefind通过，独立数学及真实桌面/500px截图审阅无须修项。
 - [previewCI38054669077](https://github.com/crazycloudcc/ccblog/actions/runs/38054669077)、[生产CI38054849538](https://github.com/crazycloudcc/ccblog/actions/runs/38054849538) success；[生产部署](https://vercel.com/chainboxapp/ccblog/A2duDevDKuueHEnCh7e17x9pvPrc) Ready/Production/crazycloud.cc/精确SHA实读。[完整记录与限制](experiments/altitude-clarity-2026-10-10/README.md)。不计第二篇，不将常青应用线索称为热点或增长证据。
 
-## 2026-10-11 新文章启动记录
+## 2026-10-11 新文章实际发布
 
 - 按用户后续明确的每天新图解自主执行授权选题，不再等待旧七日计划逐项审核；旧候选仍仅参考，10月8日未完成事实不变。
 - 实际启动 2026-10-10 16:01:38 UTC / AsiaShanghai 2026-10-11 00:01:38，主题“相似三角形：路灯下，影长和距离怎样变化？”，计划URL `/learn/similar-triangles`。
-- 当前为实现与验收中，尚不记正式发布。新增两三角形对应与同中心缩放实验，不是前日勾股维护的重复；[来源、目标及门槛](experiments/similarity-2026-10-11/README.md)。最终提交、验证及首次生产可读时间待实核后补齐。
+- 首次实际确认正式页可读：2026-10-10 16:40:54 UTC / AsiaShanghai 2026-10-11 00:40:54。正式URL https://crazycloud.cc/learn/similar-triangles ，计入10月11日唯一新篇。新增两三角形对应与同中心缩放实验，不是前日勾股维护的重复。
+- 正式产品提交 `36ca87a4ec6ea87b8a9f4951d6a39ffa2f685db3`；219/219tests、lint/types/config/冻结build/Pagefind通过。独立数学90,951组参数、636,657动画状态、7,279,025断言通过，角标/局部放大追加复审通过；Dream Loop首轮7.6修正至最终8.6，真实1182×757桌面、502×757窄窗口截图独审通过。375/390、真机触屏、屏幕阅读器与实测FPS未验。
+- 精确 [previewCI38068314030](https://github.com/crazycloudcc/ccblog/actions/runs/38068314030) success，Vercel5R2TQUqHfDiW6Tc4bDwVRqGKEhLa Ready/Preview/dev.crazycloud.cc实核后，同SHA非强推更新main；精确 [生产CI38068516130](https://github.com/crazycloudcc/ccblog/actions/runs/38068516130) success，[生产部署](https://vercel.com/chainboxapp/ccblog/BUmS7JWUWJP5SzVYRB1nWqBEAX7a) Ready/Production/crazycloud.cc/exactSHA实核。正式交互x4→8、s2→4、q6→12、代码与canonical验证。
+- 勾股课仅同批增加相似课延伸链接并更新维护日期，不计另一新篇。原Notes、两个308及query规则未改；分类为实际几何内容，canonical/sitemap/Markdown/llms入口回归通过。[完整来源、审阅及限制](experiments/similarity-2026-10-11/README.md)。
