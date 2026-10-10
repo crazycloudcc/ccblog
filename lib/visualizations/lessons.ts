@@ -1,4 +1,36 @@
 export const lessons = {
+  "similar-triangles": {
+    notesSlug: null, category: "几何", difficulty: "入门", prerequisites: "三角形内角、比与简单方程", estimatedMinutes: 12,
+    title: "相似三角形（Similar Triangles）图解：路灯下，影长和距离怎样变化？",
+    published: "2026-10-11", updated: "2026-10-11", ogImage: "/images/learn/similar-triangles.png",
+    description: "从路灯、人和影尖组成的两个直角三角形出发，标出对应角与边，连续放大重合，推导影长公式；分清影长和影尖的位置。",
+    shortAnswer: "两个三角形有两组对应角相等，就由 AA 判定相似，对应边成比例。在本页的平地点光源模型中，灯高 H、身高 h、离灯距离 x、影长 s 满足 H/(x+s)=h/s，因此 s=hx/(H−h)。固定 H、h 时，s 与 x 成正比。",
+    conditions: "地面水平，灯和人竖直，灯是固定的理想点光源，身体简化为竖直线段；所有长度使用米。有限远端影尖要求 H>h>0 且 x>0。实验限制灯高 H 为4–10、身高 h 为1–3、离灯距离 x 为1–8，步长0.5；这保证两三角形非退化、数值有限。忽略物体宽度、光源大小、散射和半影。",
+    steps: [
+      "命名三个距离：x 从灯底量到脚，s 从脚量到影尖 T，q=x+s 从灯底量到影尖。大三角形的高为 H、底为 q；小三角形的高为 h、底为 s。",
+      "竖直线与水平地面垂直，所以两三角形各有一个直角；它们还共享影尖 T 处的锐角。两组对应角相等，由 AA 判定相似。",
+      "把对应边写成同一顺序：大高/小高=大底/小底，即 H/h=(x+s)/s；也可写 H/(x+s)=h/s。不能把大底边写成 x。",
+      "交叉相乘得 Hs=h(x+s)，整理为 (H−h)s=hx。由于 H>h，所以 s=hx/(H−h)，影尖位置 q=Hx/(H−h)。",
+      "例子：H=6、h=2、x=4，影长 s=2×4/(6−2)=2 m，影尖距灯底 q=4+2=6 m。把 x 改为8，s=4 m、q=12 m；H、h 不变时比例系数 s/x=1/2 不变。",
+      "以影尖 T 为中心，把小三角形放大 H/h 倍。脚映到灯底，头映到灯顶，T 保持不动，恰好覆盖大三角形。动画只是展示对应关系；一般结论来自 AA 相似与上述代数推导。"
+    ],
+    complexityLabel: "模型边界与计算",
+    complexity: "只在最后显示时取近似值，计算中保留精度。x=0 时 s=0 是这一模型从右侧趋近的极限，但三角形退化，不能在那里用 AA 图形作证。x>0 时，H=h 的头顶光线水平，H<h 时越过头顶的射线向上，都没有本模型所需的有限远端地面影尖；不能除以0或将负结果叫影长。太阳光通常近似平行光，属于另一个模型，不能套用离路灯距离的结论。",
+    mistakes: [
+      "混淆影长 s 与影尖位置 q=x+s。H=6、h=2、x=4 时它们分别是2 m和6 m，不是同一个数。",
+      "只因两个三角形都有直角就判相似：还需要第二组对应角相等，本例来自共同的影尖角。",
+      "两三角形分别满足勾股定理，但这里连接它们大小的关键是相似比例；不能只把 x、h、s 当作同一个直角三角形的三边。",
+      "影长与离灯距离成正比的前提是 H、h 固定。调灯高或身高会改变系数 h/(H−h)，不再是同一个正比例关系。",
+      "放大倍数是对应边长的比 H/h，面积比则是 (H/h)²；图中的半透明轮廓在变换，不是人真的变高。"
+    ],
+    references: [{label:"University of Waterloo CEMC：相似与全等、相似三角形课程",url:"https://courseware.cemc.uwaterloo.ca/46?gid=161"},{label:"Mr. Yang：Related Rates 课堂的影子比例提醒（本页只讲相似，不讲求导）",url:"https://mryangteacher.weebly.com/unit-4-related-rates--applications-part-1.html"}],
+    goals: ["由直角和共同角识别 AA 相似", "区分 x、s 和 x+s，并正确配对两组边", "观察缩放重合，解释固定条件下的正比例与模型边界"],
+    summary: "灯高6 m、身高2 m，人离灯4 m时影长2 m、影尖距灯6 m。固定两种高度，离灯距离翻倍为8 m，影长变4 m、影尖距灯12 m。",
+    invariant: "在平地、竖直、固定点光源且 H>h>0、x>0 的模型中，两三角形始终 AA 相似，H/h=(x+s)/s。以影尖为中心放大 H/h 倍，小三角形恰好覆盖大三角形。",
+    question: "灯高6 m、身高2 m，人离灯4 m。若只把离灯距离改为8 m，影长和影尖距灯底分别是多少？若只改变身高，原来的 s/x=1/2 还保持吗？",
+    answer: "影长4 m，影尖距灯底12 m。改变身高会改变 h/(H−h)，所以一般不再保持1/2；不能把三个距离混为一谈，也不能漏掉固定高度的条件。",
+  },
+
   "binary-search": {
     notesSlug: "binary-search",
     category: "算法",
@@ -92,7 +124,7 @@ export const lessons = {
     estimatedMinutes: 12,
     title: "勾股定理（Pythagorean Theorem）图解：四块三角形，拼出平方和",
     published: "2026-10-09",
-    updated: "2026-10-10",
+    updated: "2026-10-11",
     ogImage: "/images/learn/pythagorean-theorem.png",
     shortAnswer: "在平面直角三角形中，两条直角边长为 a、b，直角对面的斜边长为 c，则 a² + b² = c²。它说的是三个正方形的面积关系，不是两条边长相加等于第三条边长。",
     conditions: "a、b、c 都是正的长度，并使用同一单位。a、b 的夹角必须是 90°，c 才是斜边；不能仅凭图形看起来像直角就套公式。本页讨论平面欧氏几何中的非退化三角形。反过来，在一个三角形中，若最长边 c 满足 a² + b² = c²，则 c 对面的角是直角，这就是勾股定理的逆定理。",
@@ -137,6 +169,8 @@ export function getLesson(slug: string) {
 
 /** Optional learning extensions; not prerequisites or a new lesson. */
 export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "similar-triangles": { slug: "pythagorean-theorem", label: "相关实验：勾股定理与直角条件", explanation: "勾股定理联系一个直角三角形的三边；相似比例联系两个三角形的对应边。先辨认图形和已知条件，再选择关系。" },
+  "pythagorean-theorem": { slug: "similar-triangles", label: "继续探索：路灯下的相似三角形", explanation: "同样出现直角，求影长时还要连接两个三角形。通过对应角与对应边，理解为什么应先写相似比例。" },
   "longest-increasing-subsequence": {
     slug: "binary-search-on-answer", label: "继续探索：二分答案，寻找第一个可行时刻",
     explanation: "同样是找第一个 true，候选可以从 tails 的位置换成时间。注意：本课可能返回 end，表示没有满足条件的元素；二分答案课先证明 hi 可行，才在闭区间里收缩。不能把两者的区间边界与无解处理直接混用。",

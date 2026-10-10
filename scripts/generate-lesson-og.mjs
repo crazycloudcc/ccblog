@@ -11,7 +11,10 @@ for (const [slug, lesson] of Object.entries(lessons)) {
   const answer = slug === "binary-search-on-answer";
   const binary = slug === "binary-search";
   let diagram = "";
-  if (answer) {
+  if (slug === "similar-triangles") {
+    diagram = `<polygon points="130,230 130,490 390,490" fill="#164f48" stroke="#5eead4" stroke-width="3"/><polygon points="303.333,403.333 303.333,490 390,490" fill="#284a77" stroke="#8cbcff" stroke-width="3"/><path d="M90 490H440 M130 472H148V490 M303.333 478H315.333V490" fill="none" stroke="#c5d6e9" stroke-width="2"/>`;
+    diagram += text(70,365,"H=6",23)+text(320,441,"h=2",23)+text(205,527,"x=4",23)+text(325,527,"s=2",23)+text(580,300,"Same angles. Matching sides.",30,"#5eead4")+text(580,369,"H / (x+s) = h / s",36)+text(580,435,"s = hx / (H-h)",36,"#8cbcff");
+  } else if (answer) {
     diagram += `<path d="M100 480H1050 M100 480V215" stroke="#48647c" stroke-width="2" fill="none"/><path d="M100 480H200V438H300V407H400V360H500V324H600V284H700V246H820V216H1050" stroke="#5eead4" stroke-width="5" fill="none"/><path d="M100 284H1050" stroke="#f2b36f" stroke-width="2" stroke-dasharray="8 8"/><circle cx="600" cy="284" r="10" fill="#f2b36f"/>`;
     diagram += text(115,235,"target = 8",25,"#f2b36f") + text(620,276,"first true: 9s",30,"#f2b36f") + text(105,524,"2s / 3s / 7s machines",25) + text(750,524,"4 + 3 + 1 = 8",25,"#5eead4");
   } else if (slug === "pythagorean-theorem") {
@@ -42,7 +45,7 @@ for (const [slug, lesson] of Object.entries(lessons)) {
     });
     diagram += text(810,294,"minimum",25,"#5eead4") + text(810,332,"endings",25,"#5eead4") + text(810,414,"not the actual",23) + text(810,450,"subsequence",23);
   }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0c1625"/>${text(66,60,"CRAZYCLOUDCC / VISUAL LAB",19,"#5eead4")}${text(66,125,answer ? "Binary Search on Answer" : slug === "pythagorean-theorem" ? "Pythagorean Theorem" : binary?"Binary Search":"Longest Increasing Subsequence",binary?54:46,"#f1f6ff")}${text(66,167,answer ? "Search time. Test feasibility. Find the earliest answer." : slug === "pythagorean-theorem" ? "Same four triangles. Same frame. Equal remaining areas." : binary?"Find 9. Exclude mid. Shrink the window.":"LIS / Replace an ending, or extend the length.",24)}${diagram}${text(66,575,answer ? "Monotone predicate / first true / O(n log U)" : slug === "pythagorean-theorem" ? "Right triangle / a² + b² = c² / area-preserving dissection" : binary?"Sorted array / closed interval / O(log n)":"Strictly increasing / lower_bound / O(n log n)",24,"#5eead4")}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0c1625"/>${text(66,60,"CRAZYCLOUDCC / VISUAL LAB",19,"#5eead4")}${text(66,125,slug === "similar-triangles" ? "Similar Triangles" : answer ? "Binary Search on Answer" : slug === "pythagorean-theorem" ? "Pythagorean Theorem" : binary?"Binary Search":"Longest Increasing Subsequence",binary?54:46,"#f1f6ff")}${text(66,167,slug === "similar-triangles" ? "A point light, a person, and a shadow. Match before calculating." : answer ? "Search time. Test feasibility. Find the earliest answer." : slug === "pythagorean-theorem" ? "Same four triangles. Same frame. Equal remaining areas." : binary?"Find 9. Exclude mid. Shrink the window.":"LIS / Replace an ending, or extend the length.",24)}${diagram}${text(66,575,slug === "similar-triangles" ? "AA similarity / corresponding sides / fixed-height proportionality" : answer ? "Monotone predicate / first true / O(n log U)" : slug === "pythagorean-theorem" ? "Right triangle / a² + b² = c² / area-preserving dissection" : binary?"Sorted array / closed interval / O(log n)":"Strictly increasing / lower_bound / O(n log n)",24,"#5eead4")}</svg>`;
   const path = `public${lesson.ogImage}`;
   await mkdir(new URL("../public/images/learn/", import.meta.url), { recursive: true });
   await writeFile(path.replace(/\.png$/, ".svg"), svg);

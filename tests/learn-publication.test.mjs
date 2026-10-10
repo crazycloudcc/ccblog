@@ -89,7 +89,7 @@ test("learning extensions preserve first-true end semantics in HTML and Markdown
   assert.match(data.lessons["longest-increasing-subsequence"].steps.join(" "), /空 tails/);
   assert.equal(data.lessons["longest-increasing-subsequence"].published, "2026-10-07");
   assert.equal(data.lessons["pythagorean-theorem"].published, "2026-10-09");
-  assert.equal(Object.keys(data.lessons).length, 4);
+  assert.equal(Object.keys(data.lessons).length, 5);
 });
 
 test("integer triples are distinguished from general positive real right triangles", () => {
@@ -123,5 +123,5 @@ test("Pythagorean rounding guidance preserves exact intermediate values in both 
   assert.ok(8n * 1000n ** 2n < 2835n ** 2n);
   assert.equal(141n + 141n, 282n); // sum of the prematurely rounded hundredths
   assert.equal(l.published, "2026-10-09");
-  assert.equal(l.updated, "2026-10-10");
+  assert.equal(l.updated, "2026-10-11");
 });

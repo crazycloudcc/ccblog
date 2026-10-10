@@ -5,13 +5,17 @@ import s from "./learn.module.css";
 
 export const metadata = createPageMetadata({
   title: "图解实验室",
-  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案与勾股定理的面积拼补。",
+  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补与相似三角形。",
   path: "/learn",
   lang: "zh-CN",
 });
 
 function LessonPreview({ slug }: { slug: string }) {
   const binary = slug === "binary-search";
+  if (slug === "similar-triangles") return <svg viewBox="0 0 480 220" role="img" aria-label="灯高6、身高2、离灯4：相似三角形给出影长2">
+    <polygon points="110,30 110,180 260,180" fill="#c9ded6" stroke="#245b50" strokeWidth="2"/><polygon points="210,130 210,180 260,180" fill="#c9d7ee" stroke="#35598a" strokeWidth="2"/>
+    <path d="M80 180H390 M110 168H122V180 M210 170H220V180" fill="none" stroke="currentColor"/><text x="76" y="110" fill="currentColor" fontSize="17">H=6</text><text x="218" y="151" fill="#35598a" fontSize="15">h=2</text><text x="145" y="205" fill="currentColor" fontSize="15">x=4</text><text x="221" y="205" fill="#35598a" fontSize="15">s=2</text><text x="286" y="75" fill="#245b50" fontSize="21">对应角相等</text><text x="286" y="107" fill="#245b50" fontSize="18">对应边成比例</text>
+  </svg>;
   if (slug === "binary-search-on-answer") return <svg viewBox="0 0 480 220" role="img" aria-label="产量阶梯在9秒跨过8件需求线，找到第一个可行时刻">
     <path d="M40 180H440 M40 180V32" fill="none" stroke="currentColor" /><path d="M40 180H90V158H140V130H190V108H240V82H290V58H340V32H440" fill="none" stroke="#245b50" strokeWidth="4" />
     <path d="M40 82H440" stroke="#914a2e" strokeDasharray="6 5" /><circle cx="240" cy="82" r="8" fill="#914a2e"/><text x="252" y="77" fill="currentColor" fontSize="16">9秒：8件，首次够用</text><text x="40" y="208" fill="currentColor" fontSize="14">搜索时间 / 先证明单调，再缩小区间</text>

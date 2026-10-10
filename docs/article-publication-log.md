@@ -85,3 +85,9 @@
 - 2026-10-10 13:14UTC（Asia/Shanghai21:14）确认正式页新增说明：非直角三角形的原三边不能直接套用，但作高后可在形成的直角三角形中分别使用；垂足可能在延长线上，求解仍需足够已知条件。核心图形与首次发布日期不变。
 - 产品提交 `ed6b1738b4b95ba9978e40fd297619a3dfd1aeb5`；210/210tests、lint/types/config/冻结build/Pagefind通过，独立数学及真实桌面/500px截图审阅无须修项。
 - [previewCI38054669077](https://github.com/crazycloudcc/ccblog/actions/runs/38054669077)、[生产CI38054849538](https://github.com/crazycloudcc/ccblog/actions/runs/38054849538) success；[生产部署](https://vercel.com/chainboxapp/ccblog/A2duDevDKuueHEnCh7e17x9pvPrc) Ready/Production/crazycloud.cc/精确SHA实读。[完整记录与限制](experiments/altitude-clarity-2026-10-10/README.md)。不计第二篇，不将常青应用线索称为热点或增长证据。
+
+## 2026-10-11 新文章启动记录
+
+- 按用户后续明确的每天新图解自主执行授权选题，不再等待旧七日计划逐项审核；旧候选仍仅参考，10月8日未完成事实不变。
+- 实际启动 2026-10-10 16:01:38 UTC / AsiaShanghai 2026-10-11 00:01:38，主题“相似三角形：路灯下，影长和距离怎样变化？”，计划URL `/learn/similar-triangles`。
+- 当前为实现与验收中，尚不记正式发布。新增两三角形对应与同中心缩放实验，不是前日勾股维护的重复；[来源、目标及门槛](experiments/similarity-2026-10-11/README.md)。最终提交、验证及首次生产可读时间待实核后补齐。

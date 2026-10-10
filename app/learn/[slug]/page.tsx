@@ -1,3 +1,4 @@
+import { SimilarityExperience } from "@/components/visualizations/SimilarityExperience";
 import { AnswerSearchExperience } from "@/components/visualizations/AnswerSearchExperience";
 import { PythagoreanExperience } from "@/components/visualizations/PythagoreanExperience";
 import { BinarySearchExperience } from "@/components/visualizations/BinarySearchExperience";
@@ -25,6 +26,7 @@ export default async function VisualLessonPage({ params }: Props) {
   const lesson = getLesson(slug);
   if (!lesson) notFound();
   const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
+  if (slug === "similar-triangles") return <>{schema}<SimilarityExperience><LessonReading slug={slug} /></SimilarityExperience></>;
   if (slug === "binary-search-on-answer") return <>{schema}<AnswerSearchExperience><LessonReading slug={slug} /></AnswerSearchExperience></>;
   if (slug === "pythagorean-theorem") return <>{schema}<PythagoreanExperience><LessonReading slug={slug} /></PythagoreanExperience></>;
   if (slug === "binary-search") return <>{schema}<BinarySearchExperience><LessonReading slug={slug} /></BinarySearchExperience></>;
