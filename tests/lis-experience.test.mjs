@@ -299,3 +299,22 @@ test("LIS route retains server reading and shell, with reduced-motion and narrow
   assert.match(css, /\.unreadPoint\s*\{[^}]*stroke: var\(--theme-slate\)/);
   assert.match(css, /\.hollowKey\s*\{[^}]*border: 1px solid var\(--theme-slate\)/);
 });
+
+test("prediction guidance stays beside controls through reset, replacement, append and rule changes", () => {
+  const ui = setup();
+  const guidance = () => {
+    const controls = ui.find("div", (node) => node.props["aria-label"] === "单步控制");
+    assert.equal(controls.props.role, "group");
+    const hint = ui.find("p", (node) => node.props.id === controls.props["aria-describedby"]);
+    assert.match(text(hint), /先预测，再验证.*先点重置.*待读值.*替换 tails 的哪一项.*追加到末尾.*下一步.*长度不变或增加 1/);
+    assert.equal(hint.props.hidden, undefined);
+  };
+  guidance(); ui.click("重置"); guidance();
+  for (let i = 0; i < 3; i++) ui.click("下一步");
+  assert.match(ui.status(), /长度变为 3/);
+  ui.click("下一步"); guidance();
+  assert.match(ui.status(), /用 1 替换 3.*长度仍是 3/);
+  ui.end(); guidance(); assert.match(ui.status(), /长度变为 4/);
+  ui.apply("2, 2, 2"); ui.end(); guidance(); assert.match(ui.status(), /长度仍是 1/);
+  ui.select(1, true); ui.end(); guidance(); assert.match(ui.status(), /长度变为 3/);
+});

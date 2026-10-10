@@ -119,7 +119,8 @@ export function LisExperience({ children }: { children?: ReactNode }) {
       <h1 data-pagefind-meta="title">最长递增子序列 <span>LIS</span></h1>
       <p>让最小结尾，一步步生长</p>
     </header>
-    <div className={s.controls} aria-label="单步控制">
+    <p className={s.predictionHint} id={`${id}-prediction`}><strong>先预测，再验证：</strong>先点重置。每次读入前，判断待读值会替换 tails 的哪一项，还是追加到末尾；点“下一步”对照，并说明为什么长度不变或增加 1。</p>
+    <div className={s.controls} role="group" aria-label="单步控制" aria-describedby={`${id}-prediction`}>
       <button type="button" disabled={step === 0} onClick={() => setStep((current) => Math.max(0, current - 1))}>上一步</button>
       <button type="button" className={s.primary} disabled={step === values.length} onClick={() => setStep((current) => Math.min(values.length, current + 1))}>下一步</button>
       <button type="button" onClick={() => setStep(0)}>重置</button>
