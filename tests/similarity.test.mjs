@@ -25,7 +25,7 @@ test('initial lesson UI server-renders real SVG geometry, controls and synchroni
  const deps={'react':React,'react/jsx-runtime':jsx,'next/link':{default:({children,...props})=>React.createElement('a',props,children)},'@/lib/visualizations/similar-triangles':model,'./SimilarityExperience.module.css':{default:{}}};
  new Function('exports','require',source)(out,id=>{assert.ok(id in deps,id);return deps[id];});
  const html=renderToStaticMarkup(React.createElement(out.SimilarityExperience,null,React.createElement('p',null,'静态阅读插槽')));
- assert.equal((html.match(/<svg /g)||[]).length,2);assert.equal((html.match(/type="range"/g)||[]).length,4);assert.ok(html.includes('const H = 6, h = 2, x = 4;'));assert.ok(html.includes('静态阅读插槽'));assert.ok(html.includes('影尖 T'));assert.ok(html.includes('AA 相似'));assert.ok(html.includes('disabled')===false);
+ assert.equal((html.match(/<svg /g)||[]).length,2);assert.equal((html.match(/type="range"/g)||[]).length,4);assert.ok(html.includes('const H = 6, h = 2, x = 4;'));assert.ok(html.includes('静态阅读插槽'));assert.ok(html.includes('影尖 T'));assert.ok(html.includes('AA 相似'));assert.ok(html.includes('H / (x+s) = h / s'));assert.ok(html.includes('s = hx / (H−h)'));assert.ok(html.includes('disabled')===false);
 });
 test('screen projections preserve equal horizontal and vertical units and fit extrema',()=>{
  for(const H of [4,6,10])for(const h of [1,2,3])for(const x of [1,4,8]){
