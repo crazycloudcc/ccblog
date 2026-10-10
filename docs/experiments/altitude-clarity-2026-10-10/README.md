@@ -13,3 +13,12 @@ AetherViz Master / Dream Loop 既有 MIT 许可已读取并保留。实现仅追
 Dream Loop：目标是在已有60°反例后加入短解释，保持直接可读静态答案与图形主舞台。独立数学/范围预审确认锐、钝及外垂足表述。实现后运行完整检查，并尽可用真实 preview 画面独审；具体结果待验，不提前声明通过。
 
 发布前本地检查：210/210 tests、lint、TypeScript、配置、冻结源 Next webpack build/Pagefind 均 exit0；构建HTML包含新说明及原canonical。独立最终数学/文本审阅无需修项；新增坐标回归覆盖锐角内垂足、钝角内垂足、两侧外垂足及靠近端点但非退化情况。实际09UTC发布后的dev页面本轮可正常读取，已保存维护前截图。真实preview修改后画面及部署结果仍待验。
+
+## Dream Loop 结果与发布
+
+- 产品提交：`ed6b1738b4b95ba9978e40fd297619a3dfd1aeb5`。预览[CI38054669077](https://github.com/crazycloudcc/ccblog/actions/runs/38054669077) success；[预览部署](https://vercel.com/chainboxapp/ccblog/ADKKDURHLUxDa4n8ra2NQB4BWw8F)13:11UTC实读Ready/Preview/dev.crazycloud.cc/精确SHA。
+- 实际桌面1180×757及500×757窄窗口截图，独立评审均无文字重叠、截断、横向越界或相邻条目冲突；新说明可读，正常换行。窗口随后恢复。未改图形，未把坐标测试说成新作高交互。
+- 独审无须修正后，以同SHA非强推更新main。[生产CI38054849538](https://github.com/crazycloudcc/ccblog/actions/runs/38054849538) success；[生产部署](https://vercel.com/chainboxapp/ccblog/A2duDevDKuueHEnCh7e17x9pvPrc)13:14UTC实际Ready/Production/crazycloud.cc/精确SHA；正式页新增说明、已知条件限制、canonical均已读取确认。
+- 真实375/390宽度、手机触屏、屏幕阅读器、暗色视觉未验。当前ccblog豁免不替代这些验收；没有学习效果、收录或流量增长结论。
+
+截图：[维护前](baseline.png)、[桌面](final-desktop.png)、[500px窄窗](final-narrow.png)。[独立审阅](independent-review.md)。本次不计新文章，ShanghaiOct10唯一新篇仍是二分答案。

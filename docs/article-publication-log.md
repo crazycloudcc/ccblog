@@ -79,3 +79,9 @@
 - 产品提交 `2207565ff0d715a3c42ca876dd54f72b6bbd0ad9`；209/209 tests、lint/types/config/冻结 build/Pagefind 通过；独立数学另验 44,922 前缀，Dream Loop 桌面/500px 真实截图独审通过。
 - [preview CI](https://github.com/crazycloudcc/ccblog/actions/runs/38040304413) 与 [生产 CI](https://github.com/crazycloudcc/ccblog/actions/runs/38040484513) success；[生产部署](https://vercel.com/chainboxapp/ccblog/EKYSi4UG9qCS9cDyTmZi5w5euk8x) Ready / Production / crazycloud.cc / 精确 SHA 已实读。
 - [完整记录与截图](experiments/lis-prediction-2026-10-10/README.md)。不计第二篇，不声称真机、屏幕阅读器或学习效果验收。
+
+## 2026-10-10 勾股作高应用澄清（不是新日更）
+
+- 2026-10-10 13:14UTC（Asia/Shanghai21:14）确认正式页新增说明：非直角三角形的原三边不能直接套用，但作高后可在形成的直角三角形中分别使用；垂足可能在延长线上，求解仍需足够已知条件。核心图形与首次发布日期不变。
+- 产品提交 `ed6b1738b4b95ba9978e40fd297619a3dfd1aeb5`；210/210tests、lint/types/config/冻结build/Pagefind通过，独立数学及真实桌面/500px截图审阅无须修项。
+- [previewCI38054669077](https://github.com/crazycloudcc/ccblog/actions/runs/38054669077)、[生产CI38054849538](https://github.com/crazycloudcc/ccblog/actions/runs/38054849538) success；[生产部署](https://vercel.com/chainboxapp/ccblog/A2duDevDKuueHEnCh7e17x9pvPrc) Ready/Production/crazycloud.cc/精确SHA实读。[完整记录与限制](experiments/altitude-clarity-2026-10-10/README.md)。不计第二篇，不将常青应用线索称为热点或增长证据。
