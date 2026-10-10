@@ -17,3 +17,22 @@
 
 ## 验证限制
 云端浏览器截图若成功只代表对应桌面与窄窗口；不等于真机触屏、屏幕阅读器或学习效果验收。
+
+## 已完成验证与发布
+
+- 产品提交：`2207565ff0d715a3c42ca876dd54f72b6bbd0ad9`。本次是既有 LIS 的教学引导维护，10 月 10 日唯一新文章仍是二分答案。
+- 最终 209/209 tests、ESLint、TypeScript、配置检查、冻结源码 Next.js webpack build（40 路由）及 Pagefind（17 页）通过。新增提示回归覆盖重置、替换、追加、重复值和两种递增规则；未修改算法。
+- 独立数学审阅：既有子集枚举回归通过；另用 5 值字母表、长度 0–5 的 3906 个数组，在严格和非下降两模式下核对 44,922 个前缀，全部正确，每步长度变化为 0 或 1。
+- 独立可访问性建议已修正：单步控制补 `role="group"`，并验证提示的 `aria-describedby` 关联。修正后重新完成全部相关检查。不是屏幕阅读器实测声明。
+- Dream Loop 最终截图独审通过：桌面提示单行，500px 窄窗口换成两行，没有溢出或遮挡控制，图形保持主舞台。真实重置后单步到第 4 步，显示 3→1、tails=[1,5,7]、长度仍为 3，与引导一致。
+- [精确 preview CI](https://github.com/crazycloudcc/ccblog/actions/runs/38040304413) success；[preview 部署](https://vercel.com/chainboxapp/ccblog/3ciUZBrwE9e2YBCg58Tg5DamEaB8) Ready / Preview / dev.crazycloud.cc / 精确 SHA 实读后，同一提交非强推推进 main。
+- [精确生产 CI](https://github.com/crazycloudcc/ccblog/actions/runs/38040484513) success；[生产部署](https://vercel.com/chainboxapp/ccblog/EKYSi4UG9qCS9cDyTmZi5w5euk8x) Ready / Production / crazycloud.cc / 精确 SHA 已实读。2026-10-10 09:13 UTC 确认[正式页面](https://crazycloud.cc/learn/longest-increasing-subsequence)出现新引导。
+- 控制句柄中断使一次构建回执未完成，已从持久日志定位并重新完成类型、构建与索引检查；没有将中间状态记作通过。
+
+## 真实截图
+
+- [原版基线](baseline.png)
+- [最终桌面](final-desktop.png)
+- [最终 500px 窄窗口](final-narrow.png)
+
+窄窗口截图不是 375/390px 或手机真机验收。未重复测试屏幕阅读器、触屏、暗色实际画面；静态对比度计算不能替代这些验收。没有采集或声称学习效果和流量提升。

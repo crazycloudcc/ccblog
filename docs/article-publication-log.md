@@ -72,3 +72,10 @@
 - 2026-10-10 03:09:44UTC（Asia/Shanghai11:09:44）确认生产Ready。共享常见误区补“中间保留精度，最后按要求取近似值”，单位正方形两对角线例子2√2→2.83，对照提前近似1.41+1.41→2.82；不判断外部题目答案。
 - 产品提交 `06ed4a240e4602b143d16acbd2dbbdbf2f13fe18`，208/208tests、lint/types/config/冻结build/Pagefind通过；BigInt精确舍入区间回归、独立数学与真实桌面/500px截图审阅通过。标题/首次发布日期/路由/图形算法未改，不计第二篇。
 - [previewCI38019258727](https://github.com/crazycloudcc/ccblog/actions/runs/38019258727)、[生产CI38019482807](https://github.com/crazycloudcc/ccblog/actions/runs/38019482807) success；[生产部署](https://vercel.com/chainboxapp/ccblog/89jgKisdEu2qwZLVKvh8VVMrxrH8) Ready / Production / crazycloud.cc / 精确SHA实读。[完整证据与限制](experiments/rounding-clarity-2026-10-10/README.md)。
+
+## 2026-10-10 LIS 单步预测引导（不是新日更）
+
+- 2026-10-10 09:13 UTC（Asia/Shanghai 17:13）确认正式页出现“先预测，再验证”提示：在单步前预测替换位置或追加，再对照并解释长度变化。共享静态答案继续直接可读，算法、核心图形及首次发布日期不变。
+- 产品提交 `2207565ff0d715a3c42ca876dd54f72b6bbd0ad9`；209/209 tests、lint/types/config/冻结 build/Pagefind 通过；独立数学另验 44,922 前缀，Dream Loop 桌面/500px 真实截图独审通过。
+- [preview CI](https://github.com/crazycloudcc/ccblog/actions/runs/38040304413) 与 [生产 CI](https://github.com/crazycloudcc/ccblog/actions/runs/38040484513) success；[生产部署](https://vercel.com/chainboxapp/ccblog/EKYSi4UG9qCS9cDyTmZi5w5euk8x) Ready / Production / crazycloud.cc / 精确 SHA 已实读。
+- [完整记录与截图](experiments/lis-prediction-2026-10-10/README.md)。不计第二篇，不声称真机、屏幕阅读器或学习效果验收。
