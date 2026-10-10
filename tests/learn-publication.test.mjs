@@ -101,3 +101,27 @@ test("integer triples are distinguished from general positive real right triangl
   assert.equal(10 ** 2 + 24 ** 2, 26 ** 2);
   assert.equal(1 ** 2 + 1 ** 2, 2);
 });
+
+
+test("Pythagorean rounding guidance preserves exact intermediate values in both reading forms", () => {
+  const slug = "pythagorean-theorem";
+  const l = data.lessons[slug];
+  const tip = l.mistakes.find(item => item.startsWith("过早取近似值"));
+  assert.ok(tip);
+  assert.match(tip, /要求精确值时就保留根式/);
+  assert.match(tip, /2√2.*2\.83.*1\.41.*2\.82/);
+  const html = renderToStaticMarkup(createElement(component.LessonReading, { slug }));
+  const escaped = renderToStaticMarkup(createElement("span", null, tip)).slice(6, -7);
+  assert.ok(html.includes(escaped));
+  assert.ok(renderLessonMarkdown(slug).includes(tip));
+  // Exact integer inequalities certify the rounding bins, without trusting a float sqrt.
+  // 1.405 < sqrt(2) < 1.415, so one diagonal rounds to 1.41.
+  assert.ok(1405n ** 2n < 2n * 1000n ** 2n);
+  assert.ok(2n * 1000n ** 2n < 1415n ** 2n);
+  // 2.825 < sqrt(8) = 2sqrt(2) < 2.835, so the total rounds to 2.83.
+  assert.ok(2825n ** 2n < 8n * 1000n ** 2n);
+  assert.ok(8n * 1000n ** 2n < 2835n ** 2n);
+  assert.equal(141n + 141n, 282n); // sum of the prematurely rounded hundredths
+  assert.equal(l.published, "2026-10-09");
+  assert.equal(l.updated, "2026-10-10");
+});
