@@ -59,6 +59,6 @@ export function SimilarityExperience({children}: {children?:ReactNode}) {
     <section className={s.conclusion} aria-live="polite"><h2>{captions[phase]}</h2><p className={s.equation}>{phase===0?'直角相等 + 共同角 → AA 相似':phase===1?'H / h = (x + s) / s':'s = hx / (H − h)'}</p><p>{phase===0?'两个三角形在地面处都是直角，共享影尖处的锐角。相似是根据角度判定，不是因为看起来像。':phase===1?'小三角形的身高 h 对应灯高 H；小底边 s 对应大底边 x+s，而不是离灯距离 x。':`Hs = h(x+s) → (H−h)s = hx。代入：${h} × ${x} / (${H} − ${h}) ${measure(m.s)} m。`}</p><p><strong>固定 H、h 时：s / x = h / (H−h) {measure(m.coefficient)}。</strong>只把 x 翻倍，s 也翻倍；改变 H 或 h，就换了比例系数。</p></section>
     <section className={s.code}><div><h2>跟着图计算</h2><p>数值使用米；x 是人离灯距离，q 是影尖离灯距离。代码只计算，不证明相似；当前实验范围保证差值和结果可表示。</p><p>当前：H={H}，h={h}，x={x}；s {measure(m.s)}，q {measure(m.q)}。</p></div><pre aria-label="与图形同步的 JavaScript 计算代码"><code>{`const H = ${H}, h = ${h}, x = ${x};\n`}{similarityCode.join('\n')}</code></pre></section>
     <details className={s.quiz}><summary>先预测：灯高 6 m、身高 2 m，人从 4 m 走到 8 m，影长和影尖距离各是多少？</summary><p>影长从 2 m 变成 4 m；影尖距灯底从 6 m 变成 12 m。两者不同，不能把影长当成影尖的位置。</p></details>
-    {children}<footer className={s.footer}><Link href="/learn">← 图解实验室</Link><p>教学结构参考 <a href="https://github.com/andyhuo520/aetherviz-master">AetherViz Master（MIT）</a>；本站原创 SVG 相似变换，无新增外部脚本。</p></footer>
+    {children}<footer className={s.footer}><Link href="/learn/radians">继续：弧度与同角度的圆弧比例 →</Link> · <Link href="/learn">← 图解实验室</Link><p>教学结构参考 <a href="https://github.com/andyhuo520/aetherviz-master">AetherViz Master（MIT）</a>；本站原创 SVG 相似变换，无新增外部脚本。</p></footer>
   </article>;
 }

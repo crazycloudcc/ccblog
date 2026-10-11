@@ -5,13 +5,14 @@ import s from "./learn.module.css";
 
 export const metadata = createPageMetadata({
   title: "图解实验室",
-  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补与相似三角形。",
+  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补、相似三角形与弧度。",
   path: "/learn",
   lang: "zh-CN",
 });
 
 function LessonPreview({ slug }: { slug: string }) {
   const binary = slug === "binary-search";
+  if (slug === "radians") return <svg viewBox="0 0 480 220" role="img" aria-label="直角弧度π/2，弧长除以半径保持不变"><circle cx="110" cy="110" r="70" fill="none" stroke="#bac8c3" strokeWidth="2"/><path d="M180 110A70 70 0 0 0 110 40" fill="none" stroke="#245b50" strokeWidth="5"/><path d="M110 40V110H180" fill="none" stroke="#914a2e" strokeWidth="2"/><path d="M250 160H360" stroke="#245b50" strokeWidth="5"/><text x="250" y="80" fontSize="28" fill="#245b50">θ = s / r</text><text x="230" y="115" fontSize="16" fill="currentColor">弧长里有几个半径？</text><text x="250" y="193" fontSize="16" fill="currentColor">展开同一段弧</text></svg>;
   if (slug === "similar-triangles") return <svg viewBox="0 0 480 220" role="img" aria-label="灯高6、身高2、离灯4：相似三角形给出影长2">
     <polygon points="110,30 110,180 260,180" fill="#c9ded6" stroke="#245b50" strokeWidth="2"/><polygon points="210,130 210,180 260,180" fill="#c9d7ee" stroke="#35598a" strokeWidth="2"/>
     <path d="M80 180H390 M110 168H122V180 M210 170H220V180" fill="none" stroke="currentColor"/><text x="76" y="110" fill="currentColor" fontSize="17">H=6</text><text x="218" y="151" fill="#35598a" fontSize="15">h=2</text><text x="145" y="205" fill="currentColor" fontSize="15">x=4</text><text x="221" y="205" fill="#35598a" fontSize="15">s=2</text><text x="286" y="75" fill="#245b50" fontSize="21">对应角相等</text><text x="286" y="107" fill="#245b50" fontSize="18">对应边成比例</text>

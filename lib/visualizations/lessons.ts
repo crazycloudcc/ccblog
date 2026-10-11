@@ -1,4 +1,31 @@
 export const lessons = {
+  "radians": {
+    notesSlug: null, category: "几何", difficulty: "入门", prerequisites: "圆周长、比例与角度", estimatedMinutes: 10,
+    title: "弧度（Radians）图解：一段弧，有几个半径长？",
+    published: "2026-10-12", updated: "2026-10-12", ogImage: "/images/learn/radians.png",
+    description: "改变圆的半径与圆心角，把同一段弧连续展开成直线；用弧长与半径的比值理解弧度，分清单位圆上的数值相同与物理量不同。",
+    shortAnswer: "弧度用弧长与半径的比值度量圆心角：θ=s/r，所以 s=rθ。这里 θ 必须用弧度表示。固定角度时，圆放大几倍，弧长与半径都放大几倍，比值不变。单位圆半径的数值为1，因此弧长与弧度的数值相同，但长度和角度仍是不同的量。",
+    conditions: "本页只取从右侧起始半径逆时针转过的单圈角，0≤θ≤2π，对应0–360°。半径 r>0，r和s必须使用同一长度单位。实验采用厘米，r为0.5–2 cm；只在显示时保留近似值。负角、多圈和有向弧长不在本课范围内。",
+    steps: ["先取一个圆心角，量出它选中的弧长 s 和圆半径 r。弧度值定义为 s/r；若弧长恰好等于一个半径，圆心角就是1 rad。",
+      "保持角度不变，把圆半径放大到原来的两倍。相似缩放使对应弧长也变为两倍，于是 (2s)/(2r)=s/r，角度的弧度值不变。",
+      "一整圈弧长为2πr，所以整圈角为2πr/r=2π rad，对应360°；半圈是π rad，直角是π/2 rad。1 rad约等于57.296°，不是1°。",
+      "初始例 r=1 cm、角90°：θ=π/2 rad，s=rθ=π/2 cm，约1.571 cm。此时长度和角度数值相同，单位与含义仍不同。",
+      "只把半径改为2 cm，角仍为90°：s=π cm，约3.142 cm；s/r=π/2，仍是同一个角。这里不能把弧长π直接当作角的弧度值。",
+      "把选中的弧展开。画面用弧长参数与逐渐减小的曲率生成曲线，每一帧的解析长度都为rθ，最终直线长度也是rθ。折线采样只是屏幕近似，不把普通压扁图形当作保长证明。"],
+    complexityLabel: "定义、单位与边界",
+    complexity: "弧度值s/r是同单位长度之比，数值不随厘米或米的选择改变；rad用于标明这是角度。所谓单位圆是选定坐标长度单位后半径数值为1的圆。0°时弧退化为点、s=0；360°时起终点重合，但选中的是整条圆周，s=2πr，不是0。半径0不允许，因为比值无法定义。代码用浮点近似，展示四舍五入不改变定义。",
+    mistakes: ["把弧度当作弧长：s有长度单位，θ=s/r是角的弧度值；只有半径数值为1时二者数值才相同。",
+      "把90直接代入s=rθ：90°必须先换为π/2 rad；否则得到的不是这段弧长。",
+      "把弦长当作弧长：连接两端的直线是弦，不是沿圆周走过的弧。展开动画改变整条曲线的弯曲程度，不是用端点连线替换圆弧。",
+      "看起终点重合就判断为0：本课单圈约定里0°和360°是两个不同状态，后者走过完整一圈。",
+      "把屏幕缩放当作半径变化：显示区域缩放会改变像素长度，不改变标注的厘米与角度；实验调半径才改变r。"],
+    references: [{label:"MIT OpenCourseWare 18.01SC（Fall2010）：弧长、弧度与单位圆问答",url:"https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/fbda3f72a5192d956ee948b351839f06_MIT18_01SCF10_Ses8c.pdf"},{label:"OpenStax：Angles，弧度与弧长",url:"https://openstax.org/books/algebra-and-trigonometry-2e/pages/7-1-angles"}],
+    goals: ["用弧长除以半径解释弧度", "预测固定角度时半径改变对弧长的影响", "分清弧长、弦长、角度及单位圆数值特例"],
+    summary: "90°=π/2 rad；半径1 cm时弧长π/2 cm，半径2 cm时弧长π cm。半径和弧长一起翻倍，s/r仍是π/2。",
+    invariant: "固定圆心角时，弧长s与半径r按同一比例缩放，θ=s/r保持不变；展开过程中同一段曲线的解析长度始终为rθ。",
+    question: "半径2 cm的圆，弧长为2 cm时角有多少弧度？半径改成1 cm而角不变，弧长是多少？整圈起终点相同是否表示弧长0？",
+    answer: "θ=s/r=1 rad，约57.296°。半径变1 cm后弧长为1 cm，角仍为1 rad。整圈弧长为2πr；起终点相同并不等于没有走过圆周。",
+  },
   "similar-triangles": {
     notesSlug: null, category: "几何", difficulty: "入门", prerequisites: "三角形内角、比与简单方程", estimatedMinutes: 12,
     title: "相似三角形（Similar Triangles）图解：路灯下，影长和距离怎样变化？",
@@ -171,6 +198,7 @@ export function getLesson(slug: string) {
 
 /** Optional learning extensions; not prerequisites or a new lesson. */
 export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "radians": { slug: "similar-triangles", label: "前置：相似与比例", explanation: "相似缩放让长度按同一倍数变化。把这条规律用于同角度的圆弧，就能看见弧长与半径之比不变。" },
   "similar-triangles": { slug: "pythagorean-theorem", label: "相关实验：勾股定理与直角条件", explanation: "勾股定理联系一个直角三角形的三边；相似比例联系两个三角形的对应边。先辨认图形和已知条件，再选择关系。" },
   "pythagorean-theorem": { slug: "similar-triangles", label: "继续探索：路灯下的相似三角形", explanation: "同样出现直角，求影长时还要连接两个三角形。通过对应角与对应边，理解为什么应先写相似比例。" },
   "longest-increasing-subsequence": {

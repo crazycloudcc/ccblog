@@ -110,3 +110,9 @@
 - 产品提交 `194a93143b71ca8733259a7b4212beeb115c6c44`；221/221tests、lint/types/config/冻结build/Pagefind通过。独立最终文本/数学审阅、8/8定向回归及C++20 UBSan边界穷举通过。Dream Loop实际before、实现、1180×757桌面/500×757窄窗截图独审通过，无须修正；375/390真机等未验。
 - 精确 [previewCI38142480734](https://github.com/crazycloudcc/ccblog/actions/runs/38142480734) success，[preview部署](https://vercel.com/chainboxapp/ccblog/CmMCCiP1xyxK4CfnwDSquLS9E12Q) Ready/Preview/dev.crazycloud.cc实核后，同SHA非强推main；[生产CI38142726379](https://github.com/crazycloudcc/ccblog/actions/runs/38142726379) success，[生产部署](https://vercel.com/chainboxapp/ccblog/2xEdKbHJkUFE5upPRLRiGWwTa1Wf) Ready/Production/crazycloud.cc/exactSHA及正式FAQ/canonical实核。
 - [需求来源、完整验收和边界代码](experiments/integer-range-faq-2026-10-11/README.md)。原问题日期2021-06-10，是常青需求，不称实时热度或流量成果。
+
+## 2026-10-12 新篇启动：弧度（待发布）
+
+- 实际启动2026-10-11 16:01UTC / AsiaShanghai10月12日00:01，唯一新主题 `/learn/radians`：“弧度：一段弧，有几个半径长？”依据已核原始常青学习疑问选题，不称实时热度。
+- 范围为可变半径、θ=s/r、单位圆数值特例与保长弧展开；当前仍在实现/验收，不能算正式发布。全套检查、独立数学与真实可用截图评审、精确preview后main部署验核后补回执。
+- [目标、来源、保长公式、初轮修正及限制](experiments/radians-2026-10-12/README.md)。
