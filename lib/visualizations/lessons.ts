@@ -83,7 +83,7 @@ export const lessons = {
     notesSlug: null,
     category: "算法", difficulty: "进阶", prerequisites: "二分查找、整数除法、单调性", estimatedMinutes: 15,
     title: "二分答案（Binary Search on Answer）图解：最早什么时候够用？",
-    published: "2026-10-10", updated: "2026-10-10", ogImage: "/images/learn/binary-search-on-answer.png",
+    published: "2026-10-10", updated: "2026-10-11", ogImage: "/images/learn/binary-search-on-answer.png",
     shortAnswer: "二分答案把优化问题改成判定问题：不直接猜最优答案，而是问某个候选值是否可行。如果真假结果只有一次分界，就能每次排除一半候选范围，找到第一个可行值。这里搜索的是完成需求的最早整数秒数，不是数组里某个值的下标。",
     conditions: "机器从 0 秒同时开始、互不干扰，每台生产一件需要固定的正整数秒；只计算完整产品。需求是非负整数，机器至少一台。实验限制 1–4 台、每台 1–12 秒、需求 0–24 件，确保 JavaScript 整数精确且图形可读。一般算法不受此图形范围限制，但必须重新验证整数上界与溢出。",
     steps: [
@@ -102,12 +102,14 @@ export const lessons = {
       "把这里的 hi=mid 与原二分查找的 hi=mid-1 混用。查第一个 true 与查相等元素维护的目标不同；循环条件、区间含义和更新必须成套。",
       "没有证明单调性就套模板。[F,T,F,F,T,T,T,T] 在中点看到 F 并不能排除左边的 T。",
       "把尚未做完的产品算成件数，或让动画插值改变算法状态。产量用向下取整；画面可连续变化，但二分只检查整数秒。",
-      "直接累加所有机器在大上界下的产量可能溢出。判定只需要知道是否够用，可在达到目标前提前返回；零耗时会除零，必须拒绝。"
+      "直接累加所有机器在大上界下的产量可能溢出。判定只需要知道是否够用，可在达到目标前提前返回；零耗时会除零，必须拒绝。",
+      "没有真实数组，也能用标准库：C++20 的 std::views::iota(0LL, U + 1LL) 表示候选整数 [0,U]，无需预存数组；这里 U 为 long long，且 0≤U≤10¹⁸。std::ranges::partition_point 要求谓词先 true 后 false（两段均可为空），所以本课传入 !enough(t)。先判断返回迭代器是否等于 end：相等表示该候选区间内无解，否则才把 *it 用作答案。仍须证明单调性、避免判定溢出，并确保排他上界 U+1 可表示。本课显式写循环是为了展示区间不变量。"
     ],
     references: [
       { label: "CP-Algorithms：单调谓词与二分答案", url: "https://cp-algorithms.com/num_methods/binary_search.html#search-on-arbitrary-predicate" },
       { label: "USACO Guide：Binary Search on Monotonic Functions", url: "https://usaco.guide/silver/binary-search" },
-      { label: "CSES：Factory Machines（并行生产问题；本站另设教学示例）", url: "https://cses.fi/problemset/task/1620/" }
+      { label: "CSES：Factory Machines（并行生产问题；本站另设教学示例）", url: "https://cses.fi/problemset/task/1620/" },
+      { label: "AtCoder 官方题解：C++20 iota 与 partition_point", url: "https://atcoder.jp/contests/abc319/editorial/7115" }
     ],
     description: "拖动时间，看并行机器完成产品、产量阶梯跨过需求线；再让二分窗口逼近第一个可行时刻，理解为什么先证明单调性。",
     goals: ["区分搜索空间、判定函数与最优答案", "从生产过程证明真假分界的单调性", "解释为什么可行时保留 mid，不可行时跳过 mid"],

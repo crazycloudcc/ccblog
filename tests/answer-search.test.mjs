@@ -56,3 +56,16 @@ test('real React SSR exposes SVG math and literal C++ line breaks', async()=>{
  assert.ok(css.includes('white-space:pre-wrap'), 'core code wraps instead of clipping');
  assert.match(css,/\.code i\{[^}]*text-indent:0/, 'line numbers do not inherit hanging indent');
 });
+
+test('virtual integer range FAQ preserves predicate direction and safe end handling', async()=>{
+ const {lessons}=await jiti.import('../lib/visualizations/lessons.ts');
+ const lesson=lessons['binary-search-on-answer'];
+ const faq=lesson.mistakes.find(x=>x.includes('std::views::iota'));
+ assert.ok(faq);
+ for(const text of ['C++20','iota(0LL, U + 1LL)','long long','0≤U≤10¹⁸','先 true 后 false','两段均可为空','!enough(t)','是否等于 end','区间内无解','否则才把 *it','排他上界 U+1','区间不变量'])assert.ok(faq.includes(text),text);
+ assert.equal(lesson.published,'2026-10-10');
+ assert.equal(lesson.updated,'2026-10-11');
+ assert.ok(lesson.references.some(x=>x.url==='https://atcoder.jp/contests/abc319/editorial/7115'));
+ const reader=readFileSync(new URL('../components/visualizations/LessonReading.tsx',import.meta.url),'utf8');
+ assert.ok(reader.includes('lesson.mistakes.map'));
+});
