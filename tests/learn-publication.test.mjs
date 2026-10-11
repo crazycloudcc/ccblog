@@ -125,3 +125,17 @@ test("Pythagorean rounding guidance preserves exact intermediate values in both 
   assert.equal(l.published, "2026-10-09");
   assert.equal(l.updated, "2026-10-11");
 });
+
+test("LIS reference directly reaches the official migrated article in HTML and Markdown", () => {
+  const slug = "longest-increasing-subsequence";
+  const url = "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html";
+  const old = "https://cp-algorithms.com/sequences/longest_increasing_subsequence.html";
+  assert.equal(data.lessons[slug].references[0].url, url);
+  const html = renderToStaticMarkup(createElement(component.LessonReading, { slug }));
+  assert.ok(html.includes(`href="${url}"`));
+  assert.ok(renderLessonMarkdown(slug).includes(url));
+  assert.ok(!html.includes(old));
+  assert.ok(!renderLessonMarkdown(slug).includes(old));
+  assert.equal(data.lessons[slug].published, "2026-10-07");
+  assert.equal(data.lessons[slug].updated, "2026-10-10");
+});

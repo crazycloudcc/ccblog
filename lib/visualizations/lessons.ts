@@ -98,7 +98,7 @@ export const lessons = {
     complexityLabel: "复杂度",
     complexity: "用随机访问数组保存 tails，并用二分定位时，最坏时间 O(n log n)，额外空间 O(n)；空数组 O(1)。页面复制逐帧快照的开销不代表算法本身的空间复杂度。",
     mistakes: ["把 tails 当作答案序列：各格可能来自不同子序列，恢复具体答案需要额外记录前驱。", "严格递增找第一个 ≥ x 的位置（lower_bound）；非下降找第一个 > x 的位置（upper_bound）。[2, 2, 2] 的两种答案分别是 1 和 3。", "子序列不要求连续。替换一个结尾不表示改动原数组，也不增加当前答案长度。"],
-    references: [{ label: "CP-Algorithms：Longest increasing subsequence", url: "https://cp-algorithms.com/sequences/longest_increasing_subsequence.html" }, { label: "C++ 工作草案：lower_bound / upper_bound", url: "https://eel.is/c++draft/alg.binary.search" }],
+    references: [{ label: "CP-Algorithms：Longest increasing subsequence", url: "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html" }, { label: "C++ 工作草案：lower_bound / upper_bound", url: "https://eel.is/c++draft/alg.binary.search" }],
     description: "一步一格观察 tails，切换严格递增与非下降，理解相等元素为何不能延长严格 LIS。",
     goals: ["理解 tails 每格对应的最小结尾", "对比 lower_bound 与 upper_bound", "解释 tails 不一定是一条真实子序列"],
     summary: "输入 [2, 2, 2]：严格递增时，每个 2 都落到第一个大于等于它的位置，tails 始终为 [2]，长度为 1；允许相等时，每个 2 都追加，非下降长度为 3。",
