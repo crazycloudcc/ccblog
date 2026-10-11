@@ -1,6 +1,6 @@
 # Radians: a length ratio, not an interchangeable physical quantity
 
-Started 2026-10-11 16:01UTC / Asia/Shanghai October12 00:01, after checking no October12 article had begun. Intended sole new daily lesson: /learn/radians. Previous October8 miss is not backfilled. Current release state: implementation and preview validation pending; this document does not claim publication.
+Started 2026-10-11 16:01UTC / Asia/Shanghai October12 00:01, after checking no October12 article had begun. Intended sole new daily lesson: /learn/radians. Previous October8 miss is not backfilled. Final release state: published and production-verified at2026-10-11 16:34:20UTC / ShanghaiOctober12 00:34:20. Earlier pending statements below are chronological stage records, superseded by the final receipt.
 
 ## Need and evidence
 
@@ -31,3 +31,22 @@ Independent final math/code reviewer:3,261,258sampledpoints passed, x=[14.4275,7
 Preview b7025f0a19562ad431441261f133d11bdabe98ef: GitHub CI38154791554 succeeded; Vercel H4eYiNVpJjvYdN5caYEXaPzX614L Ready/Preview/dev.crazycloud.cc exact SHA read at16:22UTC. Git trigger briefly delayed; no manual deployment or empty commit used. Actual browser screenshots and independent visual review rejected excessive blank space and separation of controls from the default90degree curve. Corrected compact heading/upper canvas and angle-only vertical crop of unfolding canvas: width760 and46SVGunits/cm unchanged, all radii/progress use one angle-specific envelope, so no radius-dependent zoom. Independent mathematical review checked19,798,323points including0/fullcircle/allprogress; curve top margin≥40SVGunits, upper circle/labels and lower ruler/text fit. New full tests229/229, lint/types/config/frozen-data webpack build/Pagefind passed after correction. Fresh actual screenshot re-review remains pending; main not advanced.
 
 Independent visual baseline score5/10 (composition0/3,color3/3,material2/3,details0/1). Its additional recommendation was implemented: opaque sticky playback toolbar and dedicated keyboard-focusable horizontal graph wrappers, instead of making the whole stage a scrolling ancestor. SVG overflow is clipped after all bounds were independently verified. These changes receive another complete automatic run before the new preview.
+
+## Final preview acceptance, 16:31UTC
+
+Final product SHA6522e3c1b16c3808a4017628260b7692b6d3ee00. After the toolbar fix,229/229tests,lint,TypeScript,config,frozen-data webpack build andPagefind all passed again. GitHub previewCI38155567843 success; Vercel EZWQARzYhdzZiHvszh2LQd3DuBxv Ready/Preview/dev.crazycloud.cc/exactSHA actually read. Independent real-image re-review8/10 (composition2/3,color3/3,material2/3,details1/1), no remaining visual blocker. The fixed-scale circle is smaller than the generated reference; no geometry distortion was introduced merely to match it.
+
+Actual cloud browser checks:1180×757desktop and500×757narrow window. Native step25%, radius1→2 with90degree angle retained, keyboard progressEnd, fullcircle intermediate50%, playback reaching100% then stopping, reset and angleHome→zero all verified. Narrow document client/scrollwidth500/500; graph wrappers412/600, actual focused ArrowRight changed scrollLeft to69, leaving toolbar and page fixed. Real narrow screenshots show controls/curve/ruler/text without page overflow. Reduced-motion and hidden-tab behavior covered by code review/automated checks, not changed in browser settings; physicalmobile,375/390,screen-reader andtouch remain unverified. Actual screenshots retained locally under ignored .dream-loop/after-v3-*.png; generated target remains a layout reference only.
+
+## Production receipt
+
+Same tested productSHA6522e3c1b16c3808a4017628260b7692b6d3ee00 advanced to existingmain with expected194a93143b71ca8733259a7b4212beeb115c6c44 andforce=false at16:31UTC. Git-triggered productionCI38155843685 success. Actual Vercel https://vercel.com/chainboxapp/ccblog/FZojoWgQjYrhHeFwr9PnEz5mEbY8 showed Ready,Production,crazycloud.cc,and exact productSHA. First actual production lesson read at2026-10-11T16:34:20.763Z; canonical https://crazycloud.cc/learn/radians,October12date,twoSVG and complete static lesson present. Actual production1radpreset thenr=2 gaveθ≈1rad,s≈2cm and synchronizedcode. The original20-itemdirtyworktree remained untouched. This counts one ShanghaiOctober12newarticle, not an extraOctober11article; October8miss remains. No traffic/ranking/learning-effect claim.
+
+Final actual screenshot SHA256 identifiers (local ignored captures, not generated target):
+ffccdedca614442c038d7f166f29f3b1c1e0484506d64758c348ceadd0bffa3d  .dream-loop/after-v3-default.png
+7e48bf90cc23ca9b62845cea41a3dd4913add92bf525c9cd383328bdf81c3f91  .dream-loop/after-v3-full-mid.png
+5b47cca777560d5a14470486a5c4f40f9e8871380a30c50b7dbd61ade995eef0  .dream-loop/after-v3-narrow-keyboard.png
+a91b63e8123119e7c92011abb3c107dfe457de1469f4b29847efaf20984a486c  .dream-loop/after-v3-narrow-stage.png
+6de101c2dd6dde18753eacb6f081776e7d52ab3ddd81dfe6f2dbd5e141099c18  .dream-loop/after-v3-narrow-top.png
+40a504155c1d862cc8fe044459e92530647e169bccccf63bb9fc958e79184aa7  .dream-loop/after-v3-quarter.png
+b73b1165af3098f770ad16b34db3442dbb5b2ada5bdb90aee08ef8c503b6508c  .dream-loop/after-v3-unrolled.png

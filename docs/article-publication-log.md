@@ -29,7 +29,7 @@
 
 ## 每日新篇状态
 
-本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-11 00:41（Asia/Shanghai；2026-10-10 16:41 UTC）。
+本节记录新文章的实际状态，不将文档记账、维护、现有页重做或视频成果计为新篇。状态核对时间：2026-10-12 00:34（Asia/Shanghai；2026-10-11 16:34 UTC）。
 
 | 北京时间日期 | 主题 | 新篇状态 | 选题确认 | 文章 URL | 新文章提交 | 新文章验证 / 发布 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -37,6 +37,7 @@
 | 2026-10-09 | 勾股定理：四块三角形，拼出平方和 | 已正式发布（当日唯一新篇） | 2026-10-09 11:49 用户明确授权启动及 preview 通过后发布；其余七日候选未据此逐项获批 | [正式文章](https://crazycloud.cc/learn/pythagorean-theorem) | 首版 cb67bdf；正式版 [ede3089962251dc5edf2e3c77c530289778f84dc](https://github.com/crazycloudcc/ccblog/commit/ede3089962251dc5edf2e3c77c530289778f84dc) | 198/198 测试、lint、TypeScript、配置、冻结源 build/Pagefind 全过；独立数学覆盖 19,796 帧。Dream Loop 第一轮 6/10 后修正，第二轮独立视觉 8/10；真实桌面及 500px 窄窗口、键盘、起终点/中点/两向极值通过。精确 [preview CI 37908460303](https://github.com/crazycloudcc/ccblog/actions/runs/37908460303) 与 [生产 CI 37909364377](https://github.com/crazycloudcc/ccblog/actions/runs/37909364377) success；[生产部署](https://vercel.com/chainboxapp/ccblog/44KfUjfFgq6orYgZe1gdXP5dZwpx) Ready / Production / 精确 SHA / crazycloud.cc 已核实。线上公式、canonical、日期例子和 MIT 署名正常，两条旧路由实测 HTTP 308 保留 query；[详情与限制](experiments/dream-loop-2026-10-09/README.md) |
 | 2026-10-10 | 二分答案：最早什么时候够用 | 已正式发布（当日唯一新篇） | 用户日更自主迭代授权 | [正式文章](https://crazycloud.cc/learn/binary-search-on-answer) | 4e6783ad9ca872bc643a92333eaa65f1e79419ec | 2026-10-09 16:49:53UTC首次正式可读；205tests，详见下方实际发布记录 |
 | 2026-10-11 | 相似三角形：路灯下，影长和距离怎样变化 | 已正式发布（当日唯一新篇） | 用户日更自主迭代授权，真实常青教学需求 | [正式文章](https://crazycloud.cc/learn/similar-triangles) | 36ca87a4ec6ea87b8a9f4951d6a39ffa2f685db3 | 2026-10-10 16:40:54UTC首次正式可读；219tests，独立数学/Dream Loop8.6，精确preview与生产CI/Ready通过；详见下方记录 |
+| 2026-10-12 | 弧度：一段弧，有几个半径长？ | 已正式发布（当日唯一新篇） | 用户日更自主执行授权；依据实际常青学习需求，不称热度 | https://crazycloud.cc/learn/radians | 6522e3c1b16c3808a4017628260b7692b6d3ee00 | 2026-10-11 16:34:20UTC首次确认正式可读；229tests，独立数学审阅及Dream Loop修正后8/10，精确preview和生产CI/Ready/域绑定通过 |
 
 ## 2026-10-07 栏目迁移（不是新日更）
 
@@ -111,8 +112,10 @@
 - 精确 [previewCI38142480734](https://github.com/crazycloudcc/ccblog/actions/runs/38142480734) success，[preview部署](https://vercel.com/chainboxapp/ccblog/CmMCCiP1xyxK4CfnwDSquLS9E12Q) Ready/Preview/dev.crazycloud.cc实核后，同SHA非强推main；[生产CI38142726379](https://github.com/crazycloudcc/ccblog/actions/runs/38142726379) success，[生产部署](https://vercel.com/chainboxapp/ccblog/2xEdKbHJkUFE5upPRLRiGWwTa1Wf) Ready/Production/crazycloud.cc/exactSHA及正式FAQ/canonical实核。
 - [需求来源、完整验收和边界代码](experiments/integer-range-faq-2026-10-11/README.md)。原问题日期2021-06-10，是常青需求，不称实时热度或流量成果。
 
-## 2026-10-12 新篇启动：弧度（待发布）
+## 2026-10-12 新文章实际发布：弧度
 
-- 实际启动2026-10-11 16:01UTC / AsiaShanghai10月12日00:01，唯一新主题 `/learn/radians`：“弧度：一段弧，有几个半径长？”依据已核原始常青学习疑问选题，不称实时热度。
-- 范围为可变半径、θ=s/r、单位圆数值特例与保长弧展开；当前仍在实现/验收，不能算正式发布。全套检查、独立数学与真实可用截图评审、精确preview后main部署验核后补回执。
-- [目标、来源、保长公式、初轮修正及限制](experiments/radians-2026-10-12/README.md)。
+- 实际启动2026-10-11 16:01UTC / Asia/Shanghai10月12日00:01；2026-10-11 16:34:20UTC / 上海00:34:20首次确认[正式文章](https://crazycloud.cc/learn/radians)可读，计10月12日唯一新篇。保留10月8日未完成记录。
+- 产品提交 `6522e3c1b16c3808a4017628260b7692b6d3ee00`，初版 `b7025f0a19562ad431441261f133d11bdabe98ef` 的实际截图暴露留白与控件距离问题，经裁切布局及固定操作栏修正后，229/229 tests、lint/types/config/冻结build/Pagefind全部重新通过。
+- 独立数学审阅验证每帧保长，裁切再查19,798,323点；Dream Loop目标/实现/实际截图/独审/修正完成，视觉复评8/10。真实1180×757桌面、500×757窄窗、单步/播放终点/重置/键盘/零角与整圈验证；375/390真机、触屏和屏幕阅读器未验，不冒称验收。
+- 精确[preview CI38155567843](https://github.com/crazycloudcc/ccblog/actions/runs/38155567843) success，[preview部署](https://vercel.com/chainboxapp/ccblog/EZWQARzYhdzZiHvszh2LQd3DuBxv) Ready/Preview/dev.crazycloud.cc/exactSHA通过后，同SHA非强推main；[生产CI38155843685](https://github.com/crazycloudcc/ccblog/actions/runs/38155843685) success，[生产部署](https://vercel.com/chainboxapp/ccblog/FZojoWgQjYrhHeFwr9PnEz5mEbY8) Ready/Production/crazycloud.cc/exactSHA及正式canonical、1rad/r=2/s=2cm交互实核。
+- [需求来源、公式、真实失败与修正、验收限制](experiments/radians-2026-10-12/README.md)。原始2019疑问与MIT2010/OpenStax资料是常青需求，不称实时热度、搜索量或流量成果。生成目标图只本地布局参考，不作实际验收图、不上传。
