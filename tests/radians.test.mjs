@@ -46,5 +46,13 @@ test('radians: complete animation fits fixed independent unroll viewport',()=>{
  for(let pi=0;pi<=1000;pi++)for(const [x,y] of unrolledPoints(2,TAU,pi/1000)){
   const px=140+46*x,py=460-46*y;assert.ok(px>=0&&px<=760,`x ${px}`);assert.ok(py>=30&&py<=460+1e-9,`y ${py}`);
  }
- const src=readFileSync(new URL('../components/visualizations/RadianExperience.tsx',import.meta.url),'utf8');assert.match(src,/viewBox="0 0 760 540"/);assert.match(src,/完全展开后/);
+ const src=readFileSync(new URL('../components/visualizations/RadianExperience.tsx',import.meta.url),'utf8');assert.match(src,/540-unfoldTop/);assert.match(src,/完全展开后/);
+});
+
+test('radians: angle-only crop preserves scale and all intermediate geometry',()=>{
+ for(let d=0;d<=360;d+=3){const theta=d*Math.PI/180,top=Math.max(0,460-Math.min(420,2*theta*46)-40);
+  for(const r of [.5,1,2])for(let i=0;i<=100;i++)for(const [x,y] of unrolledPoints(r,theta,i/100,36)){
+   assert.ok(460-46*y>=top+30-1e-8);assert.ok(460-46*y<=460+1e-8);assert.ok(140+46*x>=0&&140+46*x<=760);
+  }
+ }
 });

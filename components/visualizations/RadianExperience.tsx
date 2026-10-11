@@ -20,7 +20,10 @@ export function RadianExperience({children}:{children:ReactNode}) {
   useEffect(()=>{const stop=()=>{if(document.hidden)setPlaying(false);};document.addEventListener("visibilitychange",stop);return()=>document.removeEventListener("visibilitychange",stop);},[]);
   function changeRadius(r:number){setPlaying(false);setRadius(r);}
   function changeAngle(d:number){setPlaying(false);setDegrees(d);}
-  const cx=175,cy=170,R=radius*SCALE;
+  const cx=175,cy=130,R=radius*SCALE;
+  // Fixed horizontal scale; crop only unused vertical space. Bound covers every
+  // allowed radius and every progress value, so radius comparisons never zoom.
+  const unfoldTop=Math.max(0,460-Math.min(420,2*m.theta*SCALE)-40);
   const arc=Array.from({length:181},(_,i)=>{const a=m.theta*i/180;return `${cx+R*Math.cos(a)},${cy-R*Math.sin(a)}`;}).join(" ");
   const points=unrolledPoints(radius,m.theta,progress).map(([x,y])=>`${140+x*SCALE},${460-y*SCALE}`).join(" ");
   const endX=cx+R*Math.cos(m.theta),endY=cy-R*Math.sin(m.theta);
@@ -34,28 +37,29 @@ export function RadianExperience({children}:{children:ReactNode}) {
     </div>
     <section tabIndex={0} className={s.stage} aria-label="弧度与保长展开实验">
       <div className={s.stageTitle}><strong>同一段弧，两种形状</strong><span>所有长度：cm · 同一比例尺</span></div>
-      <svg viewBox="0 0 760 340" role="img" aria-label={`半径${fmt(radius)}厘米，圆心角${fmt(m.theta)}弧度，弧长${fmt(m.length)}厘米；展开${Math.round(progress*100)}%`}>
+      <div className={s.graphScroll} tabIndex={0} aria-label="圆弧图，可横向滚动"><svg viewBox="0 0 760 290" role="img" aria-label={`半径${fmt(radius)}厘米，圆心角${fmt(m.theta)}弧度，弧长${fmt(m.length)}厘米；展开${Math.round(progress*100)}%`}>
         <title>圆弧与等长展开曲线</title><desc>青色是所选圆弧，橙色是一个半径长。下方曲线逐渐变直，每一帧保持同样弧长。图形是解析曲线的采样显示。</desc>
         <defs><pattern id="radian-grid" width={SCALE} height={SCALE} patternUnits="userSpaceOnUse"><path d={`M ${SCALE} 0 L 0 0 0 ${SCALE}`} fill="none" stroke="currentColor" strokeOpacity=".06"/></pattern></defs>
-        <rect width="760" height="340" fill="url(#radian-grid)"/>
+        <rect width="760" height="290" fill="url(#radian-grid)"/>
         <text x="32" y="30" className={s.small}>01 / 圆上量弧</text>
         <circle cx={cx} cy={cy} r={R} className={s.circle}/><path d={`M${cx},${cy}L${cx+R},${cy} M${cx},${cy}L${endX},${endY}`} className={s.radius}/>
         <polyline points={arc} className={s.arc}/><circle cx={endX} cy={endY} r="5" className={s.endpoint}/>
         <text x={cx-12} y={cy+22} className={s.small}>O</text><text x={cx+R/2} y={cy+23} textAnchor="middle" className={s.orange}>r</text>
         <text x={cx} y={cy+R+49} textAnchor="middle">{degrees===360?"完整一圈：2π rad":degrees===0?"零角：0 rad":`θ ≈ ${fmt(m.theta)} rad`}</text>
         <g transform="translate(370 68)"><text className={s.formula}>θ = s / r</text><text y="44">{fmt(m.theta)} rad ≈ {fmt(m.length)} / {fmt(radius)}</text><text y="86" className={s.small}>s ≈ {fmt(m.length)} cm</text><text y="117" className={s.small}>同角度下，半径翻倍，弧长也翻倍。</text><text y="148" className={s.small}>这个比值不变，角度就不变。</text></g>
-      </svg>
-      <label className={s.progress}>展开进度 <strong>{Math.round(progress*100)}%</strong><input aria-label="展开进度" type="range" min="0" max="1" step="0.01" value={progress} onChange={e=>{setPlaying(false);setProgress(Number(e.target.value));}}/></label>
+      </svg></div>
+      <div className={s.toolbar}><label className={s.progress}>展开进度 <strong>{Math.round(progress*100)}%</strong><input aria-label="展开进度" type="range" min="0" max="1" step="0.01" value={progress} onChange={e=>{setPlaying(false);setProgress(Number(e.target.value));}}/></label>
       <div className={s.actions}><button onClick={()=>{if(reduced){setProgress(progress>=1?0:1);return;}if(progress>=1)setProgress(0);setPlaying(!playing);}}>{reduced?"切换起点 / 终点":playing?"暂停展开":"播放展开"}</button><button onClick={()=>{setPlaying(false);setProgress(p=>Math.min(1,p+0.25));}}>单步 +25%</button><button onClick={()=>changeRadius(1)}>单位圆 r=1</button><button onClick={()=>changeRadius(2)}>比较 r=2</button></div>
-      <svg viewBox="0 0 760 540" role="img" aria-label={`同长曲线展开${Math.round(progress*100)}%，解析长度${fmt(m.length)}厘米`}>
+      </div>
+      <div className={s.graphScroll} tabIndex={0} aria-label="展开图，可横向滚动"><svg viewBox={`0 ${unfoldTop} 760 ${540-unfoldTop}`} role="img" aria-label={`同长曲线展开${Math.round(progress*100)}%，解析长度${fmt(m.length)}厘米`}>
         <title>保长展开：完整过程固定比例尺</title><desc>整个动画都保留同样长度；曲线可能向左弯或向上伸展，视野包含全过程。</desc>
         <rect width="760" height="540" fill="url(#radian-grid)"/>
-        <text x="32" y="24" className={s.small}>02 / 展开弧，长度不变</text>
+        <text x="32" y={unfoldTop+24} className={s.small}>02 / 展开弧，长度不变</text>
         <path d="M140 460H730" className={s.guide}/>
         {Array.from({length:7},(_,i)=><g key={i}><path d={`M${140+i*radius*SCALE} 466v8`} className={s.tick}/><text x={140+i*radius*SCALE} y="494" textAnchor="middle" className={s.small}>{i}r</text></g>)}
         <polyline points={points} className={s.arc}/><circle cx="140" cy="460" r="4" className={s.endpoint}/>
         <path d={`M140 518h${radius*SCALE}`} className={s.radius}/><text x={145+radius*SCALE} y="528" className={s.orange}>一个半径长 r = {fmt(radius)} cm</text>
-      </svg>
+      </svg></div>
       <p className={s.status} aria-live="polite">{message}</p>
       <p className={s.caption}>下图是圆上所选弧旋转后的同长副本。展开只改变弯曲程度，不改变这段弧的长度。窄屏可横向滚动图形。下方刻度以当前半径为一格；完全展开后，终点在 θ 个半径处。圆与展开图共用固定比例尺。减动画偏好下用单步或直接切换。</p>
     </section>
