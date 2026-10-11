@@ -17,3 +17,17 @@ Target: keep every visible label, chart, teaching statement, date and layout unc
 ## Local validation,21:04UTC
 
 230/230 tests passed, full lint,TypeScriptnoEmit,configvalidation,frozen-data webpackproductionbuild andPagefind passed. Independent final diff review: oneURL replacement only in lessondata; fourteen appended regression-test lines, no removed/altered old tests. Mathematics,dates,geometry and algorithm implementation unchanged. Preview and production remain pending at this stage.
+
+## Exact preview and independent visual review
+
+Product SHA: `683a68a9e0f47c4ccd68d1a8d9a2d331071efd69`. Preview CI [38175058016](https://github.com/crazycloudcc/ccblog/actions/runs/38175058016) passed. [Preview deployment](https://vercel.com/chainboxapp/ccblog/C1eRYwcb7oa3oa9GiFoHdcaQKWAj) was actually read as Ready / Preview / dev.crazycloud.cc with this exact SHA at 21:09 UTC. The rendered HTML reference href matches the complete official article; visible teaching dates remain October 7 and October 10.
+
+Independent review actually viewed the 1180 × 757 before/after screenshots. Reference labels, underlines, wrapping, reading links and footer remained aligned, with no new clipping or overflow. No correction was required. Full-image equality is not claimed because the runtime header changes. This review did not cover mobile, external-link clicking or other scroll positions.
+
+Normal browser navigation to the preview Markdown route returned `net::ERR_BLOCKED_BY_CLIENT`. That resource was not retried through another route. Live Markdown remains unverified; local rendering tests for both HTML and Markdown passed. This is a tool navigation limitation, not evidence of a public-site outage.
+
+After the preview gates passed, main advanced non-forced from `6522e3c1b16c3808a4017628260b7692b6d3ee00` to the same product SHA. Production validation follows below.
+
+## Production verified
+
+At 2026-10-11 21:11:17 UTC (Shanghai October 12 05:11:17), the public LIS lesson rendered the new official reference href, its unchanged canonical URL, and original teaching dates (published October 7; updated October 10). [Production deployment](https://vercel.com/chainboxapp/ccblog/GJxaEZQ2xrwy764PiSBqaMQrbZhJ) was read as Ready / Production / crazycloud.cc / exact product SHA. [Main CI 38175225196](https://github.com/crazycloudcc/ccblog/actions/runs/38175225196) completed successfully. No additional article was created. This receipt is documentation only.

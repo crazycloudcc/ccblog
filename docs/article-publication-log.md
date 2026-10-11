@@ -119,3 +119,10 @@
 - 独立数学审阅验证每帧保长，裁切再查19,798,323点；Dream Loop目标/实现/实际截图/独审/修正完成，视觉复评8/10。真实1180×757桌面、500×757窄窗、单步/播放终点/重置/键盘/零角与整圈验证；375/390真机、触屏和屏幕阅读器未验，不冒称验收。
 - 精确[preview CI38155567843](https://github.com/crazycloudcc/ccblog/actions/runs/38155567843) success，[preview部署](https://vercel.com/chainboxapp/ccblog/EZWQARzYhdzZiHvszh2LQd3DuBxv) Ready/Preview/dev.crazycloud.cc/exactSHA通过后，同SHA非强推main；[生产CI38155843685](https://github.com/crazycloudcc/ccblog/actions/runs/38155843685) success，[生产部署](https://vercel.com/chainboxapp/ccblog/FZojoWgQjYrhHeFwr9PnEz5mEbY8) Ready/Production/crazycloud.cc/exactSHA及正式canonical、1rad/r=2/s=2cm交互实核。
 - [需求来源、公式、真实失败与修正、验收限制](experiments/radians-2026-10-12/README.md)。原始2019疑问与MIT2010/OpenStax资料是常青需求，不称实时热度、搜索量或流量成果。生成目标图只本地布局参考，不作实际验收图、不上传。
+
+## 2026-10-12 LIS 参考资料直达维护（不是新文章）
+
+- 2026-10-11 21:11:17 UTC / 上海 10 月 12 日 05:11:17，正式 LIS 页面已指向 CP-Algorithms 的完整官方新地址。原地址仍可读但只显示搬迁提示；这是减少一次导航，不称失效链接、新热点或流量成果。首次发布与教学更新日期仍为 10 月 7 日、10 月 10 日。
+- 产品提交 `683a68a9e0f47c4ccd68d1a8d9a2d331071efd69`；230/230 tests、lint、types、config、冻结 build、Pagefind 全部通过。独立 diff 审阅确认只改一个 URL，数学、算法和核心图形未变。Dream Loop 实际 before/after 1180×757 截图独审通过，无须修正。
+- [Preview CI38175058016](https://github.com/crazycloudcc/ccblog/actions/runs/38175058016) success、[preview 部署](https://vercel.com/chainboxapp/ccblog/C1eRYwcb7oa3oa9GiFoHdcaQKWAj) Ready/Preview/dev.crazycloud.cc/exact SHA 后，同 SHA 非强推 main。[生产 CI38175225196](https://github.com/crazycloudcc/ccblog/actions/runs/38175225196) success、[生产部署](https://vercel.com/chainboxapp/ccblog/GJxaEZQ2xrwy764PiSBqaMQrbZhJ) Ready/Production/crazycloud.cc/exact SHA，正式 href、canonical、日期实核。
+- [来源、完整记录与限制](experiments/lis-reference-2026-10-12/README.md)。线上 Markdown 正常导航被客户端阻止，停止且未绕路，故该线上输出未验；本地 HTML/Markdown 回归已通过。本轮未重新测移动端或其他交互。10 月 12 日唯一新篇仍为 radians。
