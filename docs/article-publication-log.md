@@ -103,3 +103,10 @@
 - 产品提交 `0122879633d3605c645fcc54dafe3f385da28db2`；220/220tests、lint/types/config/冻结build/Pagefind全过。独立数学975组射线/海伦公式复算及精确增量审阅通过；Dream Loop真实before→实现→桌面1180×757/500×757窄窗截图→独立文字布局复评通过，无须修正。375/390真机等仍未验。
 - 精确 [previewCI38086567511](https://github.com/crazycloudcc/ccblog/actions/runs/38086567511) success、[preview部署](https://vercel.com/chainboxapp/ccblog/HcxjTnSHioKPLqN8Njfpix9FSyuu) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA推进main；[生产CI38086763588](https://github.com/crazycloudcc/ccblog/actions/runs/38086763588) success、[生产部署](https://vercel.com/chainboxapp/ccblog/Esxq5udJgAb5WVwPomSqVbhthVW2) Ready/Production/crazycloud.cc/exactSHA实核。静态HTML/Markdown同步回归通过。
 - [需求、范围、Dream Loop和限制](experiments/area-scale-2026-10-11/README.md)。外部追问日期冲突未确认，不声称新热度或学习/流量增长。
+
+## 2026-10-11 整数虚拟区间标准库说明（不是新日更）
+
+- 2026-10-11 13:21:01UTC（Asia/Shanghai21:21:01）实读正式二分答案课新增说明：C++20 iota 无须预存数组，partition_point 使用 !enough 保持先true后false；必须检查 end、单调性、整数上界和溢出。首次发布日期、标题、路由及图形均保留，不计新篇。
+- 产品提交 `194a93143b71ca8733259a7b4212beeb115c6c44`；221/221tests、lint/types/config/冻结build/Pagefind通过。独立最终文本/数学审阅、8/8定向回归及C++20 UBSan边界穷举通过。Dream Loop实际before、实现、1180×757桌面/500×757窄窗截图独审通过，无须修正；375/390真机等未验。
+- 精确 [previewCI38142480734](https://github.com/crazycloudcc/ccblog/actions/runs/38142480734) success，[preview部署](https://vercel.com/chainboxapp/ccblog/CmMCCiP1xyxK4CfnwDSquLS9E12Q) Ready/Preview/dev.crazycloud.cc实核后，同SHA非强推main；[生产CI38142726379](https://github.com/crazycloudcc/ccblog/actions/runs/38142726379) success，[生产部署](https://vercel.com/chainboxapp/ccblog/2xEdKbHJkUFE5upPRLRiGWwTa1Wf) Ready/Production/crazycloud.cc/exactSHA及正式FAQ/canonical实核。
+- [需求来源、完整验收和边界代码](experiments/integer-range-faq-2026-10-11/README.md)。原问题日期2021-06-10，是常青需求，不称实时热度或流量成果。

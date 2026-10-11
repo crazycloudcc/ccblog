@@ -24,3 +24,25 @@ Local validation at 13:13 UTC: 221/221 tests, ESLint, TypeScript noEmit, configu
 The accompanying boundaries.cpp was compiled with C++20, -Wall -Wextra -Werror and undefined-behavior sanitizer, and passed: every monotone boundary for U=0..100, empty range, all true/all false, first answer at U=10^18, zero target, 3,600 small factory cases and the original [2,3,7],8 =>9. No predicate evaluation occurred at the exclusive upper endpoint. Empty range is an algorithm test; this lesson's [0,U] with U>=0 is never empty.
 
 Independent mathematical/text review and actual after-preview screenshot review are release gates. At this commit, preview/production deployment and after screenshots are pending and are not claimed passed. Receipt will record exact SHA, CI and deployment evidence after verification. Real 375/390 mobile, physical touch, screen reader and FPS remain unverified under the existing ccblog exemption.
+
+## Verified preview and independent review
+
+- Product SHA `194a93143b71ca8733259a7b4212beeb115c6c44`.
+- Independent final math/text review passed, including a separately compiled C++20 UBSan run and 8/8 focused Node tests. No blocking issue or correction was required.
+- [Preview CI 38142480734](https://github.com/crazycloudcc/ccblog/actions/runs/38142480734) completed successfully. [Exact preview deployment](https://vercel.com/chainboxapp/ccblog/CmMCCiP1xyxK4CfnwDSquLS9E12Q) was actually read as Ready / Preview / dev.crazycloud.cc with the full product commit link at 13:17 UTC.
+- Actual preview screenshots at 1180×757 desktop and 500×757 narrow window were independently reviewed: new paragraph wraps and remains readable, no observed horizontal overflow, core SVG and synchronized loop unchanged. Two consecutive narrow screenshots cover the entire paragraph. DOM viewport/client/scroll widths were all 500. Window restored after capture. This is not a 375/390 or real-device test.
+- Source and built Markdown include the same visible paragraph. Browser DOM verified the production canonical.
+- Same exact product SHA advanced main non-forced at 13:19:39 UTC only after these gates passed. Production receipt below is separate from that Git action.
+
+Screenshot SHA-256 (actual local evidence retained in the existing audit directory; no optional image upload):
+03ebf41e49f56b72dac8037f72b3805f13a17899ccf73a12e579cd372f365a0d  ccblog-audit/stdlib-faq-20261011/after-desktop-faq.png
+fd29371e1e95d5e603c9336629afc5975ccf154337db7b846838b470290cbef3  ccblog-audit/stdlib-faq-20261011/after-desktop.png
+9cc3e8726ea685bfa00e4ec4140710801c404b3e5b7a33e6409c0f3cd630332a  ccblog-audit/stdlib-faq-20261011/after-narrow-faq-complete.png
+4ee1c8128b91e818806b7d18d00853995acd788f531cb877082c564de1979df8  ccblog-audit/stdlib-faq-20261011/after-narrow-faq.png
+ac2a7cb0e44373a544c558eb62ed789b5f31353adae9f34dc9480c5994eac359  ccblog-audit/stdlib-faq-20261011/before.png
+
+## Production receipt
+
+2026-10-11 13:21:01 UTC / Asia/Shanghai October 11 21:21:01: actual production lesson read confirmed the new iota paragraph and interval-no-solution guard, unchanged core SVG presence, and canonical https://crazycloud.cc/learn/binary-search-on-answer.
+
+[Production CI 38142726379](https://github.com/crazycloudcc/ccblog/actions/runs/38142726379) completed success. [Production deployment](https://vercel.com/chainboxapp/ccblog/2xEdKbHJkUFE5upPRLRiGWwTa1Wf) was actually read Ready / Production / crazycloud.cc and linked the exact SHA 194a93143b71ca8733259a7b4212beeb115c6c44. This closes the maintenance release. No traffic/learning-effect claim follows from this change or these QA visits. Existing stopped image-upload and authentication requests were not retried.
