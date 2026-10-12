@@ -158,3 +158,10 @@
 - Dream Loop实际before、局部生成目标参考、实现、1181×757桌面/501×757窄窗截图独审9.2/10，无视觉must-fix。新文字自然换行、无页面横溢出；指针遮少量字属非阻断截图限制。375/390真机、触屏、屏幕阅读器、FPS未验；未改图形交互不重复手动QA。
 - [previewCI38289791751](https://github.com/crazycloudcc/ccblog/actions/runs/38289791751) success及[preview部署](https://vercel.com/chainboxapp/ccblog/7pWr4giRrWUAbc8WSiZjG1cpuKVp) Ready/Preview/dev.crazycloud.cc/exactSHA后，同SHA非强推main；[生产CI38290270942](https://github.com/crazycloudcc/ccblog/actions/runs/38290270942) success，[生产部署](https://vercel.com/chainboxapp/ccblog/DAsA5F1M15ztT8iV2X8U228tPT2g) Ready/Production/crazycloud.cc/exactSHA，正式FAQ/reference/canonical/日期实核。
 - [来源、定义修正与验收限制](experiments/gcd-decimal-2026-10-13/README.md)。2013原提问是常青需求，不称新热度。旧binary具体取消未重试或包含；一次preview审核遗漏Oct9连接器例外，在原证据补齐后同调用仅重试一次成功。
+
+## 2026-10-13 勾股与相似面积桥接（不是新文章）
+
+- 2026-10-12 22:17:57UTC（上海10月13日06:17:57）正式勾股课的既有延伸段补充半圆应用：三边作直径时面积常数为π/8；同类相似形须使用对应长度并共享K。明确这是勾股与面积缩放的推论，不是另一份证明，继续链接相似课。核心SVG、标题、教学日期及当日唯一新篇计数不变。
+- 产品 `69567590c90db6040966f1a494c8fc4e47886739`；新增Markdown测试的Jiti别名缺失修复后最终244/244tests、lint/types/config/冻结build/Pagefind全过。独立42组正实数数学、13项定向、静态HTML/Markdown/链接/日期审阅通过。Dream Loop真实1188×761桌面及505×761窄窗独审9/10，无必修项；375/390真机、触屏、屏幕阅读器、FPS及未改核心交互未重验。
+- [previewCI38315374178](https://github.com/crazycloudcc/ccblog/actions/runs/38315374178) success和[preview部署](https://vercel.com/chainboxapp/ccblog/5pNcDJ7hRQqyPzVDVxZC2RCeGksR) Ready/Preview/dev.crazycloud.cc/精确SHA后同SHA非强推main；[生产CI38315678569](https://github.com/crazycloudcc/ccblog/actions/runs/38315678569) success，[生产部署](https://vercel.com/chainboxapp/ccblog/HF8AAySUmbCyrJ9jj3MbycCuLVFn) Ready/Production/crazycloud.cc/精确SHA与正式正文、canonical、日期已实核。
+- [来源、失败修复与验收限制](experiments/shape-bridge-2026-10-13/README.md)。Cambridge来源更新于2022-12-12，属于常青教学需求，不称热度或流量成果。生成目标只本地；线上Markdown既有阻止未重试。旧binary具体取消未包含。

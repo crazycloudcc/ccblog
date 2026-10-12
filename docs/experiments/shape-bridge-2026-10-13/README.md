@@ -23,3 +23,17 @@ Final independent mathematical/text review passed: 42 positive-real leg pairs us
 Full checks and exact preview, actual after screenshots, independent visual review, and production verification are pending at this entry.
 
 Final validation completed 22:11:12 UTC after the alias fix: 244/244 tests, lint, TypeScript, configuration, frozen-source Next webpack build and Pagefind all passed. Generated HTML and Markdown were read and contain the full bridge and target link. Existing app data was frozen; no network sync prebuild. Preview and live visual/production verification remain pending.
+
+## Exact preview and real after review
+
+Product `69567590c90db6040966f1a494c8fc4e47886739` updated preview at 22:13:08 UTC. All uploaded blobs matched local Git hashes before committing. A transport-truncated first lesson blob was caught and replaced before any commit/ref update; the unused object was never deployed.
+
+[Preview CI38315374178](https://github.com/crazycloudcc/ccblog/actions/runs/38315374178) completed success, read 22:15:01. [Deployment5pNcDJ7hRQqyPzVDVxZC2RCeGksR](https://vercel.com/chainboxapp/ccblog/5pNcDJ7hRQqyPzVDVxZC2RCeGksR) was actually read Ready / Preview / dev.crazycloud.cc / exact SHA at22:14:18.
+
+Actual preview desktop1188×761 and narrow505×761 screenshots show the full paragraph and link. Independent fresh visual review9/10 passed with no must-fix. Scope is the visible extension area; unchanged core SVG,375/390 true phone, touch, screen reader and FPS were not re-verified. Generated target only guides layout. Desktop DOM client/scroll widths1188/1188, canonical and href checked. Actual click reached the similarity lesson and its area/k² text. Browser restored1188×761.
+
+Same product SHA advanced main with expected22a11f977 and force=false at22:16:11 UTC. Production CI/Ready and formal page verification are pending at this entry. Live Markdown was not retried through its previously blocked client route; local generated HTML/Markdown passed.
+
+## Formal completion
+
+Product formally verified 2026-10-12 22:17:57 UTC / Shanghai Oct13 06:17:57. [Production CI38315678569](https://github.com/crazycloudcc/ccblog/actions/runs/38315678569) completed success for exact69567590. [Production deploymentHF8AAySUmbCyrJ9jj3MbycCuLVFn](https://vercel.com/chainboxapp/ccblog/HF8AAySUmbCyrJ9jj3MbycCuLVFn) actually read Ready / Production / crazycloud.cc / same SHA. Formal page contains the new qualification and correct internal href/canonical; time attributes remain2026-10-09 and2026-10-11. All required product gates closed; no new article count. Documentation receipt is separate.
