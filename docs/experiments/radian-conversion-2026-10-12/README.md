@@ -24,3 +24,23 @@
 09:10:35 UTC 在正常 dev.crazycloud.cc/learn/radians 页面取得真实正文 before 截图，视口1188×761，文字和原六项步骤可读，保存在本批本地 .dream-loop/conversion/before.png。目标不等于实际after验收。
 
 本提交准备阶段：232/232 tests、lint、types、config、冻结源 Next build 与 Pagefind 均通过，实际生成 HTML 与 Markdown 包含新增说明。独立审阅18/18定向测试、576128度数/半径样本、4004反向往返、32零值断言和13非法输入拒绝通过，共4036945断言，最大反向误差5.684341886080802e-14度；341基线文件独立复核仅3个授权源码/测试文件变化。preview、正式站和after截图尚未验收。发布回执将记录精确提交与CI/Ready/域绑定、真实画面及限制。没有把自动检查当作真实手机/触屏/屏幕阅读器或学习效果验证。
+
+
+## Preview 与真实画面闭环
+
+- 产品提交 `3462cfcc106275e6583a010134d2b74fea0e904e`。09:14:49首次 preview ref 更新被审核以旧 Git-push-only 规则拒绝；补充用户2026-10-09明确连接器例外原问答后，09:15:32仅同参数复审一次成功。未换路线。
+- [Preview CI38228715241](https://github.com/crazycloudcc/ccblog/actions/runs/38228715241) success；[精确Preview部署](https://vercel.com/chainboxapp/ccblog/8oaEbGwGUxqgWtc74CBfDZAt9WJS) Ready/Preview/dev.crazycloud.cc/同SHA实际核验。
+- 09:17–09:18真实1188×761桌面与503×761窄窗口新增段落可读；窄窗DOM clientWidth=scrollWidth=503，没有页面横向溢出。canonical保持https://crazycloud.cc/learn/radians，日期未变。独立实际截图评审9/10，无阻碍或必修项。窗口已恢复。
+- 本地截图：before.png、after-desktop.png、after-narrow-text.png；独立数学与视觉报告保存在同批工作目录，没有新图片上传。范围仅本次正文，未重验未改核心图形交互、375/390真机、触屏、屏幕阅读器或FPS。线上Markdown此前被客户端阻止，本轮不重试，实际构建HTML/Markdown回归通过。
+- 09:19:42非强推同SHA到main，正式CI/部署在进行中，最终状态见后续回执。
+
+
+## 正式发布回执
+
+2026-10-12 09:22:38 UTC / 上海17:22:38实际确认 https://crazycloud.cc/learn/radians 出现新换算推导，canonical正确，两教学日期均保持2026-10-12。
+
+- main产品提交 `3462cfcc106275e6583a010134d2b74fea0e904e`。
+- [生产CI38229172108](https://github.com/crazycloudcc/ccblog/actions/runs/38229172108) completed/success。
+- [生产部署](https://vercel.com/chainboxapp/ccblog/E7a9Did1rudAyK8bDh1fsAP4pgvG) Ready / Production / crazycloud.cc / 精确产品SHA均实际读取。
+- 这是已有课的一段说明补全，不计新文章，不改图形或算法，不称流量/排名/学习效果成果。新鲜232测试属于本维护；与另一项已取消、未发布的二分证明历史232测试不是同一结果。
+- 截图及本地完整报告当前保存于本次独立工作目录；本回执保留可核实文字结论，不声称截图已上传仓库。具体二分README取消动作仍停止，本次授权没有恢复它。

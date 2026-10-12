@@ -126,3 +126,11 @@
 - 产品提交 `683a68a9e0f47c4ccd68d1a8d9a2d331071efd69`；230/230 tests、lint、types、config、冻结 build、Pagefind 全部通过。独立 diff 审阅确认只改一个 URL，数学、算法和核心图形未变。Dream Loop 实际 before/after 1180×757 截图独审通过，无须修正。
 - [Preview CI38175058016](https://github.com/crazycloudcc/ccblog/actions/runs/38175058016) success、[preview 部署](https://vercel.com/chainboxapp/ccblog/C1eRYwcb7oa3oa9GiFoHdcaQKWAj) Ready/Preview/dev.crazycloud.cc/exact SHA 后，同 SHA 非强推 main。[生产 CI38175225196](https://github.com/crazycloudcc/ccblog/actions/runs/38175225196) success、[生产部署](https://vercel.com/chainboxapp/ccblog/GJxaEZQ2xrwy764PiSBqaMQrbZhJ) Ready/Production/crazycloud.cc/exact SHA，正式 href、canonical、日期实核。
 - [来源、完整记录与限制](experiments/lis-reference-2026-10-12/README.md)。线上 Markdown 正常导航被客户端阻止，停止且未绕路，故该线上输出未验；本地 HTML/Markdown 回归已通过。本轮未重新测移动端或其他交互。10 月 12 日唯一新篇仍为 radians。
+
+
+## 2026-10-12 弧度换算比例解释（不是新文章）
+
+- 2026-10-12 09:22:38 UTC（上海17:22:38）正式页已出现一般换算比例：同一转角 d/360=θ/(2π)，故 θ=dπ/180，反向 d=180θ/π。只补原代码公式的静态解释，原图形、标题、教学日期与单圈范围不变。
+- 产品提交 `3462cfcc106275e6583a010134d2b74fea0e904e`；本批232/232 tests、lint/types/config/冻结build/Pagefind通过，独立18项聚焦测试及4036945数学断言通过。Dream Loop真实1188×761前后与503×761窄窗截图独审9/10，无须修正；375/390、触屏、屏幕阅读器与未改图形交互未重新验收。
+- 精确[previewCI38228715241](https://github.com/crazycloudcc/ccblog/actions/runs/38228715241) success及[preview部署](https://vercel.com/chainboxapp/ccblog/8oaEbGwGUxqgWtc74CBfDZAt9WJS) Ready/Preview/dev.crazycloud.cc通过后，同SHA非强推main；[生产CI38229172108](https://github.com/crazycloudcc/ccblog/actions/runs/38229172108) success，[生产部署](https://vercel.com/chainboxapp/ccblog/E7a9Did1rudAyK8bDh1fsAP4pgvG) Ready/Production/crazycloud.cc/精确SHA及正式正文/canonical/日期实核。
+- [来源、真实审查过程与限制](experiments/radian-conversion-2026-10-12/README.md)。2018原疑问是常青需求，非实时热度。线上Markdown受既有客户端限制未重试，构建HTML/Markdown已验证。当日唯一新篇仍为radians；另一项取消的二分证明未包含、未发布。
