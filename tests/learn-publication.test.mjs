@@ -139,3 +139,15 @@ test("LIS reference directly reaches the official migrated article in HTML and M
   assert.equal(data.lessons[slug].published, "2026-10-07");
   assert.equal(data.lessons[slug].updated, "2026-10-10");
 });
+
+test('radians conversion reason is directly readable in HTML and Markdown without changing teaching dates',()=>{
+ const lesson=data.lessons.radians;
+ const paragraph=lesson.steps.find(x=>x.startsWith('为什么换算时乘 π/180？'));
+ assert.ok(paragraph);
+ for(const text of ['d/360=θ/(2π)','θ=dπ/180','d=180θ/π','两种角度单位下的数值','不依赖圆的半径'])assert.ok(paragraph.includes(text));
+ const html=renderToStaticMarkup(createElement(component.LessonReading,{slug:'radians'}));
+ const escaped=renderToStaticMarkup(createElement('span',null,paragraph)).slice(6,-7);
+ assert.ok(html.includes(escaped));assert.ok(renderLessonMarkdown('radians').includes(paragraph));
+ assert.equal(lesson.published,'2026-10-12');assert.equal(lesson.updated,'2026-10-12');
+ assert.equal(data.lessons['binary-search'].steps.length,3);
+});

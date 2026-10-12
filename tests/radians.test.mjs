@@ -56,3 +56,13 @@ test('radians: angle-only crop preserves scale and all intermediate geometry',()
   }
  }
 });
+
+test('radians: conversion proportion includes zero and preserves inverse and radius independence',()=>{
+ for(const d of [0,0.001,1,15,30,57.29577951308232,90,123.456,180,270,359.999,360]){
+  for(const r of [.5,1,1.5,2]){
+   const {theta,length}=radianModel(r,d);
+   near(theta/TAU,d/360);near(theta*180/Math.PI,d);
+   near(length/(TAU*r),d/360);near(theta,length/r);
+  }
+ }
+});
