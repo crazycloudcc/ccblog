@@ -7,7 +7,7 @@ import * as React from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { renderToStaticMarkup } from "react-dom/server";
 
-const jiti = createJiti(import.meta.url);
+const jiti = createJiti(import.meta.url, { alias: { '@': new URL('..', import.meta.url).pathname } });
 const geometry = await jiti.import("../lib/visualizations/pythagorean.ts");
 const data = await jiti.import("../lib/visualizations/lessons.ts");
 const { pythagoreanModel, nonRightModel, formatMeasure } = geometry;
@@ -346,4 +346,18 @@ test("altitude clarification preserves right-angle conditions and handles intern
     if (x < 0 || x > 6) assert.ok(Math.abs(x) + Math.abs(6 - x) > 6, "external feet do not partition the original base");
   }
   assert.equal(lesson.published, "2026-10-09");
+});
+
+test('similar-shape extension preserves a shared area constant and right-angle restriction',()=>{
+ for(const a of legs)for(const b of legs){const c=Math.hypot(a,b);for(const K of [1,Math.PI/8,Math.sqrt(3)/4])close(K*(a*a+b*b),K*c*c);}
+ // Different area constants do not obey the conclusion, even for 3-4-5.
+ assert.notEqual(9+Math.PI/8*16,Math.PI/8*25);
+ assert.notEqual(Math.PI/8*(9+16),Math.PI/8*13); // 60-degree counterexample.
+});
+test('similar-shape bridge is indexed with the existing internal link and unchanged dates',async()=>{
+ const {renderLessonMarkdown}=await jiti.import('../lib/visualizations/lesson-publication.ts');
+ const md=renderLessonMarkdown('pythagorean-theorem');
+ for(const term of ['直角三角形','为直径作半圆','πa²/8','同一类长度','K 相同','非对应长度','不是另一份勾股证明','/learn/similar-triangles'])assert.ok(md.includes(term),term);
+ assert.equal(data.lessonExtensions['pythagorean-theorem'].slug,'similar-triangles');
+ assert.equal(data.lessons['pythagorean-theorem'].published,'2026-10-09');assert.equal(data.lessons['pythagorean-theorem'].updated,'2026-10-11');
 });

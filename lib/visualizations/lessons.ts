@@ -221,7 +221,7 @@ export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; la
   "euclidean-algorithm": { slug: "binary-search-on-answer", label: "对比：二分答案的单调区间", explanation: "欧几里得算法让余数严格减小；二分答案让搜索区间缩小。两者都需说明为何终止，但保留的性质不同。" },
   "radians": { slug: "similar-triangles", label: "前置：相似与比例", explanation: "相似缩放让长度按同一倍数变化。把这条规律用于同角度的圆弧，就能看见弧长与半径之比不变。" },
   "similar-triangles": { slug: "pythagorean-theorem", label: "相关实验：勾股定理与直角条件", explanation: "勾股定理联系一个直角三角形的三边；相似比例联系两个三角形的对应边。先辨认图形和已知条件，再选择关系。" },
-  "pythagorean-theorem": { slug: "similar-triangles", label: "继续探索：路灯下的相似三角形", explanation: "同样出现直角，求影长时还要连接两个三角形。通过对应角与对应边，理解为什么应先写相似比例。" },
+  "pythagorean-theorem": { slug: "similar-triangles", label: "继续探索：相似图形的面积比例", explanation: "换成半圆呢？分别以直角三角形的三边 a、b、c 为直径作半圆，面积为 πa²/8、πb²/8、πc²/8，因此两个小半圆的面积之和等于大半圆。更一般地，三边若分别对应三个相似图形中的同一类长度，面积就能写成 Ka²、Kb²、Kc²，且 K 相同；混用不同形状或非对应长度不能直接这样相加。这是已知勾股定理与面积缩放的推论，不是另一份勾股证明。相似课解释长度乘 k 时面积为什么乘 k²。" },
   "longest-increasing-subsequence": {
     slug: "binary-search-on-answer", label: "继续探索：二分答案，寻找第一个可行时刻",
     explanation: "同样是找第一个 true，候选可以从 tails 的位置换成时间。注意：本课可能返回 end，表示没有满足条件的元素；二分答案课先证明 hi 可行，才在闭区间里收缩。不能把两者的区间边界与无解处理直接混用。",
