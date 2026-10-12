@@ -6,6 +6,16 @@ const jiti=createJiti(import.meta.url);
 const {shadowModel,measure}=await jiti.import('../lib/visualizations/similar-triangles.ts');
 const {lessons,lessonExtensions}=await jiti.import('../lib/visualizations/lessons.ts');
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-9*Math.max(1,Math.abs(b)),`${a} != ${b}`);
+test('similarity perimeter scales linearly and reciprocal ratios retain direction',()=>{
+ const perimeter=vertices=>vertices.reduce((sum,[x,y],i)=>{const [nx,ny]=vertices[(i+1)%vertices.length];return sum+Math.hypot(nx-x,ny-y);},0);
+ for(let H=4;H<=10;H+=.5)for(let h=1;h<=3;h+=.5)for(let x=1;x<=8;x+=.5){
+  const m=shadowModel(H,h,x),k=H/h,small=perimeter(m.small),big=perimeter(m.big);
+  assert.ok(small>0&&big>small);near(big/small,k);near(small/big,1/k);
+  near((h*m.s)/(H*m.q),1/(k*k));
+ }
+ const m=shadowModel(6,2,4);near(perimeter(m.small),4+Math.sqrt(8));near(perimeter(m.big),12+Math.sqrt(72));
+ for(const args of [[6,2,0],[2,2,4],[1,2,4],[6,0,4]])assert.throws(()=>shadowModel(...args));
+});
 test('shadow geometry matches an independent line-ground intersection throughout inputs',()=>{
  for(let H=4;H<=10;H+=.5)for(let h=1;h<=3;h+=.5)for(let x=1;x<=8;x+=.5){
  const m=shadowModel(H,h,x);const slope=(h-H)/x;const intersection=-H/slope;

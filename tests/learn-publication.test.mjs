@@ -140,6 +140,17 @@ test("LIS reference directly reaches the official migrated article in HTML and M
   assert.equal(data.lessons[slug].updated, "2026-10-10");
 });
 
+test('similarity perimeter and ratio direction remain directly readable without changing teaching dates',()=>{
+ const slug='similar-triangles',lesson=data.lessons[slug];
+ const paragraph=lesson.mistakes.find(x=>x.startsWith('放大倍数'));
+ for(const text of ['周长作为三边之和也乘 k','底和对应的垂直高都乘 k','大/小','k、k、k²','小/大','1/k、1/k、1/k²'])assert.ok(paragraph.includes(text));
+ const html=renderToStaticMarkup(createElement(component.LessonReading,{slug}));
+ const escaped=renderToStaticMarkup(createElement('span',null,paragraph)).slice(6,-7);
+ assert.ok(html.includes(escaped));assert.ok(renderLessonMarkdown(slug).includes(paragraph));
+ assert.equal(lesson.published,'2026-10-11');assert.equal(lesson.updated,'2026-10-11');
+ assert.equal(data.lessons['binary-search'].steps.length,3);
+});
+
 test('radians conversion reason is directly readable in HTML and Markdown without changing teaching dates',()=>{
  const lesson=data.lessons.radians;
  const paragraph=lesson.steps.find(x=>x.startsWith('为什么换算时乘 π/180？'));
