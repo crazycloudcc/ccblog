@@ -1,3 +1,4 @@
+import { EuclideanExperience } from "@/components/visualizations/EuclideanExperience";
 import { RadianExperience } from "@/components/visualizations/RadianExperience";
 import { SimilarityExperience } from "@/components/visualizations/SimilarityExperience";
 import { AnswerSearchExperience } from "@/components/visualizations/AnswerSearchExperience";
@@ -27,6 +28,7 @@ export default async function VisualLessonPage({ params }: Props) {
   const lesson = getLesson(slug);
   if (!lesson) notFound();
   const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
+  if (slug === "euclidean-algorithm") return <>{schema}<EuclideanExperience><LessonReading slug={slug} /></EuclideanExperience></>;
   if (slug === "radians") return <>{schema}<RadianExperience><LessonReading slug={slug} /></RadianExperience></>;
   if (slug === "similar-triangles") return <>{schema}<SimilarityExperience><LessonReading slug={slug} /></SimilarityExperience></>;
   if (slug === "binary-search-on-answer") return <>{schema}<AnswerSearchExperience><LessonReading slug={slug} /></AnswerSearchExperience></>;

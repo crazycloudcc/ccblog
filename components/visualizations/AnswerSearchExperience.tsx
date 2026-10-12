@@ -141,7 +141,7 @@ export function AnswerSearchExperience({ children }: { children: ReactNode }) {
         {counter && <div id="answer-counterexample"><h2>不是所有 yes / no 都能二分</h2><svg viewBox="0 0 640 75" role="img" aria-label="非单调反例：false true false false true true true true，二分可能错过左边的true"><path d="M30 48H610" stroke="currentColor" />{[false,true,false,false,true,true,true,true].map((v,i)=><g key={i}><circle cx={45+i*77} cy="30" r="18" fill={v?"#245b50":"#914a2e"}/><text x={45+i*77} y="35" fill="white" textAnchor="middle" fontSize="14">{v?"T":"F"}</text><text x={45+i*77} y="68" fill="currentColor" textAnchor="middle" fontSize="13">{i}</text></g>)}</svg><p>例如 [F,T,F,F,T,T,T,T]，在下标 3 看到 F，不能推出左边都是 F；直接丢掉左半会错过下标 1。这个反例不是生产模型。先证明单调性，再选择二分。</p></div>}
       </div>
     </section>
-    <nav className={s.readingNav}><Link href="/learn/binary-search">前置：有序数组里的二分查找 →</Link><Link href="/learn">查看全部实验</Link></nav>
+    <nav className={s.readingNav}><Link href="/learn/binary-search">前置：有序数组里的二分查找 →</Link><Link href="/learn/euclidean-algorithm">对比：余数怎样保证终止 →</Link><Link href="/learn">查看全部实验</Link></nav>
     <noscript><p>交互需启用 JavaScript；下方完整原理、例子和代码仍可阅读。</p></noscript>
     {children}
     <section className={s.fullCode} data-pagefind-body><h2>enough：尽早返回，避免累计溢出</h2><p>下例适用 1 ≤ n ≤ 200000、1 ≤ kᵢ ≤ 10⁹、0 ≤ target ≤ 10⁹，参数已经校验，机器非空。fastest 与 target 都用 long long，上界最多 10¹⁸。累加前先比较剩余需求，避免把所有机器的产量直接相加。超出这些范围需要重新验证整数表示，不可盲目照搬。</p><pre tabIndex={0}><code>{`bool enough(long long sec) {

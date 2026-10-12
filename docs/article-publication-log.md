@@ -141,3 +141,9 @@
 - 产品提交`076db369cdc61a63563ea601d1ff740c9b1c24e6`；234/234 tests、lint/types/config/冻结build/Pagefind通过，独立21定向及975滑块+2000内部数学样本、边界与精确增量审阅通过。Dream Loop真实1180×757前后/500×757窄窗独审9.4/10，无必修项；375/390、真机、触屏、屏幕阅读器和未变交互未重验。
 - [previewCI38261624860](https://github.com/crazycloudcc/ccblog/actions/runs/38261624860) success及[preview部署](https://vercel.com/chainboxapp/ccblog/Byi2hjHApncZXNrqVVixBhFrkmTK) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA非强推main；[生产CI38262364590](https://github.com/crazycloudcc/ccblog/actions/runs/38262364590) success，[生产部署](https://vercel.com/chainboxapp/ccblog/6Gyw6Yv5afsSxqCLSoS5hx2HGpeN) Ready/Production/crazycloud.cc/exactSHA及正文/canonical/日期实核。
 - [来源与验收限制](experiments/perimeter-ratio-2026-10-12/README.md)。2016/2023问题是常青需求，不称实时热度；线上Markdown未重试既有客户端阻止，本地HTML/Markdown已验。另一项取消的binary证明未包含或发布。
+
+## 2026-10-13 新图解：欧几里得算法（实施中）
+
+- 2026-10-12 16:03:10 UTC / 上海10月13日00:03:10启动当日唯一新篇，计划 `/learn/euclidean-algorithm`，主题“最大公约数：把余数留在画面里”。依据2024真实提问与MIT2024课程资料的常青需求，不称新热度。此前radians属于10月12日。
+- 原矩形内逐轮切方块、余数/公式/代码同步，最终统一gcd网格；实施、独审与发布验收进行中。未满足精确preview和生产门槛前，不记已发布。
+- [完整设计、来源与真实状态](experiments/euclidean-2026-10-13/README.md)。旧取消binary证明不包含，不补记10月8日。

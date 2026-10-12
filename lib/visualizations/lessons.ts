@@ -1,4 +1,23 @@
 export const lessons = {
+  "euclidean-algorithm": {
+    notesSlug: null, category: "算法", difficulty: "入门", prerequisites: "整数除法、余数与矩形面积", estimatedMinutes: 12,
+    title: "最大公约数（GCD）图解：把余数留在画面里",
+    published: "2026-10-13", updated: "2026-10-13", ogImage: "/images/learn/euclidean-algorithm.png",
+    description: "在原矩形里逐轮切去正方形，让余数成为下一块矩形；用统一砖网格与双向整除推导理解欧几里得算法。",
+    shortAnswer: "欧几里得算法利用 gcd(a,b)=gcd(b,a%b)：每轮用较小数和余数继续，直到余数为0，最后非零除数就是最大公约数。几何上，切去整块正方形不会改变能沿两边整齐铺满的共同尺度。",
+    conditions: "图形只接受1–60的正整数边长，使用同一长度单位；统一砖为与矩形边平行、按行列整齐铺满的同尺寸正方形。代码接受非负安全整数且不同时为0，先取较大数为a、较小数为b。gcd(a,0)=a（a>0），但零宽矩形不拿来作铺砖证明。本课不定义gcd(0,0)；负数、小数与超出安全整数范围的输入需另行处理。",
+    steps: ["48×18：48=2×18+12，横向切去两块18×18正方形，留下12×18矩形。", "18=1×12+6，在余下区域切一块12×12，留下12×6矩形。原矩形没有旋转，数值运算始终先用长边除以短边。", "12=2×6+0，切去两块6×6，余数为0。因此gcd(48,18)=6，不是0。", "切分过程的大块尺寸不同；最终改用边长6的统一砖，原矩形能铺8列×3行。它说明最大同尺寸砖，不是任意混合大小正方形的最少块数问题。"],
+    complexityLabel: "为什么终止与复杂度",
+    complexity: "每轮0≤r<b，非负整数余数严格下降，最终到0；两轮内较小操作数至少减半。对正整数输入，在单位成本算术模型下，需要O(1+log min(a,b))次取模，迭代额外空间O(1)；一个输入为0时直接返回另一个。这里不计算大整数位运算成本，记录步骤和绘制网格的开销另计。",
+    mistakes: ["把最后的0当答案：答案是最后非零除数；相等或整除输入可以第一轮就余0，并不一定出现正余数。", "以为图上的大块都等于最大公约数：它们是逐轮切分的工作块，最后的统一网格才使用同一种砖。", "只证明一个方向：d整除a和b，则整除a−qb；d整除b和r，则整除qb+r。两个方向一起保证公因数集合不变。", "把交换数值大小当作旋转画面：原矩形位置与方向不变，每轮沿当前长边切分；画面只用同一缩放比例显示这一组输入。"],
+    references: [{label:"MIT OCW 6.1200：整除、欧几里得算法与矩形（2024-03-05）",url:"https://www.ocw.mit.edu/courses/6-1200j-mathematics-for-computer-science-spring-2024/1nbxrnTlb8xzIffjCnaTesZ8bEgKO592i_transcript.pdf"}],
+    goals: ["把a=qb+r对应到原矩形内的切分", "双向证明公因数集合不变", "分清工作块、最后非零除数与最大统一砖"],
+    summary: "48×18逐轮留下12×18、12×6，最终余数0，最后短边为6。统一6×6网格铺满原矩形，共24块。交换宽高会改变切分方向，但不改变gcd。",
+    invariant: "设d>0、b>0且a=qb+r：d同时整除a和b，当且仅当d同时整除b和r。因此每一步保留全部公因数。已切正方形与剩余矩形在原外框内无重叠、无遗漏。",
+    question: "24×24第一轮余数就是0，答案是什么？48×18里的18×18大块能说明最大统一砖边长18吗？",
+    answer: "gcd(24,24)=24，取最后非零除数。48×18的18只是首轮工作块，不能沿宽48整齐铺满；最终最大统一砖边长为6。",
+  },
+
   "radians": {
     notesSlug: null, category: "几何", difficulty: "入门", prerequisites: "圆周长、比例与角度", estimatedMinutes: 10,
     title: "弧度（Radians）图解：一段弧，有几个半径长？",
@@ -199,6 +218,7 @@ export function getLesson(slug: string) {
 
 /** Optional learning extensions; not prerequisites or a new lesson. */
 export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "euclidean-algorithm": { slug: "binary-search-on-answer", label: "对比：二分答案的单调区间", explanation: "欧几里得算法让余数严格减小；二分答案让搜索区间缩小。两者都需说明为何终止，但保留的性质不同。" },
   "radians": { slug: "similar-triangles", label: "前置：相似与比例", explanation: "相似缩放让长度按同一倍数变化。把这条规律用于同角度的圆弧，就能看见弧长与半径之比不变。" },
   "similar-triangles": { slug: "pythagorean-theorem", label: "相关实验：勾股定理与直角条件", explanation: "勾股定理联系一个直角三角形的三边；相似比例联系两个三角形的对应边。先辨认图形和已知条件，再选择关系。" },
   "pythagorean-theorem": { slug: "similar-triangles", label: "继续探索：路灯下的相似三角形", explanation: "同样出现直角，求影长时还要连接两个三角形。通过对应角与对应边，理解为什么应先写相似比例。" },

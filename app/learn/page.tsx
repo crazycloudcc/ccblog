@@ -5,12 +5,13 @@ import s from "./learn.module.css";
 
 export const metadata = createPageMetadata({
   title: "图解实验室",
-  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补、相似三角形与弧度。",
+  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补、相似三角形、弧度与欧几里得算法。",
   path: "/learn",
   lang: "zh-CN",
 });
 
 function LessonPreview({ slug }: { slug: string }) {
+  if (slug === "euclidean-algorithm") return <svg viewBox="0 0 480 220" role="img" aria-label="48乘18矩形切分，最大公约数6"><rect x="32" y="40" width="288" height="108" fill="#cadbd5" stroke="#245b50"/><path d="M140 40V148M248 40V148M248 112H320M284 112V148" fill="none" stroke="#245b50" strokeWidth="2"/><text x="40" y="185" fill="#245b50" fontSize="22">48 = 2 × 18 + 12</text><text x="340" y="100" fill="#914a2e" fontSize="24">gcd</text><text x="355" y="133" fill="#914a2e" fontSize="24">6</text></svg>;
   const binary = slug === "binary-search";
   if (slug === "radians") return <svg viewBox="0 0 480 220" role="img" aria-label="直角弧度π/2，弧长除以半径保持不变"><circle cx="110" cy="110" r="70" fill="none" stroke="#bac8c3" strokeWidth="2"/><path d="M180 110A70 70 0 0 0 110 40" fill="none" stroke="#245b50" strokeWidth="5"/><path d="M110 40V110H180" fill="none" stroke="#914a2e" strokeWidth="2"/><path d="M250 160H360" stroke="#245b50" strokeWidth="5"/><text x="250" y="80" fontSize="28" fill="#245b50">θ = s / r</text><text x="230" y="115" fontSize="16" fill="currentColor">弧长里有几个半径？</text><text x="250" y="193" fontSize="16" fill="currentColor">展开同一段弧</text></svg>;
   if (slug === "similar-triangles") return <svg viewBox="0 0 480 220" role="img" aria-label="灯高6、身高2、离灯4：相似三角形给出影长2">
