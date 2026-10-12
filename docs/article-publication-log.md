@@ -142,8 +142,11 @@
 - [previewCI38261624860](https://github.com/crazycloudcc/ccblog/actions/runs/38261624860) success及[preview部署](https://vercel.com/chainboxapp/ccblog/Byi2hjHApncZXNrqVVixBhFrkmTK) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA非强推main；[生产CI38262364590](https://github.com/crazycloudcc/ccblog/actions/runs/38262364590) success，[生产部署](https://vercel.com/chainboxapp/ccblog/6Gyw6Yv5afsSxqCLSoS5hx2HGpeN) Ready/Production/crazycloud.cc/exactSHA及正文/canonical/日期实核。
 - [来源与验收限制](experiments/perimeter-ratio-2026-10-12/README.md)。2016/2023问题是常青需求，不称实时热度；线上Markdown未重试既有客户端阻止，本地HTML/Markdown已验。另一项取消的binary证明未包含或发布。
 
-## 2026-10-13 新图解：欧几里得算法（实施中）
+## 2026-10-13 新文章实际发布：欧几里得算法
 
-- 2026-10-12 16:03:10 UTC / 上海10月13日00:03:10启动当日唯一新篇，计划 `/learn/euclidean-algorithm`，主题“最大公约数：把余数留在画面里”。依据2024真实提问与MIT2024课程资料的常青需求，不称新热度。此前radians属于10月12日。
-- 原矩形内逐轮切方块、余数/公式/代码同步，最终统一gcd网格；实施、独审与发布验收进行中。未满足精确preview和生产门槛前，不记已发布。
-- [完整设计、来源与真实状态](experiments/euclidean-2026-10-13/README.md)。旧取消binary证明不包含，不补记10月8日。
+- 2026-10-12 16:03:10UTC / 上海10月13日00:03:10启动，16:49:46UTC / 上海00:49:46完成[正式新篇](https://crazycloud.cc/learn/euclidean-algorithm)，计上海10月13日唯一新篇。此前radians属于10月12日，保留10月8日未完成记录。
+- 产品提交`b01692c8aebf6fac121f2c96266171f409c82a38`。原矩形逐轮切方块、余数/公式/代码同步，统一gcd网格区分工作块；静态双向整除推导、整数边界与成本口径完整。
+- 最终240/240tests、lint/types/config/冻结build/Pagefind通过；独立3,600输入/14,688中间态、244,846 BigInt对照、93状态与29,376 SVG状态通过。Dream Loop首轮真实视觉5.5分暴露留白/裁切/标签问题，经布局与对比度等修正后全部checks重跑，最终真实截图独审8.1/10。
+- 实际1180×757桌面及500×757窄窗、单步/相等/互质播放终点/键盘1与60/交换/网格已验。500宽页面无横向溢出，图形内部有412/540横滚；横滚提示偏弱为非阻断改进项。滚动后舞台通过不等同所有输入首屏同显；375/390真机、触屏、屏幕阅读器及FPS未验。
+- [PreviewCI38278896338](https://github.com/crazycloudcc/ccblog/actions/runs/38278896338) success及[preview部署](https://vercel.com/chainboxapp/ccblog/GYwEuL9ZR3ah2mpFPvMT6P4B7PAK) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA非强推main；[生产CI38279912933](https://github.com/crazycloudcc/ccblog/actions/runs/38279912933) success，[生产部署](https://vercel.com/chainboxapp/ccblog/7q6JXuCPo92n8pbuQ4qRhTu91QZi) Ready/Production/crazycloud.cc/exactSHA，正式正文/单步/canonical/日期实核。
+- [来源、真实失败与修正、验收限制](experiments/euclidean-2026-10-13/README.md)。2024原疑问和MIT课程是常青需求，非新热度或搜索量；生成目标图仅本地布局参考。旧取消binary证明未包含或发布。
