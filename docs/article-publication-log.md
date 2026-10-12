@@ -150,3 +150,11 @@
 - 实际1180×757桌面及500×757窄窗、单步/相等/互质播放终点/键盘1与60/交换/网格已验。500宽页面无横向溢出，图形内部有412/540横滚；横滚提示偏弱为非阻断改进项。滚动后舞台通过不等同所有输入首屏同显；375/390真机、触屏、屏幕阅读器及FPS未验。
 - [PreviewCI38278896338](https://github.com/crazycloudcc/ccblog/actions/runs/38278896338) success及[preview部署](https://vercel.com/chainboxapp/ccblog/GYwEuL9ZR3ah2mpFPvMT6P4B7PAK) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA非强推main；[生产CI38279912933](https://github.com/crazycloudcc/ccblog/actions/runs/38279912933) success，[生产部署](https://vercel.com/chainboxapp/ccblog/7q6JXuCPo92n8pbuQ4qRhTu91QZi) Ready/Production/crazycloud.cc/exactSHA，正式正文/单步/canonical/日期实核。
 - [来源、真实失败与修正、验收限制](experiments/euclidean-2026-10-13/README.md)。2024原疑问和MIT课程是常青需求，非新热度或搜索量；生成目标图仅本地布局参考。旧取消binary证明未包含或发布。
+
+## 2026-10-13 GCD 精确小数与浮点边界说明（不是新文章）
+
+- 2026-10-12 18:22:29UTC（上海10月13日02:22:29）[正式GCD课](https://crazycloud.cc/learn/euclidean-algorithm)新增短解释：共同尺度须使两个正长度都是它的整数倍；精确有限小数可从精确十进制表示取共同分母转整数，1116/10与465/10的最大共同尺度为93/10=9.3。不能保证已存储二进制浮点直接乘10取整等价，近似测量须先定误差规则。原整数交互域、标题、教学日期保持，唯一新篇计数不变。
+- 产品`22a11f977fa9e468744f76955d879e05f5ca9577`；补齐正长度/整数倍定义后最终242/242tests、lint/types/config/冻结build/Pagefind全部重跑通过。独立82,944精确有理数及4种共同分母细化、最大性证明和最终文本/边界审阅通过。
+- Dream Loop实际before、局部生成目标参考、实现、1181×757桌面/501×757窄窗截图独审9.2/10，无视觉must-fix。新文字自然换行、无页面横溢出；指针遮少量字属非阻断截图限制。375/390真机、触屏、屏幕阅读器、FPS未验；未改图形交互不重复手动QA。
+- [previewCI38289791751](https://github.com/crazycloudcc/ccblog/actions/runs/38289791751) success及[preview部署](https://vercel.com/chainboxapp/ccblog/7pWr4giRrWUAbc8WSiZjG1cpuKVp) Ready/Preview/dev.crazycloud.cc/exactSHA后，同SHA非强推main；[生产CI38290270942](https://github.com/crazycloudcc/ccblog/actions/runs/38290270942) success，[生产部署](https://vercel.com/chainboxapp/ccblog/DAsA5F1M15ztT8iV2X8U228tPT2g) Ready/Production/crazycloud.cc/exactSHA，正式FAQ/reference/canonical/日期实核。
+- [来源、定义修正与验收限制](experiments/gcd-decimal-2026-10-13/README.md)。2013原提问是常青需求，不称新热度。旧binary具体取消未重试或包含；一次preview审核遗漏Oct9连接器例外，在原证据补齐后同调用仅重试一次成功。
