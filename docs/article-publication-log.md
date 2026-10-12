@@ -134,3 +134,10 @@
 - 产品提交 `3462cfcc106275e6583a010134d2b74fea0e904e`；本批232/232 tests、lint/types/config/冻结build/Pagefind通过，独立18项聚焦测试及4036945数学断言通过。Dream Loop真实1188×761前后与503×761窄窗截图独审9/10，无须修正；375/390、触屏、屏幕阅读器与未改图形交互未重新验收。
 - 精确[previewCI38228715241](https://github.com/crazycloudcc/ccblog/actions/runs/38228715241) success及[preview部署](https://vercel.com/chainboxapp/ccblog/8oaEbGwGUxqgWtc74CBfDZAt9WJS) Ready/Preview/dev.crazycloud.cc通过后，同SHA非强推main；[生产CI38229172108](https://github.com/crazycloudcc/ccblog/actions/runs/38229172108) success，[生产部署](https://vercel.com/chainboxapp/ccblog/E7a9Did1rudAyK8bDh1fsAP4pgvG) Ready/Production/crazycloud.cc/精确SHA及正式正文/canonical/日期实核。
 - [来源、真实审查过程与限制](experiments/radian-conversion-2026-10-12/README.md)。2018原疑问是常青需求，非实时热度。线上Markdown受既有客户端限制未重试，构建HTML/Markdown已验证。当日唯一新篇仍为radians；另一项取消的二分证明未包含、未发布。
+
+## 2026-10-12 相似周长与比例方向说明（不是新文章）
+
+- 2026-10-12 14:24:27UTC（上海22:24:27）正式相似课新增：三条对应边都乘k，周长作为三边和也乘k；面积仍乘k²。大/小与小/大方向一致，反向比为1/k、1/k、1/k²。原图形、标题、教学日期2026-10-11保持，当日唯一新篇仍radians。
+- 产品提交`076db369cdc61a63563ea601d1ff740c9b1c24e6`；234/234 tests、lint/types/config/冻结build/Pagefind通过，独立21定向及975滑块+2000内部数学样本、边界与精确增量审阅通过。Dream Loop真实1180×757前后/500×757窄窗独审9.4/10，无必修项；375/390、真机、触屏、屏幕阅读器和未变交互未重验。
+- [previewCI38261624860](https://github.com/crazycloudcc/ccblog/actions/runs/38261624860) success及[preview部署](https://vercel.com/chainboxapp/ccblog/Byi2hjHApncZXNrqVVixBhFrkmTK) Ready/Preview/dev.crazycloud.cc/exactSHA后同SHA非强推main；[生产CI38262364590](https://github.com/crazycloudcc/ccblog/actions/runs/38262364590) success，[生产部署](https://vercel.com/chainboxapp/ccblog/6Gyw6Yv5afsSxqCLSoS5hx2HGpeN) Ready/Production/crazycloud.cc/exactSHA及正文/canonical/日期实核。
+- [来源与验收限制](experiments/perimeter-ratio-2026-10-12/README.md)。2016/2023问题是常青需求，不称实时热度；线上Markdown未重试既有客户端阻止，本地HTML/Markdown已验。另一项取消的binary证明未包含或发布。
