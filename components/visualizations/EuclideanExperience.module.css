@@ -5,3 +5,8 @@
 
 .graphScroll{overflow-x:auto}.stage svg{overflow:hidden}.toolbar{position:sticky;top:0;z-index:2;background:var(--color-paper);padding:.2rem 0}.graphScroll:focus-visible{outline:3px solid var(--color-code-cobalt);outline-offset:2px}
 .stage svg .tileLabel{fill:#fff;font-size:21px}.tile{animation:tileReveal .3s ease-out}.actions button:disabled{opacity:.5;cursor:default}@keyframes tileReveal{from{opacity:.25}to{opacity:1}}@media(prefers-reduced-motion:reduce){.tile{animation:none}}.stage svg{min-width:540px}.header h1 span{display:inline-block}
+
+/* Dream Loop: controls and equation stay together above the geometry. */
+.toolbar{border-bottom:1px solid var(--color-mist);padding:.2rem 0 .4rem}.toolbar .status{margin:.35rem 0}.actions button.primary{background:var(--color-code-teal);color:var(--color-paper)}.actions button[aria-pressed=true]{border-width:2px;text-decoration:underline}.controls label{padding:.3rem .65rem}.controls input{margin:.3rem 0}.header h1{font-size:1.95rem}.actions{margin:.45rem 0}.stage .graphScroll{margin-top:.15rem}
+.actions button:hover:not(.primary){background:var(--color-paper);text-decoration:underline;box-shadow:inset 0 0 0 1px var(--color-code-teal)}
+.explain pre{background:var(--color-terminal-bg)}
