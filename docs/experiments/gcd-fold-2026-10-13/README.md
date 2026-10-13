@@ -31,3 +31,19 @@ At 04:07:00 UTC the final implementation passed 246/246 tests, lint, TypeScript,
 Independent mathematical review passed at 04:07:55 UTC: 216,000 positive triples in 1–60, 1,296,000 permutations and 12,960,000 divisor-set comparisons; 2,056 safe-integer boundary/deterministic-random triples against BigInt (12,336 permutations); 128 lists of lengths 1–12 with reverse-order comparison. Static HTML, Markdown equality, dates and canonical were inspected. No blocker found. The extra test counterexample (6,10,15) has common GCD 1 but pairwise GCDs 2,3,5; the text does not equate these concepts.
 
 Real baseline and generated target were captured/prepared in parallel with the implementation and review. The target remains a local layout reference; its generated lettering and larger raster size are not accepted as mathematical evidence. Real after-image and exact preview/production verification remain pending at this product commit.
+
+## Preview and actual visual review
+
+Product commit `388778e6c8898287d39de8396836ca0d9001024a` reached preview with an expected-SHA non-force update at 04:08:59 UTC. [CI 38345051810](https://github.com/crazycloudcc/ccblog/actions/runs/38345051810) was confirmed successful at 04:11:09. [Vercel preview](https://vercel.com/chainboxapp/ccblog/FapcUV1dPq1FxkuCkjGRM2baEwoU) was read as Ready / Preview / dev.crazycloud.cc / exact SHA at 04:10:05.
+
+Real after screenshot at 04:10:38 covers the new paragraph at 1180×757. Independent visual review scored 9.5/10 with no must-fix. The paragraph wraps naturally, remains legible and does not overlap its neighbors. The before/after scroll positions differ; missing headings outside the crop are not interpreted as removed content. Read-only DOM inspection confirmed viewport/client/scroll width all 1180, correct canonical, both teaching dates 2026-10-13 and the complete new paragraph.
+
+This round did not repeat narrow-window/375/390/real-phone/touch/screen-reader/FPS testing or unchanged SVG interactions. Desktop screenshot review is not a claim about those untested areas. No live Markdown request was made through the previously blocked client; built HTML and Markdown were inspected instead.
+
+After successful preview checks and independent visual acceptance, main was updated to the same product commit at 04:11:59 UTC, expected previous SHA `69567590c90db6040966f1a494c8fc4e47886739`, force=false. Production verification follows.
+
+## Production completion
+
+The product was fully verified at **2026-10-13 04:13:36 UTC** (Shanghai 12:13:36). [Production CI 38345290728](https://github.com/crazycloudcc/ccblog/actions/runs/38345290728) is successful for exact `388778e6c8898287d39de8396836ca0d9001024a`. [Production deployment](https://vercel.com/chainboxapp/ccblog/CVbCwqMZZ6zv4XdKahtPfJtdPoxF) was read as Ready / Production / same SHA / crazycloud.cc at 04:13:08. The [formal lesson](https://crazycloud.cc/learn/euclidean-algorithm) was read at 04:13:26 with the complete new explanation, exact canonical and both original 2026-10-13 teaching dates.
+
+No new daily article was counted. The old working tree still had 20 changes; this batch did not include the canceled binary-proof upload, touch the stopped projects, access Gmail or repeat denied browser enumeration. This documentation receipt records completed product verification; its own preview checks are tracked separately.

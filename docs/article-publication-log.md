@@ -165,3 +165,11 @@
 - 产品 `69567590c90db6040966f1a494c8fc4e47886739`；新增Markdown测试的Jiti别名缺失修复后最终244/244tests、lint/types/config/冻结build/Pagefind全过。独立42组正实数数学、13项定向、静态HTML/Markdown/链接/日期审阅通过。Dream Loop真实1188×761桌面及505×761窄窗独审9/10，无必修项；375/390真机、触屏、屏幕阅读器、FPS及未改核心交互未重验。
 - [previewCI38315374178](https://github.com/crazycloudcc/ccblog/actions/runs/38315374178) success和[preview部署](https://vercel.com/chainboxapp/ccblog/5pNcDJ7hRQqyPzVDVxZC2RCeGksR) Ready/Preview/dev.crazycloud.cc/精确SHA后同SHA非强推main；[生产CI38315678569](https://github.com/crazycloudcc/ccblog/actions/runs/38315678569) success，[生产部署](https://vercel.com/chainboxapp/ccblog/HF8AAySUmbCyrJ9jj3MbycCuLVFn) Ready/Production/crazycloud.cc/精确SHA与正式正文、canonical、日期已实核。
 - [来源、失败修复与验收限制](experiments/shape-bridge-2026-10-13/README.md)。Cambridge来源更新于2022-12-12，属于常青教学需求，不称热度或流量成果。生成目标只本地；线上Markdown既有阻止未重试。旧binary具体取消未包含。
+
+## 2026-10-13 多个正整数的 GCD 折叠说明（不是新文章）
+
+- 2026-10-13 04:13:36UTC（上海12:13:36）正式GCD课完成短解释：用已有欧几里得公因数集合不变量追到(g,0)，说明正整数gcd(a,b,c)=gcd(gcd(a,b),c)。48、18、30得到6，换成20得到2。仍为两数图形，不引入空输入/全零约定；核心图形、整数域与原教学日期保持，不计另一新篇。
+- 产品 `388778e6c8898287d39de8396836ca0d9001024a`；246/246tests、lint/types/config/冻结build/Pagefind通过。独立216,000三元组、1,296,000换序、12,960,000整除集合检查，以及2,056安全整数BigInt三元组和128列表通过。静态HTML/Markdown/canonical/日期已验。
+- Dream Loop真实桌面1180×757前后图与本地生成布局参考，独审9.5/10无必修项。只验本轮可见桌面区域；窄屏、375/390真机、触屏、屏幕阅读器、FPS与未改SVG交互未重验，不冒称通过。
+- [previewCI38345051810](https://github.com/crazycloudcc/ccblog/actions/runs/38345051810) success和[preview部署](https://vercel.com/chainboxapp/ccblog/FapcUV1dPq1FxkuCkjGRM2baEwoU) Ready/dev/精确SHA后同SHA非强推main；[生产CI38345290728](https://github.com/crazycloudcc/ccblog/actions/runs/38345290728) success，[生产部署](https://vercel.com/chainboxapp/ccblog/CVbCwqMZZ6zv4XdKahtPfJtdPoxF) Ready/Production/crazycloud.cc/精确SHA与正式正文实核。
+- [来源、验收与限制](experiments/gcd-fold-2026-10-13/README.md)。2015结合律问题与2011两两互质问题仅作常青意图，未声称热度；明确cdp云端入口实际可读，未重复未限定浏览器枚举。旧binary具体取消未包含。
