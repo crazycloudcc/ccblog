@@ -1,4 +1,23 @@
 export const lessons = {
+  "coordinate-distance": {
+    notesSlug: null, category: "几何", difficulty: "入门", prerequisites: "坐标、绝对值与勾股定理", estimatedMinutes: 10,
+    title: "两点距离图解：负坐标，为什么仍然用相减？",
+    published: "2026-10-14", updated: "2026-10-14", ogImage: "/images/learn/coordinate-distance.png",
+    description: "在等尺度坐标平面中改变两点，用水平与竖直辅助线区分有向变化和非负长度；通过交换、平移与退化例子推导两点距离公式。",
+    shortAnswer: "在平面直角坐标系中，A=(x₁,y₁)、B=(x₂,y₂)的距离为d=√((x₂−x₁)²+(y₂−y₁)²)。坐标差可以为负，辅助线段长度分别为|x₂−x₁|和|y₂−y₁|；平方消去符号，距离取非负平方根。",
+    conditions: "两轴互相垂直，使用相同长度单位；图形两轴采用相同比例尺。公式适用于任意实数平面坐标，实验滑块仅提供−5到5的整数。它计算欧氏直线距离，不是道路绕行长度，也不能把经纬度的度数直接代入当作地面距离。两点可重合，此时距离为0。",
+    steps: ["设A=(−2,1)、B=(1,−3)，选辅助点C=(x₂,y₁)=(1,1)。AC水平、CB竖直；它们是辅助线，不是额外的坐标轴。", "从A到C，Δx=1−(−2)=3，向右3单位。从C到B，Δy=−3−1=−4，向下4单位。辅助线段长度是|Δx|=3、|Δy|=4。", "当两条辅助线段都非零，它们形成直角三角形。勾股定理给出d²=|Δx|²+|Δy|²；由于|t|²=t²，得到d=√(Δx²+Δy²)。本例d=√(9+16)=5。", "交换A、B，两个坐标差都变号，平方与距离不变。同时把两点平移(1,1)，得到A=(−1,2)、B=(2,−2)，差仍为3和−4，距离仍为5。", "同一水平线上的A=(−5,1)、B=(−2,1)，距离为|−2−(−5)|=3，不是5+2。跨轴也无需换公式，例如A=(−2,−2)、B=(2,2)，距离为√32=4√2。", "若横坐标相同或纵坐标相同，辅助图退化，直接取另一坐标差的绝对值。若两点重合，两个差都为0，距离为0；这时不再称为非退化直角三角形。"],
+    complexityLabel: "单位、精度与计算边界",
+    complexity: "固定二维坐标只需两次相减和一次长度计算，在固定精度运算模型下时间与额外空间为O(1)。代码用Math.hypot(dx,dy)，但必须先确保输入、差值和结果在可表示范围内；它不能修复已经溢出的相减。实验整数范围保证平方和0到200精确，根式给出精确距离，小数显示为近似。画面缩放只改变像素，不改变坐标单位或距离。",
+    mistakes: ["把坐标当长度：坐标可能为负；有向变化量也可能为负，长度和距离则非负。两点重合的0不能说成正数。", "一跨过坐标轴就相加：保留坐标原有正负号后做差。不同侧时绝对值有时等于到原点距离之和，同侧时一般不是。", "把横向长度与竖向长度相加当作直线距离：本例折线为3+4=7，直线为5；两种路径不同。", "把平方根写成±d：方程z²=25有两个解，但长度只能取非负值5。", "只平移一点，或让两个点分别被边界截断：这不是共同平移，不能保证距离不变。实验将越界时禁用整个平移方向。"],
+    references: [{ label: "OpenStax《Algebra and Trigonometry 2e》2.1：直角坐标系与距离公式", url: "https://openstax.org/books/algebra-and-trigonometry-2e/pages/2-1-the-rectangular-coordinate-systems-and-graphs" }],
+    goals: ["把带符号的坐标差变成辅助线段长度", "用正交辅助线推导距离公式", "解释平移、交换与重合边界"],
+    summary: "A=(−2,1)、B=(1,−3)，坐标差3和−4，距离5。交换端点或共同平移保持距离，轴对齐与重合也有明确结果。",
+    invariant: "同时平移两点同一向量，两个坐标差不变；交换两点，差同时变号而平方不变。每次画面更新使用同一组坐标计算图形、公式和代码。",
+    question: "A=(−3,2)、B=(1,−1)，距离是多少？把两点同时向右移1单位后呢？如果改为A=B=(−1,2)呢？",
+    answer: "坐标差为4和−3，距离√(16+9)=5。共同右移后差不变，距离仍为5；两点重合时两个差都为0，距离为0。",
+  },
+
   "euclidean-algorithm": {
     notesSlug: null, category: "算法", difficulty: "入门", prerequisites: "整数除法、余数与矩形面积", estimatedMinutes: 12,
     title: "最大公约数（GCD）图解：把余数留在画面里",
@@ -219,6 +238,7 @@ export function getLesson(slug: string) {
 
 /** Optional learning extensions; not prerequisites or a new lesson. */
 export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "coordinate-distance": { slug: "pythagorean-theorem", label: "前置：勾股定理的面积拼补", explanation: "本课把水平与竖直坐标差变成直角边长，再应用勾股定理。若想理解平方和为什么成立，可先看四块全等三角形的面积拼补。" },
   "euclidean-algorithm": { slug: "binary-search-on-answer", label: "对比：二分答案的单调区间", explanation: "欧几里得算法让余数严格减小；二分答案让搜索区间缩小。两者都需说明为何终止，但保留的性质不同。" },
   "radians": { slug: "similar-triangles", label: "前置：相似与比例", explanation: "相似缩放让长度按同一倍数变化。把这条规律用于同角度的圆弧，就能看见弧长与半径之比不变。" },
   "similar-triangles": { slug: "pythagorean-theorem", label: "相关实验：勾股定理与直角条件", explanation: "勾股定理联系一个直角三角形的三边；相似比例联系两个三角形的对应边。先辨认图形和已知条件，再选择关系。" },
