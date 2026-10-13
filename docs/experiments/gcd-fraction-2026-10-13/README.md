@@ -1,0 +1,18 @@
+# GCD application: simplifying positive fractions
+
+## Scope and original demand
+One shared static FAQ connects the existing GCD algorithm to fraction simplification: divide positive integer numerator and denominator by their gcd, preserve the value by cancelling a nonzero common factor, and prove lowest terms by contradiction to maximality. Example36/60 becomes3/5. Computing gcd may swap inputs; the fraction's numerator and denominator must retain their order. This is maintenance, not another article, and introduces no fraction API or changes to the existing integer diagram.
+
+Original question actually read: https://math.stackexchange.com/questions/1007938/the-steps-of-simplifying-a-fraction , asked2014-11-05 20:40. The learner's problem is what to do after finding a common factor; source comments also identify reciprocal confusion. This is historical learning intent, not new heat or measured search demand. Independent scope review found existing GCD prose did not answer this application. OpenStax corroboration actually read: https://openstax.org/books/prealgebra-2e/pages/4-2-multiply-and-divide-fractions . We wrote our own explanation and example reasoning, without copying answer prose.
+
+## Safe baseline and licenses
+Exact previewbd4e3bf06c84f5b1065042cf74f959bba3438ed1 was materialized in the original dot cloud,354 baseline blobs hash-verified. The old20-entry working tree remains untouched. No populated new branch, environment, dependency install, credential or external script. Read AetherViz Master SKILL and local MIT attribution; Dream Loop SKILL/Pro workflow at9bddb901f7d071cfefdd21e264267c757177a9df and local MIT; repository AGENTS and installed Next server/client guidance. Existing nativeSVG, controls, styles, routes, canonical, sitemap and original2026-10-13 teaching dates stay unchanged.
+
+## Dream Loop
+Explicitcdp cloud baseline screenshot13:07:15UTC at1180x757 shows existing finalFAQ and self-test. Generated1566x1005 target inspected and locked13:09:54 before implementation13:10:26. Target is only a layout reference with generated lettering, not a real screenshot or mathematical evidence; remains local and is not uploaded. Plan appends a normal bullet using existing text layout, with self-test naturally below. Actual after screenshot and independent visual review are pending.
+
+## Verification progress
+Two regression tests added: all3600 positive bounded fractions and explicit/safe-integer cases preserve value and reduce to coprime terms, with BigInt cross-products and original order; sharedMarkdown text, positive domain, dates/canonical. Independent math plan review passed13,622 cases using separate BigInt binary-GCD oracle:3600 bounded,20 boundaries,2 direction assertions and10000 safe-integer deterministic samples. All250/250tests, lint, types, config, frozenNextwebpack build and Pagefind passed13:11:30UTC. Independent exact354-file baseline review found only the intended data/tests changes; two new targeted tests independently passed2/2. Final staticoutput review pending. No preview or main update yet.
+
+## Limits
+ShanghaiOct13 sole new article remains GCD. Specific canceled binary-proof README upload is untouched. No Gmail monitoring or stopped-project access. No unscoped browser inventory or retry of earlier website/client restrictions. Narrow/mobile375/390/touch/screen-reader/FPS and unchanged SVG controls are not claimed revalidated. BuiltHTML/Markdown will be checked; denied liveMarkdown path is not retried. Publication requires final math/checks, exactpreviewCI/Ready and available screenshot review before sameSHA main, then exactproductionCI/Ready/hostname and actual text.

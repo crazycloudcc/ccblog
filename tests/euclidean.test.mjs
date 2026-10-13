@@ -73,3 +73,27 @@ test('gcd: positive multi-input explanation is static and does not broaden the i
  for(const term of ['多个正整数也能两两求吗','最后到(g,0)','当且仅当d整除g','gcd(a,b,c)=gcd(g,c)','gcd(6,30)=6','把30换成20，结果为2','不引入空输入或全零的新约定'])assert.ok(md.includes(term),term);
  assert.equal(l.published,'2026-10-13');assert.equal(l.updated,'2026-10-13');assert.match(l.conditions,/1–60的正整数/);assert.match(l.conditions,/不定义gcd\(0,0\)/);
 });
+
+test('gcd: dividing a positive fraction by its gcd preserves order, value and lowest terms',()=>{
+ const check=(a,b)=>{
+  const g=euclideanTrace(a,b).gcd,n=a/g,d=b/g;
+  assert.ok(Number.isSafeInteger(n)&&n>0);assert.ok(Number.isSafeInteger(d)&&d>0);
+  assert.equal(BigInt(n)*BigInt(b),BigInt(d)*BigInt(a));
+  assert.equal(euclideanTrace(n,d).gcd,1);
+  assert.equal(g,euclideanTrace(b,a).gcd);
+  return [n,d];
+ };
+ for(let a=1;a<=60;a++)for(let b=1;b<=60;b++)check(a,b);
+ for(const [a,b,n,d] of [[36,60,3,5],[60,36,5,3],[1,60,1,60],[60,1,60,1],[24,24,1,1],[35,22,35,22],[48,12,4,1]])assert.deepEqual(check(a,b),[n,d]);
+ for(const [a,b] of [[Number.MAX_SAFE_INTEGER,2],[Number.MAX_SAFE_INTEGER,Number.MAX_SAFE_INTEGER],[Number.MAX_SAFE_INTEGER,Number.MAX_SAFE_INTEGER-1],[754011380474634,466004661037553]])check(a,b);
+ // This is an application of the existing integer gcd, not a fraction API.
+ assert.throws(()=>euclideanTrace(0,0),RangeError);assert.throws(()=>euclideanTrace(36.5,60),RangeError);
+});
+test('gcd: fraction application is shared static text with positive domain and unchanged dates',async()=>{
+ const {lessons}=await jiti.import('../lib/visualizations/lessons.ts');const l=lessons['euclidean-algorithm'];
+ const {renderLessonMarkdown,lessonStructuredData}=await jiti.import('../lib/visualizations/lesson-publication.ts');const md=renderLessonMarkdown('euclidean-algorithm');
+ const paragraph=l.mistakes.find(x=>x.startsWith('怎样用GCD约分？'));assert.ok(paragraph);
+ for(const term of ['正整数分子a、分母b','(a/g)/(b/g)','g/g=1','分数值不变','36/60同除12，得到3/5','整数因子d>1','gd>g','所以已是最简','不能交换分子分母','36/60不能写成5/3'])assert.ok(paragraph.includes(term),term);
+ assert.ok(md.includes(paragraph));assert.equal(l.published,'2026-10-13');assert.equal(l.updated,'2026-10-13');assert.match(l.conditions,/1–60的正整数/);
+ assert.equal(lessonStructuredData('euclidean-algorithm')['@graph'][0].url,'https://crazycloud.cc/learn/euclidean-algorithm');
+});
