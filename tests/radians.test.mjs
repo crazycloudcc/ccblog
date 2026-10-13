@@ -66,3 +66,26 @@ test('radians: conversion proportion includes zero and preserves inverse and rad
   }
  }
 });
+
+test('radians: sector perimeter is arc plus radii only for proper sectors',()=>{
+ for(const r of [.5,.75,1,1.25,1.5,2])for(const d of [.000001,1,30,60,90,180,270,359,359.999999]){
+  const m=radianModel(r,d),perimeter=m.length+2*r;
+  near(perimeter,2*Math.PI*r*d/360+2*r);assert.ok(perimeter>m.length);
+ }
+ near(radianModel(2,90).length+4,Math.PI+4);
+ for(const r of [.5,1,2]){
+  near(radianModel(r,0).length,0);
+  const full=radianModel(r,360).length;near(full,TAU*r);
+  // The ordinary-sector limit includes two radial edges; the full disk does not.
+  near(radianModel(r,359.999999).length+2*r-full,2*r,1e-7);
+  near(radianModel(r,.000001).length+2*r,2*r,1e-7);
+ }
+});
+test('radians: shared explanation distinguishes arc perimeter area and both endpoints',async()=>{
+ const {lessons}=await jiti.import('../lib/visualizations/lessons.ts');
+ const {renderLessonMarkdown,lessonStructuredData}=await jiti.import('../lib/visualizations/lesson-publication.ts');
+ const l=lessons.radians,p=l.mistakes.find(t=>t.startsWith('弧长就是扇形周长吗？'));assert.ok(p);
+ for(const text of ['半径r>0、0<θ<2π','P=s+2r=rθ+2r','面积衡量内部大小，用平方单位','θ=2π','边界只有圆周','不重复计入半径','θ=0是退化情形','不套用普通扇形周长公式'])assert.ok(p.includes(text),text);
+ assert.ok(renderLessonMarkdown('radians').includes(p));assert.equal(l.published,'2026-10-12');assert.equal(l.updated,'2026-10-12');
+ const article=lessonStructuredData('radians')['@graph'][0];assert.equal(article.url,'https://crazycloud.cc/learn/radians');assert.equal(article.dateModified,'2026-10-12');
+});
