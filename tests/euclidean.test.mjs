@@ -54,3 +54,22 @@ test('gcd: decimal explanation stays in static output without broadening lesson 
  assert.equal(l.published,'2026-10-13');assert.equal(l.updated,'2026-10-13');assert.match(l.conditions,/1–60的正整数/);assert.match(l.conditions,/非负安全整数/);
  assert.ok(l.references.some(r=>r.url==='https://docs.python.org/3/tutorial/floatingpoint.html'));
 });
+
+test('gcd: positive triples preserve the complete common-divisor set when folded',()=>{
+ for(let a=1;a<=24;a++)for(let b=1;b<=24;b++)for(let c=1;c<=24;c++){
+  const g=euclideanTrace(a,b).gcd,result=euclideanTrace(g,c).gcd;
+  let expected=1;for(let d=1;d<=Math.min(a,b,c);d++)if(a%d===0&&b%d===0&&c%d===0)expected=d;
+  assert.equal(result,expected);assert.equal(result,euclideanTrace(a,euclideanTrace(b,c).gcd).gcd);
+  for(let d=1;d<=24;d++)assert.equal(a%d===0&&b%d===0&&c%d===0,g%d===0&&c%d===0);
+ }
+ for(const [a,b,c,g] of [[48,18,30,6],[48,18,20,2],[1,60,60,1],[60,60,60,60],[6,10,15,1]])assert.equal(euclideanTrace(euclideanTrace(a,b).gcd,c).gcd,g);
+ // A common gcd of 1 is not a promise of pairwise coprimality.
+ assert.equal(euclideanTrace(6,10).gcd,2);assert.equal(euclideanTrace(6,15).gcd,3);assert.equal(euclideanTrace(10,15).gcd,5);
+ assert.equal(euclideanTrace(0,7).gcd,7);assert.equal(euclideanTrace(7,0).gcd,7);assert.throws(()=>euclideanTrace(0,0),RangeError);
+});
+test('gcd: positive multi-input explanation is static and does not broaden the interactive API',async()=>{
+ const {lessons}=await jiti.import('../lib/visualizations/lessons.ts');const l=lessons['euclidean-algorithm'];
+ const {renderLessonMarkdown}=await jiti.import('../lib/visualizations/lesson-publication.ts');const md=renderLessonMarkdown('euclidean-algorithm');
+ for(const term of ['多个正整数也能两两求吗','最后到(g,0)','当且仅当d整除g','gcd(a,b,c)=gcd(g,c)','gcd(6,30)=6','把30换成20，结果为2','不引入空输入或全零的新约定'])assert.ok(md.includes(term),term);
+ assert.equal(l.published,'2026-10-13');assert.equal(l.updated,'2026-10-13');assert.match(l.conditions,/1–60的正整数/);assert.match(l.conditions,/不定义gcd\(0,0\)/);
+});
