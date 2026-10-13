@@ -16,3 +16,15 @@ Two regression tests added: all3600 positive bounded fractions and explicit/safe
 
 ## Limits
 ShanghaiOct13 sole new article remains GCD. Specific canceled binary-proof README upload is untouched. No Gmail monitoring or stopped-project access. No unscoped browser inventory or retry of earlier website/client restrictions. Narrow/mobile375/390/touch/screen-reader/FPS and unchanged SVG controls are not claimed revalidated. BuiltHTML/Markdown will be checked; denied liveMarkdown path is not retried. Publication requires final math/checks, exactpreviewCI/Ready and available screenshot review before sameSHA main, then exactproductionCI/Ready/hostname and actual text.
+
+## Final checks and precise preview
+All250 checks passed13:11:30UTC; independent final13,622 mathematicalcases,354baselineblobdiff,2new targeted tests and actual builtHTML/Markdown/fullparagraph/dates/canonical passed. No math correction required. These supersede the pending math entries above.
+Product247b7ecb59065f4ae18886ac11b40a55c42f9029 updatedpreview nonforce after expectedbd4e3bf read. [PreviewCI38403226703](https://github.com/crazycloudcc/ccblog/actions/runs/38403226703) success/exactSHA read13:15:25; [previewdeployment](https://vercel.com/chainboxapp/ccblog/ETzfF7NvFxfVcFrEREtghX4XxrsH) Ready/Preview/dev.crazycloud.cc/exactSHA read13:14:16.
+Actual1180x757 after screenshot13:14:52 shows fullFAQ and selftest/extension through normal scrolling. DOMfulltext/canonical/bothoriginaldates verified,clientWidth=scrollWidth=1180. Independentvisualreview and formalpublication still pending. No generatedtargetupload or broaderdeviceclaim.
+
+## Visual gate and main advancement
+Independent review of actualbefore/after and generatedtarget:9/10 (composition2,contrast3,materials3,details1), no must-fix. Dense inherited column and linebreak before12 are nonblocking readability observations. Actual normal scrolling reached the fullFAQ/selftest; reviewer only assessed static screenshots. CoreSVG/model/style unchanged by exactsourcehash comparison, not inferred from below-fold screenshots. No narrow/mobile/touch/SR/FPS claim.
+With required gates complete and refs reread unchanged, sameSHA247b7ec nonforce main update succeeded13:16:36UTC, expected55a7f48. ProductionCI38403659237 and deploymentDjnCnMat9sYWfyK3T3jWb1wNR61h are pending here; formal completion not yet claimed.
+
+## Formal product closure
+2026-10-13 13:19:13UTC / Shanghai21:19:13: product247b7ecb59065f4ae18886ac11b40a55c42f9029 formally complete. [ProductionCI38403659237](https://github.com/crazycloudcc/ccblog/actions/runs/38403659237) success/exactSHA and [productiondeployment](https://vercel.com/chainboxapp/ccblog/DjnCnMat9sYWfyK3T3jWb1wNR61h) Ready/Production/crazycloud.cc/exactSHA read13:18:57. Actual formal https://crazycloud.cc/learn/euclidean-algorithm renders fullFAQ, original2026-10-13 dates and correctcanonical. Earlier pending entries are historical, superseded by this closure. Text-only documentation receipt follows; no extra product or generatedimageupload.

@@ -180,3 +180,10 @@
 - 产品`55a7f48c9e4fdf7590eab3d452f794b4173c5b95`；248/248tests、lint/types/config/冻结build/Pagefind通过；独立精确差异、数学端点/趋近与2项定向、SSR/Markdown/构建产物/日期canonical通过。Dream Loop真实1180×757桌面前后独审9.1/10，无must-fix；补滚动截图确认自测答案可达。窄屏375/390、真机、触屏、屏幕阅读器、FPS和未改控件交互未重验。
 - [previewCI38388844910](https://github.com/crazycloudcc/ccblog/actions/runs/38388844910)success及[preview部署](https://vercel.com/chainboxapp/ccblog/vogZw85gPXh2geTnn6YVBp9Jo9Pv)Ready/dev/精确SHA后同SHA非强推main；[生产CI38389361205](https://github.com/crazycloudcc/ccblog/actions/runs/38389361205)success，[生产部署](https://vercel.com/chainboxapp/ccblog/6bATY21GjaJXwyFYvaj9MPQLjr6C)Ready/Production/crazycloud.cc/精确SHA及正式全文/canonical/日期实核。
 - [来源与验收限制](experiments/sector-perimeter-2026-10-13/README.md)。2013原问是常青需求，非新热点或流量成果。目标图只本地布局参考；线上Markdown限制未重试。旧binary具体取消、Gmail主动监控取消及两停止项目保持。
+
+## 2026-10-13 GCD 约分应用说明（不是新文章）
+
+- 2026-10-13 13:19:13UTC（上海21:19:13）正式GCD课新增短FAQ：正整数分子分母同除gcd，解释共同非零因子消去保持值，以最大性反证约后互质；36/60同除12得3/5，强调求gcd可交换输入但不能倒置分数。核心SVG、整数交互域及原教学日期不变，不计第二新篇。
+- 产品`247b7ecb59065f4ae18886ac11b40a55c42f9029`；250/250tests、lint/types/config/冻结build/Pagefind通过；独立13,622数学样本、354基线文件精确差异、2新增定向测试及实际HTML/Markdown/日期canonical通过。DreamLoop真实1180×757前后截图独审9/10，无must-fix；原窄正文栏略密、12换行属非阻断观察。窄屏375/390、真机、触屏、屏幕阅读器、FPS及未改控件未重验。
+- [previewCI38403226703](https://github.com/crazycloudcc/ccblog/actions/runs/38403226703)success和[preview部署](https://vercel.com/chainboxapp/ccblog/ETzfF7NvFxfVcFrEREtghX4XxrsH)Ready/Preview/dev.crazycloud.cc/精确SHA后同SHA非强推main；[生产CI38403659237](https://github.com/crazycloudcc/ccblog/actions/runs/38403659237)success，[生产部署](https://vercel.com/chainboxapp/ccblog/DjnCnMat9sYWfyK3T3jWb1wNR61h)Ready/Production/crazycloud.cc/精确SHA与正式全文/日期/canonical已实读。
+- [来源与验收限制](experiments/gcd-fraction-2026-10-13/README.md)。2014-11-05原问为常青需求，不称热度或搜索量；生成目标仅本地布局参照。旧binary具体取消、Gmail监控取消和已停项目保持。
