@@ -173,3 +173,10 @@
 - Dream Loop真实桌面1180×757前后图与本地生成布局参考，独审9.5/10无必修项。只验本轮可见桌面区域；窄屏、375/390真机、触屏、屏幕阅读器、FPS与未改SVG交互未重验，不冒称通过。
 - [previewCI38345051810](https://github.com/crazycloudcc/ccblog/actions/runs/38345051810) success和[preview部署](https://vercel.com/chainboxapp/ccblog/FapcUV1dPq1FxkuCkjGRM2baEwoU) Ready/dev/精确SHA后同SHA非强推main；[生产CI38345290728](https://github.com/crazycloudcc/ccblog/actions/runs/38345290728) success，[生产部署](https://vercel.com/chainboxapp/ccblog/CVbCwqMZZ6zv4XdKahtPfJtdPoxF) Ready/Production/crazycloud.cc/精确SHA与正式正文实核。
 - [来源、验收与限制](experiments/gcd-fold-2026-10-13/README.md)。2015结合律问题与2011两两互质问题仅作常青意图，未声称热度；明确cdp云端入口实际可读，未重复未限定浏览器枚举。旧binary具体取消未包含。
+
+## 2026-10-13 弧长与扇形周长澄清（不是新文章）
+
+- 2026-10-13 11:20:23UTC（上海19:20:23）正式弧度课完成共享FAQ：普通扇形0<θ<2π的周长为弧长加两条半径；整圆只计圆周，零角退化不套普通公式。面积仅区分平方单位。原图形、标题、教学日期2026-10-12不变，Oct13唯一新篇仍为GCD。
+- 产品`55a7f48c9e4fdf7590eab3d452f794b4173c5b95`；248/248tests、lint/types/config/冻结build/Pagefind通过；独立精确差异、数学端点/趋近与2项定向、SSR/Markdown/构建产物/日期canonical通过。Dream Loop真实1180×757桌面前后独审9.1/10，无must-fix；补滚动截图确认自测答案可达。窄屏375/390、真机、触屏、屏幕阅读器、FPS和未改控件交互未重验。
+- [previewCI38388844910](https://github.com/crazycloudcc/ccblog/actions/runs/38388844910)success及[preview部署](https://vercel.com/chainboxapp/ccblog/vogZw85gPXh2geTnn6YVBp9Jo9Pv)Ready/dev/精确SHA后同SHA非强推main；[生产CI38389361205](https://github.com/crazycloudcc/ccblog/actions/runs/38389361205)success，[生产部署](https://vercel.com/chainboxapp/ccblog/6bATY21GjaJXwyFYvaj9MPQLjr6C)Ready/Production/crazycloud.cc/精确SHA及正式全文/canonical/日期实核。
+- [来源与验收限制](experiments/sector-perimeter-2026-10-13/README.md)。2013原问是常青需求，非新热点或流量成果。目标图只本地布局参考；线上Markdown限制未重试。旧binary具体取消、Gmail主动监控取消及两停止项目保持。

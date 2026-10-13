@@ -16,3 +16,13 @@ Two regressions added: proper-sector arc-plus-radii equivalence and separate end
 
 ## Constraints
 No second ShanghaiOct13 new article. Old canceled binary proof upload remains untouched. No Gmail monitoring or stopped-project access. No unscoped browser inventory. Mobile375/390/touch/screen-reader/FPS not claimed checked. Live Markdown client restriction not retried; built HTML/Markdown will be inspected.
+
+## Verified preview and independent assessments
+- Final248 checks passed11:11:55UTC. Mathematical reviewer verified exact353-file baseline diff, preserved core/model/CSS, two new targeted tests2/2, SSR/Markdown route and build artifacts, dates/canonical. No mathematical correction required.
+- Product55a7f48c9e4fdf7590eab3d452f794b4173c5b95. [PreviewCI38388844910](https://github.com/crazycloudcc/ccblog/actions/runs/38388844910) success; [preview deployment](https://vercel.com/chainboxapp/ccblog/vogZw85gPXh2geTnn6YVBp9Jo9Pv) Ready/Preview/dev.crazycloud.cc/exactSHA actually read11:15:17.
+- Actual after FAQ screenshot11:15:52,1180x757; core90degree stage also captured without interaction. A normal scroll11:17:11 confirmed self-test and answers remain reachable. Independent visual9.1/10, no must-fix. No narrow/mobile375/390/touch/screenreader/FPS or unchanged control interaction revalidation. Generatedtarget is not a screenshot.
+- DOM paragraph complete, canonicalhttps://crazycloud.cc/learn/radians, both dates2026-10-12, client/scrollwidth1180/1180 verified. No liveMarkdown client retry.
+- SameSHA nonforce main update succeeded11:18:56 after preview gates. ProductionCI38389361205 and production deployment6bATY21GjaJXwyFYvaj9MPQLjr6C pending at this entry; formal completion not yet claimed.
+
+## Formal product closure
+2026-10-13 11:20:23UTC / Shanghai19:20:23: productionCI38389361205 success/exact55a7f48 and production6bATY21GjaJXwyFYvaj9MPQLjr6C Ready/Production/crazycloud.cc binding verified. Actual formal page https://crazycloud.cc/learn/radians renders fullFAQ, canonical and originaldates. Product complete; preceding pending entries are historical progress, superseded here. Text-only receipt publication follows independently. No optional generated-image uploads.
