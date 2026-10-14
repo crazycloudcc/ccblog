@@ -1,4 +1,22 @@
 export const lessons = {
+  "least-common-multiple": {
+    notesSlug: null, category: "算法", difficulty: "入门", prerequisites: "正整数、整除与最大公约数", estimatedMinutes: 12,
+    title: "最小公倍数（LCM）图解：第一次共同的正落点",
+    published: "2026-10-15", updated: "2026-10-15", ogImage: "/images/learn/least-common-multiple.png",
+    description: "让两排倍数共用同一条数值刻度，观察首次共同的正落点；理解为什么先除GCD再相乘，以及三数不能直接照搬乘积公式。",
+    shortAnswer: "正整数a、b的最小公倍数，是同时被a和b整除的最小正整数。令d=gcd(a,b)，则lcm(a,b)=(a/d)×b。6与8的倍数第一次在24相遇，因为gcd(6,8)=2，6÷2×8=24。",
+    conditions: "本课只讨论正整数；交互和同步代码仅接受1–20，结果不超过380。0只是数轴起点，不是正公倍数候选。负数、小数、空输入以及零输入的其他约定不在本课范围内。两排必须使用同一数值刻度；输入改变后视野重新适配，不能跨输入比较像素长度。",
+    steps: ["上排每次加6：6、12、18、24；下排每次加8：8、16、24。横坐标按数值对齐，不按第几个倍数对齐。24之前没有共同正落点，所以最小公倍数是24。", "先求d=gcd(6,8)=2，写成6=2×3、8=2×4。3与4互质，把共同因子2保留一次，得到2×3×4=24，而不是直接乘成48。", "一般地，设a=dx、b=dy，则x、y互质。dxy是两数的公倍数。若正公倍数M=ka也被b整除，就有y整除kx；由互质整除引理，y整除k，所以dxy整除M。它因此是最小的正公倍数。", "相等时lcm(a,a)=a；一个数整除另一个时答案是较大数；互质时gcd=1，答案才等于两数乘积。1与任一正整数b的最小公倍数就是b。", "三个数用两两折叠：lcm(3,12)=12，再算lcm(12,10)=60。3、12、10的gcd为1，乘积360不等于gcd×lcm的60；两数恒等式不能直接推广为三数乘积公式。"],
+    complexityLabel: "求值、绘图与精度",
+    complexity: "用欧几里得算法求GCD，再计算(a/d)×b；在单位成本整数算术模型下为O(1+log min(a,b))时间、O(1)额外空间。先除后乘减小中间值，但不保证任意大数都安全。实验范围内整数运算精确，最大结果为lcm(19,20)=380。枚举、排序回放落点与绘图另有开销，不是这个求值复杂度的一部分。",
+    mistakes: ["把0当最小值：0虽是两数的整数倍，但定义寻找的是最小正公倍数。", "直接相乘总是最小：ab是一个正公倍数，但a、b有共同因子时可能更大，例如6×8=48，而最小值24已经够用。", "按第k次跳跃对齐两排：6的第1个倍数与8的第1个倍数不在同一位置；要比较相同数值。", "把GCD和LCM混为一谈：GCD整除两数，LCM被两数整除。本课求的是后者。", "把三数乘积除以三数GCD：这不是普遍成立的公式；两两折叠仍然成立，因为每步保留相同的共同倍数集合。", "把图例当一般证明：两排落点帮助观察，最小性还要用互质整除引理或质因数指数给出推导。"],
+    references: [{label: "Wolfram 官方文档：LCM 定义、GCD关系与结合律", url: "https://reference.wolfram.com/language/ref/LCM.html"}, {label: "Wolfram MathWorld：最小公倍数与两数恒等式证明", url: "https://mathworld.wolfram.com/LeastCommonMultiple.html"}],
+    goals: ["在共同数值刻度上找第一个正交点", "说明除去GCD为何得到最小而非任意公倍数", "区分两数公式与多个数的两两折叠"],
+    summary: "6和8的首次共同正落点为24；先除GCD再相乘得到同一结果。多个数应两两折叠，不能直接套用两数乘积公式。",
+    invariant: "两排同值落点拥有相同横坐标。令a=dx、b=dy且x、y互质，每个正公倍数都是dxy的正整数倍。",
+    question: "8与12的最小公倍数是多少？7与7呢？3、12、10能否用360÷1直接得到最小公倍数？",
+    answer: "gcd(8,12)=4，最小公倍数8÷4×12=24；相等的7与7得到7。三数不能这样直接套公式，正确折叠得到60，360只是一个更大的公倍数。",
+  },
   "coordinate-distance": {
     notesSlug: null, category: "几何", difficulty: "入门", prerequisites: "坐标、绝对值与勾股定理", estimatedMinutes: 10,
     title: "两点距离图解：负坐标，为什么仍然用相减？",
@@ -238,6 +256,7 @@ export function getLesson(slug: string) {
 
 /** Optional learning extensions; not prerequisites or a new lesson. */
 export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "least-common-multiple": { slug: "euclidean-algorithm", label: "前置：用欧几里得算法求GCD", explanation: "GCD给出共同的因子，LCM给出共同的倍数。先理解取余如何保留公因数，再看为什么除去GCD能得到最小公倍数。" },
   "coordinate-distance": { slug: "pythagorean-theorem", label: "前置：勾股定理的面积拼补", explanation: "本课把水平与竖直坐标差变成直角边长，再应用勾股定理。若想理解平方和为什么成立，可先看四块全等三角形的面积拼补。" },
   "euclidean-algorithm": { slug: "binary-search-on-answer", label: "对比：二分答案的单调区间", explanation: "欧几里得算法让余数严格减小；二分答案让搜索区间缩小。两者都需说明为何终止，但保留的性质不同。" },
   "radians": { slug: "similar-triangles", label: "前置：相似与比例", explanation: "相似缩放让长度按同一倍数变化。把这条规律用于同角度的圆弧，就能看见弧长与半径之比不变。" },

@@ -1,3 +1,4 @@
+import { LcmExperience } from "@/components/visualizations/LcmExperience";
 import { CoordinateDistanceExperience } from "@/components/visualizations/CoordinateDistanceExperience";
 import { EuclideanExperience } from "@/components/visualizations/EuclideanExperience";
 import { RadianExperience } from "@/components/visualizations/RadianExperience";
@@ -29,6 +30,7 @@ export default async function VisualLessonPage({ params }: Props) {
   const lesson = getLesson(slug);
   if (!lesson) notFound();
   const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
+  if (slug === "least-common-multiple") return <>{schema}<LcmExperience><LessonReading slug={slug} /></LcmExperience></>;
   if (slug === "coordinate-distance") return <>{schema}<CoordinateDistanceExperience><LessonReading slug={slug} /></CoordinateDistanceExperience></>;
   if (slug === "euclidean-algorithm") return <>{schema}<EuclideanExperience><LessonReading slug={slug} /></EuclideanExperience></>;
   if (slug === "radians") return <>{schema}<RadianExperience><LessonReading slug={slug} /></RadianExperience></>;

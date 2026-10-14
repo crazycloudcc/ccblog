@@ -35,6 +35,6 @@ export function EuclideanExperience({children}:{children:ReactNode}){
  </section>
  <section className={s.explain}><h2>{done?'最后非零数，而不是最后的0':'为什么换成余数，共同尺度不变？'}</h2><p>若 d 同时整除 a 和 b，就整除 r=a−qb；反过来，若 d 整除 b 和 r，就整除 a=qb+r。两边的公因数集合相同，最大值也相同。</p><pre aria-label="与当前切分同步的代码"><code>{`// 本课：非负安全整数，不允许同时为0\nlet a = Math.max(width, height);\nlet b = Math.min(width, height);\nwhile (b !== 0) {\n  const r = a % b;\n  a = b;\n  b = r;\n}\nreturn a;\n\n// ${done?`结束：a=${m.gcd}, b=0`:`本轮：a=${round.a}, b=${round.b}, r=${round.r}\n// 下一对：(${round.b}, ${round.r})`}`}</code></pre></section>
  <noscript><p>初始矩形48×18：48=2×18+12，18=1×12+6，12=2×6，故gcd=6。交互需要JavaScript，下面完整解释与答案始终可读。</p></noscript>
- {children}<nav className={s.footer}><Link href="/learn">← 图解实验室</Link><Link href="/learn/binary-search-on-answer">继续比较：算法为何终止 →</Link></nav><p className={s.caption}>教学结构参考 <a href="https://github.com/andyhuo520/aetherviz-master">AetherViz Master（MIT）</a>；原创原生 SVG 实现，无外部图形脚本。几何帮助观察，整除双向推导给出证明。</p>
+ {children}<nav className={s.footer}><Link href="/learn">← 图解实验室</Link><Link href="/learn/least-common-multiple">继续探索：最小公倍数 →</Link><Link href="/learn/binary-search-on-answer">继续比较：算法为何终止 →</Link></nav><p className={s.caption}>教学结构参考 <a href="https://github.com/andyhuo520/aetherviz-master">AetherViz Master（MIT）</a>；原创原生 SVG 实现，无外部图形脚本。几何帮助观察，整除双向推导给出证明。</p>
  </article>;
 }

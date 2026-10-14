@@ -189,3 +189,10 @@
 - 产品`247b7ecb59065f4ae18886ac11b40a55c42f9029`；250/250tests、lint/types/config/冻结build/Pagefind通过；独立13,622数学样本、354基线文件精确差异、2新增定向测试及实际HTML/Markdown/日期canonical通过。DreamLoop真实1180×757前后截图独审9/10，无must-fix；原窄正文栏略密、12换行属非阻断观察。窄屏375/390、真机、触屏、屏幕阅读器、FPS及未改控件未重验。
 - [previewCI38403226703](https://github.com/crazycloudcc/ccblog/actions/runs/38403226703)success和[preview部署](https://vercel.com/chainboxapp/ccblog/ETzfF7NvFxfVcFrEREtghX4XxrsH)Ready/Preview/dev.crazycloud.cc/精确SHA后同SHA非强推main；[生产CI38403659237](https://github.com/crazycloudcc/ccblog/actions/runs/38403659237)success，[生产部署](https://vercel.com/chainboxapp/ccblog/DjnCnMat9sYWfyK3T3jWb1wNR61h)Ready/Production/crazycloud.cc/精确SHA与正式全文/日期/canonical已实读。
 - [来源与验收限制](experiments/gcd-fraction-2026-10-13/README.md)。2014-11-05原问为常青需求，不称热度或搜索量；生成目标仅本地布局参照。旧binary具体取消、Gmail监控取消和已停项目保持。
+
+
+## 2026-10-15 新文章实施：最小公倍数
+
+- 2026-10-14 16:00UTC之后（上海10月15日）启动今天唯一新篇 `/learn/least-common-multiple`。双排正倍数首次共同落点、两数GCD/LCM恒等式及三数边界，是独立于既有GCD的教学目标。
+- 状态：实施中，未宣称发布；本轮失败将继续同题，不另开日更。保留10月8日未完成记录。
+- 固定基线54f746fc5cf635c82d8f6be13509e526f6af7339；旧工作树未动。需求与Dream Loop、验证证据见 [实验记录](experiments/lcm-2026-10-15/README.md)。
