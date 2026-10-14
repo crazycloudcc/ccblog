@@ -20,3 +20,11 @@ Existing Oct14 coordinate-distance release is complete; its stale old repository
 
 ## Initial implementation checks16:09UTC
 263/263tests, fullESLint, TypeScript, config validation, frozenNextwebpack build andPagefind passed. Build used unchanged savedapps metadata rather than refreshing unrelated AppStore data; CI still runs the normal prebuild. Independent math400pairs/6268frames/132300common-multiple checks,134704landingpositions/5868cursors passed. RealSSR shows nine executable code lines and full no-JS SVG; staticHTML canonical andMarkdown verified. LocalOG1200×630 inspected. Actualpreview/visual/production remain pending.
+
+
+## Round1 preview and correction16:15UTC
+Product0a9dcda373769a698eebac18c0ace7b2e5a68abd,tree ddaf80d3f1b516a8da7dbc8548bc4ddaa517923e. CI38596170564success and deploymentG4jyhZFcAVJFEMpYKu3qF6exBXQL Ready/Preview/dev.crazycloud.cc/exactSHA verified. Actual1180×757 firstfold screenshot received independent visual6/10(composition1,color2,surfaces3,details0): formula/playback controls fall below the fold; two green sliders lose rowcolor correspondence. RealkeyboardHome/End/ArrowLeft gives1/1 and19/20→380; reset/single-step and playback started correctly.
+
+Corrective product changes: compact horizontal sliders, bslider orange, presets after immediate playback controls, twoSVG rows90units apart rather than105, smaller verticalstage, largerdots/jumparrowheads and calloutconnector. Mathematical coordinate mapping and results unchanged. Aggregatechecks and freshrealvisualreview will be rerun before main. Initial newSSRtest appended return into trailingcomment; corrected test newline and final263passed before initialpreview. No production publication yet.
+
+16:17UTC correctiveproduct263tests/lint/types/config/frozenbuild/Pagefind passed. Initialplayback observed reaching6/6 and returningtoPlay, truekeyboard1/1 and19/20 states verified. Newlayoutguard added for presetposition/stageviewBox. Finalpreviewvisualstillpending.

@@ -21,31 +21,34 @@ export function LcmExperience({ children }: { children: ReactNode }) {
   return <article lang="zh-CN" className={s.lesson}>
     <header className={s.header}><p>算法 / 整除与倍数</p><h1>最小公倍数 <span>Least common multiple</span></h1><p>沿两排倍数向前走，找到第一次共同的正落点。</p></header>
     <div className={s.controls}>{[["a", a], ["b", b]].map(([name, value]) => <label key={name}>步长 {name} <strong>{value}</strong><input aria-label={`正整数${name}`} type="range" min="1" max="20" step="1" value={value} onChange={e => change(name === "a" ? Number(e.target.value) : a, name === "b" ? Number(e.target.value) : b)} /></label>)}</div>
-    <nav className={s.actions} aria-label="最小公倍数预设"><button onClick={() => change(6, 8)}>6 和 8 / 重置</button><button onClick={() => change(5, 7)}>互质 5 和 7</button><button onClick={() => change(3, 12)}>整除 3 和 12</button><button onClick={() => change(7, 7)}>相等 7 和 7</button><button onClick={() => change(b, a)}>交换 a / b</button></nav>
+
     <section className={s.stage} aria-label="同尺度双排倍数实验">
-      <div className={s.graph} tabIndex={0} aria-label="倍数数轴，窄屏可在图内左右滚动"><svg viewBox="0 0 800 300" role="img" aria-label={`${a}和${b}的正倍数，首次共同落点${m.lcm}，当前回放到${m.value}`}>
+      <div className={s.graph} tabIndex={0} aria-label="倍数数轴，窄屏可在图内左右滚动"><svg viewBox="0 0 800 260" role="img" aria-label={`${a}和${b}的正倍数，首次共同落点${m.lcm}，当前回放到${m.value}`}>
         <title>同一数值必须落在同一横坐标</title><desc>上排是a的倍数，下排是b的倍数。空心0只是起点。实心落点为已经过的倍数，淡色虚线为尚未回放的跳步，最右侧标出第一个共同正倍数。</desc>
         <text x="20" y="30" className={s.small}>从正倍数开始 · 0 不计入</text>
+        <defs>{["a","b"].map(name=><marker key={name} id={`lcm-${name}-arrow`} viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L6 3L0 6Z" fill={name==="a"?"var(--color-code-teal)":"var(--color-code-rust)"}/></marker>)}</defs>
         <rect x="646" y="13" width="134" height="59" rx="6" className={s.badge}/><text x="713" y="36" textAnchor="middle" className={s.badgeText}>首次共同落点</text><text x="713" y="61" textAnchor="middle" className={s.badgeNumber}>{m.lcm}</text>
-        <rect x="737" y="84" width="30" height="184" rx="4" className={s.band}/>
-        {[[a, m.multiplesA, 140, "a"], [b, m.multiplesB, 245, "b"]].map(([unit, list, yy, name]) => {
+        <path d="M713 72V78H752V87 M748 83l4 4 4-4" className={s.callout}/>
+        <rect x="737" y="84" width="30" height="151" rx="4" className={s.band}/>
+        {[[a, m.multiplesA, 120, "a"], [b, m.multiplesB, 210, "b"]].map(([unit, list, yy, name]) => {
           const values = list as number[], y = Number(yy), color = name === "a" ? s.teal : s.orange;
           return <g key={String(name)} className={color}>
             <text x="16" y={y + 6} className={s.rowLabel}>{name} = {unit}</text><path d={`M112 ${y}H752`} className={s.axis}/>
             <circle cx="112" cy={y} r="5" className={s.origin}/><text x="112" y={y + 25} textAnchor="middle" className={s.number}>0</text>
             {values.map((v, i) => { const x = lcmPosition(v, m.lcm), prev = lcmPosition(i * Number(unit), m.lcm), seen = v <= m.value; return <g key={v} data-value={v} data-row={name} data-seen={seen}>
-              <path d={`M${prev} ${y - 7}Q${(prev + x) / 2} ${y - 60} ${x} ${y - 7}`} className={seen ? s.jump : s.future}/>
-              {values.length <= 8 && <text x={(prev + x) / 2} y={y - 39} textAnchor="middle" className={s.jumpLabel}>+{unit}</text>}
-              <circle cx={x} cy={y} r={v === m.lcm ? 7 : 5} className={seen ? s.landing : s.unseen}/><text x={x} y={y + 25} textAnchor="middle" className={s.number}>{v}</text>
+              <path d={`M${prev} ${y - 7}Q${(prev + x) / 2} ${y - 52} ${x} ${y - 7}`} className={seen ? s.jump : s.future} markerEnd={seen ? `url(#lcm-${name}-arrow)` : undefined}/>
+              {values.length <= 8 && <text x={(prev + x) / 2} y={y - 34} textAnchor="middle" className={s.jumpLabel}>+{unit}</text>}
+              <circle cx={x} cy={y} r={v === m.lcm ? 8 : 6} className={seen ? s.landing : s.unseen}/><text x={x} y={y + 25} textAnchor="middle" className={s.number}>{v}</text>
             </g>; })}
           </g>;
         })}
-        {step > 0 && <path d={`M${lcmPosition(m.value, m.lcm)} 85V270`} className={s.cursor}/>}
-        <text x="112" y="295" className={s.small}>两排共用数值刻度 · 改变输入时重新适配视野</text>
+        {step > 0 && <path d={`M${lcmPosition(m.value, m.lcm)} 85V234`} className={s.cursor}/>}
+        <text x="112" y="255" className={s.small}>两排共用数值刻度 · 改变输入时重新适配视野</text>
       </svg></div>
       <div className={s.formula}><span>gcd({a}, {b}) = {m.gcd}</span><strong>lcm = {a} ÷ {m.gcd} × {b} = {m.lcm}</strong></div>
     </section>
     <div className={s.toolbar}><div className={s.actions}><button disabled={step === 0} onClick={() => { setPlaying(false); setStep(v => v - 1); }}>上一步</button><button disabled={m.done} onClick={() => { setPlaying(false); setStep(v => v + 1); }}>下一落点</button><button className={s.primary} disabled={reduced} onClick={() => { if (m.done) setStep(0); setPlaying(!playing || m.done); }}>{reduced ? "减动画：请单步" : playing && !m.done ? "暂停" : "播放"}</button><button onClick={() => { setPlaying(false); setStep(0); }}>回到起点</button></div><label>落点 {step} / {m.events.length}<input aria-label="倍数回放进度" type="range" min="0" max={m.events.length} step="1" value={step} onChange={e => { setPlaying(false); setStep(Number(e.target.value)); }} /></label></div>
+    <nav className={s.actions} aria-label="最小公倍数预设"><button onClick={() => change(6, 8)}>6 和 8 / 重置</button><button onClick={() => change(5, 7)}>互质 5 和 7</button><button onClick={() => change(3, 12)}>整除 3 和 12</button><button onClick={() => change(7, 7)}>相等 7 和 7</button><button onClick={() => change(b, a)}>交换 a / b</button></nav>
     <p className={s.status} aria-live="polite">{status}</p><p className={s.caption}>回放按数值大小合并两排落点，同值只算一步；不是每步同时各跳一次。答案一直可读，动画只帮助观察。滑块可用方向键与 Home / End；窄屏图形可左右滚动。</p>
     <section className={s.proof}><h2>为什么先除掉共同因子？</h2><p>把共同尺度 d = {m.gcd} 提出来：a = d × {m.x}，b = d × {m.y}，剩下的 {m.x} 和 {m.y} 互质。</p><div className={s.factors}><span>a = <b>{m.gcd}</b> × {m.x}</span><span>b = <b>{m.gcd}</b> × {m.y}</span><strong>lcm = <b>{m.gcd}</b> × {m.x} × {m.y} = {m.lcm}</strong></div><p>一般地，写成 a=dx、b=dy。dxy 同时是两数的倍数。若另一个正公倍数 M=ka 也被 b 整除，则 y 整除 kx；因为 x、y 互质，y 必须整除 k。所以每个正公倍数都包含 dxy，最小的就是它。这里用到互质整除引理，试几个例子本身不能替代证明。</p>
       <pre tabIndex={0} aria-label="最小公倍数同步代码"><code>{`// 本实验仅接受1到20的正整数\nconst a = ${a}, b = ${b};\nlet x = a, y = b;\nwhile (y !== 0) {\n  const r = x % y;\n  x = y; y = r;\n}\nconst d = x; // ${m.gcd}\nconst result = (a / d) * b; // ${m.lcm}`}</code></pre><p className={s.caption}>先除后乘可减小中间值，但不保证任意大数都安全。本课范围内最大结果380；更大整数需要另定精度与溢出策略。绘制倍数的开销不计入上述求值算法。</p>

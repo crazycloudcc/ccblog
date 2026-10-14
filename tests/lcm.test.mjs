@@ -49,6 +49,6 @@ test('lcm: real React SSR has two meaningful tracks, full code, controls and no-
  for(const text of ['<svg','<path','<title>','<desc>','首次共同落点','正整数a','正整数b','倍数回放进度','<noscript>','static lesson','const result = (a / d) * b; // 24'])assert.ok(html.includes(text),text);
  const code=html.match(/<code>([\s\S]*?)<\/code>/)[1];assert.equal(code.split('\n').length,9);assert.ok(!code.includes('\\n'));assert.equal(new Function(code+'\nreturn result')(),24);
  assert.equal((html.match(/data-row="a"/g)||[]).length,4);assert.equal((html.match(/data-row="b"/g)||[]).length,3);assert.equal((html.match(/data-value="24"/g)||[]).length,2);assert.ok(!html.includes('NaN'));
- assert.match(src,/disabled=\{reduced\}/);assert.match(src,/visibilitychange/);assert.match(src,/clearInterval/);assert.match(src,/setPlaying\(false\)/);assert.match(src,/tabIndex=\{0\}/);
+ assert.match(src,/disabled=\{reduced\}/);assert.match(src,/visibilitychange/);assert.match(src,/clearInterval/);assert.match(src,/setPlaying\(false\)/);assert.match(src,/tabIndex=\{0\}/);assert.ok(src.indexOf('className={s.toolbar}')<src.indexOf('aria-label="最小公倍数预设"'));assert.match(src,/viewBox="0 0 800 260"/);
  const css=readFileSync(new URL('../components/visualizations/LcmExperience.module.css',import.meta.url),'utf8');for(const v of ['overflow-x:auto','focus-visible','prefers-reduced-motion','min-width:720px'])assert.ok(css.includes(v));
 });
