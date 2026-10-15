@@ -9,4 +9,6 @@
 .reading a { text-decoration: underline; text-underline-offset: 4px; }
 .byline { font-size: 12px; }
 .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.applications { margin-top: 1.5rem; border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent); }
+.applications li { margin: .8rem 0; }
 @media (max-width: 760px) { .columns { grid-template-columns: 1fr; gap: 0; } }

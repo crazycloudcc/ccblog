@@ -22,7 +22,7 @@ test("every lesson renders its complete answer without scripts or disclosures", 
   for (const [slug, l] of Object.entries(data.lessons)) {
     const html = renderToStaticMarkup(createElement(component.LessonReading, { slug }));
     assert.doesNotMatch(html, /<details|<script|hidden=/);
-    for (const value of [l.shortAnswer, l.conditions, l.complexity, l.answer, ...l.steps, ...l.mistakes]) {
+    for (const value of [l.shortAnswer, l.conditions, l.complexity, l.answer, ...l.steps, ...l.mistakes, ...("applications" in l ? [l.applications.title, ...l.applications.items.flatMap(item => [item.question, item.answer])] : [])]) {
       const escaped = renderToStaticMarkup(createElement("span", null, value)).slice(6,-7);
       assert.ok(html.includes(escaped), value);
       assert.ok(renderLessonMarkdown(slug).includes(value));
