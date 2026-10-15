@@ -15,7 +15,7 @@ const { AiReadingPrompt } = await jiti.import("../components/blog/AiReadingPromp
 
 test("curated index is small and all entries resolve to original public notes", () => {
   const index = docs.renderLlmsIndex();
-  assert.ok(Buffer.byteLength(index) < 4000);
+  assert.ok(Buffer.byteLength(index) < 5000);
   assert.equal((index.match(/^- \[/gm) ?? []).length, docs.AI_DOC_SLUGS.length + Object.keys(lessons).length);
   assert.match(index, /不改变抓取、训练/);
   for (const slug of docs.AI_DOC_SLUGS) {

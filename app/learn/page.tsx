@@ -5,12 +5,13 @@ import s from "./learn.module.css";
 
 export const metadata = createPageMetadata({
   title: "图解实验室",
-  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补、相似三角形、弧度、GCD、最小公倍数与两点坐标距离。",
+  description: "用图形、步进和反例理解算法与几何。探索二分查找、最长递增子序列、二分答案、勾股定理的面积拼补、相似三角形、弧度、GCD、最小公倍数、前缀和与两点坐标距离。",
   path: "/learn",
   lang: "zh-CN",
 });
 
 function LessonPreview({ slug }: { slug: string }) {
+  if (slug === "prefix-sum") return <svg viewBox="0 0 480 220" role="img" aria-label="两个前缀对齐相减，留下区间3加0加5等于8"><rect x="40" y="50" width="350" height="30" fill="#c9d7ee"/><rect x="40" y="100" width="140" height="30" fill="none" stroke="#914a2e" strokeDasharray="5 3"/><rect x="180" y="150" width="210" height="30" fill="#cadbd5"/><path d="M180 42V187M390 42V187" stroke="#245b50" strokeDasharray="3 3"/><text x="40" y="31" fill="currentColor" fontSize="19">P[r] − P[l]：消去共同前缀</text><text x="45" y="72" fill="currentColor" fontSize="18">4 − 6 + 3 + 0 + 5</text><text x="45" y="122" fill="#914a2e" fontSize="18">− (4 − 6)</text><text x="196" y="172" fill="#245b50" fontSize="18">3 + 0 + 5 = 8</text><text x="40" y="210" fill="currentColor" fontSize="16">条长表示项的位置，不表示和</text></svg>;
   if (slug === "least-common-multiple") return <svg viewBox="0 0 480 220" role="img" aria-label="6和8的正倍数在24第一次相遇"><path d="M50 80H420M50 150H420" stroke="currentColor"/><rect x="408" y="47" width="24" height="129" rx="4" fill="#cadbd5"/>{[6,12,18,24].map(v=><g key={v}><circle cx={50+370*v/24} cy="80" r="6" fill="#245b50"/><text x={50+370*v/24} y="107" textAnchor="middle" fill="currentColor" fontSize="16">{v}</text></g>)}{[8,16,24].map(v=><g key={v}><circle cx={50+370*v/24} cy="150" r="6" fill="#914a2e"/><text x={50+370*v/24} y="177" textAnchor="middle" fill="currentColor" fontSize="16">{v}</text></g>)}<text x="30" y="33" fontSize="19" fill="#245b50">首次共同正落点：24</text><text x="30" y="207" fontSize="16" fill="currentColor">6 ÷ gcd(6,8) × 8 = 24</text></svg>;
   if (slug === "coordinate-distance") return <svg viewBox="0 0 480 220" role="img" aria-label="两点坐标差3和负4，距离5"><path d="M30 100H245M135 20V200" stroke="currentColor" strokeWidth="1"/><path d="M85 75H160V175Z" fill="#cadbd5" stroke="#245b50" strokeWidth="3"/><path d="M85 75H160" stroke="#914a2e" strokeWidth="3"/><path d="M160 75V175" stroke="#35598a" strokeWidth="3"/><text x="70" y="62" fill="currentColor" fontSize="17">A</text><text x="165" y="195" fill="currentColor" fontSize="17">B</text><text x="265" y="78" fill="#245b50" fontSize="23">Δx=3 · Δy=−4</text><text x="265" y="122" fill="#245b50" fontSize="29">d=5</text><text x="265" y="159" fill="currentColor" fontSize="16">方向有正负，距离非负</text></svg>;
   if (slug === "euclidean-algorithm") return <svg viewBox="0 0 480 220" role="img" aria-label="48乘18矩形切分，最大公约数6"><rect x="32" y="40" width="288" height="108" fill="#cadbd5" stroke="#245b50"/><path d="M140 40V148M248 40V148M248 112H320M284 112V148" fill="none" stroke="#245b50" strokeWidth="2"/><text x="40" y="185" fill="#245b50" fontSize="22">48 = 2 × 18 + 12</text><text x="340" y="100" fill="#914a2e" fontSize="24">gcd</text><text x="355" y="133" fill="#914a2e" fontSize="24">6</text></svg>;
@@ -61,7 +62,7 @@ export default function LearnPage() {
       <div className={s.grid}>{entries.filter(([, lesson]) => lesson.category === category).map(([slug, lesson]) => <article key={slug} className={s.card}>
         <Link href={`/learn/${slug}`} className={s.preview} aria-label={`开始实验：${lesson.title}`}><LessonPreview slug={slug} /></Link>
         <div className={s.cardBody}>
-          <p className={s.eyebrow}>实验 0{entries.findIndex(([key]) => key === slug) + 1} · {lesson.category}</p>
+          <p className={s.eyebrow}>实验 {String(entries.findIndex(([key]) => key === slug) + 1).padStart(2, "0")} · {lesson.category}</p>
           <h3><Link href={`/learn/${slug}`}>{lesson.title}</Link></h3>
           <p className={s.description}>{lesson.description}</p>
           <dl className={s.facts}><div><dt>难度</dt><dd>{lesson.difficulty}</dd></div><div><dt>学习时长</dt><dd>约 {lesson.estimatedMinutes} 分钟（估计）</dd></div><div><dt>前置知识</dt><dd>{lesson.prerequisites}</dd></div></dl>
