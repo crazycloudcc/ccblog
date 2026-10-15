@@ -137,7 +137,7 @@ test("LIS reference directly reaches the official migrated article in HTML and M
   assert.ok(!html.includes(old));
   assert.ok(!renderLessonMarkdown(slug).includes(old));
   assert.equal(data.lessons[slug].published, "2026-10-07");
-  assert.equal(data.lessons[slug].updated, "2026-10-10");
+  assert.equal(data.lessons[slug].updated, "2026-10-15");
 });
 
 test('similarity perimeter and ratio direction remain directly readable without changing teaching dates',()=>{
