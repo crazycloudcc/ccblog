@@ -30,5 +30,9 @@ test('prefix sum: invalid arrays and endpoints are rejected, inputs not mutated'
  const svg=read('../public/images/learn/prefix-sum.svg');
  assert.match(svg,/Prefix Sum/);assert.doesNotMatch(svg,/Longest Increasing|Strictly increasing/);
  assert.match(read('../app/learn/page.tsx'),/slug === "prefix-sum"/);
- assert.match(read('../components/visualizations/PrefixSumExperience.tsx'),/<noscript>/);
+ const ui=read('../components/visualizations/PrefixSumExperience.tsx');
+ assert.match(ui,/<noscript>/);
+ assert.match(ui,/aria-pressed=\{example===i && l===p.l && r===p.r\}/);
+ assert.ok(ui.indexOf('className={s.formula}') < ui.indexOf('className={s.graph}'));
+ assert.ok(ui.indexOf('disabled={step===0}') < ui.indexOf('className={s.stage}'));
  });

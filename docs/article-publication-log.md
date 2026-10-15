@@ -204,3 +204,4 @@
 - 状态：实施中，尚未发布。基线main/preview均为510ba11c3e2fb94c3d442528ac1c4a5383bc37d8；失败续同题。Oct8未完成记录不变。
 - 来源是CSES与Library Checker真实题型，不宣称热度、搜索量或增长。测试、视觉证据与发布结果待实际验证后追加；不能把旧证据算作本篇验收。
 - 本地实现已通过278/278 tests、lint/types、冻结build/Pagefind；独立数学/SSR13项通过，修复稀疏输入、图形说明间距与目录预览。当前等待精确preview CI/Ready及真实画面独审，尚未正式发布。详见[本篇验收记录](experiments/prefix-sum-2026-10-16/README.md)。
+- 第一版preview提交b351b6f398d12403bb29a7eb0889f548a72ba977的CI38783683020成功、Vercel4wpjvEcUuyDdguJs7uMW7viXpJbP Ready与dev绑定已验证；真实桌面浅色截图独审无must-fix。随后前置公式/播放控件并修正手动改变边界后的预设按下态，完整278 tests及lint/types/build再次通过；等待修正版preview与正式核验。

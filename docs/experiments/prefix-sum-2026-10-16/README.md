@@ -21,3 +21,9 @@
 本地dev默认hostname因uv_interface_addresses系统错误失败；明确127.0.0.1后Ready，但云浏览器连接被拒绝，记录限制并停server，没有更改网络。目标是待精确preview Ready后读取实际画面、独立视觉审阅和修正，再main。当前未宣称真实视觉验收或正式发布。
 
 - OG实际查看发现默认LIS标题残留，已改为Prefix Sum并重新生成，新增防回归测试；最终全量278项。本地实际PNG已查看且标题/图示一致，不能代替页面真实截图。专属noscript提示已补。
+
+## Preview Dream Loop
+
+第一版b351b6f398d12403bb29a7eb0889f548a72ba977，CI38783683020成功；Vercel4wpjvEcUuyDdguJs7uMW7viXpJbP Ready，Preview与dev.crazycloud.cc绑定、来源SHA均实核。1180×757真实首屏与滚动控件截图独审：几何/文字无阻断错，公式与播放位于折叠下方是P2改进。于是将公式和步骤按钮前置，保留完整大幅SVG和字大小；不为首屏删教学图形。真实浏览器空区间预设显示0，Home键将l从6改0后显示整段和4且代码同步。另将预设按下态绑定实际l/r，避免手动调整后仍称空区间预设选中。最终修正后待重验。
+
+- 修正版完整278 tests、lint/types/config/冻结build/Pagefind通过；第4个定向测试新增控件顺序与按下态回归断言，4/4再次通过。
