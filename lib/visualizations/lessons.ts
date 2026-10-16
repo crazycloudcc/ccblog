@@ -1,4 +1,23 @@
 export const lessons = {
+  "difference-array": {
+    notesSlug: null, category: "算法", difficulty: "入门", prerequisites: "数组下标、前缀和与左闭右开区间", estimatedMinutes: 12,
+    title: "差分数组图解：区间加法，只记开始与结束",
+    published: "2026-10-17", updated: "2026-10-17", ogImage: "/images/learn/difference-array.png",
+    description: "把整段加法变成两个边界事件，逐格累加还原增量；看懂右端哨兵、重叠更新、负增量与空区间。",
+    shortAnswer: "对零基左闭右开区间 [l,r) 的每项加 v，可在全零增量差分 D 上做 D[l]+=v、D[r]−=v。最后从左到右累加 D，得到每项的额外增量，再加回原数组 A。左端开始生效，右端取消，所以 r 不包含在修改范围内。",
+    conditions: "先收集全部区间加法，再一次还原最终数组；n≥1，0≤l≤r≤n，边界为整数。D 长度为 n+1，初始全零，只记录额外增量；它不是原数组 A 的差分。实验固定六项小整数，最多叠加两次，计算精确。数学上允许负增量与空区间，不要求原数组有序。",
+    steps: ["原数组 A=[2,−1,3,0,2,−2]。给 [1,4) 每项加3，目标仅是下标1、2、3，最终应得到 [2,2,6,3,2,−2]。", "先令 D=[0,0,0,0,0,0,0]。D[1]+=3 表示从边界1开始多加3；D[4]−=3 表示到边界4停止。得到 D=[0,3,0,0,−3,0,0]。", "逐格累加 D：extra=[0,3,3,3,0,0]。每次先执行 extra+=D[i]，再算 B[i]=A[i]+extra；不能先写结果再更新 extra。", "为什么成立？一个更新在位置i的贡献是 v·1(i≥l)−v·1(i≥r)。i<l 时两项都为0；l≤i<r 时只有第一项；i≥r 时两项抵消。多次更新按加法叠加，因此次序不影响最终结果。", "再给 [3,6) 加−2：D=[0,3,0,−2,−3,0,2]，extra=[0,3,3,1,−2,−2]，结果 [2,2,6,1,0,−4]。重叠位置3得到3+(−2)=1，而不是覆盖为−2。", "r=n 时把取消事件写入 D[n]，但只还原 n 个元素。l=r 时两次修改落在同一位置并相互抵消；v=0 同样不改变任何值。"],
+    complexityLabel: "批量更新、还原与数值范围",
+    complexity: "初始化 D 为 O(n)，每次区间加法记录两个边界为 O(1)，q 次记录后统一还原 O(n)，总时间 O(n+q)，额外空间 O(n)，按单位成本整数算术计算。单次记录快，不等于每次更新后都能立即 O(1) 得到任意最终值；交错查询通常需要树状数组或线段树等结构。AtCoder AWC0173 D 最多10⁵次、每次伤害10⁹，单点累计可达10¹⁴，超过32位有符号整数；C++应使用long long。JavaScript对该上界整数仍精确，但不能推广到任意大数。",
+    mistakes: ["本课用[l,r)，所以在r处减v；零基闭区间[l,r]才在r+1处减v。题目一基闭区间[L,R]应转成本课[L−1,R)。", "只分配n项却写D[n]：右端哨兵需要n+1项；哨兵不是额外的原数组元素。", "把D当结果：D是增量变化事件，要做前缀累加，再加原值A[i]。", "混用两种构造：若D已经是原数组的差分，前缀还原就得到原值，不应再次加A。本课始终把原值与增量分开。", "用赋值替代+=或−=：多次更新共用边界时必须累加，重叠段也会叠加。", "把批量最终求值当在线查询：每次都重扫n项会变成O(nq)，不能仍声称总计O(n+q)。"],
+    references: [{label:"AtCoder AWC0173 D：Monster Subjugation（批量范围攻击，2026-10-07）",url:"https://atcoder.jp/contests/awc0173/tasks/awc0173_d"}],
+    goals: ["解释为什么一次区间加法只需两个事件", "用前缀累加还原增量并加回原值", "处理重叠、空区间、负增量与右端哨兵"],
+    summary: "D[l]+=v 开始，D[r]−=v 停止；累加得到每项额外增量，再加回原值。差分适合先批量修改、最后统一求值。",
+    invariant: "扫描完 D[i] 后，extra 等于所有满足 l≤i<r 的更新增量之和；B[i]=A[i]+extra。D[n]仅用于取消到数组末尾的影响。",
+    question: "六项数组只把最后一项减2，两个事件放哪里？[3,3)加5会怎样？有两次同为[1,4)加3，能用赋值覆盖D吗？",
+    answer: "最后一项是[5,6)，记录D[5]−=2、D[6]+=2，哨兵不输出。[3,3)的加5与减5在同一位置抵消。两次相同更新应叠加成每项加6，不能用赋值覆盖。",
+  },
+
   "prefix-sum": {
     notesSlug: null, category: "算法", difficulty: "入门", prerequisites: "数组下标、整数加减与区间", estimatedMinutes: 12,
     title: "前缀和图解：减去共同前缀，留下区间",
@@ -290,6 +309,8 @@ export function getLesson(slug: string) {
 
 /** Optional learning extensions; not prerequisites or a new lesson. */
 export const lessonExtensions: Partial<Record<LessonSlug, { slug: LessonSlug; label: string; explanation: string }>> = {
+  "difference-array": { slug: "prefix-sum", label: "前置：前缀和如何累加", explanation: "前缀和把局部数值累加为整体；差分记录变化发生的位置，再用前缀累加还原每项增量。本课的D只记录额外增量，原数组另行相加。" },
+  "prefix-sum": { slug: "difference-array", label: "继续探索：差分数组的区间加法", explanation: "静态区间求和可以减去两个前缀；若任务换成批量区间加法，就在两端记录变化，最后累加还原。先区分查询与修改，再选择工具。" },
   "least-common-multiple": { slug: "euclidean-algorithm", label: "前置：用欧几里得算法求GCD", explanation: "GCD给出共同的因子，LCM给出共同的倍数。先理解取余如何保留公因数，再看为什么除去GCD能得到最小公倍数。" },
   "coordinate-distance": { slug: "pythagorean-theorem", label: "前置：勾股定理的面积拼补", explanation: "本课把水平与竖直坐标差变成直角边长，再应用勾股定理。若想理解平方和为什么成立，可先看四块全等三角形的面积拼补。" },
   "euclidean-algorithm": { slug: "binary-search-on-answer", label: "对比：二分答案的单调区间", explanation: "欧几里得算法让余数严格减小；二分答案让搜索区间缩小。两者都需说明为何终止，但保留的性质不同。" },

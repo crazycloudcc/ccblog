@@ -205,3 +205,16 @@
 - 来源是CSES与Library Checker真实题型，不宣称热度、搜索量或增长。测试、视觉证据与发布结果待实际验证后追加；不能把旧证据算作本篇验收。
 - 本地实现已通过278/278 tests、lint/types、冻结build/Pagefind；独立数学/SSR13项通过，修复稀疏输入、图形说明间距与目录预览。当前等待精确preview CI/Ready及真实画面独审，尚未正式发布。详见[本篇验收记录](experiments/prefix-sum-2026-10-16/README.md)。
 - 第一版preview提交b351b6f398d12403bb29a7eb0889f548a72ba977的CI38783683020成功、Vercel4wpjvEcUuyDdguJs7uMW7viXpJbP Ready与dev绑定已验证；真实桌面浅色截图独审无must-fix。随后前置公式/播放控件并修正手动改变边界后的预设按下态，完整278 tests及lint/types/build再次通过；等待修正版preview与正式核验。
+
+## 2026-10-17 新文章实施：差分数组
+
+- 2026-10-16 16:00 UTC之后（上海10月17日）开始当天唯一新篇 `/learn/difference-array`：区间加法两个边界事件，前缀累加还原。基于AtCoder AWC0173 D实际批量区间需求，不宣称热度。
+- 仍在实施/验收，不提前计作正式发布。完整静态正文、原生SVG、同步公式/代码、负增量/重叠/空区间/哨兵；保留10月8日未完成记录。失败续同题，不再开新篇。
+- 初始282项测试、lint/types/config/冻结build/Pagefind通过；独立首审重叠描述遗漏已修，最终检查和精确preview/生产闭环待完成。详见[验收记录](experiments/difference-array-2026-10-17/README.md)。
+
+## 2026-10-16 前缀和正式发布回执补齐
+
+- 补录历史已完成状态，随10月17日差分新篇的实质变更提交，不是第二篇或重新发布。前缀和仍是上海10月16日唯一新篇，published/updated保持2026-10-16。
+- 最终提交 `0ce6548d9d50a6904efc6274546dcfd13b58da4b`；[preview CI 38784420823](https://github.com/crazycloudcc/ccblog/actions/runs/38784420823) success，[preview部署](https://vercel.com/chainboxapp/ccblog/2MLhFnsjitsk6Fvt9ckyHtAg3pcp) Ready及实际桌面审阅后，于2026-10-15T18:19:43Z推进main。
+- [生产部署](https://vercel.com/chainboxapp/ccblog/957Pwu6Lz4ibxsNC55J6eWPGkhPb) Production Ready状态记录2026-10-15T18:20:33Z，精确SHA与crazycloud.cc绑定已核；该时间为部署状态记录，不冒充精确浏览器观察时刻。[生产CI 38784698526](https://github.com/crazycloudcc/ccblog/actions/runs/38784698526) success。后续2026-10-16 00:05UTC浏览器复核正式Ready/domain。
+- 原发布278项测试、独立401040区间/119945可加性检查/345SVG状态验证均为前次证据；不混入10月17日新增测试数，也不声称手机实机验收。上文“待验证”为当时过程记录，本条闭环。

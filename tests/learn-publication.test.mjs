@@ -89,7 +89,7 @@ test("learning extensions preserve first-true end semantics in HTML and Markdown
   assert.match(data.lessons["longest-increasing-subsequence"].steps.join(" "), /空 tails/);
   assert.equal(data.lessons["longest-increasing-subsequence"].published, "2026-10-07");
   assert.equal(data.lessons["pythagorean-theorem"].published, "2026-10-09");
-  assert.equal(Object.keys(data.lessons).length, 10);
+  assert.equal(Object.keys(data.lessons).length, 11);
 });
 
 test("integer triples are distinguished from general positive real right triangles", () => {
