@@ -218,3 +218,7 @@
 - 最终提交 `0ce6548d9d50a6904efc6274546dcfd13b58da4b`；[preview CI 38784420823](https://github.com/crazycloudcc/ccblog/actions/runs/38784420823) success，[preview部署](https://vercel.com/chainboxapp/ccblog/2MLhFnsjitsk6Fvt9ckyHtAg3pcp) Ready及实际桌面审阅后，于2026-10-15T18:19:43Z推进main。
 - [生产部署](https://vercel.com/chainboxapp/ccblog/957Pwu6Lz4ibxsNC55J6eWPGkhPb) Production Ready状态记录2026-10-15T18:20:33Z，精确SHA与crazycloud.cc绑定已核；该时间为部署状态记录，不冒充精确浏览器观察时刻。[生产CI 38784698526](https://github.com/crazycloudcc/ccblog/actions/runs/38784698526) success。后续2026-10-16 00:05UTC浏览器复核正式Ready/domain。
 - 原发布278项测试、独立401040区间/119945可加性检查/345SVG状态验证均为前次证据；不混入10月17日新增测试数，也不声称手机实机验收。上文“待验证”为当时过程记录，本条闭环。
+
+## 2026-10-17 差分preview验收与改进
+
+- 差分初版preview `3b746e968992c186e71beec9cc68d8fe0e403f56` 的CI38929854064 success与Vercel1Jbxanip4FnkUVKRB1GFRXRGE28j Ready/dev绑定通过；真实桌面/503px窄窗独审无阻断。随后改进预设pressed视觉与窄屏扫描格自动即时定位，待修正版门禁及同SHA正式发布核验；此条仍不提前计发布。

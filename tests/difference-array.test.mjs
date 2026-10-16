@@ -31,5 +31,5 @@ test('difference arrays: lesson, discoverability, OG and reduced-motion controls
  const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
  assert.match(read('../public/images/learn/difference-array.svg'),/Difference Array/);assert.doesNotMatch(read('../public/images/learn/difference-array.svg'),/Longest Increasing/);
  assert.match(read('../app/learn/page.tsx'),/slug === "difference-array"/);
- const ui=read('../components/visualizations/DifferenceArrayExperience.tsx');assert.match(ui,/<noscript>/);assert.match(ui,/disabled=\{reduced\}/);assert.match(ui,/aria-live="polite"/);assert.match(ui,/visibilitychange/);assert.match(ui,/setValue\(\+e.target.value\);restart\(\)/);
+ const ui=read('../components/visualizations/DifferenceArrayExperience.tsx');assert.match(ui,/<noscript>/);assert.match(ui,/el.scrollTo/);assert.match(ui,/behavior:"instant"/);assert.match(read('../components/visualizations/DifferenceArrayExperience.module.css'),/aria-pressed="true"/);assert.match(ui,/disabled=\{reduced\}/);assert.match(ui,/aria-live="polite"/);assert.match(ui,/visibilitychange/);assert.match(ui,/setValue\(\+e.target.value\);restart\(\)/);
 });

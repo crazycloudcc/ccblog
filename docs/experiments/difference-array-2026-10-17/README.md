@@ -21,3 +21,13 @@ AtCoder AWC0173 D（2026-10-07）：https://atcoder.jp/contests/awc0173/tasks/aw
 本地dev明确127.0.0.1启动成功，但dot云浏览器访问报ERR_CONNECTION_REFUSED。停止server，不改网络或换环境；真实页面视觉/键盘验收留待精确preview就绪。不把代码审查或静态测试当真实画面。设计目标：桌面主体优先容纳图形、公式与步进；窄屏图形内部横滚，按钮可触及；减少动画时禁止自动播放，单步可用。
 
 当前未正式发布。须独审闭环、最终检查、精确preview CI/Ready、实际画面审查后再更新main；生产再核精确CI/Ready、hostname与页面。手机实机、屏幕阅读器、FPS未宣称已验。
+
+## 独审与真实preview闭环
+
+最终初版282 tests、lint/types/config/冻结build/Pagefind全部重跑通过。独立623559组朴素对照（382075单更新、191484双更新、50000全边界随机）、48非法输入、4032渲染阶段状态通过；每组显示代码执行与结果、几何与文字一致，控制handler和静态全文也通过。
+
+初版preview `3b746e968992c186e71beec9cc68d8fe0e403f56`，[CI38929854064](https://github.com/crazycloudcc/ccblog/actions/runs/38929854064) success，[部署](https://vercel.com/chainboxapp/ccblog/1Jbxanip4FnkUVKRB1GFRXRGE28j) Ready/Preview/精确SHA/dev.crazycloud.cc绑定实核。
+
+真实dot云浏览器1180×757与503×757截图已独立像素审阅，无must-fix；重叠8/8最终数组、空区间抵消、Home键改边界、播放中重置、日期与canonical实验通过。503px下页面宽与scrollWidth均503，图形内部单独横滚。发现两项可改进：选中预设缺少视觉样式、窄屏末步的活动格子需手动横滚。修正版增加pressed样式与只在离散步骤变化时即时滚动图形到活动格子，不滚动页面，不增加运动动画。待修正版门禁与preview复验。
+
+尝试浏览器减少动画模拟时，组织策略禁止DevTools，已停止该路径，没有规避。减少动画的禁播/单步由独立渲染及source检查验证，未冒充实际浏览器系统模式验收。无手机实机、屏幕阅读器或FPS验证。

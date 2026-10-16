@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePrefersReducedMotion } from "@/components/home/usePrefersReducedMotion";
 import { differenceModel, differenceExamples } from "@/lib/visualizations/difference-array";
@@ -9,10 +9,19 @@ export function DifferenceArrayExperience({children}:{children:ReactNode}) {
   const [l,setL]=useState(1),[r,setR]=useState(4),[value,setValue]=useState(3),[overlap,setOverlap]=useState(false);
   const [step,setStep]=useState(0),[playing,setPlaying]=useState(false);
   const reduced=usePrefersReducedMotion();
+  const graph=useRef<HTMLDivElement>(null);
   const updates=[{l,r,value},...(overlap?[{l:3,r:6,value:-2}]:[])];
   const m=differenceModel(base,updates), n=base.length, x=(i:number)=>100+i*90;
   useEffect(()=>{if(!playing||reduced||step===n+1)return;const t=setTimeout(()=>setStep(v=>v+1),1000);return()=>clearTimeout(t);},[playing,reduced,step,n]);
   useEffect(()=>{const stop=()=>{if(document.hidden)setPlaying(false);};document.addEventListener("visibilitychange",stop);return()=>document.removeEventListener("visibilitychange",stop);},[]);
+  useEffect(()=>{
+    const el=graph.current, svg=el?.querySelector("svg");
+    if(!el||!svg)return;
+    // Keep the discrete scan cell visible; never animate or move the page itself.
+    const scale=svg.getBoundingClientRect().width/760;
+    const center=(100+(step-2)*90+45)*scale;
+    el.scrollTo({left:step<2?0:Math.max(0,center-el.clientWidth/2),behavior:"instant"});
+  },[step]);
   function restart(){setStep(0);setPlaying(false);}
   function choose(i:number){const p=differenceExamples[i];setL(p.l);setR(p.r);setValue(p.value);setOverlap(p.overlap);restart();}
   const cursor=step-2;
@@ -28,7 +37,7 @@ export function DifferenceArrayExperience({children}:{children:ReactNode}) {
     <div className={s.actions}><button disabled={step===0} onClick={()=>{setPlaying(false);setStep(v=>v-1);}}>上一步</button><button disabled={step===n+1} onClick={()=>{setPlaying(false);setStep(v=>v+1);}}>下一步</button><button disabled={reduced} onClick={()=>{if(step===n+1)setStep(0);setPlaying(!playing||step===n+1);}}>{reduced?"减动画：请单步":playing&&step<n+1?"暂停":"播放还原"}</button><button onClick={restart}>回到第一步</button></div>
     <section className={s.stage} aria-label="差分边界与前缀还原图形">
       <p className={s.formula}>D[{l}] += {value}；D[{r}] −= {value} {overlap&&<span>D[3] −= 2；D[6] += 2</span>}<span>extra[i] = Σ D[0..i]</span></p>
-      <div className={s.graph} tabIndex={0} aria-label="六个元素与第六号哨兵，窄屏可左右滚动"><svg viewBox="0 0 760 370" role="img" aria-label={`第${step+1}步，区间[${l},${r})加${value}${overlap?"，另给[3,6)减2":""}，边界标记${m.delta.join(',')}，最终结果${m.result.join(',')}`}>
+      <div ref={graph} className={s.graph} tabIndex={0} aria-label="六个元素与第六号哨兵，窄屏可左右滚动"><svg viewBox="0 0 760 370" role="img" aria-label={`第${step+1}步，区间[${l},${r})加${value}${overlap?"，另给[3,6)减2":""}，边界标记${m.delta.join(',')}，最终结果${m.result.join(',')}`}>
         <title>区间带、边界事件与逐格累加</title><desc>绿色范围覆盖要修改的格子，虚线框是结束标记哨兵，不是第七个元素。扫描到哪里，下方结果就显示到哪里。条宽表示位置而非增量大小。</desc>
         {Array.from({length:n+1},(_,i)=><g key={i}><text x={x(i)} y="24" textAnchor="middle" className={s.small}>{i}</text><path d={`M${x(i)} 30V44`} className={s.axis}/></g>)}
         <text x="10" y="24" className={s.small}>边界</text>
