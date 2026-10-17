@@ -222,3 +222,16 @@
 ## 2026-10-17 差分preview验收与改进
 
 - 差分初版preview `3b746e968992c186e71beec9cc68d8fe0e403f56` 的CI38929854064 success与Vercel1Jbxanip4FnkUVKRB1GFRXRGE28j Ready/dev绑定通过；真实桌面/503px窄窗独审无阻断。随后改进预设pressed视觉与窄屏扫描格自动即时定位，待修正版门禁及同SHA正式发布核验；此条仍不提前计发布。
+
+## 2026-10-17 差分数组正式发布回执补齐
+
+- 随既有前缀和 FAQ 的实质改善补录，不新增文章。上海10月17日唯一新篇仍为 `/learn/difference-array`；保留10月8日未完成记录。
+- 最终产品提交 `3960ad5ad738e554565211d9898ac10a26d66879`：[preview CI 38930723385](https://github.com/crazycloudcc/ccblog/actions/runs/38930723385) success、[preview部署](https://vercel.com/chainboxapp/ccblog/fiVvQ5X83gRZTqWh42SsSLVumL9S) Ready/Preview/dev绑定后推进 main。[生产 CI 38931045626](https://github.com/crazycloudcc/ccblog/actions/runs/38931045626) success，更新时刻2026-10-16T16:21:22Z；[生产部署](https://vercel.com/chainboxapp/ccblog/49kgfEbmxoMQGdQ7mxWhPDQo4B66) Ready/Production/main/精确SHA/crazycloud.cc绑定。2026-10-17 06:06 UTC再次实际读取CI和部署页面，仍一致。
+- 原发布验证：282 tests、lint/types/config/冻结build/Pagefind；独立623559数学用例、48非法输入、4032 UI/trace状态及168窄屏定位边界检查。真实1180×757桌面与503×757窄窗图形检查、重叠/空区间/Home/reset及独立画面评审已完成；这些是原发布证据，不计入本次 FAQ 的新测试。
+- 减少动画浏览器仿真因组织策略拒绝，只有源码/事件逻辑测试，不声称实际仿真通过；未做手机实机和屏幕阅读器验收。原“待核验”条目保留作为过程记录，本条闭环。
+
+## 2026-10-17 前缀和区间平均值 FAQ（既有文章改善）
+
+- `/learn/prefix-sum` 增补非空区间和/项数、空区间均值不可用、零和非空、负单项、精确分数与按项数加权合并的原创解释。published仍为2026-10-16，updated为2026-10-17；不是当天第二篇新文章。图形、交互、同步求和代码不变。
+- 依据2026-10-17实际重读的历史 [AtCoder AWC0108 C](https://atcoder.jp/contests/awc0108/tasks/awc0108_c)（2026-07-08），只证明定长平均值存在真实题型需求，不声称本小时热点、搜索量或自然增长；没有分析进行中的比赛题。
+- 当前实现285/285 tests、lint/types/config/冻结build/Pagefind24页通过；独立审阅与精确preview/生产核验继续中，未提前计作正式上线。详见[验收记录](experiments/prefix-mean-2026-10-17/README.md)。

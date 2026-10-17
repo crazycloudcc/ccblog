@@ -21,7 +21,7 @@ export const lessons = {
   "prefix-sum": {
     notesSlug: null, category: "算法", difficulty: "入门", prerequisites: "数组下标、整数加减与区间", estimatedMinutes: 12,
     title: "前缀和图解：减去共同前缀，留下区间",
-    published: "2026-10-16", updated: "2026-10-16", ogImage: "/images/learn/prefix-sum.png",
+    published: "2026-10-16", updated: "2026-10-17", ogImage: "/images/learn/prefix-sum.png",
     description: "把两个从零开始的前缀对齐，消去共同项，理解左闭右开区间和 P[r]−P[l]；用负数、零和空区间检查边界。",
     shortAnswer: "令 P[0]=0，P[k+1]=P[k]+A[k]，则 P[k] 是前 k 项的和。零起始下标的左闭右开区间 [l,r) 包含 A[l] 到 A[r−1]，其和为 P[r]−P[l]。两段前缀共有的 A[0] 到 A[l−1] 相互消去，剩下所求区间。",
     conditions: "数组在查询期间保持不变；边界是整数，0≤l≤r≤n。l=r 允许空区间，和为0。本课实验为1–8个−9到9的整数预设，JavaScript整数加减精确。数学公式允许负数与零，不要求数组或前缀和有序。P有n+1项，末边界n在最后一个元素之后。",
@@ -29,7 +29,15 @@ export const lessons = {
     complexityLabel: "预处理、查询与更新",
     complexity: "长度n的数组建立前缀和需O(n)时间和O(n)额外空间；每次已知l、r的查询只做一次相减，O(1)，q次查询总计O(n+q)。这些复杂度按单位成本整数算术计算，不包含动画和绘图。修改A[i]后，P[i+1]到P[n]都要相应更新，普通前缀数组最坏O(n)，不能把频繁修改也叫O(1)。任意大整数还需考虑数值表示与溢出；实验的小整数边界不代表通用输入安全。",
     mistakes: ["把r当作包含的元素：本课[l,r)不包含A[r]；闭区间下标[a,b]对应P[b+1]−P[a]。", "混用一基和零基：题目若用一基闭区间[a,b]，转换到本课零基边界是[a−1,b)，因此答案P[b]−P[a−1]。", "漏掉P[0]或只分配n项：P[n]是整个数组的和，必须有n+1个位置。", "以为负数不能用前缀和：相同项消去不依赖正负；但不能随意把前缀和交给要求有序的二分查找。", "把范围条的长度当成和：条长表示覆盖几项，下方有符号柱形才表示数值。", "把静态求和公式当动态更新结构：交错修改和查询时需另选结构或承担重建代价。"],
-    references: [{label:"CSES：Static Range Sum Queries（一基闭区间）",url:"https://cses.fi/problemset/task/1646"},{label:"Library Checker：Static Range Sum（零基左闭右开）",url:"https://judge.yosupo.jp/problem/static_range_sum"},{label:"CSES：Dynamic Range Sum Queries（适用范围对照）",url:"https://cses.fi/problemset/task/1648"}],
+    applications: {
+      title: "区间平均值：先求和，再数项",
+      items: [
+        { question: "区间平均值也能用前缀和吗？", answer: "可以，但区间必须非空：当 l<r 时，[l,r) 恰有 r−l 项，算术平均值为 (P[r]−P[l])/(r−l)。证明分两步：共同前缀消去给出所选项的总和，再按平均值定义除以项数。例如本课 [2,5) 包含3、0、5，和为8、项数为3，平均值是8/3；[5,6)只有−2，平均值仍是−2。上方图形、交互与同步代码仍演示区间求和；这里是在求和结果上增加一次除法的文字应用。" },
+        { question: "和为0时，平均值也是0吗？", answer: "还要看项数。[1,6)有5项，和为0，因此平均值为0/5=0；空区间[3,3)的和按约定为0，但项数也为0，0/0没有定义，平均值应标为不可用。先检查l<r，再做除法。不要截断8/3为2；需要精确表达时保留分数，浮点显示只是近似。一般大输入仍须检查前缀总和的数值范围，除法不能修复此前的整数溢出。" },
+        { question: "能把两个平均值直接相减或取平均吗？", answer: "不能普遍这样做。两个前缀的平均值使用不同分母，直接相减不会消去共同项；应先减总和，再除以区间项数。合并两个不重叠的非空区间，若项数为n₁、n₂，平均值为μ₁、μ₂，则总和分别是n₁μ₁、n₂μ₂，合并平均值为(n₁μ₁+n₂μ₂)/(n₁+n₂)。这是按项数加权，而不是通常的(μ₁+μ₂)/2。例如[2,3)平均值3、1项，[3,5)平均值5/2、2项，合并为(1×3+2×5/2)/3=8/3，而直接平均得到11/4。两段项数相等时才可普遍直接平均；空段没有平均值，只能以其总和0、项数0参与合并，且总项数必须大于0。" },
+      ],
+    },
+    references: [{label:"AtCoder AWC0108 C：Smoothing the Temperature（历史定长区间平均值，2026-07-08）",url:"https://atcoder.jp/contests/awc0108/tasks/awc0108_c"},{label:"CSES：Static Range Sum Queries（一基闭区间）",url:"https://cses.fi/problemset/task/1646"},{label:"Library Checker：Static Range Sum（零基左闭右开）",url:"https://judge.yosupo.jp/problem/static_range_sum"},{label:"CSES：Dynamic Range Sum Queries（适用范围对照）",url:"https://cses.fi/problemset/task/1648"}],
     goals: ["把元素下标与n+1个前缀边界分开", "通过共同项消去推导区间和", "检查负数、首尾与空区间，而非死记下标"],
     summary: "P[k]保存边界k之前的总和。[l,r)用P[r]−P[l]消去共同前缀；负数与空区间都成立，但普通前缀数组不能免费处理动态更新。",
     invariant: "对每个k，P[k]恰好是A[0]到A[k−1]的和；P[0]为空和0。范围条表示项的位置与数量，不表示和的大小。",
