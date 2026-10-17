@@ -246,3 +246,10 @@
 - `/learn/prefix-sum` 末尾增补可选进阶应用，来源为赛后公开 ABC480 D，不计第二新篇。保留入门核心SVG和同步求和代码；共享服务端正文/Markdown、二层前缀和、三角分块定位、负数/空区间/末端和整数溢出解释。
 - 288/288 tests、lint/types与独立数学审阅通过；原有Apple目录同步请求曾被审批阻断，14:17:19UTC用户明确批准后完整npm build通过；目录无关变动已审查并恢复，另验冻结输入build/Pagefind。精确preview、实际新稿画面独审和正式发布门禁仍待完成，不提前计上线；失败续同稿。详见[验收记录](experiments/prefix-concatenation-2026-10-17/README.md)。
 - 目标是提供具体题型的原创解释，搜索量和自然增长未知，原2026-10-26复查窗口保持。
+
+## 2026-10-18（Asia/Shanghai）· Fenwick tree · 进行中
+- 当日唯一新图解：树状数组：把前缀拆成不重叠的块；URL `/learn/fenwick-tree`。2026-10-17 16:00 UTC后开始。基线 main/preview `de6eff24e048d48cd576c0770ee54e212ae817f3`，未发现 Oct18 已有主题；续本题至完成，不另计修复或旧文扩展为新篇。
+- 真实需求依据：CSES Dynamic Range Sum Queries（https://cses.fi/problemset/task/1648/），点赋值与区间和交错；属于常青练习需求，无实时搜索量或热点增长证据。
+- 已实现原生大幅 SVG 覆盖条带、查询分块、单点更新祖先、同步文字/代码、键盘滑块、窄屏横滚、减动画与静态正文；数学边界测试、独审、截图与发布核验见 `docs/experiments/fenwick-tree-2026-10-18/README.md`。当前尚未提交/部署，不能计正式上线。
+- 补记 Oct17 拼接进阶最终回执（旧文扩展，不计新篇）：`de6eff24e048d48cd576c0770ee54e212ae817f3`；preview CI https://github.com/crazycloudcc/ccblog/actions/runs/39040366149 success，精确 Preview Ready/dev 及1180×757真实截图独审通过后同SHA更新main；生产 CI https://github.com/crazycloudcc/ccblog/actions/runs/39040537373 success（2026-10-17T14:24:31Z）；部署 `B4B6nL5AhqRYBMbCCk1cWJgrTFoc` 实读 Ready / Production / Current / crazycloud.cc / fullSHA，Ready14:24:08Z。288 tests/lint/types、完整build及冻结build/Pagefind24通过；1092数组、223686含空区间数学oracle通过。正式 urllib 403未绕过，生产页面行为仍未知；未新增手机或屏幕阅读器验收。
+- 2026-10-17 16:09 UTC：292 tests/lint/types通过，标准完整build与恢复精确App基线后的冻结build/Pagefind25通过；独立数学审阅与66,048次覆盖oracle通过，修正文字节点可访问说明等。localhost浏览器URL策略拒绝，停止该路线；真实preview截图、精确CI/Ready、main仍待核验。

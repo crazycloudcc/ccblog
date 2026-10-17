@@ -1,3 +1,4 @@
+import { FenwickExperience } from "@/components/visualizations/FenwickExperience";
 import { DifferenceArrayExperience } from "@/components/visualizations/DifferenceArrayExperience";
 import { PrefixSumExperience } from "@/components/visualizations/PrefixSumExperience";
 import { LcmExperience } from "@/components/visualizations/LcmExperience";
@@ -32,6 +33,7 @@ export default async function VisualLessonPage({ params }: Props) {
   const lesson = getLesson(slug);
   if (!lesson) notFound();
   const schema = <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lessonStructuredData(slug as LessonSlug)).replace(/</g, "\\u003c") }} />;
+  if (slug === "fenwick-tree") return <>{schema}<FenwickExperience><LessonReading slug={slug} /></FenwickExperience></>;
   if (slug === "difference-array") return <>{schema}<DifferenceArrayExperience><LessonReading slug={slug} /></DifferenceArrayExperience></>;
   if (slug === "prefix-sum") return <>{schema}<PrefixSumExperience><LessonReading slug={slug} /></PrefixSumExperience></>;
   if (slug === "least-common-multiple") return <>{schema}<LcmExperience><LessonReading slug={slug} /></LcmExperience></>;

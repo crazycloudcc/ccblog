@@ -33,7 +33,7 @@ test('virtual prefix: official samples and maximum exact signed range',()=>{
 });
 test('virtual prefix: indexed HTML data and Markdown share optional scope and dates',()=>{
  const l=lessons['prefix-sum'],ext=l.advancedApplication,md=renderLessonMarkdown('prefix-sum');
- assert.equal(l.published,'2026-10-16');assert.equal(l.updated,'2026-10-17');assert.equal(Object.keys(lessons).length,11);
+ assert.equal(l.published,'2026-10-16');assert.equal(l.updated,'2026-10-17');assert.equal(Object.keys(lessons).length,12);
  assert.ok(ext.title.startsWith('可选进阶'));for(const p of ext.paragraphs)assert.ok(md.includes(p));
  for(const t of ['F(x)=S[k]+P[m]','k=N','F(0)=0','F(R)−F(L−1)','O(N+Q log N)','BigInt','不能二分','同步代码仍只演示普通数组求和'])assert.ok(ext.paragraphs.join('').includes(t));
  assert.ok(md.includes('https://atcoder.jp/contests/abc480/tasks/abc480_d'));

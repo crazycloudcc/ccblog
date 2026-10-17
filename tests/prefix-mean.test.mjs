@@ -36,5 +36,5 @@ test('prefix mean: shared indexable FAQ retains lesson scope and publication ide
  const md=renderLessonMarkdown('prefix-sum');
  for(const {question,answer} of l.applications.items){assert.ok(md.includes(question));assert.ok(md.includes(answer));}
  assert.equal(l.published,'2026-10-16');assert.equal(l.updated,'2026-10-17');
- assert.equal(Object.keys(lessons).length,11);
+ assert.equal(Object.keys(lessons).length,12);
 });
