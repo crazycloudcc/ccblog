@@ -37,7 +37,16 @@ export const lessons = {
         { question: "能把两个平均值直接相减或取平均吗？", answer: "不能普遍这样做。两个前缀的平均值使用不同分母，直接相减不会消去共同项；应先减总和，再除以区间项数。合并两个不重叠的非空区间，若项数为n₁、n₂，平均值为μ₁、μ₂，则总和分别是n₁μ₁、n₂μ₂，合并平均值为(n₁μ₁+n₂μ₂)/(n₁+n₂)。这是按项数加权，而不是通常的(μ₁+μ₂)/2。例如[2,3)平均值3、1项，[3,5)平均值5/2、2项，合并为(1×3+2×5/2)/3=8/3，而直接平均得到11/4。两段项数相等时才可普遍直接平均；空段没有平均值，只能以其总和0、项数0参与合并，且总项数必须大于0。" },
       ],
     },
-    references: [{label:"AtCoder AWC0108 C：Smoothing the Temperature（历史定长区间平均值，2026-07-08）",url:"https://atcoder.jp/contests/awc0108/tasks/awc0108_c"},{label:"CSES：Static Range Sum Queries（一基闭区间）",url:"https://cses.fi/problemset/task/1646"},{label:"Library Checker：Static Range Sum（零基左闭右开）",url:"https://judge.yosupo.jp/problem/static_range_sum"},{label:"CSES：Dynamic Range Sum Queries（适用范围对照）",url:"https://cses.fi/problemset/task/1648"}],
+    advancedApplication: {
+      title: "可选进阶：不展开，也能对拼接序列求和",
+      paragraphs: [
+        "先学会上面的普通区间和，再看这个额外应用。把 A=[2,−1,3] 的各个前缀依次拼起来，得到 B=[2 | 2,−1 | 2,−1,3]。竖线只分块，不是元素。AtCoder ABC480 D（2026-10-17 赛后阅读）要求在这类虚拟序列中回答区间和；N项会生成N(N+1)/2项，N=100000时超过50亿项，不能先展开。本段是文字进阶，上方交互与同步代码仍只演示普通数组求和。",
+        "沿用P[k]表示A的前k项和，再设S[0]=0、S[k]=P[1]+⋯+P[k]：第i块恰是A的前i项，所以完整k块的总和就是S[k]。完整k块有T[k]=k(k+1)/2项。对于B的前x项（0≤x≤T[N]），找到最大的k使T[k]≤x，剩下m=x−T[k]项恰是下一块的前m项，于是F(x)=S[k]+P[m]。当k=N时必有m=0，不需要访问不存在的下一块。x=0时k=m=0，F(0)=0。",
+        "例中P=[0,2,1,4]、S=[0,2,3,7]、T=[0,1,3,6]。x=5时，完整2块有3项，余下2项，因此F(5)=S[2]+P[2]=3+1=4。x=2时F(2)=S[1]+P[1]=2+2=4。B的零基左闭右开区间[2,5)包含−1、2、−1，和仍由两个前缀相减：F(5)−F(2)=0。题目的一基闭区间[L,R]则写作F(R)−F(L−1)。",
+        "先用O(N)时间和空间建立P与S，再在严格递增的T[k]上整数二分定位，每个查询O(log N)，Q次总计O(N+Q log N)；无须存储B或T数组。不能二分含负数、未必有序的P。以上按单位成本整数算术计算。题目范围内总和绝对值可达500005000000000000，超过JavaScript Number安全整数范围；应使用足够宽的整数（如C++的64位整数或JavaScript BigInt），并在乘法前选择正确类型。页面小整数实验不代表这种大输入也安全。",
+      ],
+    },
+    references: [{label:"AtCoder ABC480 D：Concatenation of Prefixes（2026-10-17赛后进阶）",url:"https://atcoder.jp/contests/abc480/tasks/abc480_d"},{label:"AtCoder AWC0108 C：Smoothing the Temperature（历史定长区间平均值，2026-07-08）",url:"https://atcoder.jp/contests/awc0108/tasks/awc0108_c"},{label:"CSES：Static Range Sum Queries（一基闭区间）",url:"https://cses.fi/problemset/task/1646"},{label:"Library Checker：Static Range Sum（零基左闭右开）",url:"https://judge.yosupo.jp/problem/static_range_sum"},{label:"CSES：Dynamic Range Sum Queries（适用范围对照）",url:"https://cses.fi/problemset/task/1648"}],
     goals: ["把元素下标与n+1个前缀边界分开", "通过共同项消去推导区间和", "检查负数、首尾与空区间，而非死记下标"],
     summary: "P[k]保存边界k之前的总和。[l,r)用P[r]−P[l]消去共同前缀；负数与空区间都成立，但普通前缀数组不能免费处理动态更新。",
     invariant: "对每个k，P[k]恰好是A[0]到A[k−1]的和；P[0]为空和0。范围条表示项的位置与数量，不表示和的大小。",

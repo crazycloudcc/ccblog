@@ -235,3 +235,14 @@
 - `/learn/prefix-sum` 增补非空区间和/项数、空区间均值不可用、零和非空、负单项、精确分数与按项数加权合并的原创解释。published仍为2026-10-16，updated为2026-10-17；不是当天第二篇新文章。图形、交互、同步求和代码不变。
 - 依据2026-10-17实际重读的历史 [AtCoder AWC0108 C](https://atcoder.jp/contests/awc0108/tasks/awc0108_c)（2026-07-08），只证明定长平均值存在真实题型需求，不声称本小时热点、搜索量或自然增长；没有分析进行中的比赛题。
 - 当前实现285/285 tests、lint/types/config/冻结build/Pagefind24页通过；独立审阅与精确preview/生产核验继续中，未提前计作正式上线。详见[验收记录](experiments/prefix-mean-2026-10-17/README.md)。
+
+
+## 2026-10-17 前缀和平均值 FAQ 正式回执补齐
+
+- 产品 `4ca3f9e8d84fedf1eeb3bcf8ff1cb9ca2a914264`：[preview CI 39008830012](https://github.com/crazycloudcc/ccblog/actions/runs/39008830012) success、[preview部署](https://vercel.com/chainboxapp/ccblog/318HeQQaWFb2rfJVPoN7LwAB9CNK)；[生产 CI 39008999066](https://github.com/crazycloudcc/ccblog/actions/runs/39008999066) success（06:13:18Z更新）。2026-10-17约14:00UTC实际重读[生产部署](https://vercel.com/chainboxapp/ccblog/DMeLGbXuXTKfAg1BxTDd7N18KkgQ)，Ready/Production/Current、main精确SHA与crazycloud.cc绑定一致。不是新文章。
+
+## 2026-10-17 前缀拼接序列进阶应用（实施与预发布验收）
+
+- `/learn/prefix-sum` 末尾增补可选进阶应用，来源为赛后公开 ABC480 D，不计第二新篇。保留入门核心SVG和同步求和代码；共享服务端正文/Markdown、二层前缀和、三角分块定位、负数/空区间/末端和整数溢出解释。
+- 288/288 tests、lint/types与独立数学审阅通过；原有Apple目录同步请求曾被审批阻断，14:17:19UTC用户明确批准后完整npm build通过；目录无关变动已审查并恢复，另验冻结输入build/Pagefind。精确preview、实际新稿画面独审和正式发布门禁仍待完成，不提前计上线；失败续同稿。详见[验收记录](experiments/prefix-concatenation-2026-10-17/README.md)。
+- 目标是提供具体题型的原创解释，搜索量和自然增长未知，原2026-10-26复查窗口保持。

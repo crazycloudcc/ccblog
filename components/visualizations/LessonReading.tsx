@@ -16,6 +16,10 @@ export function LessonReading({ slug }: { slug: LessonSlug }) {
       <div><h3>{lesson.complexityLabel}</h3><p>{lesson.complexity}</p><h3>常见误区</h3><ul>{lesson.mistakes.map((mistake) => <li key={mistake}>{mistake}</li>)}</ul><h3>自测与答案</h3><p>{lesson.question}</p><p>{lesson.answer}</p></div>
     </div>
     {"applications" in lesson && <div className={s.applications}><h3>{lesson.applications.title}</h3><ol>{lesson.applications.items.map((item) => <li key={item.question}><strong>{item.question}</strong> {item.answer}</li>)}</ol></div>}
+    {"advancedApplication" in lesson && <div className={s.applications}>
+      <h3>{lesson.advancedApplication.title}</h3>
+      {lesson.advancedApplication.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+    </div>}
     {extension && <div><h3>延伸学习</h3><p>{extension.explanation}</p><p><Link href={`/learn/${extension.slug}`}>{extension.label}</Link></p></div>}
     <h3>参考资料</h3><ul>{lesson.references.map((ref) => <li key={ref.url}><a href={ref.url}>{ref.label}</a></li>)}</ul>
     <p>{lesson.notesSlug && <><Link href={`/blog/${lesson.notesSlug}`}>阅读 Notes：推导与 C++ 代码</Link> · </>}<a href={`/learn/${slug}/index.md`}>纯文字 Markdown 阅读版</a></p>
